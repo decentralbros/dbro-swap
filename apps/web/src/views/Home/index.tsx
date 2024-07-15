@@ -11,7 +11,6 @@ import EcoSystemSection from './components/EcoSystemSection'
 import Footer from './components/Footer'
 import Hero from './components/Hero'
 import MetricsSection from './components/MetricsSection'
-import { NewsSection } from './components/NewsSection'
 import {
   InnerWedgeWrapper,
   OuterWedgeWrapper,
@@ -149,7 +148,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         <RightTopBox />
         <CommunitySection />
       </PageSection>
-      <PageSection
+      {/* <PageSection
         innerProps={{
           style: {
             ...HomeSectionContainerStyles,
@@ -161,7 +160,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         hasCurvedDivider={false}
       >
         <NewsSection />
-      </PageSection>
+      </PageSection> */}
       <PageSection
         innerProps={{ style: HomeSectionContainerStyles }}
         background="linear-gradient(180deg, #7645D9 0%, #5121B1 100%)"
