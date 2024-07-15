@@ -54,5 +54,6 @@
     "wbnb",
     "ZKEVM",
     "ZKSYNC"
-  ]
+  ],
+  "vitest.disableWorkspaceWarning": true
 }
