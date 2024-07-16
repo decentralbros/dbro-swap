@@ -215,14 +215,17 @@ const config: (
     // },
     {
       label: '',
-      href: '/info',
       icon: MoreIcon,
       hideSubNav: true,
       items: [
         {
           label: t('Info'),
-          href: '/info/v3',
+          href: '/info',
         },
+        // {
+        //   label: t('Info'),
+        //   href: '/info/v3',
+        // },
         // {
         //   label: t('IFO'),
         //   href: '/ifo',
@@ -251,11 +254,11 @@ const config: (
         {
           type: DropdownMenuItemType.DIVIDER,
         },
-        {
-          label: t('Blog'),
-          href: 'https://blog.pancakeswap.finance',
-          type: DropdownMenuItemType.EXTERNAL_LINK,
-        },
+        // {
+        //   label: t('Blog'),
+        //   href: 'https://blog.pancakeswap.finance',
+        //   type: DropdownMenuItemType.EXTERNAL_LINK,
+        // },
         {
           label: t('Docs'),
           href: 'https://docs.pancakeswap.finance',
