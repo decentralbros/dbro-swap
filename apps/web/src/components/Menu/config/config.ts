@@ -53,6 +53,12 @@ const config: (
       items: [],
       supportChainIds: SUPPORT_ONLY_BSC,
     },
+    {
+      label: t('Lottery'),
+      href: '/lottery',
+      showOnMobile: false,
+      items: [],
+    },
     // {
     //   label: t('Trade'),
     //   icon: SwapIcon,
@@ -208,7 +214,7 @@ const config: (
     //   items: [],
     // },
     {
-      label: 'More',
+      label: '',
       href: '/info',
       icon: MoreIcon,
       hideSubNav: true,
