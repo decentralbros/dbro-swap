@@ -1,12 +1,11 @@
 import { Box, Text, TooltipText, useTooltip } from '@pancakeswap/uikit'
 import { PropsWithChildren, useCallback } from 'react'
-import { logger } from 'utils/datadog'
 import { useChainId } from 'wagmi'
 
 const EventCaptureContainer: React.FC<PropsWithChildren> = ({ children }) => {
   const chainId = useChainId()
   const log = useCallback(() => {
-    logger.info('GiftTooltip', {
+    console.info('GiftTooltip', {
       chainId,
       path: window.location.pathname,
     })

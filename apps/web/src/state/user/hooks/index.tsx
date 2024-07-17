@@ -7,7 +7,6 @@ import { useQuery } from '@tanstack/react-query'
 import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from 'config/constants/exchange'
 import { useOfficialsAndUserAddedTokens } from 'hooks/Tokens'
 import { useActiveChainId } from 'hooks/useActiveChainId'
-import { useFeatureFlagEvaluation } from 'hooks/useDataDogRUM'
 import flatMap from 'lodash/flatMap'
 import { useCallback, useMemo } from 'react'
 import { useSelector } from 'react-redux'
@@ -124,7 +123,6 @@ export function useUserFarmsViewMode(): [ViewMode, (viewMode: ViewMode) => void]
   const userFarmsViewMode = useSelector<AppState, AppState['user']['userFarmsViewMode']>((state) => {
     return state.user.userFarmsViewMode
   })
-  useFeatureFlagEvaluation('farms-view-mode', userFarmsViewMode)
 
   const setUserFarmsViewMode = useCallback(
     (viewMode: ViewMode) => {

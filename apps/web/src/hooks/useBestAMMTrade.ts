@@ -2,7 +2,6 @@ import { ChainId } from '@pancakeswap/chains'
 import { useDebounce, usePropsChanged } from '@pancakeswap/hooks'
 import { getPoolTypeKey, getRequestBody, parseAMMPriceResponse, parseQuoteResponse } from '@pancakeswap/price-api-sdk'
 import { Currency, CurrencyAmount, TradeType } from '@pancakeswap/sdk'
-import { zeroAddress } from 'viem'
 import {
   BATCH_MULTICALL_CONFIGS,
   PoolType,
@@ -15,9 +14,10 @@ import {
 import { BigintIsh } from '@pancakeswap/swap-sdk-core'
 import { AbortControl } from '@pancakeswap/utils/abortControl'
 import { keepPreviousData, useQuery, useQueryClient } from '@tanstack/react-query'
-import { useAccount } from 'wagmi'
 import qs from 'qs'
 import { useCallback, useDeferredValue, useEffect, useMemo, useRef } from 'react'
+import { zeroAddress } from 'viem'
+import { useAccount } from 'wagmi'
 
 import { QUOTING_API, QUOTING_API_PREFIX } from 'config/constants/endpoints'
 import { EXPERIMENTAL_FEATURES } from 'config/experimentalFeatures'
@@ -25,7 +25,6 @@ import { POOLS_FAST_REVALIDATE, POOLS_NORMAL_REVALIDATE } from 'config/pools'
 import { useIsWrapping } from 'hooks/useWrapCallback'
 import { useCurrentBlock } from 'state/block/hooks'
 import { useFeeDataWithGasPrice } from 'state/user/hooks'
-import { tracker } from 'utils/datadog'
 import { createViemPublicClientGetter } from 'utils/viem'
 import { publicClient } from 'utils/wagmi'
 
@@ -336,7 +335,7 @@ function bestTradeHookFactory<
         const duration = Math.floor(performance.now() - startTime)
 
         if (trackPerf) {
-          tracker.log(`[PERF] ${key} duration:${duration}ms`, {
+          console.info(`[PERF] ${key} duration:${duration}ms`, {
             chainId: currency.chainId,
             label: key,
             duration,
@@ -578,7 +577,7 @@ function useBestTradeFromApi({
       const duration = Math.floor(performance.now() - startTime)
 
       if (trackPerf) {
-        tracker.log(`[PERF] ${key} duration:${duration}ms`, {
+        console.info(`[PERF] ${key} duration:${duration}ms`, {
           chainId: currency.chainId,
           label: key,
           duration,

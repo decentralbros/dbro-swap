@@ -3,7 +3,6 @@ import 'utils/workerPolyfill'
 import { SmartRouter, V4Router } from '@pancakeswap/smart-router'
 import { Call } from 'state/multicall/actions'
 import { fetchChunk } from 'state/multicall/fetchChunk'
-import { getLogger } from 'utils/datadog'
 import { createViemPublicClientGetter } from 'utils/viem'
 
 const { parseCurrency, parseCurrencyAmount, parsePool, serializeTrade } = SmartRouter.Transformer
@@ -15,42 +14,6 @@ export type WorkerGetBestTradeEvent = [
     params: SmartRouter.APISchema.RouterPostParams
   },
 ]
-
-const fetch_ = fetch
-const logger = getLogger('quote-rpc', { forwardErrorsToLogs: false })
-
-const fetchWithLogging = async (url: RequestInfo | URL, init?: RequestInit) => {
-  const start = Date.now()
-  let urlString: string | undefined
-  let size: number | undefined
-  if (init && init.method === 'POST' && init.body) {
-    urlString = url.toString()
-    size = init.body.toString().length / 1024
-  }
-
-  const response = await fetch_(url, init)
-  const end = Date.now()
-  if (urlString && size) {
-    if (!urlString.includes('datadoghq.com')) {
-      try {
-        logger.info('Quote RPC', {
-          rpc: {
-            duration: end - start,
-            url: urlString,
-            size,
-            status: response.status,
-          },
-        })
-      } catch (e) {
-        console.error(e)
-      }
-    }
-  }
-
-  return response
-}
-
-globalThis.fetch = fetchWithLogging
 
 export type AbortEvent = [
   id: number,

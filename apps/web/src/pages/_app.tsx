@@ -1,20 +1,24 @@
-import 'core-js/features/string/replace-all'
-import 'core-js/features/array/to-sorted'
 import { ResetCSS, ScrollToTopButtonV2, ToastListener } from '@pancakeswap/uikit'
 import BigNumber from 'bignumber.js'
 import { SentryErrorBoundary } from 'components/ErrorBoundary'
 import GlobalCheckClaimStatus from 'components/GlobalCheckClaimStatus'
 import { PageMeta } from 'components/Layout/Page'
+import { AffiliateExpiredModal } from 'components/Modal/AffiliateExpiredModal'
 import { NetworkModal } from 'components/NetworkModal'
 import { FixedSubgraphHealthIndicator } from 'components/SubgraphHealthIndicator/FixedSubgraphHealthIndicator'
 import TransactionsDetailModal from 'components/TransactionDetailModal'
 import { VercelToolbar } from 'components/VercelToolbar'
+import 'core-js/features/array/to-sorted'
+import 'core-js/features/string/replace-all'
 import { useAccountEventListener } from 'hooks/useAccountEventListener'
 import useEagerConnect from 'hooks/useEagerConnect'
 import useLockedEndNotification from 'hooks/useLockedEndNotification'
 import useSentryUser from 'hooks/useSentryUser'
 import useThemeCookie from 'hooks/useThemeCookie'
 import useUserAgent from 'hooks/useUserAgent'
+import { useVercelFeatureFlagOverrides } from 'hooks/useVercelToolbar'
+import { useWeb3WalletView } from 'hooks/useWeb3WalletView'
+import { useInitGlobalWorker } from 'hooks/useWorker'
 import { NextPage } from 'next'
 import { DefaultSeo } from 'next-seo'
 import type { AppProps } from 'next/app'
@@ -23,16 +27,9 @@ import Head from 'next/head'
 import Script from 'next/script'
 import { Fragment } from 'react'
 import { PersistGate } from 'redux-persist/integration/react'
-import { V4CakeIcon } from 'views/Home/components/V4CakeIcon'
-import { AffiliateExpiredModal } from 'components/Modal/AffiliateExpiredModal'
-
-import { useDataDogRUM } from 'hooks/useDataDogRUM'
-import { useLoadExperimentalFeatures } from 'hooks/useExperimentalFeatureEnabled'
-import { useVercelFeatureFlagOverrides } from 'hooks/useVercelToolbar'
-import { useWeb3WalletView } from 'hooks/useWeb3WalletView'
-import { useInitGlobalWorker } from 'hooks/useWorker'
 import { persistor, useStore } from 'state'
 import { usePollBlockNumber } from 'state/block/hooks'
+import { V4CakeIcon } from 'views/Home/components/V4CakeIcon'
 import { Blocklist, Updaters } from '..'
 import { SEO } from '../../next-seo.config'
 import Providers from '../Providers'
@@ -49,9 +46,7 @@ BigNumber.config({
 
 function GlobalHooks() {
   useInitGlobalWorker()
-  useDataDogRUM()
   useWeb3WalletView()
-  useLoadExperimentalFeatures()
   useVercelFeatureFlagOverrides()
   usePollBlockNumber()
   useEagerConnect()

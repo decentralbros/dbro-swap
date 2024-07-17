@@ -9,8 +9,7 @@ import { useMemo } from 'react'
 import { useSwapState } from 'state/swap/hooks'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { calculateGasMargin, safeGetAddress } from 'utils'
-import { logger } from 'utils/datadog'
-import { logSwap, logTx } from 'utils/log'
+import { logTx } from 'utils/log'
 import { isUserRejected } from 'utils/sentry'
 import { transactionErrorToUserReadableMessage } from 'utils/transactionErrorToUserReadableMessage'
 import { viemClients } from 'utils/viem'
@@ -193,16 +192,7 @@ const useSendMMTransaction = (
                 type: 'swap',
               },
             )
-            logSwap({
-              account,
-              hash,
-              chainId,
-              inputAmount,
-              outputAmount,
-              input: trade.inputAmount.currency,
-              output: trade.outputAmount.currency,
-              type: 'MarketMakerSwap',
-            })
+
             logTx({ account, chainId, hash })
 
             return { hash }
@@ -214,7 +204,7 @@ const useSendMMTransaction = (
             } else {
               // otherwise, the error was unexpected and we need to convey that
               console.error(`Swap failed`, error)
-              logger.warn(
+              console.warn(
                 'Swap failed',
                 {
                   chainId,

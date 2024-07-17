@@ -25,7 +25,6 @@ import {
 import { useSendTransaction } from 'wagmi'
 
 import { usePaymaster } from 'hooks/usePaymaster'
-import { logger } from 'utils/datadog'
 import { viemClients } from 'utils/viem'
 import { isZero } from '../utils/isZero'
 
@@ -234,7 +233,7 @@ export default function useSendSwapTransaction(
               throw new TransactionRejectedError(t('Transaction rejected'))
             } else {
               // otherwise, the error was unexpected and we need to convey that
-              logger.warn(
+              console.error(
                 'Swap failed',
                 {
                   chainId,
