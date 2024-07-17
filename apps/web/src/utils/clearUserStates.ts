@@ -1,5 +1,4 @@
 import { Dispatch } from '@reduxjs/toolkit'
-import { getCurrentScope } from '@sentry/nextjs'
 import { PREDICTION_TOOLTIP_DISMISS_KEY } from 'config/constants'
 import { deleteCookie } from 'cookies-next'
 import { AFFILIATE_SID } from 'pages/api/affiliates-program/affiliate-login'
@@ -21,7 +20,6 @@ export const clearUserStates = (
     dispatch(resetUserState({ chainId, newChainId }))
   }
   dispatch(toggleFarmTransactionModal({ showModal: false }))
-  getCurrentScope().setUser(null)
   const lsOrderKeys = getLocalStorageItemKeys(LS_ORDERS)
   lsOrderKeys.forEach((lsOrderKey) => window?.localStorage?.removeItem(lsOrderKey))
   window?.localStorage?.removeItem(PREDICTION_TOOLTIP_DISMISS_KEY)

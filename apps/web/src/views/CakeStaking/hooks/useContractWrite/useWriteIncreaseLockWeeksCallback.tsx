@@ -10,7 +10,6 @@ import {
   cakeLockWeeksAtom,
 } from 'state/vecake/atoms'
 import { useLockCakeData } from 'state/vecake/hooks'
-import { logger } from 'utils/datadog'
 import { logTx } from 'utils/log'
 import { isUserRejected } from 'utils/sentry'
 import { TransactionExecutionError } from 'viem'
@@ -65,7 +64,7 @@ export const useWriteIncreaseLockWeeksCallback = (onDismiss?: () => void) => {
       if (isUserRejected(error)) {
         setStatus(ApproveAndLockStatus.REJECT)
       } else {
-        logger.warn(
+        console.warn(
           '[CakeStaking]: Failed to increase lock weeks',
           {
             error: error instanceof TransactionExecutionError ? error.cause : undefined,

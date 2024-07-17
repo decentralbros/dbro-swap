@@ -1,22 +1,4 @@
-import { captureException } from '@sentry/nextjs'
 import { UserRejectedRequestError } from 'viem'
-
-const assignError = (maybeError: any) => {
-  if (typeof maybeError === 'string') {
-    return new Error(maybeError)
-  }
-  if (typeof maybeError === 'object') {
-    const error = new Error(maybeError?.message ?? String(maybeError))
-    if (maybeError?.stack) {
-      error.stack = maybeError.stack
-    }
-    if (maybeError?.code) {
-      error.name = maybeError.code
-    }
-    return error
-  }
-  return maybeError
-}
 
 const possibleRejectMessage = ['Cancelled by User', 'cancel', 'Transaction was rejected', 'denied']
 
@@ -48,15 +30,6 @@ export const isUserRejected = (err) => {
   return false
 }
 
-const ENABLED_LOG = false
-
 export const logError = (error: Error | unknown) => {
-  if (ENABLED_LOG) {
-    if (error instanceof Error) {
-      captureException(error)
-    } else {
-      captureException(assignError(error))
-    }
-  }
   console.error(error)
 }

@@ -1,6 +1,5 @@
 import { ResetCSS, ScrollToTopButtonV2, ToastListener } from '@pancakeswap/uikit'
 import BigNumber from 'bignumber.js'
-import { SentryErrorBoundary } from 'components/ErrorBoundary'
 import GlobalCheckClaimStatus from 'components/GlobalCheckClaimStatus'
 import { PageMeta } from 'components/Layout/Page'
 import { AffiliateExpiredModal } from 'components/Modal/AffiliateExpiredModal'
@@ -13,7 +12,6 @@ import 'core-js/features/string/replace-all'
 import { useAccountEventListener } from 'hooks/useAccountEventListener'
 import useEagerConnect from 'hooks/useEagerConnect'
 import useLockedEndNotification from 'hooks/useLockedEndNotification'
-import useSentryUser from 'hooks/useSentryUser'
 import useThemeCookie from 'hooks/useThemeCookie'
 import useUserAgent from 'hooks/useUserAgent'
 import { useVercelFeatureFlagOverrides } from 'hooks/useVercelToolbar'
@@ -52,7 +50,6 @@ function GlobalHooks() {
   useEagerConnect()
   useUserAgent()
   useAccountEventListener()
-  useSentryUser()
   useThemeCookie()
   useLockedEndNotification()
   return null
@@ -62,7 +59,6 @@ function MPGlobalHooks() {
   usePollBlockNumber()
   useUserAgent()
   useAccountEventListener()
-  useSentryUser()
   useLockedEndNotification()
   return null
 }
@@ -145,8 +141,6 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
-const ProductionErrorBoundary = process.env.NODE_ENV === 'production' ? SentryErrorBoundary : Fragment
-
 const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   if (Component.pure) {
     return <Component {...pageProps} />
@@ -160,7 +154,7 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   const isShowV4IconButton = Component.isShowV4IconButton || false
 
   return (
-    <ProductionErrorBoundary>
+    <>
       <ShowMenu>
         <Layout>
           <Component {...pageProps} />
@@ -176,7 +170,7 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
       {isShowV4IconButton && <V4CakeIcon />}
       <AffiliateExpiredModal />
       <VercelToolbar />
-    </ProductionErrorBoundary>
+    </>
   )
 }
 

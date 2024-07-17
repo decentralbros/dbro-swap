@@ -7,7 +7,6 @@ import { useSetAtom } from 'jotai'
 import { useCallback } from 'react'
 import { ApproveAndLockStatus, approveAndLockStatusAtom, cakeLockTxHashAtom } from 'state/vecake/atoms'
 import { useLockCakeData } from 'state/vecake/hooks'
-import { logger } from 'utils/datadog'
 import { logTx } from 'utils/log'
 import { isUserRejected } from 'utils/sentry'
 import { TransactionExecutionError } from 'viem'
@@ -54,7 +53,7 @@ export const useWriteIncreaseLockAmountCallback = () => {
       }
     } catch (error: any) {
       if (!isUserRejected(error)) {
-        logger.warn(
+        console.warn(
           '[CakeStaking]: Failed to increase lock amount',
           {
             error: error instanceof TransactionExecutionError ? error.cause : error,
