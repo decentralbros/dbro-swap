@@ -20,7 +20,6 @@ import { useNetworkConnectorUpdater } from 'hooks/useActiveWeb3React'
 import { useHover } from 'hooks/useHover'
 import { useSessionChainId } from 'hooks/useSessionChainId'
 import { useSwitchNetwork } from 'hooks/useSwitchNetwork'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { useUserShowTestnet } from 'state/user/hooks/useUserShowTestnet'
@@ -29,10 +28,10 @@ import { chains } from 'utils/wagmi'
 import { useAccount } from 'wagmi'
 import { ChainLogo } from './Logo/ChainLogo'
 
-const AptosChain = {
-  id: 1,
-  name: 'Aptos',
-}
+// const AptosChain = {
+//   id: 1,
+//   name: 'Aptos',
+// }
 
 const NetworkSelect = ({ switchNetwork, chainId, isWrongNetwork }) => {
   const { t } = useTranslation()
@@ -68,7 +67,7 @@ const NetworkSelect = ({ switchNetwork, chainId, isWrongNetwork }) => {
             </Text>
           </UserMenuItem>
         ))}
-      <UserMenuItem
+      {/* <UserMenuItem
         key={`aptos-${AptosChain.id}`}
         style={{ justifyContent: 'flex-start' }}
         as="a"
@@ -85,7 +84,7 @@ const NetworkSelect = ({ switchNetwork, chainId, isWrongNetwork }) => {
         <Text color="text" pl="12px">
           {AptosChain.name}
         </Text>
-      </UserMenuItem>
+      </UserMenuItem> */}
     </>
   )
 }
@@ -149,24 +148,24 @@ const SHORT_SYMBOL = {
   [ChainId.ETHEREUM]: 'ETH',
   [ChainId.BSC]: 'BNB',
   [ChainId.BSC_TESTNET]: 'tBNB',
-  [ChainId.GOERLI]: 'GOR',
+  // [ChainId.GOERLI]: 'GOR',
   [ChainId.ARBITRUM_ONE]: 'ARB',
-  [ChainId.ARBITRUM_GOERLI]: 'tARB',
+  // [ChainId.ARBITRUM_GOERLI]: 'tARB',
   [ChainId.POLYGON_ZKEVM]: 'Polygon zkEVM',
   [ChainId.POLYGON_ZKEVM_TESTNET]: 'tZkEVM',
   [ChainId.ZKSYNC]: 'zkSync',
   [ChainId.ZKSYNC_TESTNET]: 'tZkSync',
-  [ChainId.LINEA]: 'Linea',
-  [ChainId.LINEA_TESTNET]: 'tLinea',
-  [ChainId.OPBNB]: 'opBNB',
-  [ChainId.OPBNB_TESTNET]: 'tOpBNB',
+  // [ChainId.LINEA]: 'Linea',
+  // [ChainId.LINEA_TESTNET]: 'tLinea',
+  // [ChainId.OPBNB]: 'opBNB',
+  // [ChainId.OPBNB_TESTNET]: 'tOpBNB',
   [ChainId.BASE]: 'Base',
-  [ChainId.BASE_TESTNET]: 'tBase',
-  [ChainId.SCROLL_SEPOLIA]: 'tScroll',
+  // [ChainId.BASE_TESTNET]: 'tBase',
+  // [ChainId.SCROLL_SEPOLIA]: 'tScroll',
   [ChainId.SEPOLIA]: 'sepolia',
   [ChainId.BASE_SEPOLIA]: 'Base Sepolia',
   [ChainId.ARBITRUM_SEPOLIA]: 'Arb Sepolia',
-} as const satisfies Record<ChainId, string>
+} as const
 
 export const NetworkSwitcher = () => {
   const { t } = useTranslation()
