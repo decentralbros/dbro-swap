@@ -12,9 +12,9 @@ enum SlippageError {
   RiskyHigh = 'RiskyHigh',
 }
 
-enum DeadlineError {
-  InvalidInput = 'InvalidInput',
-}
+// enum DeadlineError {
+//   InvalidInput = 'InvalidInput',
+// }
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`) // match escaped "." characters via in a non-capturing group
 const THREE_DAYS_IN_SECONDS = 60 * 60 * 24 * 3
@@ -29,8 +29,8 @@ const SlippageTabs = () => {
 
   const slippageInputIsValid =
     slippageInput === '' || (userSlippageTolerance / 100).toFixed(2) === Number.parseFloat(slippageInput).toFixed(2)
-  const deadlineInputIsValid =
-    deadlineInput === '' || (ttl !== undefined && (Number(ttl) / 60).toString() === deadlineInput)
+  // const deadlineInputIsValid =
+  //   deadlineInput === '' || (ttl !== undefined && (Number(ttl) / 60).toString() === deadlineInput)
 
   let slippageError: SlippageError | undefined
   if (slippageInput !== '' && !slippageInputIsValid) {
@@ -43,12 +43,12 @@ const SlippageTabs = () => {
     slippageError = undefined
   }
 
-  let deadlineError: DeadlineError | undefined
-  if (deadlineInput !== '' && !deadlineInputIsValid) {
-    deadlineError = DeadlineError.InvalidInput
-  } else {
-    deadlineError = undefined
-  }
+  // let deadlineError: DeadlineError | undefined
+  // if (deadlineInput !== '' && !deadlineInputIsValid) {
+  //   deadlineError = DeadlineError.InvalidInput
+  // } else {
+  //   deadlineError = undefined
+  // }
 
   const parseCustomSlippage = (value: string) => {
     if (value === '' || inputRegex.test(escapeRegExp(value))) {
@@ -65,20 +65,20 @@ const SlippageTabs = () => {
     }
   }
 
-  const parseCustomDeadline = (value: string) => {
-    setDeadlineInput(value)
+  // const parseCustomDeadline = (value: string) => {
+  //   setDeadlineInput(value)
 
-    try {
-      const valueAsInt: number = Number.parseInt(value) * 60
-      if (!Number.isNaN(valueAsInt) && valueAsInt > 60 && valueAsInt < THREE_DAYS_IN_SECONDS) {
-        setTTL(valueAsInt)
-      } else {
-        deadlineError = DeadlineError.InvalidInput
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  //   try {
+  //     const valueAsInt: number = Number.parseInt(value) * 60
+  //     if (!Number.isNaN(valueAsInt) && valueAsInt > 60 && valueAsInt < THREE_DAYS_IN_SECONDS) {
+  //       setTTL(valueAsInt)
+  //     } else {
+  //       deadlineError = DeadlineError.InvalidInput
+  //     }
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // }
 
   return (
     <Flex flexDirection="column">
@@ -165,7 +165,7 @@ const SlippageTabs = () => {
           </Text>
         )}
       </Flex>
-      <Flex justifyContent="space-between" alignItems="center" mb="24px">
+      {/* <Flex justifyContent="space-between" alignItems="center" mb="24px">
         <Flex alignItems="center">
           <Text>{t('Tx deadline (mins)')}</Text>
           <QuestionHelper
@@ -191,7 +191,7 @@ const SlippageTabs = () => {
             />
           </Box>
         </Flex>
-      </Flex>
+      </Flex> */}
     </Flex>
   )
 }

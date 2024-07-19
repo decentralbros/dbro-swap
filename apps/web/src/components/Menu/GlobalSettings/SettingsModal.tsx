@@ -22,12 +22,7 @@ import {
   ThemeSwitcher,
   Toggle,
 } from '@pancakeswap/uikit'
-import {
-  useAudioPlay,
-  useExpertMode,
-  useUserExpertModeAcknowledgement,
-  useUserSingleHopOnly,
-} from '@pancakeswap/utils/user'
+import { useExpertMode, useUserExpertModeAcknowledgement, useUserSingleHopOnly } from '@pancakeswap/utils/user'
 import { ExpertModal } from '@pancakeswap/widgets-internal'
 import { TOKEN_RISK } from 'components/AccessRisk'
 import AccessRiskTooltips from 'components/AccessRisk/AccessRiskTooltips'
@@ -35,11 +30,9 @@ import { useActiveChainId } from 'hooks/useActiveChainId'
 import useTheme from 'hooks/useTheme'
 import { useWebNotifications } from 'hooks/useWebNotifications'
 import { ReactNode, Suspense, lazy, useCallback, useState } from 'react'
-import { useSwapActionHandlers } from 'state/swap/useSwapActionHandlers'
 import { useSubgraphHealthIndicatorManager, useUserUsernameVisibility } from 'state/user/hooks'
 import { useUserShowTestnet } from 'state/user/hooks/useUserShowTestnet'
 import { useUserTokenRisk } from 'state/user/hooks/useUserTokenRisk'
-import { useSpeedQuote } from 'hooks/useSpeedQuote'
 import {
   useMMLinkedPoolByDefault,
   useOnlyOneAMMSourceEnabled,
@@ -105,14 +98,14 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
   const [showConfirmExpertModal, setShowConfirmExpertModal] = useState(false)
   const [showExpertModeAcknowledgement, setShowExpertModeAcknowledgement] = useUserExpertModeAcknowledgement()
   const [expertMode, setExpertMode] = useExpertMode()
-  const [audioPlay, setAudioMode] = useAudioPlay()
-  const [speedQuote, setSpeedQuote] = useSpeedQuote()
+  // const [audioPlay, setAudioMode] = useAudioPlay()
+  // const [speedQuote, setSpeedQuote] = useSpeedQuote()
   const [subgraphHealth, setSubgraphHealth] = useSubgraphHealthIndicatorManager()
   const [userUsernameVisibility, setUserUsernameVisibility] = useUserUsernameVisibility()
   const [showTestnet, setShowTestnet] = useUserShowTestnet()
   const { enabled } = useWebNotifications()
 
-  const { onChangeRecipient } = useSwapActionHandlers()
+  // const { onChangeRecipient } = useSwapActionHandlers()
   const { chainId } = useActiveChainId()
   const [tokenRisk, setTokenRisk] = useUserTokenRisk()
 
@@ -130,14 +123,14 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
     )
   }
 
-  const handleExpertModeToggle = () => {
-    if (expertMode || !showExpertModeAcknowledgement) {
-      onChangeRecipient(null)
-      setExpertMode((s) => !s)
-    } else {
-      setShowConfirmExpertModal(true)
-    }
-  }
+  // const handleExpertModeToggle = () => {
+  //   if (expertMode || !showExpertModeAcknowledgement) {
+  //     onChangeRecipient(null)
+  //     setExpertMode((s) => !s)
+  //   } else {
+  //     setShowConfirmExpertModal(true)
+  //   }
+  // }
 
   return (
     <Modal title={t('Settings')} headerBackground="gradientCardHeader" onDismiss={onDismiss}>
@@ -256,7 +249,7 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
               </Flex>
               <TransactionSettings />
             </Flex>
-            <Flex justifyContent="space-between" alignItems="center" mb="24px">
+            {/* <Flex justifyContent="space-between" alignItems="center" mb="24px">
               <Flex alignItems="center">
                 <Text>{t('Expert Mode')}</Text>
                 <QuestionHelper
@@ -303,8 +296,8 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
                 onChange={() => setSpeedQuote((s) => !s)}
                 scale="md"
               />
-            </Flex>
-            <RoutingSettingsButton />
+            </Flex> */}
+            {/* <RoutingSettingsButton /> */}
           </>
         )}
       </ScrollableContainer>

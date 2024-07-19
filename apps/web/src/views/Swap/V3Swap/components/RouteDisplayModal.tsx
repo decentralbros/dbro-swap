@@ -48,7 +48,7 @@ export const RouteDisplayModal = memo(function RouteDisplayModal({ isOpen, onDis
         <AutoColumn gap="48px">
           {routes.map((route, i) => (
             // eslint-disable-next-line react/no-array-index-key
-            <RouteDisplay key={i} route={route} />
+            <RouteDisplay key={`${i}-${route}}`} route={route} />
           ))}
           <RoutingSettingsButton />
         </AutoColumn>
