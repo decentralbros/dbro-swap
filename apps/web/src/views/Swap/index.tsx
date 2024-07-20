@@ -1,22 +1,23 @@
 import { Currency } from '@pancakeswap/sdk'
-import { BottomDrawer, Flex, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { BottomDrawer, Flex, Heading, PageHeader, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { AppBody } from 'components/App'
+import Page from 'components/Layout/Page'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
+
+import { useTranslation } from '@pancakeswap/localization'
 
 import { useCurrency } from 'hooks/Tokens'
 import { useSwapHotTokenDisplay } from 'hooks/useSwapHotTokenDisplay'
 import { Field } from 'state/swap/actions'
 import { useSingleTokenSwapInfo, useSwapState } from 'state/swap/hooks'
-import Page from '../Page'
 import { SwapFeaturesContext } from './SwapFeaturesContext'
 import { V3SwapForm } from './V3Swap'
 import PriceChartContainer from './components/Chart/PriceChartContainer'
-import { SwapSelection } from './components/SwapSelection'
 import { StyledInputCurrencyWrapper, StyledSwapContainer } from './styles'
-import { SwapType } from './types'
 
 export default function Swap() {
+  const { t } = useTranslation()
   const { query } = useRouter()
   const { isDesktop } = useMatchBreakpoints()
   const {
@@ -64,44 +65,63 @@ export default function Swap() {
   )
 
   return (
-    <Page removePadding={isChartExpanded} hideFooterOnDesktop={isChartExpanded}>
-      <Flex width={['328px', '100%']} height="100%" justifyContent="center" position="relative" alignItems="flex-start">
-        {isDesktop && isChartSupported && (
-          <PriceChartContainer
-            inputCurrencyId={inputCurrencyId}
-            inputCurrency={currencies[Field.INPUT]}
-            outputCurrencyId={outputCurrencyId}
-            outputCurrency={currencies[Field.OUTPUT]}
-            isChartExpanded={isChartExpanded}
-            setIsChartExpanded={setIsChartExpanded}
-            isChartDisplayed={isChartDisplayed}
-            currentSwapPrice={singleTokenPrice}
-          />
-        )}
-        {!isDesktop && isChartSupported && (
-          <BottomDrawer
-            content={
-              <PriceChartContainer
-                inputCurrencyId={inputCurrencyId}
-                inputCurrency={currencies[Field.INPUT]}
-                outputCurrencyId={outputCurrencyId}
-                outputCurrency={currencies[Field.OUTPUT]}
-                isChartExpanded={isChartExpanded}
-                setIsChartExpanded={setIsChartExpanded}
-                isChartDisplayed={isChartDisplayed}
-                currentSwapPrice={singleTokenPrice}
-                isFullWidthContainer
-                isMobile
-              />
-            }
-            isOpen={isChartDisplayed}
-            setIsOpen={(isOpen) => setIsChartDisplayed?.(isOpen)}
-          />
-        )}
-        {/* {isDesktop && isSwapHotTokenDisplay && isHotTokenSupported && (
+    <>
+      <PageHeader>
+        <Flex justifyContent="space-between" flexDirection={['column', null, null, 'row']}>
+          <Flex flex="1" flexDirection="column" mr={['8px', 0]}>
+            <Heading as="h1" scale="xxl" color="secondary" mb="24px">
+              {t('Swap')}
+            </Heading>
+            <Heading scale="md" color="text">
+              {t('Trade tokens in an instant')}
+            </Heading>
+          </Flex>
+        </Flex>
+      </PageHeader>
+      <Page title={t('Swap')}>
+        <Flex
+          width={['328px', '100%']}
+          height="100%"
+          justifyContent="center"
+          position="relative"
+          alignItems="flex-start"
+        >
+          {isDesktop && isChartSupported && (
+            <PriceChartContainer
+              inputCurrencyId={inputCurrencyId}
+              inputCurrency={currencies[Field.INPUT]}
+              outputCurrencyId={outputCurrencyId}
+              outputCurrency={currencies[Field.OUTPUT]}
+              isChartExpanded={isChartExpanded}
+              setIsChartExpanded={setIsChartExpanded}
+              isChartDisplayed={isChartDisplayed}
+              currentSwapPrice={singleTokenPrice}
+            />
+          )}
+          {!isDesktop && isChartSupported && (
+            <BottomDrawer
+              content={
+                <PriceChartContainer
+                  inputCurrencyId={inputCurrencyId}
+                  inputCurrency={currencies[Field.INPUT]}
+                  outputCurrencyId={outputCurrencyId}
+                  outputCurrency={currencies[Field.OUTPUT]}
+                  isChartExpanded={isChartExpanded}
+                  setIsChartExpanded={setIsChartExpanded}
+                  isChartDisplayed={isChartDisplayed}
+                  currentSwapPrice={singleTokenPrice}
+                  isFullWidthContainer
+                  isMobile
+                />
+              }
+              isOpen={isChartDisplayed}
+              setIsOpen={(isOpen) => setIsChartDisplayed?.(isOpen)}
+            />
+          )}
+          {/* {isDesktop && isSwapHotTokenDisplay && isHotTokenSupported && (
           <HotTokenList handleOutputSelect={handleOutputSelect} />
         )} */}
-        {/* <ModalV2
+          {/* <ModalV2
           isOpen={!isDesktop && isSwapHotTokenDisplay && isHotTokenSupported}
           onDismiss={() => setIsSwapHotTokenDisplay(false)}
         >
@@ -119,17 +139,18 @@ export default function Swap() {
             />
           </Modal>
         </ModalV2> */}
-        <Flex flexDirection="column">
-          <StyledSwapContainer $isChartExpanded={isChartExpanded}>
-            <StyledInputCurrencyWrapper mt={isChartExpanded ? '24px' : '0'}>
-              <SwapSelection swapType={SwapType.MARKET} />
-              <AppBody>
-                <V3SwapForm />
-              </AppBody>
-            </StyledInputCurrencyWrapper>
-          </StyledSwapContainer>
+          <Flex flexDirection="column">
+            <StyledSwapContainer $isChartExpanded={isChartExpanded}>
+              <StyledInputCurrencyWrapper mt={isChartExpanded ? '24px' : '0'}>
+                {/* <SwapSelection swapType={SwapType.MARKET} /> */}
+                <AppBody>
+                  <V3SwapForm />
+                </AppBody>
+              </StyledInputCurrencyWrapper>
+            </StyledSwapContainer>
+          </Flex>
         </Flex>
-      </Flex>
-    </Page>
+      </Page>
+    </>
   )
 }

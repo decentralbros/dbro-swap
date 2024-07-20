@@ -3,7 +3,7 @@ import { Box } from '@pancakeswap/uikit'
 import { useMemo } from 'react'
 import { MMLiquidityWarning } from 'views/Swap/MMLinkPools/components/MMLiquidityWarning'
 import { shouldShowMMLiquidityError } from 'views/Swap/MMLinkPools/utils/exchange'
-import { FormHeader, FormMain, MMTradeDetail, PricingAndSlippage, TradeDetails } from './containers'
+import { FormMain, MMTradeDetail, PricingAndSlippage, TradeDetails } from './containers'
 import { CommitButton } from './containers/CommitButton'
 import { useAllTypeBestTrade } from './hooks/useAllTypeBestTrade'
 
@@ -32,7 +32,6 @@ export function V3SwapForm() {
 
   return (
     <>
-      <FormHeader onRefresh={refreshTrade} refreshDisabled={refreshDisabled} />
       <FormMain
         tradeLoading={isMMBetter ? false : !tradeLoaded}
         pricingAndSlippage={

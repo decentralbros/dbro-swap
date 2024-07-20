@@ -33,12 +33,7 @@ const config: (
       showOnMobile: false,
       items: [],
     },
-    {
-      label: t('Liquidity'),
-      href: '/liquidity',
-      showOnMobile: false,
-      items: [],
-    },
+
     {
       label: t('Earn'),
       href: '/simple-staking',
@@ -59,6 +54,12 @@ const config: (
       showOnMobile: false,
       items: [],
     },
+    // {
+    //   label: t('Liquidity'),
+    //   href: '/liquidity',
+    //   showOnMobile: false,
+    //   items: [],
+    // },
     // {
     //   label: t('Trade'),
     //   icon: SwapIcon,
