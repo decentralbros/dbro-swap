@@ -1,9 +1,9 @@
 import { Image, StyledLink } from '@pancakeswap/uikit'
 import { ASSET_CDN } from 'config/constants/endpoints'
 import throttle from 'lodash/throttle'
+import NextLink from 'next/link'
 import { useEffect, useState } from 'react'
 import { styled } from 'styled-components'
-import NextLink from 'next/link'
 
 const Container = styled(StyledLink)<{ hasScrollToTopButton: boolean }>`
   position: fixed;
