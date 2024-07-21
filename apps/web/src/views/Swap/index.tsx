@@ -29,7 +29,6 @@ export default function Swap() {
     // isHotTokenSupported,
   } = useContext(SwapFeaturesContext)
   const [isSwapHotTokenDisplay, setIsSwapHotTokenDisplay] = useSwapHotTokenDisplay()
-  // const { t } = useTranslation()
   const [firstTime, setFirstTime] = useState(true)
 
   useEffect(() => {
@@ -70,7 +69,7 @@ export default function Swap() {
         <Flex justifyContent="space-between" flexDirection={['column', null, null, 'row']}>
           <Flex flex="1" flexDirection="column" mr={['8px', 0]}>
             <Heading as="h1" scale="xxl" color="secondary" mb="24px">
-              {t('Swap')}
+              {t('Exchange')}
             </Heading>
             <Heading scale="md" color="text">
               {t('Trade tokens in an instant')}

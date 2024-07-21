@@ -1,7 +1,7 @@
-import { useMemo } from 'react'
-import { Box, SubMenuItems, DropdownMenuItemType } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
+import { Box, DropdownMenuItemType, SubMenuItems } from '@pancakeswap/uikit'
 import { useRouter } from 'next/router'
+import { useMemo } from 'react'
 import useAuthAffiliateExist from 'views/AffiliatesProgram/hooks/useAuthAffiliateExist'
 
 const AffiliatesProgramLayout = ({ children }) => {
