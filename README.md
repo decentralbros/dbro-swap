@@ -1,8 +1,8 @@
 # 🥞 Pancake Frontend
 
 <p align="center">
-  <a href="https://pancakeswap.finance">
-      <img src="https://pancakeswap.finance/logo.png" height="128">
+  <a href="https://https://island-swap.vercel.app">
+      <img src="https://island-swap.vercel.app/logo.png" height="128">
   </a>
 </p>
 
