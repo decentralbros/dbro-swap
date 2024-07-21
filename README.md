@@ -1,4 +1,4 @@
-# 🥞 Pancake Frontend
+# 🌴 IslandSwap Frontend
 
 <p align="center">
   <a href="https://https://island-swap.vercel.app">
