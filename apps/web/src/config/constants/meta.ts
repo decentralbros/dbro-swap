@@ -18,7 +18,13 @@ const getPathList = (t: ContextApi['t']): PathList => {
   return {
     paths: {
       '/': { title: t('Home') },
-      '/swap': { basePath: true, title: t('Exchange'), image: `${ASSET_CDN}/web/og/swap.jpg` },
+      '/swap': { basePath: true, title: t('Exchange'), image: `https://islandswap.vercel.app/logo.png` },
+      '/staking': { basePath: true, title: t('Earn'), image: `https://islandswap.vercel.app/logo.png` },
+      '/nfts': { title: t('NFT Marketplace'), image: `https://islandswap.vercel.app/logo.png` },
+      '/lottery': { title: t('Lottery'), image: `https://islandswap.vercel.app/logo.png` },
+      '/affiliates': { title: t('Affiliate Program'), image: `https://islandswap.vercel.app/logo.png` },
+
+      // everything else
       '/limit-orders': { basePath: true, title: t('Limit Orders'), image: `${ASSET_CDN}/web/og/limit.jpg` },
       '/add': { basePath: true, title: t('Add Liquidity'), image: `${ASSET_CDN}/web/og/liquidity.jpg` },
       '/remove': { basePath: true, title: t('Remove Liquidity'), image: `${ASSET_CDN}/web/og/liquidity.jpg` },
@@ -30,7 +36,6 @@ const getPathList = (t: ContextApi['t']): PathList => {
       '/farms': { title: t('Farms'), image: `${ASSET_CDN}/web/og/farms.jpg` },
       '/farms/auction': { title: t('Farm Auctions'), image: `${ASSET_CDN}/web/og/liquidity.jpg` },
       '/pools': { title: t('Pools'), image: `${ASSET_CDN}/web/og/pools.jpg` },
-      '/lottery': { title: t('Lottery'), image: `${ASSET_CDN}/web/og/lottery.jpg` },
       '/ifo': { title: t('Initial Farm Offering'), image: `${ASSET_CDN}/web/og/ifo.jpg` },
       '/teams': { basePath: true, title: t('Leaderboard'), image: `${ASSET_CDN}/web/og/teams.jpg` },
       '/voting': { basePath: true, title: t('Voting'), image: `${ASSET_CDN}/web/og/voting.jpg` },
@@ -51,14 +56,13 @@ const getPathList = (t: ContextApi['t']): PathList => {
         description: 'View statistics for Pancakeswap exchanges.',
         image: `${ASSET_CDN}/web/og/info.jpg`,
       },
-      '/nfts': { title: t('NFT Marketplace'), image: `${ASSET_CDN}/web/og/nft.jpg` },
       '/nfts/collections': { basePath: true, title: t('Collections'), image: `${ASSET_CDN}/web/og/nft.jpg` },
       '/nfts/activity': { title: t('Activity'), image: `${ASSET_CDN}/web/og/nft.jpg` },
       '/profile': { basePath: true, title: t('Profile') },
       '/pancake-squad': { basePath: true, title: t('Pancake Squad') },
       '/pottery': { basePath: true, title: t('Pottery'), image: `${ASSET_CDN}/web/og/pottery.jpg` },
     },
-    defaultTitleSuffix: t('PancakeSwap'),
+    defaultTitleSuffix: t('IslandSwap'),
   }
 }
 

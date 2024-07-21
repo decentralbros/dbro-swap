@@ -36,7 +36,7 @@ const config: (
 
     {
       label: t('Earn'),
-      href: '/simple-staking',
+      href: '/staking',
       showOnMobile: false,
       items: [],
       supportChainIds: FIXED_STAKING_SUPPORTED_CHAINS,
@@ -219,10 +219,10 @@ const config: (
       icon: MoreIcon,
       hideSubNav: true,
       items: [
-        {
-          label: t('Info'),
-          href: '/info',
-        },
+        // {
+        //   label: t('Info'),
+        //   href: '/info',
+        // },
         // {
         //   label: t('Info'),
         //   href: '/info/v3',
@@ -235,7 +235,7 @@ const config: (
         // },
         {
           label: t('Affiliate Program'),
-          href: '/affiliates-program',
+          href: '/affiliates',
         },
         // {
         //   label: t('Voting'),
