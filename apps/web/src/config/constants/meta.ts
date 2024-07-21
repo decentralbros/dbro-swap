@@ -4,9 +4,9 @@ import { ASSET_CDN } from './endpoints'
 import { PageMeta } from './types'
 
 export const DEFAULT_META: PageMeta = {
-  title: 'PancakeSwap',
+  title: 'IslandSwap',
   description: 'Trade, earn, and own crypto on the all-in-one multichain DEX',
-  image: `${ASSET_CDN}/web/og/hero.jpg`,
+  image: `https://islandswap.vercel.app/logo.png`,
 }
 
 interface PathList {
