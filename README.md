@@ -1,4 +1,6 @@
 # 🌴 IslandSwap Frontend
+### Trello:
+https://trello.com/b/ItnHvKTv/islandswap
 
 <p align="center">
   <a href="https://islandswap.vercel.app">
@@ -19,10 +21,7 @@ If you want to contribute, please refer to the [contributing guidelines](./CONTR
 
 ## `apps/web`
 
-<details>
-<summary>
 How to start
-</summary>
 
 ```sh
 pnpm i
@@ -43,14 +42,9 @@ pnpm build
 pnpm start
 ```
 
-</details>
-
 ## `apps/aptos`
 
-<details>
-<summary>
 How to start
-</summary>
 
 ```sh
 pnpm dev:aptos
@@ -60,14 +54,10 @@ pnpm dev:aptos
 pnpm build:aptos
 ```
 
-</details>
 
 ## `apps/blog`
 
-<details>
-<summary>
 How to start
-</summary>
 
 ```sh
 pnpm dev:blog
@@ -77,14 +67,10 @@ pnpm dev:blog
 pnpm build:blog
 ```
 
-</details>
 
 ## `apps/games`
 
-<details>
-<summary>
 How to start
-</summary>
 
 ```sh
 pnpm dev:games
@@ -94,7 +80,6 @@ pnpm dev:games
 pnpm build:games
 ```
 
-</details>
 
 ## Packages
 
