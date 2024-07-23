@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
+import { Flex, Link, Text } from '@pancakeswap/uikit'
 import { styled } from 'styled-components'
-import { Flex, Text, Link } from '@pancakeswap/uikit'
 
 export const Container = styled(Flex)`
   display: grid;
@@ -10,7 +10,7 @@ export const Container = styled(Flex)`
 
   h1 {
     font-size: 2.25rem;
-    font-width: bold;
+    font-weight: bold;
   }
 
   h3 {
