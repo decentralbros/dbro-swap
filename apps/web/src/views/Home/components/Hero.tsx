@@ -3,14 +3,10 @@ import { Button, Flex, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { NextLinkFromReactRouter } from '@pancakeswap/widgets-internal'
 
 import ConnectWalletButton from 'components/ConnectWalletButton'
-import { ASSET_CDN } from 'config/constants/endpoints'
 import useTheme from 'hooks/useTheme'
-import { useLayoutEffect, useRef } from 'react'
+import Image from 'next/image'
 import { styled } from 'styled-components'
 import { useAccount } from 'wagmi'
-import { useDrawCanvas } from '../hooks/useDrawCanvas'
-import { useDrawSequenceImages } from '../hooks/useDrawSequence'
-import { checkIsIOS, useIsIOS } from '../hooks/useIsIOS'
 import { SlideSvgDark, SlideSvgLight } from './SlideSvg'
 
 const BgWrapper = styled.div`
@@ -39,6 +35,7 @@ const BunnyWrapper = styled.div`
 const CakeBox = styled.div`
   width: 300px;
   height: 300px;
+  margin: auto;
   > canvas {
     transform: scale(0.33) translate(-50%, -50%);
     transform-origin: top left;
@@ -81,21 +78,6 @@ const CakeBox = styled.div`
     margin-right: -100px;
   }
 `
-const VideoWrapper = styled.div`
-  opacity: 0;
-  visibility: hidden;
-  position: absolute;
-`
-
-const CakeVideo = styled.video``
-
-const CakeCanvas = styled.canvas`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: transparent;
-`
 
 const StyledText = styled(Text)`
   font-size: 32px;
@@ -118,69 +100,6 @@ const Hero = () => {
   const { address: account } = useAccount()
   const { theme } = useTheme()
   const { isMobile, isXs, isMd } = useMatchBreakpoints()
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const starVideoRef = useRef<HTMLVideoElement>(null)
-  const cakeVideoRef = useRef<HTMLVideoElement>(null)
-  const rock01VideoRef = useRef<HTMLVideoElement>(null)
-  const rock02VideoRef = useRef<HTMLVideoElement>(null)
-  const rock03VideoRef = useRef<HTMLVideoElement>(null)
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const internalRef = useRef(0)
-  const seqInternalRef = useRef(0)
-  const { isIOS } = useIsIOS()
-  const { drawImage, isVideoPlaying } = useDrawCanvas(
-    videoRef,
-    canvasRef,
-    internalRef,
-    width,
-    height,
-    () => {
-      if (isVideoPlaying.current === false) {
-        isVideoPlaying.current = true
-        internalRef.current = window.requestAnimationFrame(() => {
-          drawImage?.()
-        })
-      }
-    },
-    () => {
-      if (videoRef.current) {
-        videoRef.current.currentTime = 3
-        videoRef.current.play()
-      }
-    },
-    [starVideoRef, cakeVideoRef, rock01VideoRef, rock02VideoRef, rock03VideoRef],
-  )
-
-  useLayoutEffect(() => {
-    starVideoRef.current?.play()
-    cakeVideoRef.current?.play()
-    rock01VideoRef.current?.play()
-    rock02VideoRef.current?.play()
-    setTimeout(() => {
-      rock03VideoRef.current?.play()
-    }, 3000)
-    return () => {
-      clearInterval(seqInternalRef.current)
-      cancelAnimationFrame(internalRef.current)
-    }
-  }, [])
-
-  const { drawSequenceImage, playing } = useDrawSequenceImages(
-    `${ASSET_CDN}/web/landing/hero-sequence`,
-    checkIsIOS() || isMobile ? 70 : 0,
-    canvasRef,
-    seqInternalRef,
-    () => clearInterval(seqInternalRef.current),
-    () => {
-      if (playing.current === false) {
-        playing.current = true
-        seqInternalRef.current = window.setInterval(() => {
-          drawSequenceImage(500, 500)
-        }, 1000 / 15)
-      }
-    },
-    true,
-  )
 
   return (
     <>
@@ -268,34 +187,12 @@ const Hero = () => {
         >
           <BunnyWrapper>
             <CakeBox>
-              <CakeCanvas
-                className={isIOS || isMobile ? 'is-ios' : undefined}
-                width={isIOS || isMobile ? 500 : width}
-                height={isIOS || isMobile ? 500 : height}
-                ref={canvasRef}
+              <Image
+                src="/logo.png"
+                width={isMobile ? width * 1.5 : width / 2.5}
+                height={isMobile ? height * 1.5 : height / 2.5}
+                alt="IslandSwap Logo"
               />
-              {!(isIOS || isMobile) && (
-                <VideoWrapper>
-                  <CakeVideo ref={videoRef} width={width} autoPlay muted playsInline>
-                    <source src={`${ASSET_CDN}/web/landing/bunnyv2.webm`} type="video/webm" />
-                  </CakeVideo>
-                  <CakeVideo ref={starVideoRef} width={width} autoPlay loop muted playsInline>
-                    <source src={`${ASSET_CDN}/web/landing/star.webm`} type="video/webm" />
-                  </CakeVideo>
-                  <CakeVideo ref={cakeVideoRef} width={width} autoPlay loop muted playsInline>
-                    <source src={`${ASSET_CDN}/web/landing/hero-cake.webm`} type="video/webm" />
-                  </CakeVideo>
-                  <CakeVideo ref={rock01VideoRef} width={width} autoPlay loop muted playsInline>
-                    <source src={`${ASSET_CDN}/web/landing/rock01.webm`} type="video/webm" />
-                  </CakeVideo>
-                  <CakeVideo ref={rock02VideoRef} width={width} autoPlay loop muted playsInline>
-                    <source src={`${ASSET_CDN}/web/landing/rock02.webm`} type="video/webm" />
-                  </CakeVideo>
-                  <CakeVideo ref={rock03VideoRef} width={width} autoPlay loop muted playsInline>
-                    <source src={`${ASSET_CDN}/web/landing/rock03.webm`} type="video/webm" />
-                  </CakeVideo>
-                </VideoWrapper>
-              )}
             </CakeBox>
           </BunnyWrapper>
         </Flex>
