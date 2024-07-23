@@ -51,7 +51,7 @@ const config = {
     '@tanstack/query-core',
   ],
   reactStrictMode: true,
-  swcMinify: false,
+  swcMinify: true,
   images: {
     contentDispositionType: 'attachment',
     remotePatterns: [
