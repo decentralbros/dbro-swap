@@ -152,7 +152,9 @@ export const ChainTags: React.FC = () => {
       {newsItems.map((d) => (
         <TagWrapper style={{ background: d.background }} key={d.key}>
           {cloneElement(d.component, { width: d.iconWidth, color: 'invertedContrast' })}
-          <Text fontWeight={600} fontSize={isMobile ? '16px' : '20px'} ml="10px" color={d?.color ?? 'invertedContrast'}>
+          {/* <Text fontWeight={600} fontSize={isMobile ? '16px' : '20px'} ml="10px" color={d?.color ?? 'invertedContrast'}> */}
+
+          <Text fontWeight={600} fontSize={isMobile ? '16px' : '20px'} ml="10px">
             {d.key}
           </Text>
         </TagWrapper>
