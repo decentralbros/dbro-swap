@@ -1,12 +1,12 @@
 {
-  "short_name": "PancakeSwap",
-  "name": "PancakeSwap",
-  "description": "Farm CAKE with Pancake LP Tokens",
+  "short_name": "Island Swap",
+  "name": "Island Swap",
+  "description": "Island Swap, everyone's favorite DEX",
   "homepage_url": "",
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#1FC7D4",
-  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "background_color": "#000000",
   "orientation": "portrait",
   "icons": [
     {
