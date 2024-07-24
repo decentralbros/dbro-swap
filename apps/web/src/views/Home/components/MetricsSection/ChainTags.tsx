@@ -1,5 +1,4 @@
 import {
-  AptosIcon,
   BaseIcon,
   BinanceChainIcon,
   EthChainIcon,
@@ -13,14 +12,14 @@ import React, { cloneElement } from 'react'
 import Marquee from 'react-fast-marquee'
 import { styled } from 'styled-components'
 
-const ZksyncWithOutCircleIcon: React.FC<React.PropsWithChildren<SvgProps>> = (props) => {
-  return (
-    <Svg viewBox="0 0 27 15" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-      <path d="M15.3652 3.72137L7.96087 9.27481V15L0.5 7.44275L7.84783 0V3.72137H15.3652Z" />
-      <path d="M19.0957 5.55343V0L26.5 7.5L19.0957 15V11.2214H11.6348L19.0957 5.55343Z" />
-    </Svg>
-  )
-}
+// const ZksyncWithOutCircleIcon: React.FC<React.PropsWithChildren<SvgProps>> = (props) => {
+//   return (
+//     <Svg viewBox="0 0 27 15" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+//       <path d="M15.3652 3.72137L7.96087 9.27481V15L0.5 7.44275L7.84783 0V3.72137H15.3652Z" />
+//       <path d="M19.0957 5.55343V0L26.5 7.5L19.0957 15V11.2214H11.6348L19.0957 5.55343Z" />
+//     </Svg>
+//   )
+// }
 
 const ArbitrumIcon: React.FC<React.PropsWithChildren<SvgProps>> = (props) => {
   return (
@@ -31,14 +30,14 @@ const ArbitrumIcon: React.FC<React.PropsWithChildren<SvgProps>> = (props) => {
   )
 }
 
-const LineaIcon: React.FC<React.PropsWithChildren<SvgProps>> = (props) => {
-  return (
-    <Svg viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg" {...props}>
-      <path d="M12 14H0V2H3V11H12V14Z" />
-      <path d="M12.0002 4C13.1045 4 14 3.10457 14 2C14 0.895432 13.1045 0 12.0002 0C10.8955 0 10 0.895432 10 2C10 3.10457 10.8955 4 12.0002 4Z" />
-    </Svg>
-  )
-}
+// const LineaIcon: React.FC<React.PropsWithChildren<SvgProps>> = (props) => {
+//   return (
+//     <Svg viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg" {...props}>
+//       <path d="M12 14H0V2H3V11H12V14Z" />
+//       <path d="M12.0002 4C13.1045 4 14 3.10457 14 2C14 0.895432 13.1045 0 12.0002 0C10.8955 0 10 0.895432 10 2C10 3.10457 10.8955 4 12.0002 4Z" />
+//     </Svg>
+//   )
+// }
 
 const TagWrapper = styled.div`
   display: flex;
@@ -58,7 +57,7 @@ const TagWrapper = styled.div`
 
 const StyledMarquee = styled(Marquee)`
   width: 100%;
-  max-width: 1063px;
+  max-width: 720px;
   mask-image: linear-gradient(to left, transparent, black 80px, black calc(100% - 80px), transparent);
   -webkit-mask-image: linear-gradient(to left, transparent, black 80px, black calc(100% - 80px), transparent);
   border-radius: 12px;
@@ -87,19 +86,19 @@ const newsItems = [
     background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.10) 100%), #F0B90B',
     iconWidth: '26px',
   },
-  {
-    key: 'opBNB Chain',
-    component: <BinanceChainIcon color="F0B90B" />,
-    background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.10) 100%), #333',
-    iconWidth: '26px',
-    color: '#F0B90B',
-  },
-  {
-    key: 'Aptos',
-    component: <AptosIcon />,
-    background: '#17BA92',
-    iconWidth: '22px',
-  },
+  // {
+  //   key: 'opBNB Chain',
+  //   component: <BinanceChainIcon color="F0B90B" />,
+  //   background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.10) 100%), #333',
+  //   iconWidth: '26px',
+  //   color: '#F0B90B',
+  // },
+  // {
+  //   key: 'Aptos',
+  //   component: <AptosIcon />,
+  //   background: '#17BA92',
+  //   iconWidth: '22px',
+  // },
   {
     key: 'Ethereum',
     component: <EthChainIcon />,
@@ -116,24 +115,24 @@ const newsItems = [
     background: '#AD73DE',
     iconWidth: '24px',
   },
-  {
-    key: 'zkSync Era',
-    component: <ZksyncWithOutCircleIcon />,
-    background: '#686EA7',
-    iconWidth: '26px',
-  },
+  // {
+  //   key: 'zkSync Era',
+  //   component: <ZksyncWithOutCircleIcon />,
+  //   background: '#686EA7',
+  //   iconWidth: '26px',
+  // },
   {
     key: 'Arbitrum One',
     component: <ArbitrumIcon />,
     background: '#6E89AE',
     iconWidth: '20px',
   },
-  {
-    key: 'Linea',
-    component: <LineaIcon />,
-    background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.10) 100%), #81D8EA',
-    iconWidth: '18px',
-  },
+  // {
+  //   key: 'Linea',
+  //   component: <LineaIcon />,
+  //   background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.10) 100%), #81D8EA',
+  //   iconWidth: '18px',
+  // },
   {
     key: 'Base',
     component: (
