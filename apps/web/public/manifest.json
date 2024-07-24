@@ -1,8 +1,8 @@
 {
-  "short_name": "Island Swap",
-  "name": "Island Swap",
-  "description": "Island Swap, everyone's favorite DEX",
-  "homepage_url": "",
+  "short_name": "IslandSwap",
+  "name": "IslandSwap",
+  "description": "IslandSwap, everyone's favorite DEX",
+  "homepage_url": "https://islandswap.vercel.app",
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#ffffff",
