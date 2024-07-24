@@ -8,13 +8,7 @@ import EcoSystemSection from './components/EcoSystemSection'
 import Footer from './components/Footer'
 import Hero from './components/Hero'
 import MetricsSection from './components/MetricsSection'
-import {
-  InnerWedgeWrapper,
-  OuterWedgeWrapper,
-  WedgeBottomRight,
-  WedgeTopLeft,
-  WedgeTopRight,
-} from './components/WedgeSvgs'
+import { InnerWedgeWrapper, OuterWedgeWrapper, WedgeBottomRight, WedgeTopRight } from './components/WedgeSvgs'
 
 const StyledHeroSection = styled(PageSection)`
   padding-top: 16px;
@@ -72,21 +66,14 @@ const Home: React.FC<React.PropsWithChildren> = () => {
           id: 'home-1',
         }}
         index={2}
-        hasCurvedDivider={false}
+        hasCurvedDivider
       >
         {/* <MultipleBanner /> */}
         <Hero />
-      </StyledHeroSection>
-      <PageSection
-        innerProps={{ style: { margin: '0', width: '100%' } }}
-        containerProps={{
-          id: 'home-2',
-        }}
-        index={2}
-        hasCurvedDivider={false}
-      >
+
         <MetricsSection />
-      </PageSection>
+      </StyledHeroSection>
+
       <PageSection
         innerProps={{ style: { ...HomeSectionContainerStyles, maxWidth: 'auto' } }}
         background={theme.colors.background}
@@ -96,11 +83,11 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         index={2}
         hasCurvedDivider={false}
       >
-        <OuterWedgeWrapper>
+        {/* <OuterWedgeWrapper>
           <InnerWedgeWrapper top>
             <WedgeTopLeft />
           </InnerWedgeWrapper>
-        </OuterWedgeWrapper>
+        </OuterWedgeWrapper> */}
         <EcoSystemSection />
       </PageSection>
       <PageSection
