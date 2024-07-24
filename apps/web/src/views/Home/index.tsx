@@ -1,8 +1,7 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { Box, Flex, PageSection, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { Box, PageSection, useMatchBreakpoints } from '@pancakeswap/uikit'
 import useTheme from 'hooks/useTheme'
 import { styled } from 'styled-components'
-import CakeDataRow from './components/CakeDataRow'
 import CakeSection from './components/CakeSection'
 import CommunitySection from './components/CommunitySection'
 import { RightTopBox } from './components/CommunitySection/ImagesOnBg'
@@ -121,7 +120,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
           </InnerWedgeWrapper>
         </OuterWedgeWrapper>
         <CakeSection />
-        <Flex style={{ gap: 5 }} justifyContent="center" mt="40px">
+        {/* <Flex style={{ gap: 5 }} justifyContent="center" mt="40px">
           <Text fontSize={24} bold>
             {t('CAKE')}
           </Text>
@@ -129,7 +128,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
             {t('Figures')}
           </Text>
         </Flex>
-        <CakeDataRow />
+        <CakeDataRow /> */}
         <OuterWedgeWrapper>
           <InnerWedgeWrapper id="bottom-wedge4-2">
             <WedgeBottomRight />

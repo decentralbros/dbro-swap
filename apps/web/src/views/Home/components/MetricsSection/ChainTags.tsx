@@ -57,7 +57,7 @@ const TagWrapper = styled.div`
 
 const StyledMarquee = styled(Marquee)`
   width: 100%;
-  max-width: 720px;
+  max-width: 800px;
   mask-image: linear-gradient(to left, transparent, black 80px, black calc(100% - 80px), transparent);
   -webkit-mask-image: linear-gradient(to left, transparent, black 80px, black calc(100% - 80px), transparent);
   border-radius: 12px;
