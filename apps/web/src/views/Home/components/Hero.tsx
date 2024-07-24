@@ -7,7 +7,6 @@ import useTheme from 'hooks/useTheme'
 import Image from 'next/image'
 import { styled } from 'styled-components'
 import { useAccount } from 'wagmi'
-import { SlideSvgDark, SlideSvgLight } from './SlideSvg'
 
 const BgWrapper = styled.div`
   z-index: -1;
@@ -119,12 +118,12 @@ const Hero = () => {
           }
         `}
       </style>
-      <BgWrapper>
+      {/* <BgWrapper>
         <InnerWrapper>
           <SlideSvgDark className="slide-svg-dark" width="100%" />
           <SlideSvgLight className="slide-svg-light" width="100%" />
         </InnerWrapper>
-      </BgWrapper>
+      </BgWrapper> */}
       <Flex
         position="relative"
         flexDirection={['column-reverse', null, null, 'row']}
