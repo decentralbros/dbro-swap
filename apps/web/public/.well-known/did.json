@@ -1,11 +1,11 @@
 {
   "@context": ["https://www.w3.org/ns/did/v1", "https://w3id.org/security/suites/jws-2020/v1"],
-  "id": "did:web:pancakeswap.finance",
+  "id": "did:web:islandswap.finance",
   "verificationMethod": [
     {
-      "id": "did:web:pancakeswap.finance#wc-notify-subscribe-key",
+      "id": "did:web:islandswap.finance#wc-notify-subscribe-key",
       "type": "JsonWebKey2020",
-      "controller": "did:web:pancakeswap.finance",
+      "controller": "did:web:islandswap.finance",
       "publicKeyJwk": {
         "kty": "OKP",
         "crv": "X25519",
@@ -13,9 +13,9 @@
       }
     },
     {
-      "id": "did:web:pancakeswap.finance#wc-notify-authentication-key",
+      "id": "did:web:islandswap.finance#wc-notify-authentication-key",
       "type": "JsonWebKey2020",
-      "controller": "did:web:pancakeswap.finance",
+      "controller": "did:web:islandswap.finance",
       "publicKeyJwk": {
         "kty": "OKP",
         "crv": "Ed25519",
@@ -23,6 +23,6 @@
       }
     }
   ],
-  "keyAgreement": ["did:web:pancakeswap.finance#wc-notify-subscribe-key"],
-  "authentication": ["did:web:pancakeswap.finance#wc-notify-authentication-key"]
+  "keyAgreement": ["did:web:islandswap.finance#wc-notify-subscribe-key"],
+  "authentication": ["did:web:islandswap.finance#wc-notify-authentication-key"]
 }

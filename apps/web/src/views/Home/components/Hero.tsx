@@ -8,21 +8,21 @@ import Image from 'next/image'
 import { styled } from 'styled-components'
 import { useAccount } from 'wagmi'
 
-const BgWrapper = styled.div`
-  z-index: -1;
-  overflow: hidden;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  bottom: 0px;
-  left: 0px;
-`
+// const BgWrapper = styled.div`
+//   z-index: -1;
+//   overflow: hidden;
+//   position: absolute;
+//   width: 100%;
+//   height: 100%;
+//   bottom: 0px;
+//   left: 0px;
+// `
 
-const InnerWrapper = styled.div`
-  position: absolute;
-  width: 100%;
-  bottom: -3px;
-`
+// const InnerWrapper = styled.div`
+//   position: absolute;
+//   width: 100%;
+//   bottom: -3px;
+// `
 
 const BunnyWrapper = styled.div`
   width: 100%;
