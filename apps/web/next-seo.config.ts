@@ -12,6 +12,6 @@ export const SEO: DefaultSeoProps = {
   openGraph: {
     title: "🏝️ IslandSwap - Everyone's Favorite DEX",
     description: 'Trade, earn, and own crypto on the all-in-one multichain DEX',
-    images: [{ url: 'https://islandswap.vercel.app/logo.png' }],
+    images: [{ url: 'https://islandswap.vercel.app/islandswap.jpg' }],
   },
 }
