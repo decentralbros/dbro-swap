@@ -6,7 +6,7 @@ import { PageMeta } from './types'
 export const DEFAULT_META: PageMeta = {
   title: 'IslandSwap',
   description: 'Trade, earn, and own crypto on the all-in-one multichain DEX',
-  image: `https://islandswap.vercel.app/logo.png`,
+  image: `https://islandswap.vercel.app/islandswap.jpg`,
 }
 
 interface PathList {
@@ -18,11 +18,11 @@ const getPathList = (t: ContextApi['t']): PathList => {
   return {
     paths: {
       '/': { title: t('Home') },
-      '/swap': { basePath: true, title: t('Exchange'), image: `https://islandswap.vercel.app/logo.png` },
-      '/staking': { basePath: true, title: t('Earn'), image: `https://islandswap.vercel.app/logo.png` },
-      '/nfts': { title: t('NFT Marketplace'), image: `https://islandswap.vercel.app/logo.png` },
-      '/lottery': { title: t('Lottery'), image: `https://islandswap.vercel.app/logo.png` },
-      '/affiliates': { title: t('Affiliate Program'), image: `https://islandswap.vercel.app/logo.png` },
+      '/swap': { basePath: true, title: t('Exchange'), image: `https://islandswap.vercel.app/islandswap.jpg` },
+      '/staking': { basePath: true, title: t('Earn'), image: `https://islandswap.vercel.app/islandswap.jpg` },
+      '/nfts': { title: t('NFT Marketplace'), image: `https://islandswap.vercel.app/islandswap.jpg` },
+      '/lottery': { title: t('Lottery'), image: `https://islandswap.vercel.app/islandswap.jpg` },
+      '/affiliates': { title: t('Affiliate Program'), image: `https://islandswap.vercel.app/islandswap.jpg` },
 
       // everything else
       '/limit-orders': { basePath: true, title: t('Limit Orders'), image: `${ASSET_CDN}/web/og/limit.jpg` },
