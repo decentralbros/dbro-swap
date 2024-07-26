@@ -6,11 +6,6 @@ import 'swiper/css'
 import 'swiper/css/effect-fade'
 
 import { ASSET_CDN } from 'config/constants/endpoints'
-import { AIPrediction } from './AIPredictionStripe'
-import { Countdown } from './Countdown'
-import { FeeRefund } from './FeeRefund'
-import { PerpetualSeason } from './PerpetualSeason'
-import { Step1 } from './Step1'
 import { Step2 } from './Step2'
 
 const Container = styled(Flex).withConfig({ shouldForwardProp: (prop) => !['$background'].includes(prop) })<{
@@ -99,52 +94,52 @@ type BannerConfig = {
 }
 
 const CONFIG: BannerConfig[] = [
-  {
-    component: Step1,
-    stripeImage: `${ASSET_CDN}/web/phishing-warning/phishing-warning-bunny-1.png`,
-    stripeImageWidth: '92px',
-    stripeImageAlt: 'Phishing Warning',
-  },
+  // {
+  //   component: Step1,
+  //   stripeImage: `${ASSET_CDN}/web/phishing-warning/phishing-warning-bunny-1.png`,
+  //   stripeImageWidth: '92px',
+  //   stripeImageAlt: 'Phishing Warning',
+  // },
   {
     component: Step2,
     stripeImage: `${ASSET_CDN}/web/phishing-warning/phishing-warning-bunny-2.png`,
     stripeImageWidth: '92px',
     stripeImageAlt: 'Phishing Warning',
   },
-  {
-    component: FeeRefund,
-    stripeImage: FeeRefund.stripeImage,
-    stripeImageWidth: FeeRefund.stripeImageWidth,
-    stripeImageAlt: FeeRefund.stripeImageAlt,
-    background: FeeRefund.background,
-    customStyle: { position: 'relative', transform: 'scale(1.25) translateX(-10px)' },
-  },
-  {
-    component: PerpetualSeason,
-    stripeImage: PerpetualSeason.stripeImage,
-    stripeImageWidth: PerpetualSeason.stripeImageWidth,
-    stripeImageAlt: PerpetualSeason.stripeImageAlt,
-    background: PerpetualSeason.background,
-    customStyle: { position: 'relative', transform: 'scale(1.25) translateX(-10px)' },
-  },
-  {
-    component: AIPrediction,
-    stripeImage: AIPrediction.stripeImage,
-    stripeImageWidth: AIPrediction.stripeImageWidth,
-    stripeImageAlt: AIPrediction.stripeImageAlt,
-    background: AIPrediction.background,
-    customStyle: { position: 'relative', transform: 'scale(1.25) translateX(-10px)' },
-  },
+  // {
+  //   component: FeeRefund,
+  //   stripeImage: FeeRefund.stripeImage,
+  //   stripeImageWidth: FeeRefund.stripeImageWidth,
+  //   stripeImageAlt: FeeRefund.stripeImageAlt,
+  //   background: FeeRefund.background,
+  //   customStyle: { position: 'relative', transform: 'scale(1.25) translateX(-10px)' },
+  // },
+  // {
+  //   component: PerpetualSeason,
+  //   stripeImage: PerpetualSeason.stripeImage,
+  //   stripeImageWidth: PerpetualSeason.stripeImageWidth,
+  //   stripeImageAlt: PerpetualSeason.stripeImageAlt,
+  //   background: PerpetualSeason.background,
+  //   customStyle: { position: 'relative', transform: 'scale(1.25) translateX(-10px)' },
+  // },
+  // {
+  //   component: AIPrediction,
+  //   stripeImage: AIPrediction.stripeImage,
+  //   stripeImageWidth: AIPrediction.stripeImageWidth,
+  //   stripeImageAlt: AIPrediction.stripeImageAlt,
+  //   background: AIPrediction.background,
+  //   customStyle: { position: 'relative', transform: 'scale(1.25) translateX(-10px)' },
+  // },
 ]
 
 const PhishingWarningBanner: React.FC<React.PropsWithChildren> = () => {
   const [, hideBanner] = usePhishingBanner()
   const { isDesktop, isLg } = useMatchBreakpoints()
-  const [percentage, setPerCentage] = useState(0)
+  const [, setPerCentage] = useState(0)
   const showInBigDevice = isDesktop || isLg
   const [step, setStep] = useState(0)
   const timer = useRef<number | null>(null)
-  const [showAnimation, setShowAnimation] = useState(true)
+  const [showAnimation, setShowAnimation] = useState(false)
   const [remainingTimer, setRemainingTimer] = useState(DISPLAY_TIMER)
   const banner = useMemo(() => CONFIG[step], [step])
 
@@ -170,7 +165,7 @@ const PhishingWarningBanner: React.FC<React.PropsWithChildren> = () => {
 
         if (newPercentage >= 1) {
           setStep(nextItem)
-          setShowAnimation(true)
+          setShowAnimation(false)
         }
       }, 50)
     }
@@ -184,14 +179,14 @@ const PhishingWarningBanner: React.FC<React.PropsWithChildren> = () => {
     }
   }, [remainingTimer, showAnimation, step, nextItem])
 
-  const handleClickNext = () => {
-    setTimeout(() => {
-      setStep(nextItem)
-      setPerCentage(0)
-      setRemainingTimer(DISPLAY_TIMER)
-      setShowAnimation(true)
-    }, 600)
-  }
+  // const handleClickNext = () => {
+  //   setTimeout(() => {
+  //     setStep(nextItem)
+  //     setPerCentage(0)
+  //     setRemainingTimer(DISPLAY_TIMER)
+  //     setShowAnimation(true)
+  //   }, 600)
+  // }
 
   return (
     <Container className="warning-banner" $background={banner.background}>
@@ -209,7 +204,7 @@ const PhishingWarningBanner: React.FC<React.PropsWithChildren> = () => {
             <InnerContainer>
               <banner.component />
             </InnerContainer>
-            <Countdown percentage={percentage} onClick={handleClickNext} />
+            {/* <Countdown percentage={percentage} onClick={handleClickNext} /> */}
           </SpeechBubble>
         </Flex>
       </AnimationContainer>
