@@ -2,11 +2,9 @@ import { useTranslation } from '@pancakeswap/localization'
 import { Flex, Heading, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import useTheme from 'hooks/useTheme'
 import { styled } from 'styled-components'
-import { Autoplay, EffectFade, Pagination } from 'swiper/modules'
-import { Swiper, SwiperSlide } from 'swiper/react'
+import { Swiper } from 'swiper/react'
 import CommunitySummary, { sharedCss } from './CommunitySummary'
 import { CommunityTags } from './CommunityTags'
-import { BlogCard, TwitterCards } from './TwitterCards'
 import { LeftBottomBox, RightBottomBox } from './ImagesOnBg'
 
 const TransparentFrame = styled.div<{ isDark: boolean }>`
@@ -95,7 +93,7 @@ const CommunitySection = () => {
           </Text>
           <Flex flexDirection="row" flexWrap="wrap" alignItems="center" style={{ gap: 24 }} justifyContent="center">
             <CommunitySummary />
-            <StyledSwiper
+            {/* <StyledSwiper
               modules={[Autoplay, Pagination, EffectFade]}
               spaceBetween={50}
               observer
@@ -113,7 +111,7 @@ const CommunitySection = () => {
               <SwiperSlide key="BlogCard">
                 <BlogCard />
               </SwiperSlide>
-            </StyledSwiper>
+            </StyledSwiper> */}
           </Flex>
         </Flex>
 

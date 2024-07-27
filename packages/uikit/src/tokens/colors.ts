@@ -2,7 +2,7 @@ export const baseColors = {
   white: "white",
   failure: "#ED4B9E",
   failure33: "#ED4B9E33",
-  primary: "#1FC7D4",
+  primary: "#10c0fc", // buttons, primary text
   primary0f: "#1FC7D40f",
   primary3D: "#1FC7D43D",
   primaryBright: "#53DEE9",
@@ -63,14 +63,14 @@ export const darkColors = {
   secondary80: "#A881FC80",
   background: "#08060B",
   backgroundDisabled: "#3c3742",
-  backgroundAlt: "#27262c",
+  backgroundAlt: "#0c0e25", // header
   backgroundAlt2: "rgba(39, 38, 44, 0.7)",
   cardBorder: "#383241",
   contrast: "#FFFFFF",
   dropdown: "#1E1D20",
   dropdownDeep: "#100C18",
-  invertedContrast: "#191326",
-  input: "#372F47",
+  invertedContrast: "#FFFFFF", // button text
+  input: "#050611", // swap input
   inputSecondary: "#262130",
   primaryDark: "#0098A1",
   tertiary: "#353547",
@@ -80,7 +80,7 @@ export const darkColors = {
   textSubtle: "#B8ADD2",
   disabled: "#524B63",
   gradientPrimary: "linear-gradient(228.54deg, #1FC7D4 -13.69%, #9A6AFF 91.33%)",
-  gradientBubblegum: "linear-gradient(139.73deg, #313D5C 0%, #3D2A54 100%)",
+  gradientBubblegum: "linear-gradient(139.73deg, #0c0e25 0%, #050611 100%)", // discover ecosystem
   gradientInverseBubblegum: "linear-gradient(139.73deg, #3D2A54 0%, #313D5C 100%)",
   gradientCardHeader: "linear-gradient(166.77deg, #3B4155 0%, #3A3045 100%)",
   gradientBlue: "linear-gradient(180deg, #00707F 0%, #19778C 100%)",
