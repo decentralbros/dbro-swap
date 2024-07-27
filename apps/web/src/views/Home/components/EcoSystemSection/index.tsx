@@ -10,7 +10,7 @@ import GradientLogo from '../GradientLogoSvg'
 
 export const CardWrapper = styled.div`
   border-radius: 24px;
-  background: ${({ theme }) => (theme.isDark ? theme.colors.gradientBubblegum : theme.colors.backgroundAlt)};
+  background: ${({ theme }) => (theme.isDark ? theme.colors.backgroundAlt : theme.colors.backgroundAlt)};
   width: 100%;
   box-sizing: border-box;
   padding: 48px 24px 24px 24px;

@@ -2,8 +2,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import { Flex, Heading, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import useTheme from 'hooks/useTheme'
 import { styled } from 'styled-components'
-import { Swiper } from 'swiper/react'
-import CommunitySummary, { sharedCss } from './CommunitySummary'
+import CommunitySummary from './CommunitySummary'
 import { CommunityTags } from './CommunityTags'
 import { LeftBottomBox, RightBottomBox } from './ImagesOnBg'
 
@@ -22,36 +21,36 @@ const TransparentFrame = styled.div<{ isDark: boolean }>`
   }
 `
 
-const StyledSwiper = styled(Swiper)`
-  width: 340px;
-  position: relative;
-  padding-bottom: 3px;
-  .swiper-pagination {
-    position: absolute;
-    bottom: 24px;
-    left: 24px;
-    width: 72px;
-    display: flex;
-    height: 8px;
-    border-radius: 24px;
-    span {
-      width: 50%;
-      margin: 0 !important;
-      border-radius: 24px;
-      background-color: rgba(122, 110, 170, 0.7);
-      &:first-child {
-        border-radius: 4px 0px 0px 4px;
-      }
-      &:last-child {
-        border-radius: 0px 4px 4px 0px;
-      }
-      &.swiper-pagination-bullet-active {
-        background-color: #7645d9;
-      }
-    }
-  }
-  ${sharedCss}
-`
+// const StyledSwiper = styled(Swiper)`
+//   width: 340px;
+//   position: relative;
+//   padding-bottom: 3px;
+//   .swiper-pagination {
+//     position: absolute;
+//     bottom: 24px;
+//     left: 24px;
+//     width: 72px;
+//     display: flex;
+//     height: 8px;
+//     border-radius: 24px;
+//     span {
+//       width: 50%;
+//       margin: 0 !important;
+//       border-radius: 24px;
+//       background-color: rgba(122, 110, 170, 0.7);
+//       &:first-child {
+//         border-radius: 4px 0px 0px 4px;
+//       }
+//       &:last-child {
+//         border-radius: 0px 4px 4px 0px;
+//       }
+//       &.swiper-pagination-bullet-active {
+//         background-color: #7645d9;
+//       }
+//     }
+//   }
+//   ${sharedCss}
+// `
 
 const BgWrapper = styled.div`
   z-index: -1;
