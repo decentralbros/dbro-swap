@@ -169,7 +169,7 @@ const Hero = () => {
             <NextLinkFromReactRouter to="/swap">
               <Button
                 scale="md"
-                style={{ borderRadius: isXs ? 12 : undefined, color: theme.isDark ? '#FFFFFF' : 'undefined' }}
+                style={{ borderRadius: isXs ? 12 : undefined, color: 'primary' }}
                 variant={!account ? 'secondary' : 'primary'}
               >
                 {t('Trade Now')}
