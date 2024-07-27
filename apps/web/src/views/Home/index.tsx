@@ -69,7 +69,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
           id: 'home-1',
         }}
         index={2}
-        hasCurvedDivider
+        hasCurvedDivider={false}
       >
         {/* <MultipleBanner /> */}
         <Hero />
