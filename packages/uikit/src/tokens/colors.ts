@@ -59,8 +59,8 @@ export const lightColors = {
 export const darkColors = {
   ...baseColors,
   ...additionalColors,
-  secondary: "#A881FC",
-  secondary80: "#A881FC80",
+  secondary: "#7364ff", // "favorite" text
+  secondary80: "#7364ff80",
   background: "#08060B",
   backgroundDisabled: "#3c3742",
   backgroundAlt: "#0c0e25", // header
@@ -77,7 +77,7 @@ export const darkColors = {
   text: "#F4EEFF",
   text99: "#F4EEFF99",
   textDisabled: "#666171",
-  textSubtle: "#B8ADD2",
+  textSubtle: "#d5d9ff",
   disabled: "#524B63",
   gradientPrimary: "linear-gradient(228.54deg, #1FC7D4 -13.69%, #9A6AFF 91.33%)",
   gradientBubblegum: "linear-gradient(139.73deg, #0c0e25 0%, #050611 100%)", // discover ecosystem
