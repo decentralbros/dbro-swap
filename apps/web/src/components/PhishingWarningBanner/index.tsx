@@ -15,12 +15,12 @@ const Container = styled(Flex).withConfig({ shouldForwardProp: (prop) => !['$bac
   height: 100%;
   padding: 12px;
   align-items: center;
-  background: #280d5f;
+  background: #7364ff;
 
   ${({ theme }) => theme.mediaQueries.md} {
     padding: 0px;
-    background: #7a6eaa;
-    ${({ $background }) => $background && `background: ${$background};`}
+    background: #7364ff;
+    ${({ $background }) => $background && `background: ${$background};`};
   }
 `
 
@@ -47,7 +47,7 @@ const SpeechBubble = styled(Flex)`
     width: 800px;
     padding: 8px;
     margin-left: 8px;
-    background: #280d5f;
+    background: #0c0e25;
 
     &:before {
       content: '';
@@ -59,7 +59,7 @@ const SpeechBubble = styled(Flex)`
       height: 0;
       border-top: 8px solid transparent;
       border-bottom: 8px solid transparent;
-      border-right: 8px solid #280d5f;
+      border-right: 8px solid #0c0e25;
     }
   }
 
