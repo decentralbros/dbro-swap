@@ -24,15 +24,11 @@ import {
 } from '@pancakeswap/uikit'
 import { useExpertMode, useUserExpertModeAcknowledgement, useUserSingleHopOnly } from '@pancakeswap/utils/user'
 import { ExpertModal } from '@pancakeswap/widgets-internal'
-import { TOKEN_RISK } from 'components/AccessRisk'
-import AccessRiskTooltips from 'components/AccessRisk/AccessRiskTooltips'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import useTheme from 'hooks/useTheme'
-import { useWebNotifications } from 'hooks/useWebNotifications'
 import { ReactNode, lazy, useCallback, useState } from 'react'
-import { useSubgraphHealthIndicatorManager, useUserUsernameVisibility } from 'state/user/hooks'
+import { useUserUsernameVisibility } from 'state/user/hooks'
 import { useUserShowTestnet } from 'state/user/hooks/useUserShowTestnet'
-import { useUserTokenRisk } from 'state/user/hooks/useUserTokenRisk'
 import {
   useMMLinkedPoolByDefault,
   useOnlyOneAMMSourceEnabled,
@@ -100,14 +96,14 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
   const [expertMode, setExpertMode] = useExpertMode()
   // const [audioPlay, setAudioMode] = useAudioPlay()
   // const [speedQuote, setSpeedQuote] = useSpeedQuote()
-  const [subgraphHealth, setSubgraphHealth] = useSubgraphHealthIndicatorManager()
+  // const [subgraphHealth, setSubgraphHealth] = useSubgraphHealthIndicatorManager()
   const [userUsernameVisibility, setUserUsernameVisibility] = useUserUsernameVisibility()
   const [showTestnet, setShowTestnet] = useUserShowTestnet()
-  const { enabled } = useWebNotifications()
+  // const { enabled } = useWebNotifications()
 
   // const { onChangeRecipient } = useSwapActionHandlers()
   const { chainId } = useActiveChainId()
-  const [tokenRisk, setTokenRisk] = useUserTokenRisk()
+  // const [tokenRisk, setTokenRisk] = useUserTokenRisk()
 
   const { t } = useTranslation()
   const { isDark, setTheme } = useTheme()
@@ -208,7 +204,7 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
               </Flex>
               {chainId === ChainId.BSC && (
                 <>
-                  <Flex justifyContent="space-between" alignItems="center" mb="24px">
+                  {/* <Flex justifyContent="space-between" alignItems="center" mb="24px">
                     <Flex alignItems="center">
                       <Text>{t('Token Risk Scanning')}</Text>
                       <QuestionHelper
@@ -233,7 +229,7 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
                         setTokenRisk(!tokenRisk)
                       }}
                     />
-                  </Flex>
+                  </Flex> */}
                   <GasSettings />
                 </>
               )}
