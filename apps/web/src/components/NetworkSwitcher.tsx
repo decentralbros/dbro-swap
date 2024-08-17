@@ -147,7 +147,7 @@ const WrongNetworkSelect = ({ switchNetwork, chainId }) => {
 const SHORT_SYMBOL = {
   [ChainId.ETHEREUM]: 'ETH',
   [ChainId.BSC]: 'BNB',
-  [ChainId.BSC_TESTNET]: 'tBNB',
+  // [ChainId.BSC_TESTNET]: 'tBNB',
   // [ChainId.GOERLI]: 'GOR',
   [ChainId.ARBITRUM_ONE]: 'ARB',
   // [ChainId.ARBITRUM_GOERLI]: 'tARB',
@@ -163,8 +163,8 @@ const SHORT_SYMBOL = {
   // [ChainId.BASE_TESTNET]: 'tBase',
   // [ChainId.SCROLL_SEPOLIA]: 'tScroll',
   [ChainId.SEPOLIA]: 'sepolia',
-  [ChainId.BASE_SEPOLIA]: 'Base Sepolia',
-  [ChainId.ARBITRUM_SEPOLIA]: 'Arb Sepolia',
+  // [ChainId.BASE_SEPOLIA]: 'Base Sepolia',
+  // [ChainId.ARBITRUM_SEPOLIA]: 'Arb Sepolia',
 } as const
 
 export const NetworkSwitcher = () => {
