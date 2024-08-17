@@ -14,9 +14,6 @@ const handler: NextApiHandler = async (req, res) => {
   })
   const data = await request.json()
 
-  // eslint-disable-next-line no-console
-  console.dir(data)
-
   return res.json(data)
 }
 

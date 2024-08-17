@@ -300,7 +300,30 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
       buyTokenPercentageFee: 0.01, // 1%
     }
 
-    const response = await fetch(`/api/quote-sepolia?${qs.stringify(params)}`)
+    let chain: string = ''
+
+    switch (chainId) {
+      case 42161:
+        chain = 'arb'
+        break
+      case 8453:
+        chain = 'base'
+        break
+      case 56:
+        chain = 'bsc'
+        break
+      case 1:
+        chain = 'mainnet'
+        break
+      case 11155111:
+        chain = 'sepolia'
+        break
+
+      default:
+        break
+    }
+
+    const response = await fetch(`/api/quote-${chain}?${qs.stringify(params)}`)
     const quote = await response.json()
 
     const tx = await sendTransaction(config, {
