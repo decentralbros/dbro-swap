@@ -40,11 +40,11 @@ export const TradeSummary = memo(function TradeSummary({
   const { feeSavedAmount, feeSavedUsdValue } = useFeeSaved(inputAmount, outputAmount)
 
   return (
-    <AutoColumn style={{ padding: '0 24px' }}>
+    <AutoColumn style={{ padding: '0 24px' }} background="backgroundAlt">
       {gasTokenSelector}
       <RowBetween>
         <RowFixed>
-          <Text fontSize="14px" color="textSubtle">
+          <Text fontSize="14px" color="primary">
             {isExactIn ? t('Minimum received') : t('Maximum sold')}
           </Text>
           <QuestionHelper
@@ -66,7 +66,7 @@ export const TradeSummary = memo(function TradeSummary({
       {feeSavedAmount ? (
         <RowBetween align="flex-start">
           <RowFixed>
-            <Text fontSize="14px" color="textSubtle">
+            <Text fontSize="14px" color="primary">
               {t('Fee saved')}
             </Text>
             <QuestionHelper
@@ -102,7 +102,7 @@ export const TradeSummary = memo(function TradeSummary({
       {priceImpactWithoutFee && (
         <RowBetween style={{ padding: '4px 0 0 0' }}>
           <RowFixed>
-            <Text fontSize="14px" color="textSubtle">
+            <Text fontSize="14px" color="primary">
               {t('Price Impact')}
             </Text>
             <QuestionHelper
@@ -127,14 +127,14 @@ export const TradeSummary = memo(function TradeSummary({
             />
           </RowFixed>
 
-          {isMM ? <Text color="textSubtle">--</Text> : <FormattedPriceImpact priceImpact={priceImpactWithoutFee} />}
+          {isMM ? <Text color="primary">--</Text> : <FormattedPriceImpact priceImpact={priceImpactWithoutFee} />}
         </RowBetween>
       )}
 
       {realizedLPFee && (
         <RowBetween style={{ padding: '4px 0 0 0' }}>
           <RowFixed>
-            <Text fontSize="14px" color="textSubtle">
+            <Text fontSize="14px" color="primary">
               {t('Trading Fee')}
             </Text>
             <QuestionHelper
@@ -231,7 +231,7 @@ export const AdvancedSwapDetails = memo(function AdvancedSwapDetails({
             <>
               <RowBetween style={{ padding: '0 24px' }}>
                 <span style={{ display: 'flex', alignItems: 'center' }}>
-                  <Text fontSize="14px" color="textSubtle">
+                  <Text fontSize="14px" color="primary">
                     {t('MM Route')}
                   </Text>
                   <QuestionHelper
@@ -248,7 +248,9 @@ export const AdvancedSwapDetails = memo(function AdvancedSwapDetails({
                   <Modal
                     title={
                       <Flex justifyContent="center">
-                        {t('Route')}{' '}
+                        <Text fontSize="14px" color="primary">
+                          {t('Route')}
+                        </Text>
                         <QuestionHelper
                           text={t(
                             'Route is automatically calculated based on your routing preference to achieve the best price for your trade.',

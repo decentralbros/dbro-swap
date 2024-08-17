@@ -10,7 +10,7 @@ import { AdvancedDetailsFooter } from 'views/Swap/components/AdvancedSwapDetails
 import { GasTokenSelector } from 'components/Paymaster/GasTokenSelector'
 import { usePaymaster } from 'hooks/usePaymaster'
 import { MMTradeInfo } from 'views/Swap/MMLinkPools/hooks'
-import { RouteDisplayEssentials, RoutesBreakdown } from '../components'
+import { RouteDisplayEssentials } from '../components'
 import { useIsWrapping, useSlippageAdjustedAmounts } from '../hooks'
 import { TradeEssentialForPriceBreakdown, computeTradePriceBreakdown } from '../utils/exchange'
 
@@ -35,7 +35,7 @@ export function MMTradeDetail({
 
   return (
     <AdvancedDetailsFooter show={loaded}>
-      <AutoColumn gap="0px">
+      <AutoColumn gap="0px" background="backgroundAlt">
         {lastTrade && mmTrade && (
           <AdvancedSwapDetails
             pairs={[]}
@@ -73,7 +73,7 @@ export const TradeDetails = memo(function TradeDetails({ loaded, trade }: Props)
 
   return (
     <AdvancedDetailsFooter show={loaded}>
-      <AutoColumn gap="0px">
+      <AutoColumn gap="0px" background="backgroundAlt">
         <TradeSummary
           slippageAdjustedAmounts={slippageAdjustedAmounts}
           inputAmount={inputAmount}
@@ -84,7 +84,7 @@ export const TradeDetails = memo(function TradeDetails({ loaded, trade }: Props)
           hasStablePair={hasStablePool}
           gasTokenSelector={isPaymasterAvailable && <GasTokenSelector trade={trade} />}
         />
-        <RoutesBreakdown routes={routes} />
+        {/* <RoutesBreakdown routes={routes} /> */}
       </AutoColumn>
     </AdvancedDetailsFooter>
   )
