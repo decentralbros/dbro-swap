@@ -129,7 +129,6 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
   const { address: account } = useAccount()
   const { t } = useTranslation()
   const chainId = useChainId()
-  const { address } = useAccount()
   const [allowedSlippage] = useUserSlippage()
   const [loadSwap, setLoadSwap] = useState<boolean>(false)
   // form data
@@ -284,7 +283,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
           address: tokens[3].address as `0x${string}`, // contract
           functionName: 'approve',
           args: [
-            address as `0x${string}`, // spender
+            account as `0x${string}`, // spender
             parseUnits('100000', 18),
           ],
           chainId,
@@ -302,7 +301,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         sellToken: tokens[2].address,
         buyToken: tokens[3].address,
         sellAmount: BigInt(100000 * 10 ** 18),
-        taker: address as string,
+        taker: account as string,
         slippagePercentage: allowedSlippage / 100,
         buyTokenPercentageFee: 0.01, // 1%
         feeRecipient: '0xd2A2B2fa9b97da9cB5AB80717AaDA9bF86eB8103',
@@ -335,7 +334,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
       const quote = await response.json()
 
       const tx = await sendTransaction(config, {
-        account: address,
+        account,
         chainId: quote.chainId,
         gasPrice: BigInt(quote.gasPrice * 2),
         to: quote.to,
