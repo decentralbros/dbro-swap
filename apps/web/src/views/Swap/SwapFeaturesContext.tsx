@@ -31,10 +31,10 @@ const CHART_SUPPORT_CHAIN_IDS = [
   ChainId.ETHEREUM,
   ChainId.ARBITRUM_ONE,
   ChainId.BASE,
-  ChainId.LINEA,
-  ChainId.POLYGON_ZKEVM,
-  ChainId.OPBNB,
-  ChainId.ZKSYNC,
+  // ChainId.LINEA,
+  // ChainId.POLYGON_ZKEVM,
+  // ChainId.OPBNB,
+  // ChainId.ZKSYNC,
 ]
 const STABLE_SUPPORT_CHAIN_IDS = [ChainId.BSC_TESTNET, ChainId.BSC]
 // const HOT_TOKEN_SUPPORT_CHAIN_IDS = [ChainId.BSC, ChainId.ETHEREUM]

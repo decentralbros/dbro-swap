@@ -352,13 +352,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         disabled={disabled}
         onClick={handleSwap}
       >
-        {swapInputError ||
-          (tradeLoading && <Dots>{t('Searching For The Best Price')}</Dots>) ||
-          (priceImpactSeverity > 3 && !isExpertMode
-            ? t('Price Impact Too High')
-            : priceImpactSeverity > 2
-            ? t('Swap Anyway')
-            : t('Swap'))}
+        {swapInputError || (tradeLoading && <Dots>{t('Searching For The Best Price')}</Dots>) || t('Swap')}
       </CommitButton>
     </Box>
   )
@@ -370,12 +364,12 @@ const ResetRoutesButton = () => {
   return (
     <AutoColumn gap="12px">
       <GreyCard style={{ textAlign: 'center', padding: '0.75rem' }}>
-        <Text color="textSubtle">{t('Insufficient liquidity for this trade.')}</Text>
+        <Text color="textSubtle"> {t('Check your settings')}</Text>
       </GreyCard>
       {isRoutingSettingChange && (
         <Message variant="warning" icon={<></>}>
           <AutoColumn gap="8px">
-            <MessageText>{t('Unable to establish trading route due to customized routing.')}</MessageText>
+            <MessageText> {t('Check your settings')}</MessageText>
             <AutoRow gap="4px">
               <RoutingSettingsButton
                 buttonProps={{
