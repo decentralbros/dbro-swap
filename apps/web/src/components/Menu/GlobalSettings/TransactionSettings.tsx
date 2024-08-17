@@ -1,5 +1,5 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { Box, Button, Flex, Input, QuestionHelper, Text } from '@pancakeswap/uikit'
+import { Button, Flex, QuestionHelper, Text } from '@pancakeswap/uikit'
 import { useUserSlippage } from '@pancakeswap/utils/user'
 import { useState } from 'react'
 import { escapeRegExp } from 'utils'
@@ -100,11 +100,11 @@ const SlippageTabs = () => {
             scale="sm"
             onClick={() => {
               setSlippageInput('')
-              setUserSlippageTolerance(10)
+              setUserSlippageTolerance(1)
             }}
-            variant={userSlippageTolerance === 10 ? 'primary' : 'tertiary'}
+            variant={userSlippageTolerance === 1 ? 'primary' : 'tertiary'}
           >
-            0.1%
+            0.01%
           </Button>
           <Button
             mt="4px"
@@ -112,11 +112,11 @@ const SlippageTabs = () => {
             scale="sm"
             onClick={() => {
               setSlippageInput('')
-              setUserSlippageTolerance(50)
+              setUserSlippageTolerance(2)
             }}
-            variant={userSlippageTolerance === 50 ? 'primary' : 'tertiary'}
+            variant={userSlippageTolerance === 2 ? 'primary' : 'tertiary'}
           >
-            0.5%
+            0.02%
           </Button>
           <Button
             mr="4px"
@@ -124,13 +124,13 @@ const SlippageTabs = () => {
             scale="sm"
             onClick={() => {
               setSlippageInput('')
-              setUserSlippageTolerance(100)
+              setUserSlippageTolerance(3)
             }}
-            variant={userSlippageTolerance === 100 ? 'primary' : 'tertiary'}
+            variant={userSlippageTolerance === 3 ? 'primary' : 'tertiary'}
           >
-            1.0%
+            0.03%
           </Button>
-          <Flex alignItems="center">
+          {/* <Flex alignItems="center">
             <Box width="76px" mt="4px">
               <Input
                 scale="sm"
@@ -153,7 +153,7 @@ const SlippageTabs = () => {
             <Text color="primary" bold ml="2px">
               %
             </Text>
-          </Flex>
+          </Flex> */}
         </Flex>
         {!!slippageError && (
           <Text fontSize="14px" color={slippageError === SlippageError.InvalidInput ? 'red' : '#F3841E'} mt="8px">

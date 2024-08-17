@@ -1,19 +1,18 @@
 import { TradeType } from '@pancakeswap/sdk'
 import { SmartRouterTrade } from '@pancakeswap/smart-router'
 import { Currency, CurrencyAmount, NativeCurrency, Token } from '@pancakeswap/swap-sdk-core'
-import { AutoColumn, Box, Button, Dots, Message, MessageText, Text, useModal } from '@pancakeswap/uikit'
+import { Box, Button, Dots, useModal } from '@pancakeswap/uikit'
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 
 import { useTranslation } from '@pancakeswap/localization'
 import { getUniversalRouterAddress } from '@pancakeswap/universal-router-sdk'
+import { useUserSlippage } from '@pancakeswap/utils/user'
 import { parseUnits } from '@pancakeswap/utils/viem/parseUnits'
 import { ConfirmModalState } from '@pancakeswap/widgets-internal'
 import { sendTransaction, waitForTransactionReceipt, writeContract } from '@wagmi/core'
-import { GreyCard } from 'components/Card'
 import { CommitButton } from 'components/CommitButton'
 import ConnectWalletButton from 'components/ConnectWalletButton'
-import { AutoRow } from 'components/Layout/Row'
-import SettingsModal, { RoutingSettingsButton, withCustomOnDismiss } from 'components/Menu/GlobalSettings/SettingsModal'
+import SettingsModal, { withCustomOnDismiss } from 'components/Menu/GlobalSettings/SettingsModal'
 import { SettingsMode } from 'components/Menu/GlobalSettings/types'
 import { BIG_INT_ZERO } from 'config/constants/exchange'
 import { useCurrency } from 'hooks/Tokens'
@@ -23,7 +22,6 @@ import qs from 'qs'
 import { Field } from 'state/swap/actions'
 import { useSwapState } from 'state/swap/hooks'
 import { useSwapActionHandlers } from 'state/swap/useSwapActionHandlers'
-import { useRoutingSettingChanged } from 'state/user/smartRouter'
 import { useCurrencyBalances } from 'state/wallet/hooks'
 import { warningSeverity } from 'utils/exchange'
 import { config } from 'utils/wagmi'
@@ -132,17 +130,17 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
   const { t } = useTranslation()
   const chainId = useChainId()
   const { address } = useAccount()
+  const [allowedSlippage] = useUserSlippage()
+  const [loadSwap, setLoadSwap] = useState<boolean>(false)
   // form data
   const { independentField } = useSwapState()
   const [inputCurrency, outputCurrency] = useSwapCurrency()
   const { isExpertMode } = useSwapConfig()
-
   const slippageAdjustedAmounts = useSlippageAdjustedAmounts(trade)
   const amountToApprove = useMemo(
     () => (inputCurrency?.isNative ? undefined : slippageAdjustedAmounts[Field.INPUT]),
     [inputCurrency?.isNative, slippageAdjustedAmounts],
   )
-
   const tradePriceBreakdown = useMemo(() => computeTradePriceBreakdown(trade), [trade])
   // warnings on slippage
   const priceImpactSeverity = warningSeverity(
@@ -243,9 +241,9 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     }
   }, [indirectlyOpenConfirmModalState, openConfirmSwapModal])
 
-  if (noRoute && userHasSpecifiedInputOutput && !tradeLoading) {
-    return <ResetRoutesButton />
-  }
+  // if (noRoute && userHasSpecifiedInputOutput && !tradeLoading) {
+  //   return <ResetRoutesButton />
+  // }
 
   const tokens = [
     {
@@ -266,80 +264,94 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
       decimals: 18,
       address: '0x53844f9577c2334e541aec7df7174ece5df1fcf0',
     },
+    {
+      name: 'ChainLink',
+      symbol: 'Link',
+      decimals: 18,
+      address: '0x779877a7b0d9e8603169ddbd7836e478b4624789',
+    },
   ]
 
   const handleSwap = async () => {
     if (!currencyBalances) return
 
-    if (NativeCurrency) {
-      const hash = await writeContract(config, {
-        abi,
-        address: tokens[0].address as `0x${string}`, // contract
-        functionName: 'approve',
-        args: [
-          address as `0x${string}`, // spender
-          parseUnits('1000', 18),
-        ],
+    try {
+      setLoadSwap(true)
+
+      if (!NativeCurrency) {
+        const hash = await writeContract(config, {
+          abi,
+          address: tokens[3].address as `0x${string}`, // contract
+          functionName: 'approve',
+          args: [
+            address as `0x${string}`, // spender
+            parseUnits('100000', 18),
+          ],
+          chainId,
+        })
+
+        await waitForTransactionReceipt(config, {
+          confirmations: 1,
+          hash: hash as `0x${string}`,
+          chainId,
+        })
+      }
+
+      const params = {
         chainId,
+        sellToken: tokens[2].address,
+        buyToken: tokens[3].address,
+        sellAmount: BigInt(100000 * 10 ** 18),
+        taker: address as string,
+        slippagePercentage: allowedSlippage / 100,
+        buyTokenPercentageFee: 0.01, // 1%
+        feeRecipient: '0xd2A2B2fa9b97da9cB5AB80717AaDA9bF86eB8103',
+      }
+
+      let chain: string = ''
+
+      switch (chainId) {
+        case 42161:
+          chain = 'arb'
+          break
+        case 8453:
+          chain = 'base'
+          break
+        case 56:
+          chain = 'bsc'
+          break
+        case 1:
+          chain = 'mainnet'
+          break
+        case 11155111:
+          chain = 'sepolia'
+          break
+
+        default:
+          break
+      }
+
+      const response = await fetch(`/api/quote-${chain}?${qs.stringify(params)}`)
+      const quote = await response.json()
+
+      const tx = await sendTransaction(config, {
+        account: address,
+        chainId: quote.chainId,
+        gasPrice: BigInt(quote.gasPrice * 2),
+        to: quote.to,
+        value: quote.value,
+        data: quote.data,
       })
 
       await waitForTransactionReceipt(config, {
         confirmations: 1,
-        hash: hash as `0x${string}`,
+        hash: tx as `0x${string}`,
         chainId,
       })
+      setLoadSwap(false)
+    } catch {
+      setLoadSwap(false)
     }
-
-    const params = {
-      chainId,
-      sellToken: tokens[2].address,
-      buyToken: tokens[0].address,
-      sellAmount: BigInt(100000 * 10 ** 18),
-      taker: address as string,
-      feeRecipient: '0xd2A2B2fa9b97da9cB5AB80717AaDA9bF86eB8103',
-      buyTokenPercentageFee: 0.01, // 1%
-    }
-
-    let chain: string = ''
-
-    switch (chainId) {
-      case 42161:
-        chain = 'arb'
-        break
-      case 8453:
-        chain = 'base'
-        break
-      case 56:
-        chain = 'bsc'
-        break
-      case 1:
-        chain = 'mainnet'
-        break
-      case 11155111:
-        chain = 'sepolia'
-        break
-
-      default:
-        break
-    }
-
-    const response = await fetch(`/api/quote-${chain}?${qs.stringify(params)}`)
-    const quote = await response.json()
-
-    const tx = await sendTransaction(config, {
-      account: address,
-      chainId: quote.chainId,
-      gasPrice: BigInt(quote.gasPrice * 1.5),
-      to: quote.to,
-      value: quote.value,
-      data: quote.data,
-    })
-
-    await waitForTransactionReceipt(config, {
-      confirmations: 1,
-      hash: tx as `0x${string}`,
-      chainId,
-    })
   }
 
   return (
@@ -349,45 +361,45 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         width="100%"
         data-dd-action-name="Swap commit button"
         variant={isValid && priceImpactSeverity > 2 && !errorMessage ? 'danger' : 'primary'}
-        disabled={disabled}
+        disabled={loadSwap}
         onClick={handleSwap}
       >
-        {swapInputError || (tradeLoading && <Dots>{t('Searching For The Best Price')}</Dots>) || t('Swap')}
+        {(loadSwap && <Dots>{t('Swap')}</Dots>) || t('Swap')}
       </CommitButton>
     </Box>
   )
 })
 
-const ResetRoutesButton = () => {
-  const { t } = useTranslation()
-  const [isRoutingSettingChange, resetRoutingSetting] = useRoutingSettingChanged()
-  return (
-    <AutoColumn gap="12px">
-      <GreyCard style={{ textAlign: 'center', padding: '0.75rem' }}>
-        <Text color="textSubtle"> {t('Check your settings')}</Text>
-      </GreyCard>
-      {isRoutingSettingChange && (
-        <Message variant="warning" icon={<></>}>
-          <AutoColumn gap="8px">
-            <MessageText> {t('Check your settings')}</MessageText>
-            <AutoRow gap="4px">
-              <RoutingSettingsButton
-                buttonProps={{
-                  scale: 'xs',
-                  p: 0,
-                }}
-                showRedDot={false}
-              >
-                {t('Check your settings')}
-              </RoutingSettingsButton>
-              <MessageText>{t('or')}</MessageText>
-              <Button variant="text" scale="xs" p="0" onClick={resetRoutingSetting}>
-                {t('Reset to default')}
-              </Button>
-            </AutoRow>
-          </AutoColumn>
-        </Message>
-      )}
-    </AutoColumn>
-  )
-}
+// const ResetRoutesButton = () => {
+//   const { t } = useTranslation()
+//   const [isRoutingSettingChange, resetRoutingSetting] = useRoutingSettingChanged()
+//   return (
+//     <AutoColumn gap="12px">
+//       <GreyCard style={{ textAlign: 'center', padding: '0.75rem' }}>
+//         <Text color="textSubtle"> {t('Check your settings')}</Text>
+//       </GreyCard>
+//       {isRoutingSettingChange && (
+//         <Message variant="warning" icon={<></>}>
+//           <AutoColumn gap="8px">
+//             <MessageText> {t('Check your settings')}</MessageText>
+//             <AutoRow gap="4px">
+//               <RoutingSettingsButton
+//                 buttonProps={{
+//                   scale: 'xs',
+//                   p: 0,
+//                 }}
+//                 showRedDot={false}
+//               >
+//                 {t('Check your settings')}
+//               </RoutingSettingsButton>
+//               <MessageText>{t('or')}</MessageText>
+//               <Button variant="text" scale="xs" p="0" onClick={resetRoutingSetting}>
+//                 {t('Reset to default')}
+//               </Button>
+//             </AutoRow>
+//           </AutoColumn>
+//         </Message>
+//       )}
+//     </AutoColumn>
+//   )
+// }
