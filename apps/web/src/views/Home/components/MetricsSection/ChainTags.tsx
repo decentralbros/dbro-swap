@@ -1,13 +1,4 @@
-import {
-  BaseIcon,
-  BinanceChainIcon,
-  EthChainIcon,
-  Svg,
-  SvgProps,
-  Text,
-  ZkEVMIcon,
-  useMatchBreakpoints,
-} from '@pancakeswap/uikit'
+import { BaseIcon, BinanceChainIcon, EthChainIcon, Svg, SvgProps, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import React, { cloneElement } from 'react'
 import Marquee from 'react-fast-marquee'
 import { styled } from 'styled-components'
@@ -105,16 +96,16 @@ const newsItems = [
     background: '#627AD8',
     iconWidth: '16px',
   },
-  {
-    key: 'Polygon zkEVM',
-    component: (
-      <StyledChainIcon>
-        <ZkEVMIcon />
-      </StyledChainIcon>
-    ),
-    background: '#AD73DE',
-    iconWidth: '24px',
-  },
+  // {
+  //   key: 'Polygon zkEVM',
+  //   component: (
+  //     <StyledChainIcon>
+  //       <ZkEVMIcon />
+  //     </StyledChainIcon>
+  //   ),
+  //   background: '#AD73DE',
+  //   iconWidth: '24px',
+  // },
   // {
   //   key: 'zkSync Era',
   //   component: <ZksyncWithOutCircleIcon />,
@@ -150,7 +141,7 @@ export const ChainTags: React.FC = () => {
   return (
     <StyledMarquee>
       {newsItems.map((d) => (
-        <TagWrapper style={{ background: d.background }} key={d.key}>
+        <TagWrapper style={{ background: d.background, marginLeft: 20, marginRight: 20 }} key={d.key}>
           {cloneElement(d.component, { width: d.iconWidth, color: 'invertedContrast' })}
           {/* <Text fontWeight={600} fontSize={isMobile ? '16px' : '20px'} ml="10px" color={d?.color ?? 'invertedContrast'}> */}
 
