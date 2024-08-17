@@ -1,5 +1,4 @@
-import { Currency } from '@pancakeswap/sdk'
-import { BottomDrawer, Flex, Heading, PageHeader, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { Flex, Heading, PageHeader, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { AppBody } from 'components/App'
 import Page from 'components/Layout/Page'
 import { useRouter } from 'next/router'
@@ -7,13 +6,9 @@ import { useContext, useEffect, useState } from 'react'
 
 import { useTranslation } from '@pancakeswap/localization'
 
-import { useCurrency } from 'hooks/Tokens'
 import { useSwapHotTokenDisplay } from 'hooks/useSwapHotTokenDisplay'
-import { Field } from 'state/swap/actions'
-import { useSingleTokenSwapInfo, useSwapState } from 'state/swap/hooks'
 import { SwapFeaturesContext } from './SwapFeaturesContext'
 import { V3SwapForm } from './V3Swap'
-import PriceChartContainer from './components/Chart/PriceChartContainer'
 import { StyledInputCurrencyWrapper, StyledSwapContainer } from './styles'
 
 export default function Swap() {
@@ -43,25 +38,25 @@ export default function Swap() {
   }, [firstTime, isChartDisplayed, isSwapHotTokenDisplay, query, setIsSwapHotTokenDisplay, setIsChartDisplayed])
 
   // swap state & price data
-  const {
-    [Field.INPUT]: { currencyId: inputCurrencyId },
-    [Field.OUTPUT]: { currencyId: outputCurrencyId },
-  } = useSwapState()
-  const inputCurrency = useCurrency(inputCurrencyId)
-  const outputCurrency = useCurrency(outputCurrencyId)
+  // const {
+  //   [Field.INPUT]: { currencyId: inputCurrencyId },
+  //   [Field.OUTPUT]: { currencyId: outputCurrencyId },
+  // } = useSwapState()
+  // const inputCurrency = useCurrency(inputCurrencyId)
+  // const outputCurrency = useCurrency(outputCurrencyId)
 
-  const currencies: { [field in Field]?: Currency } = {
-    [Field.INPUT]: inputCurrency ?? undefined,
-    [Field.OUTPUT]: outputCurrency ?? undefined,
-  }
+  // const currencies: { [field in Field]?: Currency } = {
+  //   [Field.INPUT]: inputCurrency ?? undefined,
+  //   [Field.OUTPUT]: outputCurrency ?? undefined,
+  // }
 
-  const singleTokenPrice = useSingleTokenSwapInfo(
-    inputCurrencyId,
-    inputCurrency,
-    outputCurrencyId,
-    outputCurrency,
-    isChartSupported,
-  )
+  // const singleTokenPrice = useSingleTokenSwapInfo(
+  //   inputCurrencyId,
+  //   inputCurrency,
+  //   outputCurrencyId,
+  //   outputCurrency,
+  //   isChartSupported,
+  // )
 
   return (
     <>
@@ -85,7 +80,7 @@ export default function Swap() {
           position="relative"
           alignItems="flex-start"
         >
-          {isDesktop && isChartSupported && (
+          {/* {isDesktop && isChartSupported && (
             <PriceChartContainer
               inputCurrencyId={inputCurrencyId}
               inputCurrency={currencies[Field.INPUT]}
@@ -116,7 +111,7 @@ export default function Swap() {
               isOpen={isChartDisplayed}
               setIsOpen={(isOpen) => setIsChartDisplayed?.(isOpen)}
             />
-          )}
+          )} */}
           {/* {isDesktop && isSwapHotTokenDisplay && isHotTokenSupported && (
           <HotTokenList handleOutputSelect={handleOutputSelect} />
         )} */}

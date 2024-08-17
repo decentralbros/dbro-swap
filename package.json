@@ -75,10 +75,5 @@
   "dependencies": {
     "ws": "^8.17.1",
     "zod": "^3.22.3"
-  },
-  "pnpm": {
-    "patchedDependencies": {
-      "@ledgerhq/connect-kit-loader@1.1.2": "patches/@ledgerhq__connect-kit-loader@1.1.2.patch"
-    }
   }
 }

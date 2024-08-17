@@ -1,12 +1,14 @@
 import { TradeType } from '@pancakeswap/sdk'
 import { SmartRouterTrade } from '@pancakeswap/smart-router'
-import { Currency, CurrencyAmount, Token } from '@pancakeswap/swap-sdk-core'
+import { Currency, CurrencyAmount, NativeCurrency, Token } from '@pancakeswap/swap-sdk-core'
 import { AutoColumn, Box, Button, Dots, Message, MessageText, Text, useModal } from '@pancakeswap/uikit'
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 
 import { useTranslation } from '@pancakeswap/localization'
 import { getUniversalRouterAddress } from '@pancakeswap/universal-router-sdk'
+import { parseUnits } from '@pancakeswap/utils/viem/parseUnits'
 import { ConfirmModalState } from '@pancakeswap/widgets-internal'
+import { sendTransaction, waitForTransactionReceipt, writeContract } from '@wagmi/core'
 import { GreyCard } from 'components/Card'
 import { CommitButton } from 'components/CommitButton'
 import ConnectWalletButton from 'components/ConnectWalletButton'
@@ -17,14 +19,16 @@ import { BIG_INT_ZERO } from 'config/constants/exchange'
 import { useCurrency } from 'hooks/Tokens'
 import { useIsTransactionUnsupported } from 'hooks/Trades'
 import useWrapCallback, { WrapType } from 'hooks/useWrapCallback'
+import qs from 'qs'
 import { Field } from 'state/swap/actions'
 import { useSwapState } from 'state/swap/hooks'
 import { useSwapActionHandlers } from 'state/swap/useSwapActionHandlers'
 import { useRoutingSettingChanged } from 'state/user/smartRouter'
 import { useCurrencyBalances } from 'state/wallet/hooks'
-import { logGTMClickSwapEvent } from 'utils/customGTMEventTracking'
 import { warningSeverity } from 'utils/exchange'
+import { config } from 'utils/wagmi'
 import { useAccount, useChainId } from 'wagmi'
+import { abi } from '../abi'
 import { useParsedAmounts, useSlippageAdjustedAmounts, useSwapInputError } from '../hooks'
 import { useConfirmModalState } from '../hooks/useConfirmModalState'
 import { useSwapConfig } from '../hooks/useSwapConfig'
@@ -127,6 +131,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
   const { address: account } = useAccount()
   const { t } = useTranslation()
   const chainId = useChainId()
+  const { address } = useAccount()
   // form data
   const { independentField } = useSwapState()
   const [inputCurrency, outputCurrency] = useSwapCurrency()
@@ -217,19 +222,19 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     'confirmSwapModal',
   )
 
-  const handleSwap = useCallback(() => {
-    setTradeToConfirm(trade)
-    resetState()
+  // const handleSwap = useCallback(() => {
+  //   setTradeToConfirm(trade)
+  //   resetState()
 
-    // if expert mode turn-on, will not show preview modal
-    // start swap directly
-    if (isExpertMode) {
-      onConfirm()
-    }
+  //   // if expert mode turn-on, will not show preview modal
+  //   // start swap directly
+  //   if (isExpertMode) {
+  //     onConfirm()
+  //   }
 
-    openConfirmSwapModal()
-    logGTMClickSwapEvent()
-  }, [isExpertMode, onConfirm, openConfirmSwapModal, resetState, trade])
+  //   openConfirmSwapModal()
+  //   logGTMClickSwapEvent()
+  // }, [isExpertMode, onConfirm, openConfirmSwapModal, resetState, trade])
 
   useEffect(() => {
     if (indirectlyOpenConfirmModalState) {
@@ -240,6 +245,78 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
 
   if (noRoute && userHasSpecifiedInputOutput && !tradeLoading) {
     return <ResetRoutesButton />
+  }
+
+  const tokens = [
+    {
+      name: 'Ethereum',
+      symbol: 'ETH',
+      decimals: 18,
+      address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+    },
+    {
+      name: 'Weth',
+      symbol: 'WETH',
+      decimals: 18,
+      address: '0xfff9976782d46cc05630d1f6ebab18b2324d6b14',
+    },
+    {
+      name: 'Dai',
+      symbol: 'tDAI',
+      decimals: 18,
+      address: '0x53844f9577c2334e541aec7df7174ece5df1fcf0',
+    },
+  ]
+
+  const handleSwap = async () => {
+    if (!currencyBalances) return
+
+    if (NativeCurrency) {
+      const hash = await writeContract(config, {
+        abi,
+        address: tokens[0].address as `0x${string}`, // contract
+        functionName: 'approve',
+        args: [
+          address as `0x${string}`, // spender
+          parseUnits('1000', 18),
+        ],
+        chainId,
+      })
+
+      await waitForTransactionReceipt(config, {
+        confirmations: 1,
+        hash: hash as `0x${string}`,
+        chainId,
+      })
+    }
+
+    const params = {
+      chainId,
+      sellToken: tokens[2].address,
+      buyToken: tokens[0].address,
+      sellAmount: BigInt(100000 * 10 ** 18),
+      taker: address as string,
+      feeRecipient: '0xd2A2B2fa9b97da9cB5AB80717AaDA9bF86eB8103',
+      buyTokenPercentageFee: 0.01, // 1%
+    }
+
+    const response = await fetch(`/api/quote-sepolia?${qs.stringify(params)}`)
+    const quote = await response.json()
+
+    const tx = await sendTransaction(config, {
+      account: address,
+      chainId: quote.chainId,
+      gasPrice: BigInt(quote.gasPrice * 1.5),
+      to: quote.to,
+      value: quote.value,
+      data: quote.data,
+    })
+
+    await waitForTransactionReceipt(config, {
+      confirmations: 1,
+      hash: tx as `0x${string}`,
+      chainId,
+    })
   }
 
   return (

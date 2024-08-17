@@ -78,28 +78,30 @@ export const cyberWalletConnector = isCyberWallet()
     })
   : undefined
 
+export const config = createConfig({
+  chains,
+  ssr: true,
+  syncConnectedChain: true,
+  transports,
+  ...CLIENT_CONFIG,
+
+  connectors: [
+    metaMaskConnector,
+    injectedConnector,
+    safe(),
+    coinbaseConnector,
+    walletConnectConnector,
+    bloctoConnector,
+    // ledgerConnector,
+    trustConnector,
+    binanceWeb3WalletConnector(),
+
+    ...(cyberWalletConnector ? [cyberWalletConnector as any] : []),
+  ],
+})
+
 export function createWagmiConfig() {
-  return createConfig({
-    chains,
-    ssr: true,
-    syncConnectedChain: true,
-    transports,
-    ...CLIENT_CONFIG,
-
-    connectors: [
-      metaMaskConnector,
-      injectedConnector,
-      safe(),
-      coinbaseConnector,
-      walletConnectConnector,
-      bloctoConnector,
-      // ledgerConnector,
-      trustConnector,
-      binanceWeb3WalletConnector(),
-
-      ...(cyberWalletConnector ? [cyberWalletConnector as any] : []),
-    ],
-  })
+  return config
 }
 
 export const CHAIN_IDS = chains.map((c) => c.id)

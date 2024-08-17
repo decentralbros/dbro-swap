@@ -7,7 +7,7 @@ const handler: NextApiHandler = async (req, res) => {
 
   const { searchParams } = url
 
-  const request = await fetch(`https://api.0x.org/swap/permit2/quote?${searchParams}`, {
+  const request = await fetch(`https://api.0x.org/swap/v1/quote?${searchParams}`, {
     headers: {
       '0x-api-key': process.env.NEXT_PUBLIC_ZERO_X_KEY as string,
     },
@@ -15,7 +15,7 @@ const handler: NextApiHandler = async (req, res) => {
   const data = await request.json()
 
   // eslint-disable-next-line no-console
-  console.log('quote api', `https://api.0x.org/swap/permit2/quote?${searchParams}`)
+  console.dir(data)
 
   return res.json(data)
 }
