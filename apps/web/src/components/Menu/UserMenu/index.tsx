@@ -17,7 +17,6 @@ import Trans from 'components/Trans'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import useAuth from 'hooks/useAuth'
 import { useDomainNameForAddress } from 'hooks/useDomain'
-import NextLink from 'next/link'
 import { useCallback, useEffect, useState } from 'react'
 import { useProfile } from 'state/profile/hooks'
 import { usePendingTransactions } from 'state/transactions/hooks'
@@ -31,7 +30,7 @@ const UserMenuItems = () => {
   const { t } = useTranslation()
   const { chainId, isWrongNetwork } = useActiveChainId()
   const { logout } = useAuth()
-  const { address: account } = useAccount()
+  // const { address: account } = useAccount()
   const { hasPendingTransactions } = usePendingTransactions()
   const { isInitialized, isLoading, profile } = useProfile()
   const { shouldShowModal } = useAirdropModalStatus()
@@ -57,9 +56,9 @@ const UserMenuItems = () => {
         {hasPendingTransactions && <RefreshIcon spin />}
       </UserMenuItem>
       <UserMenuDivider />
-      <NextLink href={`/profile/${account?.toLowerCase()}`} passHref>
+      {/* <NextLink href={`/profile/${account?.toLowerCase()}`} passHref>
         <UserMenuItem disabled={isWrongNetwork || chainId !== ChainId.BSC}>{t('Your NFTs')}</UserMenuItem>
-      </NextLink>
+      </NextLink> */}
       {shouldShowModal && <ClaimYourNFT />}
       <ProfileUserMenuItem
         isLoading={isLoading}
