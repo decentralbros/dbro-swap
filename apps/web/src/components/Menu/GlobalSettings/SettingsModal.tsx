@@ -39,7 +39,6 @@ import {
   useUserV3SwapEnable,
 } from 'state/user/smartRouter'
 import { styled } from 'styled-components'
-import GasSettings from './GasSettings'
 import TransactionSettings from './TransactionSettings'
 import { SettingsMode } from './types'
 
@@ -230,7 +229,7 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
                       }}
                     />
                   </Flex> */}
-                  <GasSettings />
+                  {/* <GasSettings /> */}
                 </>
               )}
             </Flex>
@@ -241,7 +240,7 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
             <Flex pt="3px" flexDirection="column">
               <PreTitle>{t('Swaps & Liquidity')}</PreTitle>
               <Flex justifyContent="space-between" alignItems="center" mb="24px">
-                {chainId === ChainId.BSC && <GasSettings />}
+                {/* {chainId === ChainId.BSC && <GasSettings />} */}
               </Flex>
               <TransactionSettings />
             </Flex>
