@@ -8,7 +8,7 @@ export const Step2 = () => {
   const { t } = useTranslation()
 
   const warningTextAsParts = useMemo(() => {
-    const warningText = t("please make sure you're visiting %domain% - check the URL carefully.", { domain })
+    const warningText = t("please make sure you're visiting %domain%- check the URL carefully.", { domain })
     return warningText.split(/(https:\/\/islandswap.finance)/g)
   }, [t])
 

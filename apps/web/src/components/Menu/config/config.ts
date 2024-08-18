@@ -1,6 +1,6 @@
 import { ContextApi } from '@pancakeswap/localization'
-import { DropdownMenuItems, DropdownMenuItemType, MenuItemsType, MoreIcon } from '@pancakeswap/uikit'
-import { FIXED_STAKING_SUPPORTED_CHAINS, SUPPORT_ONLY_BSC } from 'config/constants/supportChains'
+import { DropdownMenuItems, MenuItemsType } from '@pancakeswap/uikit'
+import { SUPPORT_ONLY_BSC } from 'config/constants/supportChains'
 
 export type ConfigMenuDropDownItemsType = DropdownMenuItems & { hideSubNav?: boolean }
 export type ConfigMenuItemsType = Omit<MenuItemsType, 'items'> & { hideSubNav?: boolean; image?: string } & {
@@ -32,14 +32,6 @@ const config: (
       href: '/swap',
       showOnMobile: false,
       items: [],
-    },
-
-    {
-      label: t('Earn'),
-      href: '/staking',
-      showOnMobile: false,
-      items: [],
-      supportChainIds: FIXED_STAKING_SUPPORTED_CHAINS,
     },
     {
       label: t('NFT'),
@@ -214,64 +206,64 @@ const config: (
     //   showOnMobile: false,
     //   items: [],
     // },
-    {
-      label: '',
-      icon: MoreIcon,
-      hideSubNav: true,
-      items: [
-        // {
-        //   label: t('Info'),
-        //   href: '/info',
-        // },
-        // {
-        //   label: t('Info'),
-        //   href: '/info/v3',
-        // },
-        // {
-        //   label: t('IFO'),
-        //   href: '/ifo',
-        //   supportChainIds: IFO_SUPPORTED_CHAINS,
-        //   image: '/images/ifos/ifo-bunny.png',
-        // },
-        {
-          label: t('Affiliate Program'),
-          href: '/affiliates',
-        },
-        // {
-        //   label: t('Voting'),
-        //   href: '/voting',
-        //   supportChainIds: SUPPORT_ONLY_BSC,
-        //   image: '/images/voting/voting-bunny.png',
-        // },
-        // {
-        //   type: DropdownMenuItemType.DIVIDER,
-        // },
-        // {
-        //   label: t('Leaderboard'),
-        //   href: '/teams',
-        //   supportChainIds: SUPPORT_ONLY_BSC,
-        //   image: '/images/decorations/leaderboard.png',
-        // },
-        {
-          type: DropdownMenuItemType.DIVIDER,
-        },
-        // {
-        //   label: t('Blog'),
-        //   href: 'https://blog.pancakeswap.finance',
-        //   type: DropdownMenuItemType.EXTERNAL_LINK,
-        // },
-        {
-          label: t('Docs'),
-          href: 'https://docs.pancakeswap.finance',
-          type: DropdownMenuItemType.EXTERNAL_LINK,
-        },
-        // {
-        //   label: t('v4'),
-        //   href: '/v4',
-        //   isMobileOnly: true,
-        // },
-      ].map((item) => addMenuItemSupported(item, chainId)),
-    },
+    // {
+    //   label: '',
+    //   icon: MoreIcon,
+    //   hideSubNav: true,
+    //   items: [
+    // {
+    //   label: t('Info'),
+    //   href: '/info',
+    // },
+    // {
+    //   label: t('Info'),
+    //   href: '/info/v3',
+    // },
+    // {
+    //   label: t('IFO'),
+    //   href: '/ifo',
+    //   supportChainIds: IFO_SUPPORTED_CHAINS,
+    //   image: '/images/ifos/ifo-bunny.png',
+    // },
+    // {
+    //   label: t('Affiliate Program'),
+    //   href: '/affiliates',
+    // },
+    // {
+    //   label: t('Voting'),
+    //   href: '/voting',
+    //   supportChainIds: SUPPORT_ONLY_BSC,
+    //   image: '/images/voting/voting-bunny.png',
+    // },
+    // {
+    //   type: DropdownMenuItemType.DIVIDER,
+    // },
+    // {
+    //   label: t('Leaderboard'),
+    //   href: '/teams',
+    //   supportChainIds: SUPPORT_ONLY_BSC,
+    //   image: '/images/decorations/leaderboard.png',
+    // },
+    // {
+    //   type: DropdownMenuItemType.DIVIDER,
+    // },
+    // {
+    //   label: t('Blog'),
+    //   href: 'https://blog.pancakeswap.finance',
+    //   type: DropdownMenuItemType.EXTERNAL_LINK,
+    // },
+    // {
+    //   label: t('Docs'),
+    //   href: 'https://docs.pancakeswap.finance',
+    //   type: DropdownMenuItemType.EXTERNAL_LINK,
+    // },
+    // {
+    //   label: t('v4'),
+    //   href: '/v4',
+    //   isMobileOnly: true,
+    // },
   ].map((item) => addMenuItemSupported(item, chainId))
+//   },
+// ].map((item) => addMenuItemSupported(item, chainId))
 
 export default config
