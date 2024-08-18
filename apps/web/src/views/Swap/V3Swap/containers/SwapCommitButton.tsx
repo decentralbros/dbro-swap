@@ -1,6 +1,6 @@
 import { TradeType } from '@pancakeswap/sdk'
 import { SmartRouterTrade } from '@pancakeswap/smart-router'
-import { Currency, CurrencyAmount, NativeCurrency, Token } from '@pancakeswap/swap-sdk-core'
+import { Currency, CurrencyAmount, Token } from '@pancakeswap/swap-sdk-core'
 import { Box, Button, Dots, useModal } from '@pancakeswap/uikit'
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 
@@ -58,6 +58,7 @@ const useSwapCurrencies = () => {
   } = useSwapState()
   const inputCurrency = useCurrency(inputCurrencyId) as Currency
   const outputCurrency = useCurrency(outputCurrencyId) as Currency
+
   return { inputCurrency, outputCurrency }
 }
 
@@ -131,8 +132,9 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
   const chainId = useChainId()
   const [allowedSlippage] = useUserSlippage()
   const [loadSwap, setLoadSwap] = useState<boolean>(false)
+
   // form data
-  const { independentField } = useSwapState()
+  const { independentField, typedValue } = useSwapState()
   const [inputCurrency, outputCurrency] = useSwapCurrency()
   const { isExpertMode } = useSwapConfig()
   const slippageAdjustedAmounts = useSlippageAdjustedAmounts(trade)
@@ -150,6 +152,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     inputCurrency ?? undefined,
     outputCurrency ?? undefined,
   ])
+
   const currencyBalances = {
     [Field.INPUT]: relevantTokenBalances[0],
     [Field.OUTPUT]: relevantTokenBalances[1],
@@ -179,12 +182,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     setTradeToConfirm(trade)
   }, [trade])
 
-  const noRoute = useMemo(() => !((trade?.routes?.length ?? 0) > 0) || tradeError, [trade?.routes?.length, tradeError])
   const isValid = useMemo(() => !swapInputError && !tradeLoading, [swapInputError, tradeLoading])
-  const disabled = useMemo(
-    () => !isValid || (priceImpactSeverity > 3 && !isExpertMode),
-    [isExpertMode, isValid, priceImpactSeverity],
-  )
 
   const userHasSpecifiedInputOutput = Boolean(
     inputCurrency && outputCurrency && parsedIndependentFieldAmount?.greaterThan(BIG_INT_ZERO),
@@ -219,20 +217,6 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     'confirmSwapModal',
   )
 
-  // const handleSwap = useCallback(() => {
-  //   setTradeToConfirm(trade)
-  //   resetState()
-
-  //   // if expert mode turn-on, will not show preview modal
-  //   // start swap directly
-  //   if (isExpertMode) {
-  //     onConfirm()
-  //   }
-
-  //   openConfirmSwapModal()
-  //   logGTMClickSwapEvent()
-  // }, [isExpertMode, onConfirm, openConfirmSwapModal, resetState, trade])
-
   useEffect(() => {
     if (indirectlyOpenConfirmModalState) {
       setIndirectlyOpenConfirmModalState(false)
@@ -240,51 +224,20 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     }
   }, [indirectlyOpenConfirmModalState, openConfirmSwapModal])
 
-  // if (noRoute && userHasSpecifiedInputOutput && !tradeLoading) {
-  //   return <ResetRoutesButton />
-  // }
-
-  const tokens = [
-    {
-      name: 'Ethereum',
-      symbol: 'ETH',
-      decimals: 18,
-      address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-    },
-    {
-      name: 'Weth',
-      symbol: 'WETH',
-      decimals: 18,
-      address: '0xfff9976782d46cc05630d1f6ebab18b2324d6b14',
-    },
-    {
-      name: 'Dai',
-      symbol: 'tDAI',
-      decimals: 18,
-      address: '0x53844f9577c2334e541aec7df7174ece5df1fcf0',
-    },
-    {
-      name: 'ChainLink',
-      symbol: 'Link',
-      decimals: 18,
-      address: '0x779877a7b0d9e8603169ddbd7836e478b4624789',
-    },
-  ]
-
   const handleSwap = async () => {
-    if (!currencyBalances) return
+    if (!currencyBalances || !inputCurrency || !outputCurrency) return
 
     try {
       setLoadSwap(true)
 
-      if (!NativeCurrency) {
+      if (!inputCurrency.isNative) {
         const hash = await writeContract(config, {
           abi,
-          address: tokens[3].address as `0x${string}`, // contract
+          address: inputCurrency.address as `0x${string}`, // contract
           functionName: 'approve',
           args: [
             account as `0x${string}`, // spender
-            parseUnits('100000', 18),
+            parseUnits(typedValue, inputCurrency.decimals),
           ],
           chainId,
         })
@@ -294,17 +247,6 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
           hash: hash as `0x${string}`,
           chainId,
         })
-      }
-
-      const params = {
-        chainId,
-        sellToken: tokens[2].address,
-        buyToken: tokens[3].address,
-        sellAmount: BigInt(100000 * 10 ** 18),
-        taker: account as string,
-        slippagePercentage: allowedSlippage / 100,
-        buyTokenPercentageFee: 0.01, // 1%
-        feeRecipient: '0xd2A2B2fa9b97da9cB5AB80717AaDA9bF86eB8103',
       }
 
       let chain: string = ''
@@ -330,6 +272,39 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
           break
       }
 
+      let sellToken: string = ''
+
+      if (inputCurrency.isNative) {
+        sellToken =
+          inputCurrency.chainId !== 56
+            ? '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
+            : '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'
+      } else {
+        sellToken = inputCurrency.address
+      }
+
+      let buyToken: string = ''
+
+      if (outputCurrency.isNative) {
+        buyToken =
+          inputCurrency.chainId !== 56
+            ? '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
+            : '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'
+      } else {
+        buyToken = outputCurrency.address
+      }
+
+      const params = {
+        chainId,
+        sellToken,
+        buyToken,
+        sellAmount: BigInt(parseFloat(typedValue) * 10 ** inputCurrency.decimals),
+        taker: account as string,
+        slippagePercentage: allowedSlippage / 100,
+        buyTokenPercentageFee: 0.01, // 1%
+        feeRecipient: '0xd2A2B2fa9b97da9cB5AB80717AaDA9bF86eB8103',
+      }
+
       const response = await fetch(`/api/quote-${chain}?${qs.stringify(params)}`)
       const quote = await response.json()
 
@@ -348,7 +323,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         chainId,
       })
       setLoadSwap(false)
-    } catch {
+    } catch (error) {
       setLoadSwap(false)
     }
   }
@@ -368,37 +343,3 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     </Box>
   )
 })
-
-// const ResetRoutesButton = () => {
-//   const { t } = useTranslation()
-//   const [isRoutingSettingChange, resetRoutingSetting] = useRoutingSettingChanged()
-//   return (
-//     <AutoColumn gap="12px">
-//       <GreyCard style={{ textAlign: 'center', padding: '0.75rem' }}>
-//         <Text color="textSubtle"> {t('Check your settings')}</Text>
-//       </GreyCard>
-//       {isRoutingSettingChange && (
-//         <Message variant="warning" icon={<></>}>
-//           <AutoColumn gap="8px">
-//             <MessageText> {t('Check your settings')}</MessageText>
-//             <AutoRow gap="4px">
-//               <RoutingSettingsButton
-//                 buttonProps={{
-//                   scale: 'xs',
-//                   p: 0,
-//                 }}
-//                 showRedDot={false}
-//               >
-//                 {t('Check your settings')}
-//               </RoutingSettingsButton>
-//               <MessageText>{t('or')}</MessageText>
-//               <Button variant="text" scale="xs" p="0" onClick={resetRoutingSetting}>
-//                 {t('Reset to default')}
-//               </Button>
-//             </AutoRow>
-//           </AutoColumn>
-//         </Message>
-//       )}
-//     </AutoColumn>
-//   )
-// }
