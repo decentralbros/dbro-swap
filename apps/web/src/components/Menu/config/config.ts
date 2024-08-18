@@ -1,5 +1,5 @@
 import { ContextApi } from '@pancakeswap/localization'
-import { DropdownMenuItems, MenuItemsType } from '@pancakeswap/uikit'
+import { DropdownMenuItems, DropdownMenuItemType, MenuItemsType, MoreIcon } from '@pancakeswap/uikit'
 import { SUPPORT_ONLY_BSC } from 'config/constants/supportChains'
 
 export type ConfigMenuDropDownItemsType = DropdownMenuItems & { hideSubNav?: boolean }
@@ -45,6 +45,25 @@ const config: (
       href: '/lottery',
       showOnMobile: false,
       items: [],
+    },
+    {
+      label: '',
+      icon: MoreIcon,
+      hideSubNav: true,
+      items: [
+        {
+          label: t('Affiliate Program'),
+          href: '/affiliates',
+        },
+        {
+          type: DropdownMenuItemType.DIVIDER,
+        },
+        {
+          label: t('Make a Profile'),
+          href: 'https://crypto-social-h6ep.vercel.app',
+          type: DropdownMenuItemType.EXTERNAL_LINK,
+        },
+      ],
     },
     // {
     //   label: t('Liquidity'),
