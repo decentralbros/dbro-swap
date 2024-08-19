@@ -187,7 +187,7 @@ const Hero = () => {
           <BunnyWrapper>
             <CakeBox>
               <Image
-                src="/logo.png"
+                src="/bunny.png"
                 width={isMobile ? width * 1.5 : width / 2.5}
                 height={isMobile ? height * 1.5 : height / 2.5}
                 alt="IslandSwap Logo"
