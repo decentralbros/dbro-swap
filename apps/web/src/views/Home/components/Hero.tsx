@@ -188,8 +188,8 @@ const Hero = () => {
             <CakeBox>
               <Image
                 src="/logo.png"
-                width={isMobile ? width * 1.5 : width / 2.5}
-                height={isMobile ? height * 1.5 : height / 2.5}
+                width={isMobile ? width * 2 : width / 2}
+                height={isMobile ? height * 2 : height / 2}
                 alt="IslandSwap Logo"
               />
             </CakeBox>

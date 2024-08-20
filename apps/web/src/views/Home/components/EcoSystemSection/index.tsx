@@ -1,6 +1,5 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { Box, ChevronRightIcon, Flex, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
-import { ASSET_CDN } from 'config/constants/endpoints'
 import useTheme from 'hooks/useTheme'
 import Image, { StaticImageData } from 'next/image'
 import { useRouter } from 'next/router'
@@ -305,8 +304,8 @@ const useIslandSwapData = () => {
         title: t('Swap'),
         description: t('Trade crypto instantly across multiple chains'),
         ctaTitle: t('Trade Now'),
-        image: `${ASSET_CDN}/web/landing/trade-swap.png`,
-        defaultImage: `${ASSET_CDN}/web/landing/trade-swap-purple.png`,
+        image: `/images/home/new/trade-swap.png`,
+        defaultImage: `/images/home/new/trade-swap.png`,
         path: '/swap',
       },
       // {
@@ -321,8 +320,8 @@ const useIslandSwapData = () => {
         title: t('NFT Marketplace'),
         description: t('Trade unique NFTs on BNB Chain'),
         ctaTitle: t('Trade Now'),
-        image: `${ASSET_CDN}/web/landing/nft-marketplace.png`,
-        defaultImage: `${ASSET_CDN}/web/landing/nft-marketplace-purple.png`,
+        image: `/images/home/new/nft-marketplace.png`,
+        defaultImage: `/images/home/new/nft-marketplace.png`,
         path: '/nfts',
         className: 'adjust-height',
       },
@@ -358,8 +357,8 @@ const FeatureBox: React.FC<{
       onClick={onClick ? () => onClick() : () => path && push(path)}
     >
       <ImageBox>
-        <Image className="default" src={defaultImage} width={108} height={108} alt={title} unoptimized />
-        <Image className="hover" src={image} width={108} height={108} alt={title} unoptimized />
+        <Image className="default" src={defaultImage} width={108} height={108} alt={title} />
+        <Image className="hover" src={image} width={108} height={108} alt={title} />
       </ImageBox>
       <Box>
         <Text fontSize="20px" mb="8px" lineHeight="110%" fontWeight={600} color={theme.colors.text}>

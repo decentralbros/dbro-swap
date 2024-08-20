@@ -4,7 +4,6 @@ import useTheme from 'hooks/useTheme'
 import { styled } from 'styled-components'
 import CommunitySummary from './CommunitySummary'
 import { CommunityTags } from './CommunityTags'
-import { LeftBottomBox, RightBottomBox } from './ImagesOnBg'
 
 const TransparentFrame = styled.div<{ isDark: boolean }>`
   position: relative;
@@ -69,10 +68,10 @@ const CommunitySection = () => {
 
   return (
     <>
-      <BgWrapper>
+      {/* <BgWrapper>
         <RightBottomBox />
         <LeftBottomBox />
-      </BgWrapper>
+      </BgWrapper> */}
       <TransparentFrame isDark={theme.isDark}>
         <Flex flexDirection="column" alignItems="center" justifyContent="center">
           <Flex
