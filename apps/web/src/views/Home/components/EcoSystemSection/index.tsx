@@ -418,8 +418,8 @@ const EcoSystemSection: React.FC = () => {
         >
           <Image
             style={{ marginLeft: isMobile ? -32 : -72 }}
-            src={`${ASSET_CDN}/web/landing/game-nft-bunny.png`}
-            alt="game-nft-bunny"
+            src="/bunny.png"
+            alt="bunny girl"
             width={344}
             height={360}
             unoptimized
