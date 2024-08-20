@@ -45,6 +45,7 @@ const config: (
       href: '/lottery',
       showOnMobile: false,
       items: [],
+      supportChainIds: SUPPORT_ONLY_BSC,
     },
     {
       label: '',

@@ -1,7 +1,7 @@
 import { useIsMounted } from "@pancakeswap/hooks";
 import React from "react";
 import { useMatchBreakpoints } from "../../contexts";
-import { Box, Flex } from "../Box";
+import { Flex } from "../Box";
 import { Link } from "../Link";
 import {
   StyledFooter,
@@ -14,10 +14,8 @@ import {
 } from "./styles";
 
 import { vars } from "../../css/vars.css";
-import { Button } from "../Button";
-import CakePrice from "../CakePrice/CakePrice";
+import { Image } from "../Image";
 import LangSelector from "../LangSelector/LangSelector";
-import { ArrowForwardIcon, LogoIcon, LogoWithTextIcon } from "../Svg";
 import { ThemeSwitcher } from "../ThemeSwitcher";
 import { FooterProps } from "./types";
 
@@ -46,7 +44,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
     >
       <Flex flexDirection="column" width={["100%", null, "1200px;"]}>
         <StyledIconMobileContainer display={["block", null, "none"]}>
-          <LogoWithTextIcon width="130px" />
+          <Image src="/tree-left.png" alt="islandswap" height={50} width={50} />
         </StyledIconMobileContainer>
         <Flex
           order={[2, null, 1]}
@@ -78,7 +76,13 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
               ))}
             </StyledList>
           ))}
-          <Box display={["none", null, "block"]}>{isXl ? <LogoIcon /> : <LogoWithTextIcon width="160px" />}</Box>
+          {/* <Box display={["none", null, "block"]}>
+            {isXl ? (
+              <Image src="/tree.png" alt="islandswap" height={50} width={50} />
+            ) : (
+              <Image src="/tree-left.png" alt="islandswap" height={50} width={50} />
+            )}
+          </Box> */}
         </Flex>
         <StyledSocialLinks order={[2]} pb={["42px", null, "32px"]} mb={["0", null, "32px"]} />
         <StyledToolsContainer
@@ -97,7 +101,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
               dropdownPosition="top-right"
             />
           </Flex>
-          <Flex order={[1, null, 2]} mb={["24px", null, "0"]} justifyContent="space-between" alignItems="center">
+          {/* <Flex order={[1, null, 2]} mb={["24px", null, "0"]} justifyContent="space-between" alignItems="center">
             <Box mr="20px">
               <CakePrice chainId={chainId} cakePriceUsd={cakePriceUsd} color="textSubtle" />
             </Box>
@@ -111,7 +115,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
             >
               {buyCakeLabel}
             </Button>
-          </Flex>
+          </Flex> */}
         </StyledToolsContainer>
       </Flex>
     </StyledFooter>

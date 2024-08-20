@@ -1,4 +1,4 @@
-import { Link, TelegramIcon, TwitterIcon } from '@pancakeswap/uikit'
+import { GithubIcon, Link, TelegramIcon, TwitterIcon } from '@pancakeswap/uikit'
 import { cloneElement } from 'react'
 import { styled } from 'styled-components'
 
@@ -33,8 +33,13 @@ const CommunityTag = styled.div`
   }
 `
 const communityData = [
-  { icon: <TwitterIcon />, href: 'https://twitter.com/pancakeswap', alt: 'TwitterIcon' },
-  { icon: <TelegramIcon />, href: 'https://t.me/pancakeswap', alt: 'TelegramIcon' },
+  { icon: <TwitterIcon />, href: 'https://x.com/DecentralBros_', alt: 'TwitterIcon' },
+  { icon: <TelegramIcon />, href: 'https://t.me/DecentralBros', alt: 'TelegramIcon' },
+  {
+    icon: <GithubIcon />,
+    href: 'https://github.com/decentralbros',
+    alt: 'Github',
+  },
   // { icon: <DiscordIcon />, href: 'https://discord.gg/pancakeswap', alt: 'DiscordIcon' },
   // { icon: <InstagramIcon />, href: 'https://www.instagram.com/pancakeswap_official/', alt: 'InstagramIcon' },
   // { icon: <RedditIcon />, href: 'https://www.reddit.com/r/pancakeswap/', alt: 'RedditIcon' },

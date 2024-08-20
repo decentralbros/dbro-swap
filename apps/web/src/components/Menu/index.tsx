@@ -1,13 +1,11 @@
 import { languageList, useTranslation } from '@pancakeswap/localization'
 import { Text, Menu as UikitMenu, footerLinks, useModal } from '@pancakeswap/uikit'
-import { BIG_ZERO } from '@pancakeswap/utils/bigNumber'
 import { usePhishingBanner } from '@pancakeswap/utils/user'
 import { NextLinkFromReactRouter } from '@pancakeswap/widgets-internal'
 import USCitizenConfirmModal from 'components/Modal/USCitizenConfirmModal'
 import { NetworkSwitcher } from 'components/NetworkSwitcher'
 import PhishingWarningBanner from 'components/PhishingWarningBanner'
 import { useActiveChainId } from 'hooks/useActiveChainId'
-import { useCakePrice } from 'hooks/useCakePrice'
 import { usePerpUrl } from 'hooks/usePerpUrl'
 import useTheme from 'hooks/useTheme'
 import { IdType, useUserNotUsCitizenAcknowledgement } from 'hooks/useUserIsUsCitizenAcknowledgement'
@@ -27,7 +25,7 @@ const LinkComponent = (linkProps) => {
 const Menu = (props) => {
   const { chainId } = useActiveChainId()
   const { isDark, setTheme } = useTheme()
-  const cakePrice = useCakePrice()
+  // const cakePrice = useCakePrice()
   const { currentLanguage, setLanguage, t } = useTranslation()
   const { pathname } = useRouter()
   const perpUrl = usePerpUrl({ chainId, isDark, languageCode: currentLanguage.code })
@@ -110,7 +108,7 @@ const Menu = (props) => {
         currentLang={currentLanguage.code}
         langs={languageList}
         setLang={setLanguage}
-        cakePriceUsd={cakePrice.eq(BIG_ZERO) ? undefined : cakePrice}
+        cakePriceUsd={undefined}
         links={menuItems}
         subLinks={activeMenuItem?.hideSubNav || activeSubMenuItem?.hideSubNav ? [] : activeMenuItem?.items}
         footerLinks={getFooterLinks}

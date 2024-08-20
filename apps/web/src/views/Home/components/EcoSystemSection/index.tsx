@@ -5,7 +5,6 @@ import Image, { StaticImageData } from 'next/image'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { styled } from 'styled-components'
-import GradientLogo from '../GradientLogoSvg'
 
 export const CardWrapper = styled.div`
   border-radius: 24px;
@@ -386,8 +385,8 @@ const EcoSystemSection: React.FC = () => {
 
   return (
     <Flex justifyContent="center" alignItems="center" flexDirection="column" pt={isMobile ? '24px' : '60px'}>
-      <GradientLogo height="48px" width="48px" mb="24px" />
-      <Text textAlign="center" p="0px 20px">
+      <Image src="/tree-left.png" alt="islandswap" height={100} width={100} />
+      <Text textAlign="center" p="20px">
         <Text
           fontSize={['32px', null, null, '40px']}
           lineHeight="110%"
@@ -408,7 +407,6 @@ const EcoSystemSection: React.FC = () => {
           {t('Ecosystem')}
         </Text>
       </Text>
-
       <CardWrapper>
         <Flex
           style={{ gap: 32 }}
@@ -444,7 +442,6 @@ const EcoSystemSection: React.FC = () => {
           </Flex>
         </Flex>
       </CardWrapper>
-
       {/* <CardWrapper>
         <Flex
           style={{ gap: 32 }}
