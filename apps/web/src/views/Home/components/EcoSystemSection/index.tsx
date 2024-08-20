@@ -309,14 +309,14 @@ const useIslandSwapData = () => {
         defaultImage: `${ASSET_CDN}/web/landing/trade-swap-purple.png`,
         path: '/swap',
       },
-      {
-        title: t('Simple Staking'),
-        description: t('Earn rewards hassle-free with single-sided staking'),
-        ctaTitle: t('Stake Now'),
-        image: `${ASSET_CDN}/web/landing/earn-fixed-staking.png`,
-        defaultImage: `${ASSET_CDN}/web/landing/earn-fixed-staking-purple.png`,
-        path: '/simple-staking',
-      },
+      // {
+      //   title: t('Simple Staking'),
+      //   description: t('Earn rewards hassle-free with single-sided staking'),
+      //   ctaTitle: t('Stake Now'),
+      //   image: `${ASSET_CDN}/web/landing/earn-fixed-staking.png`,
+      //   defaultImage: `${ASSET_CDN}/web/landing/earn-fixed-staking-purple.png`,
+      //   path: '/simple-staking',
+      // },
       {
         title: t('NFT Marketplace'),
         description: t('Trade unique NFTs on BNB Chain'),
@@ -326,14 +326,14 @@ const useIslandSwapData = () => {
         path: '/nfts',
         className: 'adjust-height',
       },
-      {
-        title: t('Buy Crypto'),
-        description: t('Buy crypto with your preferred currency and payment method'),
-        ctaTitle: t('Buy Now'),
-        image: `${ASSET_CDN}/web/landing/trade-buy-crypto.png`,
-        defaultImage: `${ASSET_CDN}/web/landing/trade-buy-crypto-purple.png`,
-        path: '/buy-crypto',
-      },
+      // {
+      //   title: t('Buy Crypto'),
+      //   description: t('Buy crypto with your preferred currency and payment method'),
+      //   ctaTitle: t('Buy Now'),
+      //   image: `${ASSET_CDN}/web/landing/trade-buy-crypto.png`,
+      //   defaultImage: `${ASSET_CDN}/web/landing/trade-buy-crypto-purple.png`,
+      //   path: '/buy-crypto',
+      // },
     ]
   }, [t])
 }
@@ -415,11 +415,12 @@ const EcoSystemSection: React.FC = () => {
           style={{ gap: 32 }}
           flexDirection={isMobile || isMd ? 'column' : 'row'}
           alignItems={isMobile || isMd ? undefined : 'center'}
+          justifyContent="center"
         >
           <Image
             style={{ marginLeft: isMobile ? -32 : -72 }}
             src="/bunny.png"
-            alt="bunny girl"
+            alt="trader girl"
             width={344}
             height={360}
             unoptimized
