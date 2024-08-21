@@ -14,6 +14,7 @@ import { useCurrencyBalances } from 'state/wallet/hooks'
 import { currencyId } from 'utils/currencyId'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
 
+import { Flex, Text } from '@pancakeswap/uikit'
 import { useAccount } from 'wagmi'
 import useWarningImport from '../../hooks/useWarningImport'
 import { FormContainer } from '../components'
@@ -112,6 +113,11 @@ export function FormMain({ pricingAndSlippage, inputAmount, outputAmount, tradeL
 
   return (
     <FormContainer>
+      <Flex width="100%" alignItems="center" justifyContent="space-between" flexDirection="column">
+        <Flex flexDirection="column" alignItems="flex-start" width="100%" marginBottom={15}>
+          <Text fontWeight="bold">{t('Exchange')}</Text>
+        </Flex>
+      </Flex>
       <CurrencyInputPanel
         id="swap-currency-input"
         showUSDPrice
@@ -148,7 +154,7 @@ export function FormMain({ pricingAndSlippage, inputAmount, outputAmount, tradeL
         otherCurrency={outputCurrency}
         commonBasesType={CommonBasesType.SWAP_LIMITORDER}
       />
-      <RiskCheck currency={outputCurrency ?? undefined} />
+      {/* <RiskCheck currency={outputCurrency ?? undefined} /> */}
       <Recipient />
       {pricingAndSlippage}
       {swapCommitButton}
