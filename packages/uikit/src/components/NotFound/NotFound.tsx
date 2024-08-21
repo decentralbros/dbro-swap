@@ -1,10 +1,10 @@
-import { styled } from "styled-components";
-import { JSXElementConstructor, ReactNode, createElement } from "react";
 import { useTranslation } from "@pancakeswap/localization";
-import { LogoIcon } from "../Svg";
-import { Heading } from "../Heading";
-import { Text } from "../Text";
+import { JSXElementConstructor, ReactNode, createElement } from "react";
+import { styled } from "styled-components";
 import { Button } from "../Button";
+import { Heading } from "../Heading";
+import { Image } from "../Image";
+import { Text } from "../Text";
 
 const StyledNotFound = styled.div`
   align-items: center;
@@ -38,7 +38,7 @@ const NotFound = ({
     <>
       {children}
       <StyledNotFound>
-        <LogoIcon width="64px" mb="8px" />
+        <Image src="/tree.png" alt="islandswap" width={100} height={100} />
         <Heading scale="xxl">{statusCode}</Heading>
         <Text mb="16px">{t("Oops, page not found.")}</Text>
         {linkElement}
