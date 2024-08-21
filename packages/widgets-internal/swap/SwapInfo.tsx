@@ -11,7 +11,7 @@ type SwapInfoType = {
 };
 
 export const SwapInfoLabel = (props: PropsWithChildren<TextProps>) => (
-  <Text fontSize="12px" bold color="secondary" {...props} />
+  <Text fontSize="14px" bold color="secondary" {...props} />
 );
 
 export const SwapInfo = ({ allowedSlippage, price, onSlippageClick, allowedSlippageSlot }: SwapInfoType) => {
@@ -32,16 +32,15 @@ export const SwapInfo = ({ allowedSlippage, price, onSlippageClick, allowedSlipp
                 onClick={onSlippageClick}
                 data-dd-action-name="Swap slippage button"
               >
-                <PencilIcon color="primary" width="10px" />
+                <PencilIcon color="primary" width="14px" />
               </IconButton>
             ) : null}
           </SwapInfoLabel>
-          {isMounted &&
-            (allowedSlippageSlot ?? (
-              <Text bold color="primary">
-                {allowedSlippage / 100}%
-              </Text>
-            ))}
+          {isMounted && (
+            <Text bold color="primary" fontSize="14px">
+              {allowedSlippage}%
+            </Text>
+          )}
         </RowBetween>
       )}
     </AutoColumn>

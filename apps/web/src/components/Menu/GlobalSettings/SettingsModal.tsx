@@ -238,7 +238,7 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
         {mode === SettingsMode.SWAP_LIQUIDITY && (
           <>
             <Flex pt="3px" flexDirection="column">
-              <PreTitle>{t('Swaps & Liquidity')}</PreTitle>
+              <PreTitle>{t('Swap')}</PreTitle>
               <Flex justifyContent="space-between" alignItems="center" mb="24px">
                 {/* {chainId === ChainId.BSC && <GasSettings />} */}
               </Flex>

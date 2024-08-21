@@ -1,9 +1,6 @@
 import { SmartRouter } from '@pancakeswap/smart-router/evm'
-import { Box } from '@pancakeswap/uikit'
 import { useMemo } from 'react'
-import { MMLiquidityWarning } from 'views/Swap/MMLinkPools/components/MMLiquidityWarning'
-import { shouldShowMMLiquidityError } from 'views/Swap/MMLinkPools/utils/exchange'
-import { FormMain, MMTradeDetail, PricingAndSlippage, TradeDetails } from './containers'
+import { FormMain, PricingAndSlippage } from './containers'
 import { CommitButton } from './containers/CommitButton'
 import { useAllTypeBestTrade } from './hooks/useAllTypeBestTrade'
 
@@ -51,17 +48,17 @@ export function V3SwapForm() {
 
       {/* <BuyCryptoLink currency={insufficientFundCurrency} /> */}
 
-      {isMMBetter ? (
+      {/* {isMMBetter ? (
         <MMTradeDetail loaded={!mmTrade.mmOrderBookTrade.isLoading} mmTrade={mmTrade.mmTradeInfo} />
       ) : (
         <TradeDetails loaded={tradeLoaded} trade={ammTrade} />
-      )}
-      {(shouldShowMMLiquidityError(mmTrade?.mmOrderBookTrade?.inputError) || mmTrade?.mmRFQTrade?.error) &&
+      )} */}
+      {/* {(shouldShowMMLiquidityError(mmTrade?.mmOrderBookTrade?.inputError) || mmTrade?.mmRFQTrade?.error) &&
         !ammTrade && (
           <Box mt="5px">
             <MMLiquidityWarning />
           </Box>
-        )}
+        )} */}
     </>
   )
 }

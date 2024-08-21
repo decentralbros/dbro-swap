@@ -104,7 +104,7 @@ const SlippageTabs = () => {
             }}
             variant={userSlippageTolerance === 1 ? 'primary' : 'tertiary'}
           >
-            0.01%
+            1%
           </Button>
           <Button
             mt="4px"
@@ -116,7 +116,7 @@ const SlippageTabs = () => {
             }}
             variant={userSlippageTolerance === 2 ? 'primary' : 'tertiary'}
           >
-            0.02%
+            2%
           </Button>
           <Button
             mr="4px"
@@ -128,7 +128,7 @@ const SlippageTabs = () => {
             }}
             variant={userSlippageTolerance === 3 ? 'primary' : 'tertiary'}
           >
-            0.03%
+            3%
           </Button>
           {/* <Flex alignItems="center">
             <Box width="76px" mt="4px">
@@ -155,7 +155,7 @@ const SlippageTabs = () => {
             </Text>
           </Flex> */}
         </Flex>
-        {!!slippageError && (
+        {/* {!!slippageError && (
           <Text fontSize="14px" color={slippageError === SlippageError.InvalidInput ? 'red' : '#F3841E'} mt="8px">
             {slippageError === SlippageError.InvalidInput
               ? t('Enter a valid slippage percentage')
@@ -163,7 +163,7 @@ const SlippageTabs = () => {
               ? t('Your transaction may fail')
               : t('Your transaction may be frontrun')}
           </Text>
-        )}
+        )} */}
       </Flex>
       {/* <Flex justifyContent="space-between" alignItems="center" mb="24px">
         <Flex alignItems="center">
