@@ -36,7 +36,7 @@ const ProfileUserMenuItem: React.FC<React.PropsWithChildren<ProfileUserMenuItemP
   if (!hasProfile) {
     return (
       <NextLink href="https://crypto-social-h6ep.vercel.app" target="_blank" rel="noreferrer" passHref>
-        <UserMenuItem disabled={disabled}>
+        <UserMenuItem>
           <Flex alignItems="center" justifyContent="space-between" width="100%">
             {t('Make a Profile')}
             <Dot />
