@@ -38,7 +38,7 @@ export const SwapInfo = ({ allowedSlippage, price, onSlippageClick, allowedSlipp
           </SwapInfoLabel>
           {isMounted && (
             <Text bold color="primary" fontSize="14px">
-              {allowedSlippage}%
+              {allowedSlippage.toFixed(1)}%
             </Text>
           )}
         </RowBetween>
