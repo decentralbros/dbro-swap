@@ -22,6 +22,7 @@ import qs from 'qs'
 import { Field } from 'state/swap/actions'
 import { useSwapState } from 'state/swap/hooks'
 import { useSwapActionHandlers } from 'state/swap/useSwapActionHandlers'
+import { useTransactionAdder } from 'state/transactions/hooks'
 import { useCurrencyBalances } from 'state/wallet/hooks'
 import { warningSeverity } from 'utils/exchange'
 import { config } from 'utils/wagmi'
@@ -29,7 +30,6 @@ import { useAccount, useChainId } from 'wagmi'
 import { abi } from '../abi'
 import { useParsedAmounts, useSlippageAdjustedAmounts, useSwapInputError } from '../hooks'
 import { useConfirmModalState } from '../hooks/useConfirmModalState'
-import { useSwapConfig } from '../hooks/useSwapConfig'
 import { useSwapCurrency } from '../hooks/useSwapCurrency'
 import { CommitButtonProps } from '../types'
 import { computeTradePriceBreakdown } from '../utils/exchange'
@@ -136,7 +136,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
   // form data
   const { independentField, typedValue } = useSwapState()
   const [inputCurrency, outputCurrency] = useSwapCurrency()
-  const { isExpertMode } = useSwapConfig()
+
   const slippageAdjustedAmounts = useSlippageAdjustedAmounts(trade)
   const amountToApprove = useMemo(
     () => (inputCurrency?.isNative ? undefined : slippageAdjustedAmounts[Field.INPUT]),
@@ -164,7 +164,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
   const [indirectlyOpenConfirmModalState, setIndirectlyOpenConfirmModalState] = useState(false)
 
   const { callToAction, confirmState, txHash, confirmActions, errorMessage, resetState } = useConfirmModalState(
-    isExpertMode ? trade : tradeToConfirm,
+    tradeToConfirm,
     amountToApprove?.currency.isToken ? (amountToApprove as CurrencyAmount<Token>) : undefined,
     getUniversalRouterAddress(chainId),
   )
@@ -183,10 +183,13 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
   }, [trade])
 
   const isValid = useMemo(() => !swapInputError && !tradeLoading, [swapInputError, tradeLoading])
+  const disabled = useMemo(() => !isValid, [isValid])
 
   const userHasSpecifiedInputOutput = Boolean(
     inputCurrency && outputCurrency && parsedIndependentFieldAmount?.greaterThan(BIG_INT_ZERO),
   )
+
+  const addTransaction = useTransactionAdder()
 
   const onConfirm = useCallback(() => {
     beforeCommit?.()
@@ -197,6 +200,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
   const onSettingModalDismiss = useCallback(() => {
     setIndirectlyOpenConfirmModalState(true)
   }, [])
+
   const openSettingModal = useSettingModal(onSettingModalDismiss)
   const [openConfirmSwapModal] = useModal(
     <ConfirmSwapModal
@@ -224,7 +228,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     }
   }, [indirectlyOpenConfirmModalState, openConfirmSwapModal])
 
-  const handleSwap = async () => {
+  const initiateSwap = async () => {
     if (!currencyBalances || !inputCurrency || !outputCurrency) return
 
     try {
@@ -317,16 +321,26 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         data: quote.data,
       })
 
+      addTransaction({ hash: tx as string })
+
       await waitForTransactionReceipt(config, {
         confirmations: 1,
         hash: tx as `0x${string}`,
         chainId,
       })
+
       setLoadSwap(false)
     } catch (error) {
       setLoadSwap(false)
     }
   }
+
+  const handleSwap = useCallback(() => {
+    resetState()
+
+    initiateSwap()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resetState])
 
   return (
     <Box mt="0.25rem">
@@ -334,7 +348,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         id="swap-button"
         width="100%"
         data-dd-action-name="Swap commit button"
-        variant={isValid && priceImpactSeverity > 2 && !errorMessage ? 'danger' : 'primary'}
+        variant={isValid && !errorMessage ? 'danger' : 'primary'}
         disabled={loadSwap}
         onClick={handleSwap}
       >

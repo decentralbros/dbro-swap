@@ -21,7 +21,6 @@ import { FormContainer } from '../components'
 import { useIsWrapping } from '../hooks'
 import { FlipButton } from './FlipButton'
 import { Recipient } from './Recipient'
-import { RiskCheck } from './RiskCheck'
 
 interface Props {
   inputAmount?: CurrencyAmount<Currency>
@@ -137,7 +136,7 @@ export function FormMain({ pricingAndSlippage, inputAmount, outputAmount, tradeL
         otherCurrency={outputCurrency}
         commonBasesType={CommonBasesType.SWAP_LIMITORDER}
       />
-      <RiskCheck currency={inputCurrency ?? undefined} />
+      {/* <RiskCheck currency={inputCurrency ?? undefined} /> */}
       <FlipButton />
       <CurrencyInputPanel
         id="swap-currency-output"
