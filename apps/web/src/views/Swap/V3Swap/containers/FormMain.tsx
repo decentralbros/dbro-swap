@@ -115,7 +115,7 @@ export function FormMain({ pricingAndSlippage, inputAmount, outputAmount, tradeL
     <FormContainer>
       <Flex width="100%" alignItems="center" justifyContent="space-between" flexDirection="column">
         <Flex flexDirection="column" alignItems="flex-start" width="100%" marginBottom={15}>
-          <Text fontWeight="bold">{t('Exchange')}</Text>
+          <Text fontWeight="bold">{t('Swap')}</Text>
         </Flex>
       </Flex>
       <CurrencyInputPanel
