@@ -14,7 +14,6 @@ import { CommitButton } from 'components/CommitButton'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import SettingsModal, { withCustomOnDismiss } from 'components/Menu/GlobalSettings/SettingsModal'
 import { SettingsMode } from 'components/Menu/GlobalSettings/types'
-import { BIG_INT_ZERO } from 'config/constants/exchange'
 import { useCurrency } from 'hooks/Tokens'
 import { useIsTransactionUnsupported } from 'hooks/Trades'
 import useWrapCallback, { WrapType } from 'hooks/useWrapCallback'
@@ -24,17 +23,16 @@ import { useSwapState } from 'state/swap/hooks'
 import { useSwapActionHandlers } from 'state/swap/useSwapActionHandlers'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { useCurrencyBalances } from 'state/wallet/hooks'
-import { warningSeverity } from 'utils/exchange'
 import { config } from 'utils/wagmi'
 import { useAccount, useChainId } from 'wagmi'
 import { abi } from '../abi'
-import { useParsedAmounts, useSlippageAdjustedAmounts, useSwapInputError } from '../hooks'
+import { useSlippageAdjustedAmounts, useSwapInputError } from '../hooks'
 import { useConfirmModalState } from '../hooks/useConfirmModalState'
 import { useSwapCurrency } from '../hooks/useSwapCurrency'
 import { CommitButtonProps } from '../types'
-import { computeTradePriceBreakdown } from '../utils/exchange'
 import { ConfirmSwapModal } from './ConfirmSwapModal'
 
+const ZEROX_ADDRESS = '0xDef1C0ded9bec7F1a1670819833240f027b25EfF'
 const SettingsModalWithCustomDismiss = withCustomOnDismiss(SettingsModal)
 
 interface SwapCommitButtonPropsType {
@@ -142,11 +140,11 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     () => (inputCurrency?.isNative ? undefined : slippageAdjustedAmounts[Field.INPUT]),
     [inputCurrency?.isNative, slippageAdjustedAmounts],
   )
-  const tradePriceBreakdown = useMemo(() => computeTradePriceBreakdown(trade), [trade])
+  // const tradePriceBreakdown = useMemo(() => computeTradePriceBreakdown(trade), [trade])
   // warnings on slippage
-  const priceImpactSeverity = warningSeverity(
-    tradePriceBreakdown ? tradePriceBreakdown.priceImpactWithoutFee : undefined,
-  )
+  // const priceImpactSeverity = warningSeverity(
+  //   tradePriceBreakdown ? tradePriceBreakdown.priceImpactWithoutFee : undefined,
+  // )
 
   const relevantTokenBalances = useCurrencyBalances(account ?? undefined, [
     inputCurrency ?? undefined,
@@ -157,8 +155,8 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     [Field.INPUT]: relevantTokenBalances[0],
     [Field.OUTPUT]: relevantTokenBalances[1],
   }
-  const parsedAmounts = useParsedAmounts(trade, currencyBalances, false)
-  const parsedIndependentFieldAmount = parsedAmounts[independentField]
+  // const parsedAmounts = useParsedAmounts(trade, currencyBalances, false)
+  // const parsedIndependentFieldAmount = parsedAmounts[independentField]
   const swapInputError = useSwapInputError(trade, currencyBalances)
   const [tradeToConfirm, setTradeToConfirm] = useState<SmartRouterTrade<TradeType> | undefined>(undefined)
   const [indirectlyOpenConfirmModalState, setIndirectlyOpenConfirmModalState] = useState(false)
@@ -183,11 +181,11 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
   }, [trade])
 
   const isValid = useMemo(() => !swapInputError && !tradeLoading, [swapInputError, tradeLoading])
-  const disabled = useMemo(() => !isValid, [isValid])
+  // const disabled = useMemo(() => !isValid, [isValid])
 
-  const userHasSpecifiedInputOutput = Boolean(
-    inputCurrency && outputCurrency && parsedIndependentFieldAmount?.greaterThan(BIG_INT_ZERO),
-  )
+  // const userHasSpecifiedInputOutput = Boolean(
+  //   inputCurrency && outputCurrency && parsedIndependentFieldAmount?.greaterThan(BIG_INT_ZERO),
+  // )
 
   const addTransaction = useTransactionAdder()
 
@@ -228,8 +226,12 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     }
   }, [indirectlyOpenConfirmModalState, openConfirmSwapModal])
 
-  const initiateSwap = async () => {
-    if (!currencyBalances || !inputCurrency || !outputCurrency) return
+  const handleSwap = async () => {
+    if (!currencyBalances || !inputCurrency || !outputCurrency) {
+      reset()
+      resetState()
+      return
+    }
 
     try {
       setLoadSwap(true)
@@ -240,14 +242,14 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
           address: inputCurrency.address as `0x${string}`, // contract
           functionName: 'approve',
           args: [
-            account as `0x${string}`, // spender
+            ZEROX_ADDRESS as `0x${string}`, // spender
             parseUnits(typedValue, inputCurrency.decimals),
           ],
           chainId,
         })
 
         await waitForTransactionReceipt(config, {
-          confirmations: 1,
+          confirmations: 2,
           hash: hash as `0x${string}`,
           chainId,
         })
@@ -276,33 +278,30 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
           break
       }
 
-      let sellToken: string = ''
+      let sellToken: string = !inputCurrency.isNative ? inputCurrency.address : ''
 
       if (inputCurrency.isNative) {
         sellToken =
           inputCurrency.chainId !== 56
             ? '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
             : '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'
-      } else {
-        sellToken = inputCurrency.address
       }
 
-      let buyToken: string = ''
+      let buyToken: string = !outputCurrency.isNative ? outputCurrency.address : ''
 
       if (outputCurrency.isNative) {
         buyToken =
           inputCurrency.chainId !== 56
             ? '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
             : '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'
-      } else {
-        buyToken = outputCurrency.address
       }
 
+      const sellAmount = parseUnits(typedValue, inputCurrency.decimals)
       const params = {
         chainId,
         sellToken,
         buyToken,
-        sellAmount: BigInt(parseFloat(typedValue) * 10 ** inputCurrency.decimals),
+        sellAmount,
         taker: account as string,
         slippagePercentage: allowedSlippage / 100,
         buyTokenPercentageFee: 0.01, // 1%
@@ -324,23 +323,20 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
       addTransaction({ hash: tx as string })
 
       await waitForTransactionReceipt(config, {
-        confirmations: 1,
+        confirmations: 2,
         hash: tx as `0x${string}`,
         chainId,
       })
 
+      reset()
+      resetState()
       setLoadSwap(false)
     } catch (error) {
+      reset()
+      resetState()
       setLoadSwap(false)
     }
   }
-
-  const handleSwap = useCallback(() => {
-    resetState()
-
-    initiateSwap()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resetState])
 
   return (
     <Box mt="0.25rem">
