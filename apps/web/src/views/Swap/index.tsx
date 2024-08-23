@@ -1,4 +1,4 @@
-import { Flex, Heading, PageHeader, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { Flex, Heading, PageHeader } from '@pancakeswap/uikit'
 import { AppBody } from 'components/App'
 import Page from 'components/Layout/Page'
 import { useRouter } from 'next/router'
@@ -14,7 +14,7 @@ import { StyledInputCurrencyWrapper, StyledSwapContainer } from './styles'
 export default function Swap() {
   const { t } = useTranslation()
   const { query } = useRouter()
-  const { isDesktop } = useMatchBreakpoints()
+  // const { isDesktop } = useMatchBreakpoints()
   const {
     isChartExpanded,
     isChartDisplayed,

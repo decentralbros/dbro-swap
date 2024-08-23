@@ -181,7 +181,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
   }, [trade])
 
   const isValid = useMemo(() => !swapInputError && !tradeLoading, [swapInputError, tradeLoading])
-  // const disabled = useMemo(() => !isValid, [isValid])
+  const disabled = useMemo(() => !isValid, [isValid])
 
   // const userHasSpecifiedInputOutput = Boolean(
   //   inputCurrency && outputCurrency && parsedIndependentFieldAmount?.greaterThan(BIG_INT_ZERO),
@@ -344,8 +344,8 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         id="swap-button"
         width="100%"
         data-dd-action-name="Swap commit button"
-        variant={isValid && !errorMessage ? 'danger' : 'primary'}
-        disabled={loadSwap}
+        variant={isValid ? 'danger' : 'primary'}
+        disabled={disabled}
         onClick={handleSwap}
       >
         {(loadSwap && <Dots>{t('Swap')}</Dots>) || t('Swap')}

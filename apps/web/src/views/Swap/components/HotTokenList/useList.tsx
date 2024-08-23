@@ -1,5 +1,5 @@
 import { ChainId } from '@pancakeswap/chains'
-import { PANCAKE_EXTENDED } from 'config/constants/lists'
+import { COINGECKO } from 'config/constants/lists'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useAtomValue } from 'jotai'
 import { useMemo } from 'react'
@@ -12,7 +12,7 @@ import { parseV2TokenData, parseV3TokenData } from './utils'
 export const useChainWhiteList = (chainId?: number) => {
   const listsByUrl = useAtomValue(selectorByUrlsAtom)
   const whiteList = useMemo(() => {
-    const list = listsByUrl[PANCAKE_EXTENDED]?.current
+    const list = listsByUrl[COINGECKO]?.current
     return list ? list.tokens.map((t) => t.address.toLowerCase()) : []
   }, [listsByUrl])
   if (chainId !== ChainId.BSC) return null
