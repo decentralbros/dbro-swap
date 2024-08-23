@@ -1,7 +1,6 @@
 import { Box, PageSection, useMatchBreakpoints } from '@pancakeswap/uikit'
 import useTheme from 'hooks/useTheme'
 import { styled } from 'styled-components'
-import EcoSystemSection from './components/EcoSystemSection'
 import Hero from './components/Hero'
 import MetricsSection from './components/MetricsSection'
 
@@ -86,7 +85,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         <MetricsSection />
       </PageSection>
 
-      <PageSection
+      {/* <PageSection
         innerProps={{ style: { ...HomeSectionContainerStyles, maxWidth: 'auto' } }}
         background={theme.colors.background}
         containerProps={{
@@ -95,13 +94,13 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         index={2}
         hasCurvedDivider={false}
       >
-        {/* <OuterWedgeWrapper>
+        <OuterWedgeWrapper>
           <InnerWedgeWrapper top>
             <WedgeTopLeft />
           </InnerWedgeWrapper>
-        </OuterWedgeWrapper> */}
+        </OuterWedgeWrapper>
         <EcoSystemSection />
-      </PageSection>
+      </PageSection> */}
 
       {/* <PageSection
         innerProps={{ style: HomeSectionContainerStyles }}

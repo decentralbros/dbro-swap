@@ -55,7 +55,7 @@ export function Blocklist() {
               {t('We have detected that this address is associated with a Prohibited Activity')}{' '}
               <Link
                 style={{ display: 'inline-block' }}
-                href="https://pancakeswap.finance/terms-of-service"
+                href="https://islandswap.finance/terms-of-service"
                 target="_blank"
               >
                 {t('Learn more')}
@@ -63,8 +63,8 @@ export function Blocklist() {
             </Text>
             <Text>
               {t('If you believe that your address has been misclassified, please email')}{' '}
-              <Link style={{ display: 'inline-block' }} href="mailto:info@pancakeswap.com">
-                info@pancakeswap.com
+              <Link style={{ display: 'inline-block' }} href="mailto:vincent@vmcodes.com">
+                vincent@vmcodes.com
               </Link>
             </Text>
           </Grid>

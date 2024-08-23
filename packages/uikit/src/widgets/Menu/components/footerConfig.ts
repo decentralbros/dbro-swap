@@ -17,10 +17,10 @@ export const footerLinks: (t: ContextApi["t"]) => FooterLinkType[] = (t) => [
       //   label: t("Game"),
       //   href: "https://pancakeswap.games/",
       // },
-      {
-        label: t("NFT"),
-        href: "https://islandswap.finance/nfts",
-      },
+      // {
+      //   label: t("NFT"),
+      //   href: "https://islandswap.finance/nfts",
+      // },
       // {
       //   label: t("Tokenomics"),
       //   href: "https://docs.pancakeswap.finance/governance-and-tokenomics/cake-tokenomics",
@@ -33,10 +33,10 @@ export const footerLinks: (t: ContextApi["t"]) => FooterLinkType[] = (t) => [
       //   label: t("Merchandise"),
       //   href: "https://merch.pancakeswap.finance/",
       // },
-      {
-        label: t("Lottery"),
-        href: "https://islandswap.finance/lottery",
-      },
+      // {
+      //   label: t("Lottery"),
+      //   href: "https://islandswap.finance/lottery",
+      // },
     ],
   },
   // {
@@ -65,7 +65,7 @@ export const footerLinks: (t: ContextApi["t"]) => FooterLinkType[] = (t) => [
       // },
       {
         label: t("Github"),
-        href: "https://github.com/decentralbros",
+        href: "https://github.com/vmcodes/island-frontend",
       },
       // {
       //   label: t("Bug Bounty"),
@@ -82,7 +82,7 @@ export const footerLinks: (t: ContextApi["t"]) => FooterLinkType[] = (t) => [
     items: [
       {
         label: t("Contact"),
-        href: "https://islandswap.finance/contact-us/customer-support",
+        href: "mailto:vincent@vmcodes.com",
       },
       // {
       //   label: t("Troubleshooting"),

@@ -2,7 +2,7 @@
 
 Thanks for taking the time to contribute !
 
-- Before opening a pull request, please read the [contributing guidelines](https://github.com/pancakeswap/pancake-frontend/blob/master/CONTRIBUTING.md) first
+- Before opening a pull request, please read the [contributing guidelines](https://github.com/vmcodes/island-frontend/blob/master/CONTRIBUTING.md) first
 - If your PR is work in progress, open it as `draft`
 - Before requesting a review, all the checks need to pass
 - Explain what your PR does

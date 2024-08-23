@@ -1,6 +1,5 @@
 import { ContextApi } from '@pancakeswap/localization'
-import { DropdownMenuItems, DropdownMenuItemType, MenuItemsType, MoreIcon } from '@pancakeswap/uikit'
-import { SUPPORT_ONLY_BSC } from 'config/constants/supportChains'
+import { DropdownMenuItems, MenuItemsType } from '@pancakeswap/uikit'
 
 export type ConfigMenuDropDownItemsType = DropdownMenuItems & { hideSubNav?: boolean }
 export type ConfigMenuItemsType = Omit<MenuItemsType, 'items'> & { hideSubNav?: boolean; image?: string } & {
@@ -28,44 +27,44 @@ const config: (
 ) => ConfigMenuItemsType[] = (t, isDark, languageCode, chainId) =>
   [
     {
-      label: t('Swap'),
+      label: t('Trade'),
       href: '/swap',
       showOnMobile: false,
       items: [],
     },
-    {
-      label: t('NFT'),
-      href: `/nfts`,
-      showOnMobile: false,
-      items: [],
-      supportChainIds: SUPPORT_ONLY_BSC,
-    },
-    {
-      label: t('Lottery'),
-      href: '/lottery',
-      showOnMobile: false,
-      items: [],
-      supportChainIds: SUPPORT_ONLY_BSC,
-    },
-    {
-      label: '',
-      icon: MoreIcon,
-      hideSubNav: true,
-      items: [
-        {
-          label: t('Affiliate Program'),
-          href: '/affiliates',
-        },
-        {
-          type: DropdownMenuItemType.DIVIDER,
-        },
-        {
-          label: t('Make a Profile'),
-          href: 'https://crypto-social-h6ep.vercel.app',
-          type: DropdownMenuItemType.EXTERNAL_LINK,
-        },
-      ],
-    },
+    // {
+    //   label: t('NFT'),
+    //   href: `/nfts`,
+    //   showOnMobile: false,
+    //   items: [],
+    //   supportChainIds: SUPPORT_ONLY_BSC,
+    // },
+    // {
+    //   label: t('Lottery'),
+    //   href: '/lottery',
+    //   showOnMobile: false,
+    //   items: [],
+    //   supportChainIds: SUPPORT_ONLY_BSC,
+    // },
+    // {
+    //   label: '',
+    //   icon: MoreIcon,
+    //   hideSubNav: true,
+    //   items: [
+    //     {
+    //       label: t('Affiliate Program'),
+    //       href: '/affiliates',
+    //     },
+    //     {
+    //       type: DropdownMenuItemType.DIVIDER,
+    //     },
+    //     {
+    //       label: t('Make a Profile'),
+    //       href: 'https://crypto-social-h6ep.vercel.app',
+    //       type: DropdownMenuItemType.EXTERNAL_LINK,
+    //     },
+    //   ],
+    // },
     // {
     //   label: t('Liquidity'),
     //   href: '/liquidity',

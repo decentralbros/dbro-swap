@@ -229,14 +229,14 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowNativeBalance, onDismiss 
             )}
           </Flex>
         )}
-        <Flex alignItems="center" justifyContent="space-between">
+        {/* <Flex alignItems="center" justifyContent="space-between">
           <Text color="textSubtle">{t('CAKE Balance')}</Text>
           {cakeFetchStatus !== FetchStatus.Fetched ? (
             <Skeleton height="22px" width="60px" />
           ) : (
             <Text>{formatBigInt(cakeBalance, 3)}</Text>
           )}
-        </Flex>
+        </Flex> */}
       </Box>
       <Button variant="secondary" width="100%" minHeight={48} onClick={handleLogout}>
         {t('Disconnect Wallet')}
