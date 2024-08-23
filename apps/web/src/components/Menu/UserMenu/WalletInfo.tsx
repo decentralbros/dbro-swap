@@ -7,14 +7,11 @@ import {
   CopyAddress,
   Flex,
   FlexGap,
-  InfoFilledIcon,
   InjectedModalProps,
   LinkExternal,
   Message,
-  ScanLink,
   Skeleton,
   Text,
-  TooltipText,
   useTooltip,
 } from '@pancakeswap/uikit'
 import { ChainLogo } from 'components/Logo/ChainLogo'
@@ -101,7 +98,7 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowNativeBalance, onDismiss 
       </Text>
       <FlexGap flexDirection="column" mb="24px" gap="8px">
         <CopyAddress tooltipMessage={t('Copied')} account={account ?? undefined} />
-        {domainName ? <Text color="textSubtle">{domainName}</Text> : null}
+        {domainName ? <Text color="text">{domainName}</Text> : null}
       </FlexGap>
       {hasLowNativeBalance && (
         <Message variant="warning" mb="24px">
@@ -111,13 +108,11 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowNativeBalance, onDismiss 
                 currency: native.symbol,
               })}
             </Text>
-            <InternalLink href="/buy-crypto" onClick={() => onDismiss?.()}>
-              <Text color="primary">
-                {t('You need %currency% for transaction fees.', {
-                  currency: native.symbol,
-                })}
-              </Text>
-            </InternalLink>
+            <Text color="primary">
+              {t('You need %currency% for transaction fees.', {
+                currency: native.symbol,
+              })}
+            </Text>
           </Box>
         </Message>
       )}
@@ -135,7 +130,7 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowNativeBalance, onDismiss 
             </LinkExternal>
           </Flex>
           <Flex alignItems="center" justifyContent="space-between">
-            <Text color="textSubtle">
+            <Text color="text">
               {native.symbol} {t('Balance')}
             </Text>
             {!nativeBalance.isFetched ? (
@@ -143,12 +138,12 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowNativeBalance, onDismiss 
             ) : (
               <Flex>
                 <Text
-                  color={showNativeEntryPoint ? 'warning' : 'text'}
-                  fontWeight={showNativeEntryPoint ? 'bold' : 'normal'}
+                  color={showNativeEntryPoint ? 'text' : 'text'}
+                  fontWeight={showNativeEntryPoint ? 'bold' : 'bold'}
                 >
                   {formatBigInt(nativeBalance?.data?.value ?? 0n, 6)}
                 </Text>
-                {showNativeEntryPoint ? (
+                {/* {showNativeEntryPoint ? (
                   <TooltipText
                     ref={buyCryptoTargetRef}
                     onClick={() => setMobileTooltipShow(false)}
@@ -158,20 +153,20 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowNativeBalance, onDismiss 
                     <InfoFilledIcon pl="2px" fill="#000" color="#D67E0A" width="22px" />
                   </TooltipText>
                 ) : null}
-                {buyCryptoTooltipVisible && (!isMobile || mobileTooltipShow) && buyCryptoTooltip}
+                {buyCryptoTooltipVisible && (!isMobile || mobileTooltipShow) && buyCryptoTooltip} */}
               </Flex>
             )}
           </Flex>
           {wNativeBalance && wNativeBalance.gt(0) && (
             <Flex alignItems="center" justifyContent="space-between">
-              <Text color="textSubtle">
+              <Text color="text">
                 {wNativeToken?.symbol} {t('Balance')}
               </Text>
               {wNativeFetchStatus !== FetchStatus.Fetched ? (
                 <Skeleton height="22px" width="60px" />
               ) : (
                 wNativeToken?.decimals && (
-                  <Text>{getFullDisplayBalance(wNativeBalance, wNativeToken?.decimals, 6)}</Text>
+                  <Text color="text">{getFullDisplayBalance(wNativeBalance, wNativeToken?.decimals, 6)}</Text>
                 )
               )}
             </Flex>
@@ -180,7 +175,7 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowNativeBalance, onDismiss 
       )}
 
       <Box mb="24px">
-        <Flex justifyContent="space-between" alignItems="center" mb="8px">
+        {/* <Flex justifyContent="space-between" alignItems="center" mb="8px">
           <Flex bg={COLORS.BNB} borderRadius="16px" pl="4px" pr="8px" py="2px">
             <ChainLogo chainId={ChainId.BSC} />
             <Text color="white" ml="4px">
@@ -190,8 +185,8 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowNativeBalance, onDismiss 
           <ScanLink useBscCoinFallback href={getBlockExploreLink(account, 'address', ChainId.BSC)}>
             {getBlockExploreName(ChainId.BSC)}
           </ScanLink>
-        </Flex>
-        {chainId === 56 ? (
+        </Flex> */}
+        {/* {chainId === 56 ? (
           <Flex alignItems="center" justifyContent="space-between">
             <Text color="textSubtle">BNB {t('Balance')}</Text>
             {!bnbBalance.isFetched ? (
@@ -218,8 +213,8 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowNativeBalance, onDismiss 
               </Flex>
             )}
           </Flex>
-        ) : null}
-        {wBNBBalance.gt(0) && (
+        ) : null} */}
+        {/* {wBNBBalance.gt(0) && (
           <Flex alignItems="center" justifyContent="space-between">
             <Text color="textSubtle">WBNB {t('Balance')}</Text>
             {wBNBFetchStatus !== FetchStatus.Fetched ? (
@@ -228,7 +223,7 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowNativeBalance, onDismiss 
               <Text>{getFullDisplayBalance(wBNBBalance, wBNBToken.decimals, 6)}</Text>
             )}
           </Flex>
-        )}
+        )} */}
         {/* <Flex alignItems="center" justifyContent="space-between">
           <Text color="textSubtle">{t('CAKE Balance')}</Text>
           {cakeFetchStatus !== FetchStatus.Fetched ? (
