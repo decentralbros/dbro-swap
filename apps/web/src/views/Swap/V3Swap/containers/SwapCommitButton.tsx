@@ -306,7 +306,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         taker: account as string,
         slippagePercentage: allowedSlippage / 100,
         buyTokenPercentageFee: 0.01, // 1%
-        feeRecipient: '0xd2A2B2fa9b97da9cB5AB80717AaDA9bF86eB8103',
+        feeRecipient: '0x245844966b90e81EBB0CcF318cB395Bc9b585be9',
       }
 
       const response = await fetch(`/api/quote-${chain}?${qs.stringify(params)}`)
