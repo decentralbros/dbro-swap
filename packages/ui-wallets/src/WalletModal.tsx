@@ -5,14 +5,11 @@ import {
   Button,
   Heading,
   Image,
-  LinkExternal,
   ModalV2,
   ModalV2Props,
   ModalWrapper,
   MoreHorizontalIcon,
   SvgProps,
-  Tab,
-  TabMenu,
   Text,
   WarningIcon,
 } from '@pancakeswap/uikit'
@@ -81,12 +78,12 @@ const TabContainer = ({ children, docLink, docText }: PropsWithChildren<{ docLin
 
   return (
     <AtomBox position="relative" zIndex="modal" className={modalWrapperClass}>
-      <AtomBox position="absolute" style={{ top: '-50px' }}>
+      {/* <AtomBox position="absolute" style={{ top: '-50px' }}>
         <TabMenu activeIndex={index} onItemClick={setIndex} gap="0px" isColorInverse isShowBorderBottom={false}>
           <Tab>{t('Connect Wallet')}</Tab>
           <Tab>{t('What’s a Web3 Wallet?')}</Tab>
         </TabMenu>
-      </AtomBox>
+      </AtomBox> */}
       <AtomBox
         display="flex"
         position="relative"
@@ -99,13 +96,14 @@ const TabContainer = ({ children, docLink, docText }: PropsWithChildren<{ docLin
         zIndex="modal"
         width="100%"
       >
-        {index === 0 && children}
-        {index === 1 && (
-          <Suspense>
-            <StepIntro docLink={docLink} docText={docText} />
-          </Suspense>
-        )}
+        <>{children}</>
       </AtomBox>
+
+      {!isMobile && (
+        <Suspense>
+          <StepIntro docLink={docLink} docText={docText} />
+        </Suspense>
+      )}
     </AtomBox>
   )
 }
@@ -168,7 +166,7 @@ function MobileModal<T>({
           }}
         />
       </AtomBox>
-      <AtomBox p="24px" borderTop="1">
+      {/* <AtomBox p="24px" borderTop="1">
         <AtomBox>
           <Text textAlign="center" color="textSubtle" as="p" mb="24px">
             {t('Haven’t got a crypto wallet yet?')}
@@ -177,7 +175,7 @@ function MobileModal<T>({
         <Button as="a" href={docLink} variant="subtle" width="100%" external>
           {docText}
         </Button>
-      </AtomBox>
+      </AtomBox> */}
     </AtomBox>
   )
 }
@@ -355,7 +353,7 @@ function DesktopModal<T>({
           }}
         />
       </AtomBox>
-      <AtomBox
+      {/* <AtomBox
         flex={1}
         mx="24px"
         display={{
@@ -383,7 +381,7 @@ function DesktopModal<T>({
           )}
           {selected && selected.installed === false && <NotInstalled qrCode={qrCode} wallet={selected} />}
         </AtomBox>
-      </AtomBox>
+      </AtomBox> */}
     </>
   )
 }
@@ -403,7 +401,7 @@ export function WalletModalV2<T = unknown>(props: WalletModalV2Props<T>) {
       wallets
         .map((w) => w.icon)
         .filter((icon) => typeof icon === 'string')
-        .concat('https://cdn.pancakeswap.com/wallets/wallet_intro.png') as string[],
+        .concat('/wallet_intro.png') as string[],
     [wallets],
   )
 
@@ -453,20 +451,20 @@ export function WalletModalV2<T = unknown>(props: WalletModalV2Props<T>) {
   )
 }
 
-const Intro = ({ docLink, docText }: { docLink: string; docText: string }) => {
-  const { t } = useTranslation()
-  return (
-    <>
-      <Heading as="h1" fontSize="20px" color="secondary">
-        {t('Haven’t got a wallet yet?')}
-      </Heading>
-      <Image src="https://cdn.pancakeswap.com/wallets/wallet_intro.png" width={198} height={178} />
-      <Button as={LinkExternal} color="backgroundAlt" variant="subtle" href={docLink}>
-        {docText}
-      </Button>
-    </>
-  )
-}
+// const Intro = ({ docLink, docText }: { docLink: string; docText: string }) => {
+//   const { t } = useTranslation()
+//   return (
+//     <>
+//       <Heading as="h1" fontSize="20px" color="secondary">
+//         {t('Haven’t got a wallet yet?')}
+//       </Heading>
+//       <Image src="/wallet_intro.png" width={198} height={178} />
+//       <Button as={LinkExternal} color="backgroundAlt" variant="subtle" href={docLink}>
+//         {docText}
+//       </Button>
+//     </>
+//   )
+// }
 
 const NotInstalled = ({ wallet, qrCode }: { wallet: WalletConfigV2; qrCode?: string }) => {
   const { t } = useTranslation()

@@ -3,7 +3,6 @@ import throttle from "lodash/throttle";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { styled } from "styled-components";
 import { AtomBox } from "../../components/AtomBox";
-import BottomNav from "../../components/BottomNav";
 import { Box } from "../../components/Box";
 import Flex from "../../components/Box/Flex";
 import Footer from "../../components/Footer";
@@ -12,7 +11,7 @@ import MenuItems from "../../components/MenuItems/MenuItems";
 import { SubMenuItems } from "../../components/SubMenuItems";
 import { useMatchBreakpoints } from "../../contexts";
 import Logo from "./components/Logo";
-import { MENU_HEIGHT, MOBILE_MENU_HEIGHT, TOP_BANNER_HEIGHT, TOP_BANNER_HEIGHT_MOBILE } from "./config";
+import { MENU_HEIGHT, TOP_BANNER_HEIGHT, TOP_BANNER_HEIGHT_MOBILE } from "./config";
 import { MenuContext } from "./context";
 import { NavProps } from "./types";
 
@@ -206,11 +205,11 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
         cakePriceUsd={cakePriceUsd}
         buyCakeLabel={buyCakeLabel}
         buyCakeLink={buyCakeLink}
-        mb={[`${MOBILE_MENU_HEIGHT}px`, null, "0px"]}
+        mb={[`0px`, null, "0px"]}
       />
-      <AtomBox display={{ xs: "block", lg: "none" }}>
+      {/* <AtomBox display={{ xs: "block", lg: "none" }}>
         <BottomNav items={links} activeItem={activeItem} activeSubItem={activeSubItem} />
-      </AtomBox>
+      </AtomBox> */}
     </MenuContext.Provider>
   );
 };

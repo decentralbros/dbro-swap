@@ -50,7 +50,7 @@ const Footer: React.FC<
   helpUrl,
   externalText,
   externalLinkUrl,
-  helpImage = <Image src="https://islandswap.com/logo.png" alt="Get some help" width={160} height={108} />,
+  helpImage = <Image src="https://islandswap.finance/logo.png" alt="Get some help" width={160} height={108} />,
 }) => {
   const { t } = useTranslation();
   const isSide = variant === "side";

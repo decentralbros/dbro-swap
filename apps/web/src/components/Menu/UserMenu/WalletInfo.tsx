@@ -19,7 +19,7 @@ import { FetchStatus } from 'config/constants/types'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import useAuth from 'hooks/useAuth'
 import useNativeCurrency from 'hooks/useNativeCurrency'
-import useTokenBalance, { useBSCCakeBalance } from 'hooks/useTokenBalance'
+import useTokenBalance from 'hooks/useTokenBalance'
 
 import { formatBigInt, getFullDisplayBalance } from '@pancakeswap/utils/formatBalance'
 import InternalLink from 'components/Links'
@@ -52,8 +52,8 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowNativeBalance, onDismiss 
   const wNativeToken = !isBSC ? WNATIVE[chainId as ChainId] : null
   const wBNBToken = WNATIVE[ChainId.BSC]
   const { balance: wNativeBalance, fetchStatus: wNativeFetchStatus } = useTokenBalance(wNativeToken?.address as Address)
-  const { balance: wBNBBalance, fetchStatus: wBNBFetchStatus } = useTokenBalance(wBNBToken?.address, true)
-  const { balance: cakeBalance, fetchStatus: cakeFetchStatus } = useBSCCakeBalance()
+  // const { balance: wBNBBalance, fetchStatus: wBNBFetchStatus } = useTokenBalance(wBNBToken?.address, true)
+  // const { balance: cakeBalance, fetchStatus: cakeFetchStatus } = useBSCCakeBalance()
   const [mobileTooltipShow, setMobileTooltipShow] = useState(false)
   const { logout } = useAuth()
 
@@ -88,7 +88,7 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowNativeBalance, onDismiss 
     },
   )
 
-  const showBscEntryPoint = Number(bnbBalance?.data?.value) === 0
+  // const showBscEntryPoint = Number(bnbBalance?.data?.value) === 0
   const showNativeEntryPoint = Number(nativeBalance?.data?.value) === 0
 
   return (
