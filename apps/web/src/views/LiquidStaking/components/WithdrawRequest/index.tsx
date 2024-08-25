@@ -10,7 +10,7 @@ import { useStablecoinPrice } from 'hooks/useStablecoinPrice'
 import useTokenBalance from 'hooks/useTokenBalance'
 import first from 'lodash/first'
 import NextLink from 'next/link'
-import { OptionProps } from 'pages/liquid-staking/index'
+// import { OptionProps } from 'pages/liquid-staking/index'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { formatUnixTime } from 'utils/formatTime'
 import { Address } from 'viem'
@@ -43,7 +43,7 @@ function ClaimButton({ tokenAmount, claimIndex }: { tokenAmount?: CurrencyAmount
   )
 }
 
-export const WithdrawRequest = ({ selectedList }: { selectedList: OptionProps }) => {
+export const WithdrawRequest = ({ selectedList }: { selectedList: any }) => {
   const { t } = useTranslation()
   const { account } = useActiveWeb3React()
   const { balance: stakedTokenBalance } = useTokenBalance(selectedList.token1.address as Address)

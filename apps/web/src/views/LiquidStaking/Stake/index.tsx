@@ -2,12 +2,12 @@ import { useTranslation } from '@pancakeswap/localization'
 import { Box, Button, CardBody, Select, Text } from '@pancakeswap/uikit'
 import { AppHeader } from 'components/App'
 import NextLink from 'next/link'
-import { OptionProps } from 'pages/liquid-staking/index'
+// import { OptionProps } from 'pages/liquid-staking/index'
 import StakeInfo from '../components/StakeInfo'
 
 interface LiquidStakingPageStakeProps {
-  selectedList: OptionProps
-  optionsList: OptionProps[]
+  selectedList: any
+  optionsList: any[]
   handleSortOptionChange: (value: any) => void
 }
 
