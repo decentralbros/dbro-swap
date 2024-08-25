@@ -1,4 +1,3 @@
-import { isCyberWallet } from '@cyberlab/cyber-app-sdk'
 import { WalletConfigV2 } from '@pancakeswap/ui-wallets'
 import { WalletFilledIcon } from '@pancakeswap/uikit'
 import { getTrustWalletProvider } from '@pancakeswap/wagmi/connectors/trustWallet'
@@ -228,30 +227,30 @@ const walletsConfig = <config extends Config = Config, context = unknown>({
       },
       qrCode,
     },
-    {
-      id: 'blocto',
-      title: 'Blocto',
-      icon: `/images/wallets/blocto.png`,
-      connectorId: ConnectorNames.Blocto,
-      get installed() {
-        return typeof window !== 'undefined' && Boolean((window.ethereum as ExtendEthereum)?.isBlocto)
-          ? true
-          : undefined // undefined to show SDK
-      },
-    },
-    {
-      id: 'cyberwallet',
-      title: 'CyberWallet',
-      icon: `/images/wallets/cyberwallet.png`,
-      connectorId: ConnectorNames.CyberWallet,
-      get installed() {
-        return typeof window !== 'undefined' && isCyberWallet()
-      },
-      isNotExtension: true,
-      guide: {
-        desktop: 'https://docs.cyber.co/sdk/cyber-account#supported-chains',
-      },
-    },
+    // {
+    //   id: 'blocto',
+    //   title: 'Blocto',
+    //   icon: `/images/wallets/blocto.png`,
+    //   connectorId: ConnectorNames.Blocto,
+    //   get installed() {
+    //     return typeof window !== 'undefined' && Boolean((window.ethereum as ExtendEthereum)?.isBlocto)
+    //       ? true
+    //       : undefined // undefined to show SDK
+    //   },
+    // },
+    // {
+    //   id: 'cyberwallet',
+    //   title: 'CyberWallet',
+    //   icon: `/images/wallets/cyberwallet.png`,
+    //   connectorId: ConnectorNames.CyberWallet,
+    //   get installed() {
+    //     return typeof window !== 'undefined' && isCyberWallet()
+    //   },
+    //   isNotExtension: true,
+    //   guide: {
+    //     desktop: 'https://docs.cyber.co/sdk/cyber-account#supported-chains',
+    //   },
+    // },
     // {
     //   id: 'ledger',
     //   title: 'Ledger',
