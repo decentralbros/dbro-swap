@@ -30,9 +30,9 @@ export function V3SwapForm() {
   return (
     <>
       <FormMain
-        tradeLoading={isMMBetter ? false : !tradeLoaded}
+        tradeLoading={false}
         pricingAndSlippage={
-          <PricingAndSlippage priceLoading={!tradeLoaded} price={ammPrice ?? undefined} showSlippage={!isMMBetter} />
+          <PricingAndSlippage priceLoading={false} price={ammPrice ?? undefined} showSlippage={!isMMBetter} />
         }
         inputAmount={bestTrade?.inputAmount}
         outputAmount={bestTrade?.outputAmount}

@@ -15,6 +15,7 @@ import useUserAgent from 'hooks/useUserAgent'
 import { useVercelFeatureFlagOverrides } from 'hooks/useVercelToolbar'
 import { useWeb3WalletView } from 'hooks/useWeb3WalletView'
 import { useInitGlobalWorker } from 'hooks/useWorker'
+import { Updaters } from 'index'
 import { NextPage } from 'next'
 import { DefaultSeo } from 'next-seo'
 import type { AppProps } from 'next/app'
@@ -92,7 +93,7 @@ function MyApp(props: AppProps<{ initialReduxState: any; dehydratedState: any }>
         <GlobalStyle />
         <GlobalCheckClaimStatus excludeLocations={[]} />
         <PersistGate loading={null} persistor={persistor}>
-          {/* <Updaters /> */}
+          <Updaters />
           <App {...props} />
         </PersistGate>
       </Providers>

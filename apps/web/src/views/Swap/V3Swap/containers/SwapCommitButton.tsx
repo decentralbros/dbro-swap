@@ -229,7 +229,6 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
   const handleSwap = async () => {
     if (!currencyBalances || !inputCurrency || !outputCurrency) {
       reset()
-      resetState()
       return
     }
 
@@ -320,20 +319,18 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         data: quote.data,
       })
 
-      addTransaction({ hash: tx as string })
-
       await waitForTransactionReceipt(config, {
         confirmations: 2,
         hash: tx as `0x${string}`,
         chainId,
       })
 
+      addTransaction({ hash: tx as string })
+
       reset()
-      resetState()
       setLoadSwap(false)
     } catch (error) {
       reset()
-      resetState()
       setLoadSwap(false)
     }
   }
@@ -345,7 +342,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         width="100%"
         data-dd-action-name="Swap commit button"
         variant={isValid ? 'danger' : 'primary'}
-        disabled={disabled || loadSwap}
+        disabled={loadSwap}
         onClick={handleSwap}
       >
         {(loadSwap && <Dots>{t('Swap')}</Dots>) || t('Swap')}
