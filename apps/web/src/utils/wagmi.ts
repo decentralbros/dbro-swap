@@ -1,6 +1,4 @@
 import { getWagmiConnectorV2 } from '@binance/w3w-wagmi-connector-v2'
-import { cyberWalletConnector as createCyberWalletConnector, isCyberWallet } from '@cyberlab/cyber-app-sdk'
-import { blocto } from '@pancakeswap/wagmi/connectors/blocto'
 import { CHAINS } from 'config/chains'
 import { PUBLIC_NODES } from 'config/nodes'
 import memoize from 'lodash/memoize'
@@ -17,28 +15,28 @@ export const injectedConnector = injected({
 })
 
 export const coinbaseConnector = coinbaseWallet({
-  appName: 'PancakeSwap',
-  appLogoUrl: 'https://pancakeswap.com/logo.png',
+  appName: 'IslandsSwap',
+  appLogoUrl: 'https://islandswap.com/logo.png',
 })
 
 export const walletConnectConnector = walletConnect({
   // ignore the error in test environment
   // Error: To use QR modal, please install @walletconnect/modal package
   showQrModal: process.env.NODE_ENV !== 'test',
-  projectId: 'e542ff314e26ff34de2d4fba98db70bb',
+  projectId: 'c341b7c160a72c5dd3d2c20504a7343e',
 })
 
 export const walletConnectNoQrCodeConnector = walletConnect({
   showQrModal: false,
-  projectId: 'e542ff314e26ff34de2d4fba98db70bb',
+  projectId: 'c341b7c160a72c5dd3d2c20504a7343e',
 })
 
 export const metaMaskConnector = injected({ target: 'metaMask', shimDisconnect: false })
 export const trustConnector = injected({ target: 'trust', shimDisconnect: false })
 
-const bloctoConnector = blocto({
-  appId: 'e2f2f0cd-3ceb-4dec-b293-bb555f2ed5af',
-})
+// const bloctoConnector = blocto({
+//   appId: 'e2f2f0cd-3ceb-4dec-b293-bb555f2ed5af',
+// })
 
 export const binanceWeb3WalletConnector = getWagmiConnectorV2()
 
@@ -71,12 +69,12 @@ export const transports = chains.reduce((ts, chain) => {
   }
 }, {} as Record<number, Transport>)
 
-export const cyberWalletConnector = isCyberWallet()
-  ? createCyberWalletConnector({
-      name: 'PancakeSwap',
-      appId: 'b825cd87-2db3-456d-b108-d61e74d89771',
-    })
-  : undefined
+// export const cyberWalletConnector = isCyberWallet()
+//   ? createCyberWalletConnector({
+//       name: 'PancakeSwap',
+//       appId: 'b825cd87-2db3-456d-b108-d61e74d89771',
+//     })
+//   : undefined
 
 export const config = createConfig({
   chains,
@@ -91,12 +89,12 @@ export const config = createConfig({
     safe(),
     coinbaseConnector,
     walletConnectConnector,
-    bloctoConnector,
+    // bloctoConnector,
     // ledgerConnector,
     trustConnector,
     binanceWeb3WalletConnector(),
 
-    ...(cyberWalletConnector ? [cyberWalletConnector as any] : []),
+    // ...(cyberWalletConnector ? [cyberWalletConnector as any] : []),
   ],
 })
 
