@@ -19,7 +19,6 @@ import { Updaters } from 'index'
 import { NextPage } from 'next'
 import { DefaultSeo } from 'next-seo'
 import type { AppProps } from 'next/app'
-import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { Fragment } from 'react'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -31,7 +30,7 @@ import Providers from '../Providers'
 import Menu from '../components/Menu'
 import GlobalStyle from '../style/Global'
 
-const EasterEgg = dynamic(() => import('components/EasterEgg'), { ssr: false })
+// const EasterEgg = dynamic(() => import('components/EasterEgg'), { ssr: false })
 
 // This config is required for number formatting
 BigNumber.config({
@@ -144,7 +143,6 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
           <Component {...pageProps} />
         </Layout>
       </ShowMenu>
-      <EasterEgg iterations={2} />
       <ToastListener />
       <FixedSubgraphHealthIndicator />
       <NetworkModal pageSupportedChains={Component.chains} />
