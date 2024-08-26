@@ -9,7 +9,7 @@ const handler: NextApiHandler = async (req, res) => {
 
   const request = await fetch(`https://arbitrum.api.0x.org/swap/v1/price?${searchParams}`, {
     headers: {
-      '0x-api-key': process.env.NEXT_PUBLIC_ZERO_X_KEY as string,
+      '0x-api-key': process.env.ZERO_X_KEY as string,
     },
   })
   const data = await request.json()

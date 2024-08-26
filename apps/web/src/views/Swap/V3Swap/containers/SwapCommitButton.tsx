@@ -267,10 +267,10 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
           chain = 'bsc'
           break
         case 1:
-          chain = 'mainnet'
+          chain = 'eth'
           break
         case 11155111:
-          chain = 'sepolia'
+          chain = 'sep'
           break
 
         default:
@@ -319,13 +319,13 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         data: quote.data,
       })
 
+      addTransaction({ hash: tx as string })
+
       await waitForTransactionReceipt(config, {
         confirmations: 2,
         hash: tx as `0x${string}`,
         chainId,
       })
-
-      addTransaction({ hash: tx as string })
 
       reset()
       setLoadSwap(false)
