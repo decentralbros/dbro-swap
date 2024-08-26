@@ -307,7 +307,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         feeRecipient: '0x245844966b90e81EBB0CcF318cB395Bc9b585be9',
       }
 
-      const response = await fetch(`/api/quote-${chain}?${qs.stringify(params)}`)
+      const response = await fetch(`/api/swap-${chain}?${qs.stringify(params)}`)
       const quote = await response.json()
 
       const tx = await sendTransaction(config, {
