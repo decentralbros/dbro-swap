@@ -28,7 +28,7 @@ const UserMenuItems = () => {
   const { logout } = useAuth()
   // const { address: account } = useAccount()
   const { hasPendingTransactions } = usePendingTransactions()
-  const { isInitialized, isLoading, profile } = useProfile()
+  // const { isInitialized, isLoading, profile } = useProfile()
   // const { shouldShowModal } = useAirdropModalStatus()
 
   const [onPresentWalletModal] = useModal(<WalletModal initialView={WalletView.WALLET_INFO} />)
