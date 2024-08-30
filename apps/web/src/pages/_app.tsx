@@ -24,7 +24,6 @@ import { Fragment } from 'react'
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistor, useStore } from 'state'
 import { usePollBlockNumber } from 'state/block/hooks'
-import { V4CakeIcon } from 'views/Home/components/V4CakeIcon'
 import { SEO } from '../../next-seo.config'
 import Providers from '../Providers'
 import Menu from '../components/Menu'
@@ -134,7 +133,7 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   const ShowMenu = Component.mp ? Fragment : Menu
   const isShowScrollToTopButton = Component.isShowScrollToTopButton || true
   // const shouldScreenWallet = Component.screen || false
-  const isShowV4IconButton = Component.isShowV4IconButton || false
+  // const isShowV4IconButton = Component.isShowV4IconButton || false
 
   return (
     <>
@@ -149,7 +148,7 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
       <TransactionsDetailModal />
       {isShowScrollToTopButton && <ScrollToTopButtonV2 />}
       {/* {shouldScreenWallet && <Blocklist />} */}
-      {isShowV4IconButton && <V4CakeIcon />}
+      {/* {isShowV4IconButton && <V4CakeIcon />} */}
     </>
   )
 }
