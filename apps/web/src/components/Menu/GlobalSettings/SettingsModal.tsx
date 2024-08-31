@@ -21,7 +21,8 @@ import {
   ThemeSwitcher,
   Toggle,
 } from '@pancakeswap/uikit'
-import { useUserSingleHopOnly } from '@pancakeswap/utils/user'
+import { useExpertMode, useUserExpertModeAcknowledgement, useUserSingleHopOnly } from '@pancakeswap/utils/user'
+import { useActiveChainId } from 'hooks/useActiveChainId'
 import useTheme from 'hooks/useTheme'
 import { ReactNode, useCallback, useState } from 'react'
 import { useUserShowTestnet } from 'state/user/hooks/useUserShowTestnet'
@@ -35,6 +36,7 @@ import {
   useUserV3SwapEnable,
 } from 'state/user/smartRouter'
 import { styled } from 'styled-components'
+import TransactionSettings from './TransactionSettings'
 import { SettingsMode } from './types'
 
 // const WebNotiToggle = lazy(() => import('./WebNotiToggle'))
@@ -85,9 +87,9 @@ export const withCustomOnDismiss =
   }
 
 const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ onDismiss, mode }) => {
-  // const [showConfirmExpertModal, setShowConfirmExpertModal] = useState(false)
-  // const [showExpertModeAcknowledgement, setShowExpertModeAcknowledgement] = useUserExpertModeAcknowledgement()
-  // const [expertMode, setExpertMode] = useExpertMode()
+  const [showConfirmExpertModal, setShowConfirmExpertModal] = useState(false)
+  const [showExpertModeAcknowledgement, setShowExpertModeAcknowledgement] = useUserExpertModeAcknowledgement()
+  const [expertMode, setExpertMode] = useExpertMode()
   // const [audioPlay, setAudioMode] = useAudioPlay()
   // const [speedQuote, setSpeedQuote] = useSpeedQuote()
   // const [subgraphHealth, setSubgraphHealth] = useSubgraphHealthIndicatorManager()
@@ -96,7 +98,7 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
   // const { enabled } = useWebNotifications()
 
   // const { onChangeRecipient } = useSwapActionHandlers()
-  // const { chainId } = useActiveChainId()
+  const { chainId } = useActiveChainId()
   // const [tokenRisk, setTokenRisk] = useUserTokenRisk()
 
   const { t } = useTranslation()
@@ -196,8 +198,7 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
                   }}
                 />
               </Flex>
-              {/*
-              {chainId === ChainId.BSC && (
+              {/* {chainId === ChainId.BSC && (
                 <>
                   <Flex justifyContent="space-between" alignItems="center" mb="24px">
                     <Flex alignItems="center">
@@ -224,23 +225,23 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
                         setTokenRisk(!tokenRisk)
                       }}
                     />
-                  </Flex> 
-                  {/* <GasSettings />
+                  </Flex>
+                  <GasSettings />
                 </>
               )} */}
             </Flex>
           </>
         )}
-        {/* {mode === SettingsMode.SWAP_LIQUIDITY && (
+        {mode === SettingsMode.SWAP_LIQUIDITY && (
           <>
             <Flex pt="3px" flexDirection="column">
               <PreTitle>{t('Swap')}</PreTitle>
               <Flex justifyContent="space-between" alignItems="center" mb="24px">
-                {chainId === ChainId.BSC && <GasSettings />}
+                {/* {chainId === ChainId.BSC && <GasSettings />} */}
               </Flex>
               <TransactionSettings />
             </Flex>
-            <Flex justifyContent="space-between" alignItems="center" mb="24px">
+            {/* <Flex justifyContent="space-between" alignItems="center" mb="24px">
               <Flex alignItems="center">
                 <Text>{t('Expert Mode')}</Text>
                 <QuestionHelper
@@ -287,10 +288,10 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
                 onChange={() => setSpeedQuote((s) => !s)}
                 scale="md"
               />
-            </Flex>
-            <RoutingSettingsButton />
+            </Flex> */}
+            {/* <RoutingSettingsButton /> */}
           </>
-        )} */}
+        )}
       </ScrollableContainer>
     </Modal>
   )
