@@ -65,7 +65,7 @@ export const footerLinks: (t: ContextApi["t"]) => FooterLinkType[] = (t) => [
       // },
       {
         label: t("Github"),
-        href: "https://github.com/vmcodes/island-frontend",
+        href: "https://github.com/decentralbros/islandswap",
       },
       // {
       //   label: t("Bug Bounty"),
@@ -82,7 +82,7 @@ export const footerLinks: (t: ContextApi["t"]) => FooterLinkType[] = (t) => [
     items: [
       {
         label: t("Contact"),
-        href: "mailto:vincent@vmcodes.com",
+        href: "mailto:team@decentralbros.xyz",
       },
       // {
       //   label: t("Troubleshooting"),
