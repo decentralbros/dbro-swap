@@ -1,4 +1,4 @@
-# Contributing to the Pancake ecosystem 🥞
+# Contributing to the IslandSwap ecosystem 🌴
 
 Thanks for taking the time to contribute !
 
