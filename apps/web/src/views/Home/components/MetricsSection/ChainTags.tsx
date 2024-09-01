@@ -67,16 +67,6 @@ const StyledChainIcon = styled.div`
 `
 
 const newsItems = [
-  {
-    key: 'BNB Chain',
-    component: (
-      <StyledChainIcon style={{ width: 26 }}>
-        <BinanceChainIcon />
-      </StyledChainIcon>
-    ),
-    background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.10) 100%), #F0B90B',
-    iconWidth: '26px',
-  },
   // {
   //   key: 'opBNB Chain',
   //   component: <BinanceChainIcon color="F0B90B" />,
@@ -112,12 +102,12 @@ const newsItems = [
   //   background: '#686EA7',
   //   iconWidth: '26px',
   // },
-  {
-    key: 'Arbitrum One',
-    component: <ArbitrumIcon />,
-    background: '#6E89AE',
-    iconWidth: '20px',
-  },
+  // {
+  //   key: 'Arbitrum One',
+  //   component: <ArbitrumIcon />,
+  //   background: '#6E89AE',
+  //   iconWidth: '20px',
+  // },
   // {
   //   key: 'Linea',
   //   component: <LineaIcon />,
@@ -133,6 +123,16 @@ const newsItems = [
     ),
     background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.10) 100%), #75A1FF',
     iconWidth: '20px',
+  },
+  {
+    key: 'BNB Chain',
+    component: (
+      <StyledChainIcon style={{ width: 26 }}>
+        <BinanceChainIcon />
+      </StyledChainIcon>
+    ),
+    background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.10) 100%), #F0B90B',
+    iconWidth: '26px',
   },
 ]
 
