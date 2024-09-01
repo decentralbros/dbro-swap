@@ -2,7 +2,6 @@ import { Box, PageSection, useMatchBreakpoints } from '@pancakeswap/uikit'
 import useTheme from 'hooks/useTheme'
 import { styled } from 'styled-components'
 import Hero from './components/Hero'
-import MetricsSection from './components/MetricsSection'
 
 const StyledHeroSection = styled(PageSection)`
   padding-top: 16px;
@@ -73,7 +72,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         <Hero />
       </StyledHeroSection>
 
-      <PageSection
+      {/* <PageSection
         innerProps={{ style: { ...HomeSectionContainerStyles, maxWidth: 'auto' } }}
         background={theme.colors.background}
         containerProps={{
@@ -83,7 +82,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         hasCurvedDivider={false}
       >
         <MetricsSection />
-      </PageSection>
+      </PageSection> */}
 
       {/* <PageSection
         innerProps={{ style: { ...HomeSectionContainerStyles, maxWidth: 'auto' } }}
