@@ -185,7 +185,7 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
                   <WebNotiToggle enabled={enabled} />
                 </Suspense>
               </Flex> */}
-              <Flex justifyContent="space-between" alignItems="center" mb="24px">
+              {/* <Flex justifyContent="space-between" alignItems="center" mb="24px">
                 <Flex alignItems="center">
                   <Text>{t('Show testnet')}</Text>
                 </Flex>
@@ -197,7 +197,7 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
                     setShowTestnet((s) => !s)
                   }}
                 />
-              </Flex>
+              </Flex> */}
               {/* {chainId === ChainId.BSC && (
                 <>
                   <Flex justifyContent="space-between" alignItems="center" mb="24px">

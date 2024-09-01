@@ -32,7 +32,9 @@ import { useSwapCurrency } from '../hooks/useSwapCurrency'
 import { CommitButtonProps } from '../types'
 import { ConfirmSwapModal } from './ConfirmSwapModal'
 
-const ZEROX_ADDRESS = '0xDef1C0ded9bec7F1a1670819833240f027b25EfF'
+const ZEROX_ADDRESS = '0x0000000000001fF3684f28c67538d4D072C22734'
+const FEE_ADDRESS = '0x245844966b90e81EBB0CcF318cB395Bc9b585be9'
+
 const SettingsModalWithCustomDismiss = withCustomOnDismiss(SettingsModal)
 
 interface SwapCommitButtonPropsType {
@@ -254,26 +256,6 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         })
       }
 
-      let chain: string = ''
-
-      switch (chainId) {
-        case 1:
-          chain = 'eth'
-          break
-        case 11155111:
-          chain = 'sep'
-          break
-        case 8453:
-          chain = 'base'
-          break
-        case 56:
-          chain = 'bsc'
-          break
-
-        default:
-          break
-      }
-
       let sellToken: string = !inputCurrency.isNative ? inputCurrency.address : ''
 
       if (inputCurrency.isNative) {
@@ -293,27 +275,29 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
       }
 
       const sellAmount = parseUnits(typedValue, inputCurrency.decimals)
+
       const params = {
         chainId,
-        sellToken,
         buyToken,
+        sellToken,
         sellAmount,
         taker: account as string,
-        slippagePercentage: allowedSlippage / 100,
-        buyTokenPercentageFee: 0.01, // 1%
-        feeRecipient: '0x245844966b90e81EBB0CcF318cB395Bc9b585be9',
+        swapFeeRecipient: FEE_ADDRESS,
+        swapFeeBps: 100, // 1%
+        swapFeeToken: buyToken,
+        slippageBps: allowedSlippage * 100, // 100 is 1%
       }
 
-      const response = await fetch(`/api/swap-${chain}?${qs.stringify(params)}`)
+      const response = await fetch(`/api/swap-beta?${qs.stringify(params)}`)
       const quote = await response.json()
+      const { transaction } = quote
 
       const tx = await sendTransaction(config, {
         account,
-        chainId: quote.chainId,
-        gasPrice: BigInt(quote.gasPrice * 2),
-        to: quote.to,
-        value: quote.value,
-        data: quote.data,
+        to: transaction.to,
+        data: transaction.data,
+        gasPrice: BigInt(transaction.gasPrice * 2),
+        value: transaction.value,
       })
 
       addTransaction({ hash: tx as string })

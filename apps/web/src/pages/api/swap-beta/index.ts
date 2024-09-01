@@ -7,11 +7,12 @@ const handler: NextApiHandler = async (req, res) => {
 
   const { searchParams } = url
 
-  const request = await fetch(`https://base.api.0x.org/swap/v1/quote?${searchParams}`, {
+  const request = await fetch(`http://api.0x.org/swap/allowance-holder/quote?${searchParams}`, {
     headers: {
       '0x-api-key': process.env.ZERO_X_KEY as string,
     },
   })
+
   const data = await request.json()
 
   return res.json(data)
