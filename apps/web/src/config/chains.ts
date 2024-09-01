@@ -2,7 +2,6 @@ import { ChainId, chainNames } from '@pancakeswap/chains'
 import memoize from 'lodash/memoize'
 import {
   Chain,
-  arbitrum,
   base,
   bsc as bsc_,
   mainnet,
@@ -66,7 +65,7 @@ export const CHAINS: [Chain, ...Chain[]] = [
   mainnet,
   // goerli,
   sepolia,
-  arbitrum,
+  // arbitrum,
   base,
   // bscTestnet,
   // polygonZkEvm,

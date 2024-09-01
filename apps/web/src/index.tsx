@@ -63,8 +63,8 @@ export function Blocklist() {
             </Text>
             <Text>
               {t('If you believe that your address has been misclassified, please email')}{' '}
-              <Link style={{ display: 'inline-block' }} href="mailto:vincent@vmcodes.com">
-                vincent@vmcodes.com
+              <Link style={{ display: 'inline-block' }} href="mailto:team@decentralbros.xyz">
+                team@decentralbros.xyz
               </Link>
             </Text>
           </Grid>

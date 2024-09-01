@@ -17,8 +17,8 @@ export const PANCAKE_BSC_MM = 'https://tokens.pancakeswap.finance/pancakeswap-bn
 const COINGECKO_ETH = 'https://tokens.coingecko.com/uniswap/all.json'
 // export const CMC = 'https://tokens.pancakeswap.finance/cmc.json' // not updated for a while
 
-const COINGECKO_ARBITRUM = 'https://tokens.coingecko.com/arbitrum-one/all.json'
-const COINGECKO_BASE = 'https://tokens.coingecko.com/base/all.json'
+export const COINGECKO_ARBITRUM = 'https://tokens.coingecko.com/arbitrum-one/all.json'
+export const COINGECKO_BASE = 'https://tokens.coingecko.com/base/all.json'
 
 const ETH_URLS = [COINGECKO_ETH]
 const BSC_URLS = [COINGECKO]
@@ -53,7 +53,7 @@ export const DEFAULT_LIST_OF_LISTS: string[] = [
 ]
 
 // default lists to be 'active' aka searched across
-export const DEFAULT_ACTIVE_LIST_URLS: string[] = [COINGECKO, COINGECKO_ETH]
+export const DEFAULT_ACTIVE_LIST_URLS: string[] = [COINGECKO_ETH, COINGECKO_ARBITRUM, COINGECKO_BASE, COINGECKO]
 
 export const MULTI_CHAIN_LIST_URLS: { [chainId: number]: string[] } = {
   [ChainId.BSC]: BSC_URLS,

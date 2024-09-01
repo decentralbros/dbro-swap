@@ -2,46 +2,43 @@ import { useTranslation } from '@pancakeswap/localization'
 import { Button, Flex, QuestionHelper, Text } from '@pancakeswap/uikit'
 import { useUserSlippage } from '@pancakeswap/utils/user'
 import { useState } from 'react'
-import { escapeRegExp } from 'utils'
 
-import { useUserTransactionTTL } from 'hooks/useTransactionDeadline'
-
-enum SlippageError {
-  InvalidInput = 'InvalidInput',
-  RiskyLow = 'RiskyLow',
-  RiskyHigh = 'RiskyHigh',
-}
+// enum SlippageError {
+//   InvalidInput = 'InvalidInput',
+//   RiskyLow = 'RiskyLow',
+//   RiskyHigh = 'RiskyHigh',
+// }
 
 // enum DeadlineError {
 //   InvalidInput = 'InvalidInput',
 // }
 
-const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`) // match escaped "." characters via in a non-capturing group
-const THREE_DAYS_IN_SECONDS = 60 * 60 * 24 * 3
+// const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`) // match escaped "." characters via in a non-capturing group
+// const THREE_DAYS_IN_SECONDS = 60 * 60 * 24 * 3
 
 const SlippageTabs = () => {
   const [userSlippageTolerance, setUserSlippageTolerance] = useUserSlippage()
-  const [ttl, setTTL] = useUserTransactionTTL()
+  // const [ttl, setTTL] = useUserTransactionTTL()
   const [slippageInput, setSlippageInput] = useState('')
-  const [deadlineInput, setDeadlineInput] = useState('')
+  // const [deadlineInput, setDeadlineInput] = useState('')
 
   const { t } = useTranslation()
 
-  const slippageInputIsValid =
-    slippageInput === '' || (userSlippageTolerance / 100).toFixed(2) === Number.parseFloat(slippageInput).toFixed(2)
+  // const slippageInputIsValid =
+  //   slippageInput === '' || (userSlippageTolerance / 100).toFixed(2) === Number.parseFloat(slippageInput).toFixed(2)
   // const deadlineInputIsValid =
   //   deadlineInput === '' || (ttl !== undefined && (Number(ttl) / 60).toString() === deadlineInput)
 
-  let slippageError: SlippageError | undefined
-  if (slippageInput !== '' && !slippageInputIsValid) {
-    slippageError = SlippageError.InvalidInput
-  } else if (slippageInputIsValid && userSlippageTolerance < 50) {
-    slippageError = SlippageError.RiskyLow
-  } else if (slippageInputIsValid && userSlippageTolerance > 500) {
-    slippageError = SlippageError.RiskyHigh
-  } else {
-    slippageError = undefined
-  }
+  // let slippageError: SlippageError | undefined
+  // if (slippageInput !== '' && !slippageInputIsValid) {
+  //   slippageError = SlippageError.InvalidInput
+  // } else if (slippageInputIsValid && userSlippageTolerance < 50) {
+  //   slippageError = SlippageError.RiskyLow
+  // } else if (slippageInputIsValid && userSlippageTolerance > 500) {
+  //   slippageError = SlippageError.RiskyHigh
+  // } else {
+  //   slippageError = undefined
+  // }
 
   // let deadlineError: DeadlineError | undefined
   // if (deadlineInput !== '' && !deadlineInputIsValid) {
@@ -50,20 +47,20 @@ const SlippageTabs = () => {
   //   deadlineError = undefined
   // }
 
-  const parseCustomSlippage = (value: string) => {
-    if (value === '' || inputRegex.test(escapeRegExp(value))) {
-      setSlippageInput(value)
+  // const parseCustomSlippage = (value: string) => {
+  //   if (value === '' || inputRegex.test(escapeRegExp(value))) {
+  //     setSlippageInput(value)
 
-      try {
-        const valueAsIntFromRoundedFloat = Number.parseInt((Number.parseFloat(value) * 100).toString())
-        if (!Number.isNaN(valueAsIntFromRoundedFloat) && valueAsIntFromRoundedFloat < 5000) {
-          setUserSlippageTolerance(valueAsIntFromRoundedFloat)
-        }
-      } catch (error) {
-        console.error(error)
-      }
-    }
-  }
+  //     try {
+  //       const valueAsIntFromRoundedFloat = Number.parseInt((Number.parseFloat(value) * 100).toString())
+  //       if (!Number.isNaN(valueAsIntFromRoundedFloat) && valueAsIntFromRoundedFloat < 5000) {
+  //         setUserSlippageTolerance(valueAsIntFromRoundedFloat)
+  //       }
+  //     } catch (error) {
+  //       console.error(error)
+  //     }
+  //   }
+  // }
 
   // const parseCustomDeadline = (value: string) => {
   //   setDeadlineInput(value)
