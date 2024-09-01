@@ -23,12 +23,12 @@ export const walletConnectConnector = walletConnect({
   // ignore the error in test environment
   // Error: To use QR modal, please install @walletconnect/modal package
   showQrModal: process.env.NODE_ENV !== 'test',
-  projectId: 'c341b7c160a72c5dd3d2c20504a7343e',
+  projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT as string,
 })
 
 export const walletConnectNoQrCodeConnector = walletConnect({
   showQrModal: false,
-  projectId: 'c341b7c160a72c5dd3d2c20504a7343e',
+  projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT as string,
 })
 
 export const metaMaskConnector = injected({ target: 'metaMask', shimDisconnect: false })
