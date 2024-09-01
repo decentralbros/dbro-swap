@@ -3,8 +3,7 @@ description: File a bug/issue
 title: '[BUG] <title>'
 labels: [Bug, Triage]
 assignees:
-  - Chef-Cheems
-  - chef-jojo
+  - vmcodes
 body:
   - type: checkboxes
     attributes:
@@ -20,11 +19,7 @@ body:
       multiple: false
       options:
         - Trade
-        - Farms
-        - Syrup Pools
         - Lottery
-        - Prediction
-        - IFO
         - Info
         - NFT
         - Other
