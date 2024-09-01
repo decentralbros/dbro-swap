@@ -28,7 +28,7 @@ body:
       required: true
   - type: textarea
     attributes:
-      label: How does this feature benefit IslandSwap users and CAKE holders?
+      label: How does this feature benefit IslandSwap users?
       description: Explain how this feature will be beneficial for the IslandSwap community and ecosystem.
     validations:
       required: true
