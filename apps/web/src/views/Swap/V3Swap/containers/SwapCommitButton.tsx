@@ -181,7 +181,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
   }, [trade])
 
   const isValid = useMemo(() => !swapInputError && !tradeLoading, [swapInputError, tradeLoading])
-  const disabled = useMemo(() => !isValid, [isValid])
+  // const disabled = useMemo(() => !isValid, [isValid])
 
   // const userHasSpecifiedInputOutput = Boolean(
   //   inputCurrency && outputCurrency && parsedIndependentFieldAmount?.greaterThan(BIG_INT_ZERO),
@@ -257,20 +257,17 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
       let chain: string = ''
 
       switch (chainId) {
-        case 42161:
-          chain = 'arb'
+        case 1:
+          chain = 'eth'
+          break
+        case 11155111:
+          chain = 'sep'
           break
         case 8453:
           chain = 'base'
           break
         case 56:
           chain = 'bsc'
-          break
-        case 1:
-          chain = 'eth'
-          break
-        case 11155111:
-          chain = 'sep'
           break
 
         default:
@@ -329,7 +326,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
 
       reset()
       setLoadSwap(false)
-    } catch (error) {
+    } catch {
       reset()
       setLoadSwap(false)
     }
