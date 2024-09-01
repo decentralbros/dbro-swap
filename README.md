@@ -1,8 +1,8 @@
-# 🌴 IslandSwap
+# 🌴 IslandSwap 🌴
 
 <p >
   <a href="https://islandswap.finance">
-      <img src="https://islandswap.finance/islandswap.jpg" height="200">
+      <img src="https://islandswap.finance/readme.jpg" height="200">
   </a>
 </p>
 
