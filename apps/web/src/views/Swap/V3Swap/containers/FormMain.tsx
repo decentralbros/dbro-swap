@@ -99,14 +99,17 @@ export function FormMain({ pricingAndSlippage, inputAmount, outputAmount, tradeL
   )
 
   const isTypingInput = independentField === Field.INPUT
+
   const inputValue = useMemo(
     () => typedValue && (isTypingInput ? typedValue : formatAmount(inputAmount) || ''),
     [typedValue, isTypingInput, inputAmount],
   )
+
   const outputValue = useMemo(
     () => typedValue && (isTypingInput ? formatAmount(outputAmount) || '' : typedValue),
     [typedValue, isTypingInput, outputAmount],
   )
+
   const inputLoading = typedValue ? !isTypingInput && tradeLoading : false
   const outputLoading = typedValue ? isTypingInput && tradeLoading : false
 

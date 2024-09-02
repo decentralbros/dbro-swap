@@ -6,7 +6,6 @@ import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 
 import { useTranslation } from '@pancakeswap/localization'
 import { getUniversalRouterAddress } from '@pancakeswap/universal-router-sdk'
-import { useUserSlippage } from '@pancakeswap/utils/user'
 import { parseUnits } from '@pancakeswap/utils/viem/parseUnits'
 import { ConfirmModalState } from '@pancakeswap/widgets-internal'
 import { sendTransaction, waitForTransactionReceipt, writeContract } from '@wagmi/core'
@@ -29,13 +28,12 @@ import { abi } from '../abi'
 import { useSlippageAdjustedAmounts, useSwapInputError } from '../hooks'
 import { useConfirmModalState } from '../hooks/useConfirmModalState'
 import { useSwapCurrency } from '../hooks/useSwapCurrency'
+import { useSwapValues } from '../hooks/useSwapValues'
 import { CommitButtonProps } from '../types'
 import { ConfirmSwapModal } from './ConfirmSwapModal'
 
-const ZEROX_ADDRESS = '0x0000000000001fF3684f28c67538d4D072C22734'
-const FEE_ADDRESS = '0x245844966b90e81EBB0CcF318cB395Bc9b585be9'
-
 const SettingsModalWithCustomDismiss = withCustomOnDismiss(SettingsModal)
+const ZEROX_ADDRESS = '0x0000000000001fF3684f28c67538d4D072C22734'
 
 interface SwapCommitButtonPropsType {
   trade?: SmartRouterTrade<TradeType>
@@ -130,11 +128,10 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
   const { address: account } = useAccount()
   const { t } = useTranslation()
   const chainId = useChainId()
-  const [allowedSlippage] = useUserSlippage()
   const [loadSwap, setLoadSwap] = useState<boolean>(false)
 
   // form data
-  const { independentField, typedValue } = useSwapState()
+  const { typedValue } = useSwapState()
   const [inputCurrency, outputCurrency] = useSwapCurrency()
 
   const slippageAdjustedAmounts = useSlippageAdjustedAmounts(trade)
@@ -142,11 +139,6 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     () => (inputCurrency?.isNative ? undefined : slippageAdjustedAmounts[Field.INPUT]),
     [inputCurrency?.isNative, slippageAdjustedAmounts],
   )
-  // const tradePriceBreakdown = useMemo(() => computeTradePriceBreakdown(trade), [trade])
-  // warnings on slippage
-  // const priceImpactSeverity = warningSeverity(
-  //   tradePriceBreakdown ? tradePriceBreakdown.priceImpactWithoutFee : undefined,
-  // )
 
   const relevantTokenBalances = useCurrencyBalances(account ?? undefined, [
     inputCurrency ?? undefined,
@@ -157,8 +149,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     [Field.INPUT]: relevantTokenBalances[0],
     [Field.OUTPUT]: relevantTokenBalances[1],
   }
-  // const parsedAmounts = useParsedAmounts(trade, currencyBalances, false)
-  // const parsedIndependentFieldAmount = parsedAmounts[independentField]
+
   const swapInputError = useSwapInputError(trade, currencyBalances)
   const [tradeToConfirm, setTradeToConfirm] = useState<SmartRouterTrade<TradeType> | undefined>(undefined)
   const [indirectlyOpenConfirmModalState, setIndirectlyOpenConfirmModalState] = useState(false)
@@ -184,10 +175,6 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
 
   const isValid = useMemo(() => !swapInputError && !tradeLoading, [swapInputError, tradeLoading])
   // const disabled = useMemo(() => !isValid, [isValid])
-
-  // const userHasSpecifiedInputOutput = Boolean(
-  //   inputCurrency && outputCurrency && parsedIndependentFieldAmount?.greaterThan(BIG_INT_ZERO),
-  // )
 
   const addTransaction = useTransactionAdder()
 
@@ -228,17 +215,20 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     }
   }, [indirectlyOpenConfirmModalState, openConfirmSwapModal])
 
+  const swapParams = useSwapValues()
+
   const handleSwap = async () => {
-    if (!currencyBalances || !inputCurrency || !outputCurrency) {
+    if (!swapParams || !inputCurrency || !outputCurrency) {
       reset()
       return
     }
 
     try {
       setLoadSwap(true)
+      const confirmations: number = chainId === ChainId.BASE ? 4 : 2
 
       if (!inputCurrency.isNative) {
-        const hash = await writeContract(config, {
+        const hash: `0x${string}` = await writeContract(config, {
           abi,
           address: inputCurrency.address as `0x${string}`, // contract
           functionName: 'approve',
@@ -250,49 +240,17 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         })
 
         await waitForTransactionReceipt(config, {
-          confirmations: 2,
-          hash: hash as `0x${string}`,
+          confirmations,
+          hash,
           chainId,
         })
       }
 
-      let sellToken: string = !inputCurrency.isNative ? inputCurrency.address : ''
-
-      if (inputCurrency.isNative) {
-        sellToken =
-          inputCurrency.chainId !== ChainId.BSC
-            ? '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
-            : '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'
-      }
-
-      let buyToken: string = !outputCurrency.isNative ? outputCurrency.address : ''
-
-      if (outputCurrency.isNative) {
-        buyToken =
-          outputCurrency.chainId !== ChainId.BSC
-            ? '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
-            : '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'
-      }
-
-      const sellAmount = parseUnits(typedValue, inputCurrency.decimals)
-
-      const params = {
-        chainId,
-        buyToken,
-        sellToken,
-        sellAmount,
-        taker: account as string,
-        swapFeeRecipient: FEE_ADDRESS,
-        swapFeeBps: 100, // 1%
-        swapFeeToken: buyToken,
-        slippageBps: allowedSlippage * 100, // 100 is 1%
-      }
-
-      const response = await fetch(`/api/swap-beta?${qs.stringify(params)}`)
+      const response = await fetch(`/api/swap?${qs.stringify(swapParams)}`)
       const quote = await response.json()
       const { transaction } = quote
 
-      const tx = await sendTransaction(config, {
+      const tx: `0x${string}` = await sendTransaction(config, {
         account,
         to: transaction.to,
         data: transaction.data,
@@ -300,11 +258,11 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         value: transaction.value,
       })
 
-      addTransaction({ hash: tx as string })
+      addTransaction({ hash: tx })
 
       await waitForTransactionReceipt(config, {
-        confirmations: 2,
-        hash: tx as `0x${string}`,
+        confirmations,
+        hash: tx,
         chainId,
       })
 
