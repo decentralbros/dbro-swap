@@ -283,9 +283,9 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         sellAmount,
         taker: account as string,
         swapFeeRecipient: FEE_ADDRESS,
-        swapFeeBps: 100, // 1%
+        swapFeeBps: 100,
         swapFeeToken: buyToken,
-        slippageBps: allowedSlippage * 100, // 100 is 1%
+        slippageBps: allowedSlippage * 100,
       }
 
       const response = await fetch(`/api/swap-beta?${qs.stringify(params)}`)
@@ -322,7 +322,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         id="swap-button"
         width="100%"
         data-dd-action-name="Swap commit button"
-        variant={isValid ? 'danger' : 'primary'}
+        variant={isValid ? 'primary' : 'danger'}
         disabled={loadSwap}
         onClick={handleSwap}
       >
