@@ -1,4 +1,4 @@
-import { TradeType } from '@pancakeswap/sdk'
+import { ChainId, TradeType } from '@pancakeswap/sdk'
 import { SmartRouterTrade } from '@pancakeswap/smart-router'
 import { Currency, CurrencyAmount, Token } from '@pancakeswap/swap-sdk-core'
 import { Box, Button, Dots, useModal } from '@pancakeswap/uikit'
@@ -260,7 +260,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
 
       if (inputCurrency.isNative) {
         sellToken =
-          inputCurrency.chainId !== 56
+          inputCurrency.chainId !== ChainId.BSC
             ? '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
             : '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'
       }
@@ -269,7 +269,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
 
       if (outputCurrency.isNative) {
         buyToken =
-          inputCurrency.chainId !== 56
+          inputCurrency.chainId !== ChainId.BSC
             ? '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
             : '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'
       }
