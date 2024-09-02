@@ -269,7 +269,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
 
       if (outputCurrency.isNative) {
         buyToken =
-          inputCurrency.chainId !== ChainId.BSC
+          outputCurrency.chainId !== ChainId.BSC
             ? '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
             : '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'
       }
