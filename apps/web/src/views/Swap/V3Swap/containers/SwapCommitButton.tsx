@@ -7,7 +7,6 @@ import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from '@pancakeswap/localization'
 import { getUniversalRouterAddress } from '@pancakeswap/universal-router-sdk'
 import { parseUnits } from '@pancakeswap/utils/viem/parseUnits'
-import { ConfirmModalState } from '@pancakeswap/widgets-internal'
 import { sendTransaction, waitForTransactionReceipt, writeContract } from '@wagmi/core'
 import { CommitButton } from 'components/CommitButton'
 import ConnectWalletButton from 'components/ConnectWalletButton'
@@ -163,11 +162,10 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
   const { onUserInput } = useSwapActionHandlers()
   const reset = useCallback(() => {
     afterCommit?.()
-    if (confirmState === ConfirmModalState.COMPLETED) {
-      onUserInput(Field.INPUT, '')
-    }
+
+    onUserInput(Field.INPUT, '')
     resetState()
-  }, [afterCommit, confirmState, onUserInput, resetState])
+  }, [afterCommit, onUserInput, resetState])
 
   const handleAcceptChanges = useCallback(() => {
     setTradeToConfirm(trade)
@@ -225,7 +223,6 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
 
     try {
       setLoadSwap(true)
-      const confirmations: number = chainId === ChainId.BASE ? 4 : 2
 
       if (!inputCurrency.isNative) {
         const hash: `0x${string}` = await writeContract(config, {
@@ -238,6 +235,8 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
           ],
           chainId,
         })
+
+        const confirmations: number = chainId === ChainId.BASE ? 4 : 2
 
         await waitForTransactionReceipt(config, {
           confirmations,
@@ -261,7 +260,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
       addTransaction({ hash: tx })
 
       await waitForTransactionReceipt(config, {
-        confirmations,
+        confirmations: 2,
         hash: tx,
         chainId,
       })
