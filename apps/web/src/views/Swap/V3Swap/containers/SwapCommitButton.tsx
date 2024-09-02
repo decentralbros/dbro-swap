@@ -164,6 +164,8 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     afterCommit?.()
 
     onUserInput(Field.INPUT, '')
+    onUserInput(Field.OUTPUT, '')
+
     resetState()
   }, [afterCommit, onUserInput, resetState])
 
