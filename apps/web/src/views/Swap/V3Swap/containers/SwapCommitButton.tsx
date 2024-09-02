@@ -220,6 +220,8 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
   const handleSwap = async () => {
     if (!swapParams || !inputCurrency || !outputCurrency) {
       reset()
+      setLoadSwap(false)
+
       return
     }
 
@@ -281,7 +283,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         id="swap-button"
         width="100%"
         data-dd-action-name="Swap commit button"
-        variant={isValid ? 'danger' : 'primary'}
+        variant={loadSwap ? 'danger' : 'primary'}
         disabled={loadSwap}
         onClick={handleSwap}
       >

@@ -2,7 +2,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import { Currency, CurrencyAmount, Percent } from '@pancakeswap/sdk'
 import { formatAmount } from '@pancakeswap/utils/formatFractions'
 import replaceBrowserHistory from '@pancakeswap/utils/replaceBrowserHistory'
-import { ReactNode, useCallback, useMemo } from 'react'
+import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 
 import CurrencyInputPanel from 'components/CurrencyInputPanel'
 import { CommonBasesType } from 'components/SearchModal/types'
@@ -15,10 +15,12 @@ import { currencyId } from 'utils/currencyId'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
 
 import { Flex, Text } from '@pancakeswap/uikit'
+import qs from 'qs'
 import { useAccount } from 'wagmi'
 import useWarningImport from '../../hooks/useWarningImport'
 import { FormContainer } from '../components'
 import { useIsWrapping } from '../hooks'
+import { useSwapValues } from '../hooks/useSwapValues'
 import { FlipButton } from './FlipButton'
 import { Recipient } from './Recipient'
 
@@ -105,10 +107,31 @@ export function FormMain({ pricingAndSlippage, inputAmount, outputAmount, tradeL
     [typedValue, isTypingInput, inputAmount],
   )
 
-  const outputValue = useMemo(
-    () => typedValue && (isTypingInput ? formatAmount(outputAmount) || '' : typedValue),
-    [typedValue, isTypingInput, outputAmount],
-  )
+  // const outputValue = useMemo(() => {
+  //   return typedValue && (isTypingInput ? estimate : typedValue)
+  // }, [typedValue, isTypingInput, estimate])
+
+  const swapParams = useSwapValues()
+  const [estimate, setEstimate] = useState<string>('')
+
+  const estimateOutput = async () => {
+    const response = await fetch(`/api/quote?${qs.stringify(swapParams)}`)
+    const quote = await response.json()
+
+    if (quote.buyAmount && outputCurrency?.decimals) {
+      const buyAmount = quote.buyAmount / 10 ** outputCurrency.decimals
+      setEstimate(String(buyAmount))
+    }
+  }
+
+  useEffect(() => {
+    if (parseFloat(typedValue) > 0) {
+      estimateOutput()
+    } else {
+      setEstimate('')
+    }
+    // eslint-disable-next-line
+  }, [typedValue])
 
   const inputLoading = typedValue ? !isTypingInput && tradeLoading : false
   const outputLoading = typedValue ? isTypingInput && tradeLoading : false
@@ -149,7 +172,7 @@ export function FormMain({ pricingAndSlippage, inputAmount, outputAmount, tradeL
         inputLoading={!isWrapping && outputLoading}
         currencyLoading={!loadedUrlParams}
         label={isTypingInput && !isWrapping ? t('To (estimated)') : t('To')}
-        value={isWrapping ? typedValue : outputValue}
+        value={isWrapping ? typedValue : estimate}
         currency={outputCurrency}
         onUserInput={handleTypeOutput}
         onCurrencySelect={handleOutputSelect}
