@@ -36,7 +36,7 @@ const bsc = {
  * The expectation is that all of these networks have immediate transaction confirmation.
  */
 export const L2_CHAIN_IDS: ChainId[] = [
-  ChainId.ARBITRUM_ONE,
+  // ChainId.ARBITRUM_ONE,
   // ChainId.ARBITRUM_GOERLI,
   // ChainId.POLYGON_ZKEVM,
   // ChainId.POLYGON_ZKEVM_TESTNET,

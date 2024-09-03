@@ -104,7 +104,7 @@ const WrongNetworkSelect = ({ switchNetwork, chainId }) => {
     },
   )
   const { chain } = useAccount()
-  const localChainId = useLocalNetworkChain() || ChainId.BSC
+  const localChainId = useLocalNetworkChain() || ChainId.ETHEREUM
   const [, setSessionChainId] = useSessionChainId()
 
   const localChainName = chains.find((c) => c.id === localChainId)?.name ?? 'BSC'
@@ -148,7 +148,7 @@ const SHORT_SYMBOL = {
   [ChainId.BSC]: 'BNB',
   // [ChainId.BSC_TESTNET]: 'tBNB',
   // [ChainId.GOERLI]: 'GOR',
-  [ChainId.ARBITRUM_ONE]: 'ARB',
+  // [ChainId.ARBITRUM_ONE]: 'ARB',
   // [ChainId.ARBITRUM_GOERLI]: 'tARB',
   // [ChainId.POLYGON_ZKEVM]: 'Polygon zkEVM',
   // [ChainId.POLYGON_ZKEVM_TESTNET]: 'tZkEVM',
@@ -161,7 +161,7 @@ const SHORT_SYMBOL = {
   [ChainId.BASE]: 'Base',
   // [ChainId.BASE_TESTNET]: 'tBase',
   // [ChainId.SCROLL_SEPOLIA]: 'tScroll',
-  [ChainId.SEPOLIA]: 'sepolia',
+  // [ChainId.SEPOLIA]: 'sepolia',
   // [ChainId.BASE_SEPOLIA]: 'Base Sepolia',
   // [ChainId.ARBITRUM_SEPOLIA]: 'Arb Sepolia',
 } as const

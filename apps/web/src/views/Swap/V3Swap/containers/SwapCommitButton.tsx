@@ -24,7 +24,7 @@ import { useCurrencyBalances } from 'state/wallet/hooks'
 import { config } from 'utils/wagmi'
 import { useAccount, useChainId } from 'wagmi'
 import { abi } from '../abi'
-import { useSlippageAdjustedAmounts, useSwapInputError } from '../hooks'
+import { useSlippageAdjustedAmounts } from '../hooks'
 import { useConfirmModalState } from '../hooks/useConfirmModalState'
 import { useSwapCurrency } from '../hooks/useSwapCurrency'
 import { useSwapValues } from '../hooks/useSwapValues'
@@ -149,7 +149,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     [Field.OUTPUT]: relevantTokenBalances[1],
   }
 
-  const swapInputError = useSwapInputError(trade, currencyBalances)
+  // const swapInputError = useSwapInputError(trade, currencyBalances)
   const [tradeToConfirm, setTradeToConfirm] = useState<SmartRouterTrade<TradeType> | undefined>(undefined)
   const [indirectlyOpenConfirmModalState, setIndirectlyOpenConfirmModalState] = useState(false)
 
@@ -173,7 +173,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     setTradeToConfirm(trade)
   }, [trade])
 
-  const isValid = useMemo(() => !swapInputError && !tradeLoading, [swapInputError, tradeLoading])
+  // const isValid = useMemo(() => !swapInputError && !tradeLoading, [swapInputError, tradeLoading])
   // const disabled = useMemo(() => !isValid, [isValid])
 
   const addTransaction = useTransactionAdder()
