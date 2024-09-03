@@ -240,13 +240,13 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
           chainId,
         })
 
-        const confirmations: number = chainId === ChainId.BASE ? 4 : 2
-
-        await waitForTransactionReceipt(config, {
-          confirmations,
-          hash,
-          chainId,
-        })
+        if (chainId === ChainId.BASE) {
+          await waitForTransactionReceipt(config, {
+            confirmations: 4,
+            hash,
+            chainId,
+          })
+        }
       }
 
       const response = await fetch(`/api/swap?${qs.stringify(swapParams)}`)
@@ -263,11 +263,13 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
 
       addTransaction({ hash: tx })
 
-      await waitForTransactionReceipt(config, {
-        confirmations: 2,
-        hash: tx,
-        chainId,
-      })
+      if (chainId === ChainId.BASE) {
+        await waitForTransactionReceipt(config, {
+          confirmations: 2,
+          hash: tx,
+          chainId,
+        })
+      }
 
       reset()
       setLoadSwap(false)
