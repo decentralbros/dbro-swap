@@ -17,13 +17,9 @@ export const useSwapValues = (): Estimate | undefined => {
 
   if (!inputCurrency || !outputCurrency || chainId === ChainId.BSC) return undefined
 
-  const nativeInput: string = ETHEREUM
+  const sellToken: string = inputCurrency.isNative ? ETHEREUM : inputCurrency.address
 
-  const sellToken: string = inputCurrency.isNative ? nativeInput : inputCurrency.address
-
-  const nativeOutput: string = ETHEREUM
-
-  const buyToken: string = outputCurrency.isNative ? nativeOutput : outputCurrency.address
+  const buyToken: string = outputCurrency.isNative ? ETHEREUM : outputCurrency.address
 
   const sellAmount = parseUnits(typedValue, inputCurrency.decimals)
 
