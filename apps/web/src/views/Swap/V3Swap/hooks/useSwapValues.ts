@@ -7,8 +7,7 @@ import { useAccount } from 'wagmi'
 import { useSwapCurrency } from './useSwapCurrency'
 
 const FEE_ADDRESS: string = '0x245844966b90e81EBB0CcF318cB395Bc9b585be9'
-const ETH: string = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
-const BNB: string = '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'
+const ETHEREUM: string = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
 
 export const useSwapValues = (): Estimate | undefined => {
   const [inputCurrency, outputCurrency] = useSwapCurrency()
@@ -16,13 +15,13 @@ export const useSwapValues = (): Estimate | undefined => {
   const { address: account, chainId } = useAccount()
   const [allowedSlippage] = useUserSlippage()
 
-  if (!inputCurrency || !outputCurrency) return undefined
+  if (!inputCurrency || !outputCurrency || chainId === ChainId.BSC) return undefined
 
-  const nativeInput: string = inputCurrency.chainId === ChainId.BSC ? BNB : ETH
+  const nativeInput: string = ETHEREUM
 
   const sellToken: string = inputCurrency.isNative ? nativeInput : inputCurrency.address
 
-  const nativeOutput: string = outputCurrency.chainId === ChainId.BSC ? BNB : ETH
+  const nativeOutput: string = ETHEREUM
 
   const buyToken: string = outputCurrency.isNative ? nativeOutput : outputCurrency.address
 
