@@ -44,6 +44,7 @@ const NetworkSelect = ({ switchNetwork, chainId, isWrongNetwork }) => {
       <UserMenuDivider />
       {chains
         .filter((chain) => {
+          if (chain.id === ChainId.BSC) return false
           if (chain.id === chainId) return true
           if ('testnet' in chain && chain.testnet) {
             return showTestnet
