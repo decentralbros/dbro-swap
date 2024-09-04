@@ -30,6 +30,8 @@ const BLOCKS_SUBGRAPH_URLS = {
   [ChainId.OPBNB]: `${THE_GRAPH_PROXY_API}/blocks-opbnb`,
 }
 
+const THE_GRAPH_KEY = process.env.NEXT_PUBLIC_THE_GRAPH_KEY
+
 export const GRAPH_API_NFTMARKET = `${THE_GRAPH_PROXY_API}/nft-marketplace-bsc`
 export const GRAPH_HEALTH = 'https://api.thegraph.com/index-node/graphql'
 
@@ -62,8 +64,8 @@ export const ASSET_CDN = 'https://islandswap.finance'
 export const V3_SUBGRAPH_URLS = {
   ...V3_SUBGRAPHS,
   [ChainId.POLYGON_ZKEVM]: `${THE_GRAPH_PROXY_API}/exchange-v3-polygon-zkevm`,
-  [ChainId.BASE]: `${THE_GRAPH_PROXY_API}/exchange-v3-base`,
-  [ChainId.ETHEREUM]: `${THE_GRAPH_PROXY_API}/exchange-v3-eth`,
+  [ChainId.BASE]: `https://gateway.thegraph.com/api/${THE_GRAPH_KEY}/subgraphs/id/BHWNsedAHtmTCzXxCCDfhPmm6iN9rxUhoRHdHKyujic3`,
+  [ChainId.ETHEREUM]: `https://gateway.thegraph.com/api/${THE_GRAPH_KEY}/subgraphs/id/CJYGNhb7RvnhfBDjqpRnD3oxgyhibzc7fkAMa38YV3oS`,
   [ChainId.BSC]: `${THE_GRAPH_PROXY_API}/exchange-v3-bsc`,
   [ChainId.ARBITRUM_ONE]: `${THE_GRAPH_PROXY_API}/exchange-v3-arb`,
   [ChainId.ZKSYNC]: `${THE_GRAPH_PROXY_API}/exchange-v3-zksync`,
