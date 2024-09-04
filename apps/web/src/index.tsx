@@ -2,9 +2,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import { Grid, Link, Modal, ModalV2, Text } from '@pancakeswap/uikit'
 import { useQuery } from '@tanstack/react-query'
 import { WALLET_API } from 'config/constants/endpoints'
-import { UpdatePositionsReminder } from 'views/Farms/components/UpdatePositionsReminder'
 import { useAccount } from 'wagmi'
-import ListsUpdater from './state/lists/updater'
 import MulticallUpdater from './state/multicall/updater'
 import TransactionUpdater from './state/transactions/updater'
 import { chains } from './utils/wagmi'
@@ -12,8 +10,8 @@ import { chains } from './utils/wagmi'
 export function Updaters() {
   return (
     <>
-      <UpdatePositionsReminder />
-      <ListsUpdater />
+      {/* <UpdatePositionsReminder /> */}
+      {/* <ListsUpdater /> */}
       {chains.map((chain) => (
         <TransactionUpdater key={`trxUpdater#${chain.id}`} chainId={chain.id} />
       ))}
