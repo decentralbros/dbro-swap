@@ -228,25 +228,22 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     try {
       setLoadSwap(true)
 
+      const txConfirms = chainId === ChainId.BASE ? 4 : 2
+
       if (!inputCurrency.isNative) {
         const hash: `0x${string}` = await writeContract(config, {
           abi,
-          address: inputCurrency.address as `0x${string}`, // contract
+          address: inputCurrency.address as `0x${string}`,
           functionName: 'approve',
-          args: [
-            ZEROX_ADDRESS as `0x${string}`, // spender
-            parseUnits(typedValue, inputCurrency.decimals),
-          ],
+          args: [ZEROX_ADDRESS as `0x${string}`, parseUnits(typedValue, inputCurrency.decimals)],
           chainId,
         })
 
-        if (chainId === ChainId.BASE) {
-          await waitForTransactionReceipt(config, {
-            confirmations: 4,
-            hash,
-            chainId,
-          })
-        }
+        await waitForTransactionReceipt(config, {
+          confirmations: txConfirms,
+          hash,
+          chainId,
+        })
       }
 
       const response = await fetch(`/api/swap?${qs.stringify(swapParams)}`)
@@ -263,13 +260,11 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
 
       addTransaction({ hash: tx })
 
-      if (chainId === ChainId.BASE) {
-        await waitForTransactionReceipt(config, {
-          confirmations: 2,
-          hash: tx,
-          chainId,
-        })
-      }
+      await waitForTransactionReceipt(config, {
+        confirmations: txConfirms,
+        hash: tx,
+        chainId,
+      })
 
       reset()
       setLoadSwap(false)
