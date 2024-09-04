@@ -3,12 +3,12 @@ import { BigintIsh, Currency } from '@pancakeswap/sdk'
 import memoize from 'lodash/memoize.js'
 import { Address } from 'viem'
 
-import { OnChainProvider, SubgraphProvider, V3PoolWithTvl } from '../../types'
 import { createAsyncCallWithFallbacks, WithFallbackOptions } from '../../../utils/withFallback'
-import { getV3PoolSubgraph } from './subgraphPoolProviders'
 import { getPairCombinations } from '../../functions'
-import { v3PoolTvlSelector } from './poolTvlSelectors'
+import { OnChainProvider, SubgraphProvider, V3PoolWithTvl } from '../../types'
 import { getV3PoolsWithoutTicksOnChain } from './onChainPoolProviders'
+import { v3PoolTvlSelector } from './poolTvlSelectors'
+import { getV3PoolSubgraph } from './subgraphPoolProviders'
 
 // @deprecated
 export type { GetV3PoolsParams as GetV3CandidatePoolsParams }

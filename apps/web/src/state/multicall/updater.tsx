@@ -1,10 +1,10 @@
 import { useDebounce } from '@pancakeswap/hooks'
 import { useActiveChainId } from 'hooks/useActiveChainId'
+import { useWorker } from 'hooks/useWorker'
 import { useAtom } from 'jotai'
 import { useEffect, useMemo, useRef } from 'react'
 import { useCurrentBlock } from 'state/block/hooks'
 import { multicallReducerAtom, MulticallState } from 'state/multicall/reducer'
-import { useWorker } from 'hooks/useWorker'
 
 import { useMulticallContract } from '../../hooks/useContract'
 import {
@@ -139,7 +139,7 @@ export default function Updater(): null {
               minBlockNumber: currentBlock,
             }),
           {
-            n: Infinity,
+            n: 1,
             minWait: 2500,
             maxWait: 3500,
           },
