@@ -4,6 +4,8 @@ export const THE_GRAPH_PROXY_API = 'https://thegraph.pancakeswap.com'
 
 export const GRAPH_API_PROFILE = `${THE_GRAPH_PROXY_API}/profile`
 
+export const ISLANDSWAP_API = 'https://api.islandswap.finance'
+
 export const GRAPH_API_LOTTERY = `${THE_GRAPH_PROXY_API}/lottery-bsc`
 export const SNAPSHOT_BASE_URL = process.env.NEXT_PUBLIC_SNAPSHOT_BASE_URL
 export const API_PROFILE = 'https://profile.pancakeswap.com'
@@ -79,7 +81,7 @@ export const STABLESWAP_SUBGRAPHS_URLS = {
   [ChainId.ARBITRUM_ONE]: `${THE_GRAPH_PROXY_API}/exchange-stableswap-arb`,
 }
 
-export const TRADING_REWARD_API = 'https://trading-reward.pancakeswap.com/api/v1'
+export const TRADING_REWARD_API = '/'
 
 export const QUOTING_API_PREFIX = `${process.env.NEXT_PUBLIC_QUOTING_API}/order-price`
 
@@ -98,7 +100,7 @@ export const MERCURYO_WIDGET_URL =
     ? 'https://sandbox-widget.mrcr.io/embed.2.0.js'
     : 'https://widget.mercuryo.io/embed.2.0.js'
 
-export const WALLET_API = 'https://wallet-api.pancakeswap.com'
+export const WALLET_API = '/'
 
 export const BINANCE_DATA_API = 'https://data-api.binance.vision/api'
 

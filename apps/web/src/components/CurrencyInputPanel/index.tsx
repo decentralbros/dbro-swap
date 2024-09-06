@@ -2,9 +2,9 @@ import { useTranslation } from '@pancakeswap/localization'
 import { Currency, CurrencyAmount, Pair, Percent, Token } from '@pancakeswap/sdk'
 import { WrappedTokenInfo } from '@pancakeswap/token-lists'
 import { ArrowDropDownIcon, Box, Button, CopyButton, Flex, Loading, Skeleton, Text, useModal } from '@pancakeswap/uikit'
-import { formatAmount } from '@pancakeswap/utils/formatFractions'
 import { CurrencyLogo, DoubleCurrencyLogo, Swap as SwapUI } from '@pancakeswap/widgets-internal'
-import { memo, useCallback, useMemo } from 'react'
+import { ISLANDSWAP_API } from 'config/constants/endpoints'
+import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { styled } from 'styled-components'
 import { safeGetAddress } from 'utils'
 
@@ -13,6 +13,7 @@ import { useStablecoinPriceAmount } from 'hooks/useStablecoinPrice'
 import { StablePair } from 'views/AddLiquidity/AddStableLiquidity/hooks/useStableLPDerivedMintInfo'
 
 import { FiatLogo } from 'components/Logo/CurrencyLogo'
+import qs from 'qs'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { useAccount } from 'wagmi'
 import CurrencySearchModal from '../SearchModal/CurrencySearchModal'
@@ -61,6 +62,15 @@ interface CurrencyInputPanelProps {
   title?: React.ReactNode
   hideBalanceComp?: boolean
 }
+
+interface Balance {
+  address: string
+  chainId: number
+  native: boolean
+  contract?: string
+  decimals?: number
+}
+
 const CurrencyInputPanel = memo(function CurrencyInputPanel({
   value,
   onUserInput,
@@ -96,7 +106,6 @@ const CurrencyInputPanel = memo(function CurrencyInputPanel({
 
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const { t } = useTranslation()
-
   const mode = id
   const token = pair ? pair.liquidityToken : currency?.isToken ? currency : null
   const tokenAddress = token ? safeGetAddress(token.address) : null
@@ -147,13 +156,46 @@ const CurrencyInputPanel = memo(function CurrencyInputPanel({
 
   const isAtPercentMax = (maxAmount && value === maxAmount.toExact()) || (lpPercent && lpPercent === '100')
 
-  const balance = !hideBalance && !!currency ? formatAmount(selectedCurrencyBalance, 6) : undefined
+  const [balance, setBalance] = useState<string | undefined>(undefined)
+
+  useEffect(() => {
+    const fetchBalance = async () => {
+      if (!currency || !account) {
+        return
+      }
+
+      let params: Balance
+
+      if (!currency.isNative) {
+        params = {
+          address: account,
+          chainId: currency.chainId,
+          native: false,
+          contract: currency.address,
+          decimals: currency.decimals,
+        }
+      } else {
+        params = { address: account, chainId: currency.chainId, native: true }
+      }
+
+      const response = await fetch(`${ISLANDSWAP_API}/balance?${qs.stringify(params)}`)
+      const data = await response.json()
+
+      setBalance(data.toFixed(6))
+    }
+
+    if (!hideBalance && !!currency) {
+      fetchBalance()
+    }
+    // eslint-disable-next-line
+  }, [account, currency, hideBalance, currency])
+
   return (
     <SwapUI.CurrencyInputPanel
       id={id}
       disabled={disabled}
       error={error as boolean}
-      value={value}
+      value={Number(value).toFixed(6)}
       onInputBlur={onInputBlur}
       onUserInput={handleUserInput}
       loading={inputLoading}
@@ -231,11 +273,7 @@ const CurrencyInputPanel = memo(function CurrencyInputPanel({
               title={!hideBalance && !!currency ? t('Balance: %balance%', { balance: balance ?? t('Loading') }) : ' -'}
               style={{ display: 'inline', cursor: 'pointer' }}
             >
-              {!hideBalance && !!currency
-                ? (balance?.replace('.', '')?.length || 0) > 12
-                  ? balance
-                  : t('Balance: %balance%', { balance: balance ?? t('Loading') })
-                : ' -'}
+              {t('Balance: %balance%', { balance: balance ?? t('Loading') })}
             </Text>
           )}
         </>

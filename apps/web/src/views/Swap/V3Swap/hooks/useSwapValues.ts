@@ -31,7 +31,7 @@ export const useSwapValues = (): Estimate | undefined => {
     taker: account as string,
     swapFeeRecipient: FEE_ADDRESS,
     swapFeeBps: 100, // 1%
-    swapFeeToken: buyToken,
+    swapFeeToken: ETHEREUM,
     slippageBps: allowedSlippage * 100, // 100 is 1%
   }
 

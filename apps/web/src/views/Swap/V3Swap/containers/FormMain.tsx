@@ -166,6 +166,7 @@ export function FormMain({ pricingAndSlippage, inputAmount, outputAmount, tradeL
       <FlipButton />
       <CurrencyInputPanel
         id="swap-currency-output"
+        disabled
         showUSDPrice={false}
         showCommonBases
         showMaxButton={false}

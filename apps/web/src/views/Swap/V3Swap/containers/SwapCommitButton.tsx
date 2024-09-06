@@ -254,7 +254,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         account,
         to: transaction.to,
         data: transaction.data,
-        gasPrice: BigInt(transaction.gasPrice * 2),
+        gasPrice: BigInt(transaction.gasPrice * 3),
         value: transaction.value,
       })
 
