@@ -178,7 +178,7 @@ const CurrencyInputPanel = memo(function CurrencyInputPanel({
         params = { address: account, chainId: currency.chainId, native: true }
       }
 
-      const response = await fetch(`${ISLANDSWAP_API}/balance?${qs.stringify(params)}`)
+      const response = await fetch(`${ISLANDSWAP_API}/balance/token?${qs.stringify(params)}`)
       const data = await response.json()
 
       setBalance(data.toFixed(6))

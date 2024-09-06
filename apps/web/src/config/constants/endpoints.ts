@@ -4,7 +4,7 @@ export const THE_GRAPH_PROXY_API = 'https://thegraph.pancakeswap.com'
 
 export const GRAPH_API_PROFILE = `${THE_GRAPH_PROXY_API}/profile`
 
-export const ISLANDSWAP_API = 'https://api.islandswap.finance'
+export const ISLANDSWAP_API = process.env.NEXT_PUBLIC_ISLANDSWAP_API
 
 export const GRAPH_API_LOTTERY = `${THE_GRAPH_PROXY_API}/lottery-bsc`
 export const SNAPSHOT_BASE_URL = process.env.NEXT_PUBLIC_SNAPSHOT_BASE_URL
