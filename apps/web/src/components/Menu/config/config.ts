@@ -39,7 +39,7 @@ const config: (
         },
         {
           label: t('Bridge'),
-          href: 'https://defiway.com/bridge',
+          href: 'https://app.across.to/bridge',
           showOnMobile: false,
           type: DropdownMenuItemType.EXTERNAL_LINK,
         },
