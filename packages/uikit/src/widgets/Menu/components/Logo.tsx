@@ -46,8 +46,8 @@ const Logo: React.FC<React.PropsWithChildren<Props>> = ({ href }) => {
   const isAbsoluteUrl = href.startsWith("http");
   const innerLogo = (
     <>
-      <Image src="/tree.png" alt="islandswap" height={50} width={50} className="mobile-icon" />
-      <Image src="/tree.png" alt="islandswap" height={50} width={50} className="desktop-icon" />
+      <Image src="/tree.webp" alt="islandswap" height={50} width={50} className="mobile-icon" />
+      <Image src="/tree.webp" alt="islandswap" height={50} width={50} className="desktop-icon" />
 
       {/* <LogoIcon className="mobile-icon" />
       <LogoWithTextIcon className="desktop-icon" /> */}
@@ -57,11 +57,11 @@ const Logo: React.FC<React.PropsWithChildren<Props>> = ({ href }) => {
   return (
     <Flex alignItems="center">
       {isAbsoluteUrl ? (
-        <StyledLink as="a" href={href} aria-label="Pancake home page">
+        <StyledLink as="a" href={href} aria-label="IslandSwap home page">
           {innerLogo}
         </StyledLink>
       ) : (
-        <StyledLink href={href} as={linkComponent} aria-label="Pancake home page">
+        <StyledLink href={href} as={linkComponent} aria-label="IslandSwap home page">
           {innerLogo}
         </StyledLink>
       )}

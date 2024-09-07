@@ -10,7 +10,7 @@ import type { Swiper as SwiperClass } from 'swiper/types'
 const IntroSteps = [
   {
     title: <Trans>Your first step in the DeFi world</Trans>,
-    icon: '/images/wallets/bunny.png',
+    icon: '/images/wallets/bunny.webp',
     description: (
       <Trans>
         A Web3 Wallet allows you to send and receive crypto assets like bitcoin, BNB, ETH, NFTs and much more.
@@ -19,7 +19,7 @@ const IntroSteps = [
   },
   {
     title: <Trans>Login using a wallet connection</Trans>,
-    icon: '/images/wallets/world_lock.png',
+    icon: '/images/wallets/world_lock.webp',
     description: (
       <Trans>
         Instead of setting up new accounts and passwords for every website, simply set up your wallet in one go, and
