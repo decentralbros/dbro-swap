@@ -1,16 +1,16 @@
-import { Button, Grid, Message, MessageText, Modal, Text } from '@pancakeswap/uikit'
-import { useLocalNetworkChain } from 'hooks/useActiveChainId'
+import { ChainId } from '@pancakeswap/chains'
 import { useTranslation } from '@pancakeswap/localization'
+import { Button, Grid, Message, MessageText, Modal, Text } from '@pancakeswap/uikit'
+import { useMenuItems } from 'components/Menu/hooks/useMenuItems'
+import { getActiveMenuItem, getActiveSubMenuItem } from 'components/Menu/utils'
+import { useLocalNetworkChain } from 'hooks/useActiveChainId'
+import useAuth from 'hooks/useAuth'
 import { useSwitchNetwork, useSwitchNetworkLocal } from 'hooks/useSwitchNetwork'
 import Image from 'next/image'
-import useAuth from 'hooks/useAuth'
-import { useMenuItems } from 'components/Menu/hooks/useMenuItems'
 import { useRouter } from 'next/router'
-import { getActiveMenuItem, getActiveSubMenuItem } from 'components/Menu/utils'
-import { useAccount } from 'wagmi'
 import { useMemo } from 'react'
-import { ChainId } from '@pancakeswap/chains'
 import { viemClients } from 'utils/viem'
+import { useAccount } from 'wagmi'
 import Dots from '../Loader/Dots'
 
 // Where chain is not supported or page not supported
@@ -47,13 +47,7 @@ export function UnsupportedNetworkModal({ pageSupportedChains }: { pageSupported
           {supportedMainnetChains?.map((c) => c?.name).join(', ')}
         </Text>
         <div style={{ textAlign: 'center' }}>
-          <Image
-            layout="fixed"
-            width={194}
-            height={175}
-            src="/images/check-your-network.png"
-            alt="check your network"
-          />
+          <Image layout="fixed" width={194} height={194} src="/logo.webp" alt="check your network" />
         </div>
         <Message variant="warning">
           <MessageText>{t('Please switch your network to continue.')}</MessageText>
@@ -65,7 +59,7 @@ export function UnsupportedNetworkModal({ pageSupportedChains }: { pageSupported
               if (supportedMainnetChains.map((c) => c?.id).includes(chainId)) {
                 switchNetworkAsync(chainId)
               } else {
-                switchNetworkAsync(ChainId.BSC)
+                switchNetworkAsync(ChainId.ETHEREUM)
               }
             }}
           >
@@ -87,7 +81,7 @@ export function UnsupportedNetworkModal({ pageSupportedChains }: { pageSupported
             variant="secondary"
             onClick={() =>
               logout().then(() => {
-                switchNetworkLocal(ChainId.BSC)
+                switchNetworkLocal(ChainId.ETHEREUM)
               })
             }
           >

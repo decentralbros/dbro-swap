@@ -22,14 +22,14 @@ export function WrongNetworkModal({ currentChain, onDismiss }: { currentChain: C
   const switchText = t('Switch to %network%', { network: currentChain.name })
 
   return (
-    <Modal title={t('You are in wrong network')} headerBackground="gradientCardHeader" onDismiss={onDismiss}>
+    <Modal title={t('You are in wrong network')} headerBackground="backgroundAlt" onDismiss={onDismiss}>
       <Grid style={{ gap: '16px' }} maxWidth="336px">
         <Text>{t('This page is located for %network%.', { network: currentChain.name })}</Text>
-        <Text>
+        {/* <Text>
           {t('You are under %network% now, please switch the network to continue.', { network: chain?.name ?? '' })}
-        </Text>
+        </Text> */}
         <div style={{ textAlign: 'center' }}>
-          <Image width={184} height={140} src="/images/decorations/3d-pan-bunny.png" alt="check your network" />
+          <Image width={184} height={184} src="/logo.webp" alt="check your network" />
         </div>
         <Message variant="warning" icon={false} p="8px 12px">
           <MessageText>
