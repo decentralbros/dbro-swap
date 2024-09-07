@@ -27,10 +27,10 @@ const Home: React.FC<React.PropsWithChildren> = () => {
       <style jsx global>
         {`
           #home-1 .page-bg {
-            background: linear-gradient(139.73deg, #e6fdff 0%, #f3efff 100%);
+            background: #faf9fa;
           }
           [data-theme='dark'] #home-1 .page-bg {
-            background: #050611;
+            background: #08060b;
           }
           #home-2 .page-bg {
             background: linear-gradient(180deg, #ffffff 22%, #d7caec 100%);
