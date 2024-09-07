@@ -1,4 +1,4 @@
-import { Flex, Heading, PageHeader } from '@pancakeswap/uikit'
+import { Flex } from '@pancakeswap/uikit'
 import { AppBody } from 'components/App'
 import Page from 'components/Layout/Page'
 import { useRouter } from 'next/router'
@@ -60,18 +60,6 @@ export default function Swap() {
 
   return (
     <>
-      <PageHeader>
-        <Flex justifyContent="space-between" flexDirection={['column', null, null, 'row']}>
-          <Flex flex="1" flexDirection="column" mr={['8px', 0]}>
-            <Heading as="h1" scale="xxl" color="secondary" mb="24px">
-              {t('Exchange')}
-            </Heading>
-            <Heading scale="md" color="text">
-              {t('Trade tokens in an instant')}
-            </Heading>
-          </Flex>
-        </Flex>
-      </PageHeader>
       <Page title={t('Swap')}>
         <Flex
           width={['328px', '100%']}

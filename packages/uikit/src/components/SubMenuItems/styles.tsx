@@ -17,7 +17,7 @@ const StyledSubMenuItems = styled(Flex)`
   white-space: nowrap;
   scroll-behavior: smooth;
   flex-grow: 1;
-  background-color: ${({ theme }) => `${theme.colors.backgroundAlt2}`};
+  background-color: ${({ theme }) => `${theme.colors.backgroundAlt}`};
   box-shadow: inset 0px -2px 0px -8px rgba(133, 133, 133, 0.1);
   overflow-x: scroll;
   scrollbar-width: none;
