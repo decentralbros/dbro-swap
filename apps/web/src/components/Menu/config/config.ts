@@ -1,5 +1,5 @@
 import { ContextApi } from '@pancakeswap/localization'
-import { DropdownMenuItems, MenuItemsType } from '@pancakeswap/uikit'
+import { DropdownMenuItems, DropdownMenuItemType, MenuItemsType, SwapFillIcon, SwapIcon } from '@pancakeswap/uikit'
 
 export type ConfigMenuDropDownItemsType = DropdownMenuItems & { hideSubNav?: boolean }
 export type ConfigMenuItemsType = Omit<MenuItemsType, 'items'> & { hideSubNav?: boolean; image?: string } & {
@@ -28,9 +28,22 @@ const config: (
   [
     {
       label: t('Trade'),
+      icon: SwapIcon,
+      fillIcon: SwapFillIcon,
       href: '/swap',
-      showOnMobile: false,
-      items: [],
+      showItemsOnMobile: false,
+      items: [
+        {
+          label: t('Swap'),
+          href: '/swap',
+        },
+        {
+          label: t('Bridge'),
+          href: 'https://defiway.com/bridge',
+          showOnMobile: false,
+          type: DropdownMenuItemType.EXTERNAL_LINK,
+        },
+      ],
     },
     // {
     //   label: t('NFT'),
