@@ -1,3 +1,5 @@
+import { APTOS_COIN, useAccount, useBalance } from '@pancakeswap/awgmi'
+import { useTranslation } from '@pancakeswap/localization'
 import {
   ButtonMenu,
   ButtonMenuItem,
@@ -6,13 +8,11 @@ import {
   IconButton,
   InjectedModalProps,
   ModalBody,
+  ModalTitle,
   ModalWrapper,
   ModalHeader as UIKitModalHeader,
-  ModalTitle,
 } from '@pancakeswap/uikit'
-import { useState, useCallback } from 'react'
-import { useAccount, useBalance, APTOS_COIN } from '@pancakeswap/awgmi'
-import { useTranslation } from '@pancakeswap/localization'
+import { useCallback, useState } from 'react'
 import { styled } from 'styled-components'
 
 import { LOW_APT } from 'config'

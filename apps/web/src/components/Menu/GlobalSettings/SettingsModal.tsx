@@ -21,11 +21,9 @@ import {
   ThemeSwitcher,
   Toggle,
 } from '@pancakeswap/uikit'
-import { useExpertMode, useUserExpertModeAcknowledgement, useUserSingleHopOnly } from '@pancakeswap/utils/user'
-import { useActiveChainId } from 'hooks/useActiveChainId'
+import { useUserSingleHopOnly } from '@pancakeswap/utils/user'
 import useTheme from 'hooks/useTheme'
 import { ReactNode, useCallback, useState } from 'react'
-import { useUserShowTestnet } from 'state/user/hooks/useUserShowTestnet'
 import {
   useMMLinkedPoolByDefault,
   useOnlyOneAMMSourceEnabled,
@@ -87,18 +85,18 @@ export const withCustomOnDismiss =
   }
 
 const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ onDismiss, mode }) => {
-  const [showConfirmExpertModal, setShowConfirmExpertModal] = useState(false)
-  const [showExpertModeAcknowledgement, setShowExpertModeAcknowledgement] = useUserExpertModeAcknowledgement()
-  const [expertMode, setExpertMode] = useExpertMode()
+  // const [showConfirmExpertModal, setShowConfirmExpertModal] = useState(false)
+  // const [showExpertModeAcknowledgement, setShowExpertModeAcknowledgement] = useUserExpertModeAcknowledgement()
+  // const [expertMode, setExpertMode] = useExpertMode()
   // const [audioPlay, setAudioMode] = useAudioPlay()
   // const [speedQuote, setSpeedQuote] = useSpeedQuote()
   // const [subgraphHealth, setSubgraphHealth] = useSubgraphHealthIndicatorManager()
   // const [userUsernameVisibility, setUserUsernameVisibility] = useUserUsernameVisibility()
-  const [showTestnet, setShowTestnet] = useUserShowTestnet()
+  // const [showTestnet, setShowTestnet] = useUserShowTestnet()
   // const { enabled } = useWebNotifications()
 
   // const { onChangeRecipient } = useSwapActionHandlers()
-  const { chainId } = useActiveChainId()
+  // const { chainId } = useActiveChainId()
   // const [tokenRisk, setTokenRisk] = useUserTokenRisk()
 
   const { t } = useTranslation()
@@ -125,7 +123,7 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
   // }
 
   return (
-    <Modal title={t('Settings')} headerBackground="gradientCardHeader" onDismiss={onDismiss}>
+    <Modal title={t('Settings')} headerBackground="backgroundAlt" onDismiss={onDismiss}>
       <ScrollableContainer>
         {mode === SettingsMode.GLOBAL && (
           <>
