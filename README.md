@@ -63,15 +63,3 @@ pnpm dev:blog
 ```sh
 pnpm build:blog
 ```
-
-## `apps/games`
-
-How to start
-
-```sh
-pnpm dev:games
-```
-
-```sh
-pnpm build:games
-```

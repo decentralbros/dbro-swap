@@ -3,8 +3,7 @@ description: Share your amazing ideas!
 title: '[Feature Request] <title>'
 labels: [Feature Request, Triage]
 assignees:
-  - Chef-Cheems
-  - chef-jojo
+  - vmcodes
 body:
   - type: checkboxes
     attributes:
