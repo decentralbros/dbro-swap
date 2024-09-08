@@ -69,7 +69,7 @@ export const V3_SUBGRAPH_URLS = {
   [ChainId.BASE]: `https://gateway.thegraph.com/api/${THE_GRAPH_KEY}/subgraphs/id/BHWNsedAHtmTCzXxCCDfhPmm6iN9rxUhoRHdHKyujic3`,
   [ChainId.ETHEREUM]: `https://gateway.thegraph.com/api/${THE_GRAPH_KEY}/subgraphs/id/CJYGNhb7RvnhfBDjqpRnD3oxgyhibzc7fkAMa38YV3oS`,
   [ChainId.BSC]: `${THE_GRAPH_PROXY_API}/exchange-v3-bsc`,
-  [ChainId.ARBITRUM_ONE]: `${THE_GRAPH_PROXY_API}/exchange-v3-arb`,
+  [ChainId.ARBITRUM_ONE]: `https://gateway.thegraph.com/api/${THE_GRAPH_KEY}/subgraphs/id/251MHFNN1rwjErXD2efWMpNS73SANZN8Ua192zw6iXve`,
   [ChainId.ZKSYNC]: `${THE_GRAPH_PROXY_API}/exchange-v3-zksync`,
   [ChainId.LINEA]: `${THE_GRAPH_PROXY_API}/exchange-v3-linea`,
   [ChainId.OPBNB]: `${THE_GRAPH_PROXY_API}/exchange-v3-opbnb`,
