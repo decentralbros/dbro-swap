@@ -1,6 +1,6 @@
 import { ChainId, chainNames } from '@pancakeswap/chains'
 import memoize from 'lodash/memoize'
-import { Chain, base, bsc as bsc_, mainnet } from 'wagmi/chains'
+import { Chain, arbitrum, base, mainnet } from 'wagmi/chains'
 
 export const CHAIN_QUERY_NAME = chainNames
 
@@ -16,27 +16,27 @@ export const getChainId = memoize((chainName: string) => {
   return CHAIN_QUERY_NAME_TO_ID[chainName.toLowerCase()] ? +CHAIN_QUERY_NAME_TO_ID[chainName.toLowerCase()] : undefined
 })
 
-const bsc = {
-  ...bsc_,
-  rpcUrls: {
-    ...bsc_.rpcUrls,
-    public: {
-      ...bsc_.rpcUrls,
-      http: ['https://bsc-dataseed.binance.org/'],
-    },
-    default: {
-      ...bsc_.rpcUrls.default,
-      http: ['https://bsc-dataseed.binance.org/'],
-    },
-  },
-} satisfies Chain
+// const bsc = {
+//   ...bsc_,
+//   rpcUrls: {
+//     ...bsc_.rpcUrls,
+//     public: {
+//       ...bsc_.rpcUrls,
+//       http: ['https://bsc-dataseed.binance.org/'],
+//     },
+//     default: {
+//       ...bsc_.rpcUrls.default,
+//       http: ['https://bsc-dataseed.binance.org/'],
+//     },
+//   },
+// } satisfies Chain
 
 /**
  * Controls some L2 specific behavior, e.g. slippage tolerance, special UI behavior.
  * The expectation is that all of these networks have immediate transaction confirmation.
  */
 export const L2_CHAIN_IDS: ChainId[] = [
-  // ChainId.ARBITRUM_ONE,
+  ChainId.ARBITRUM_ONE,
   // ChainId.ARBITRUM_GOERLI,
   // ChainId.POLYGON_ZKEVM,
   // ChainId.POLYGON_ZKEVM_TESTNET,
@@ -56,7 +56,7 @@ export const CHAINS: [Chain, ...Chain[]] = [
   mainnet,
   // goerli,
   // sepolia,
-  // arbitrum,
+  arbitrum,
   base,
   // bscTestnet,
   // polygonZkEvm,
@@ -66,7 +66,7 @@ export const CHAINS: [Chain, ...Chain[]] = [
   // arbitrumSepolia,
   // linea,
   // lineaTestnet,
-  bsc,
+  // bsc,
   // baseGoerli,
   // baseSepolia,
   // opBNB,
