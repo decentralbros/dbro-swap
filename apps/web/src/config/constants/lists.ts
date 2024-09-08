@@ -14,9 +14,9 @@ const PANCAKE_OPBNB_DEFAULT = 'https://tokens.pancakeswap.finance/pancakeswap-op
 export const PANCAKE_ETH_MM = 'https://tokens.pancakeswap.finance/pancakeswap-eth-mm.json'
 export const PANCAKE_BSC_MM = 'https://tokens.pancakeswap.finance/pancakeswap-bnb-mm.json'
 
-const COINGECKO_ETH = 'https://tokens.coingecko.com/uniswap/all.json'
 // export const CMC = 'https://tokens.pancakeswap.finance/cmc.json' // not updated for a while
 
+export const COINGECKO_ETH = 'https://tokens.coingecko.com/uniswap/all.json'
 export const COINGECKO_ARBITRUM = 'https://tokens.coingecko.com/arbitrum-one/all.json'
 export const COINGECKO_BASE = 'https://tokens.coingecko.com/base/all.json'
 
@@ -32,9 +32,9 @@ const BASE_URLS = [COINGECKO_BASE]
 const OPBNB_URLS = [PANCAKE_OPBNB_DEFAULT]
 
 // List of official tokens list
-export const OFFICIAL_LISTS = [PANCAKE_EXTENDED, PANCAKE_ETH_DEFAULT]
+export const OFFICIAL_LISTS = []
 
-export const UNSUPPORTED_LIST_URLS: string[] = []
+export const UNSUPPORTED_LIST_URLS: string[] = [COINGECKO]
 export const WARNING_LIST_URLS: string[] = []
 
 // lower index == higher priority for token import
@@ -53,7 +53,7 @@ export const DEFAULT_LIST_OF_LISTS: string[] = [
 ]
 
 // default lists to be 'active' aka searched across
-export const DEFAULT_ACTIVE_LIST_URLS: string[] = [COINGECKO_ETH, COINGECKO_ARBITRUM, COINGECKO_BASE, COINGECKO]
+export const DEFAULT_ACTIVE_LIST_URLS: string[] = [COINGECKO_ETH, COINGECKO_ARBITRUM, COINGECKO_BASE]
 
 export const MULTI_CHAIN_LIST_URLS: { [chainId: number]: string[] } = {
   [ChainId.BSC]: BSC_URLS,
