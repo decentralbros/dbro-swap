@@ -53,7 +53,7 @@ export const DEFAULT_LIST_OF_LISTS: string[] = [
 ]
 
 // default lists to be 'active' aka searched across
-export const DEFAULT_ACTIVE_LIST_URLS: string[] = [COINGECKO_ETH, COINGECKO_ARBITRUM, COINGECKO_BASE]
+export const DEFAULT_ACTIVE_LIST_URLS: string[] = []
 
 export const MULTI_CHAIN_LIST_URLS: { [chainId: number]: string[] } = {
   [ChainId.BSC]: BSC_URLS,
