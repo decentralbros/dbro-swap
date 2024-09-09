@@ -1,7 +1,25 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { TokenList } from '@pancakeswap/token-lists'
-import { useFetchListCallback } from '@pancakeswap/token-lists/react'
-import { AutoColumn, Button, CheckmarkIcon, CogIcon, Column, LinkExternal, Text, useTooltip } from '@pancakeswap/uikit'
+import { TokenList, Version } from '@pancakeswap/token-lists'
+import {
+  acceptListUpdate,
+  disableList,
+  enableList,
+  removeList,
+  useFetchListCallback,
+} from '@pancakeswap/token-lists/react'
+import {
+  AutoColumn,
+  Button,
+  CheckmarkIcon,
+  CogIcon,
+  Column,
+  Input,
+  LinkExternal,
+  Text,
+  Toggle,
+  useConfirm,
+  useTooltip,
+} from '@pancakeswap/uikit'
 import { ListLogo } from '@pancakeswap/widgets-internal'
 
 import uriToHttp from '@pancakeswap/utils/uriToHttp'
@@ -18,9 +36,9 @@ import { selectorByUrlsAtom, useActiveListUrls, useAllLists, useIsListActive } f
 import Row, { RowBetween, RowFixed } from '../Layout/Row'
 import { CurrencyModalView } from './types'
 
-// function listVersionLabel(version: Version): string {
-//   return `v${version.major}.${version.minor}.${version.patch}`
-// }
+function listVersionLabel(version: Version): string {
+  return `v${version.major}.${version.minor}.${version.patch}`
+}
 
 const Wrapper = styled(Column)`
   width: 100%;
@@ -48,7 +66,7 @@ const ListRow = memo(function ListRow({ listUrl }: { listUrl: string }) {
   const isActive = useIsListActive(listUrl)
 
   const listsByUrl = useAtomValue(selectorByUrlsAtom)
-  // const [, dispatch] = useListState()
+  const [, dispatch] = useListState()
   const { current: list, pendingUpdate: pending } = listsByUrl[listUrl]
 
   const activeTokensOnThisChain = useMemo(() => {
@@ -58,42 +76,42 @@ const ListRow = memo(function ListRow({ listUrl }: { listUrl: string }) {
     return list.tokens.reduce((acc, cur) => (cur.chainId === chainId ? acc + 1 : acc), 0)
   }, [chainId, list])
 
-  // const handleAcceptListUpdate = useCallback(() => {
-  //   if (!pending) return
-  //   dispatch(acceptListUpdate(listUrl))
-  // }, [dispatch, listUrl, pending])
+  const handleAcceptListUpdate = useCallback(() => {
+    if (!pending) return
+    dispatch(acceptListUpdate(listUrl))
+  }, [dispatch, listUrl, pending])
 
-  // const confirm = useConfirm()
+  const confirm = useConfirm()
 
-  // const handleRemoveList = useCallback(() => {
-  //   confirm({
-  //     message: 'Please confirm you would like to remove this list',
-  //     onConfirm: (confirmed) => confirmed && dispatch(removeList(listUrl)),
-  //   })
-  // }, [confirm, dispatch, listUrl])
+  const handleRemoveList = useCallback(() => {
+    confirm({
+      message: 'Please confirm you would like to remove this list',
+      onConfirm: (confirmed) => confirmed && dispatch(removeList(listUrl)),
+    })
+  }, [confirm, dispatch, listUrl])
 
-  // const handleEnableList = useCallback(() => {
-  //   dispatch(enableList(listUrl))
-  // }, [dispatch, listUrl])
+  const handleEnableList = useCallback(() => {
+    dispatch(enableList(listUrl))
+  }, [dispatch, listUrl])
 
-  // const handleDisableList = useCallback(() => {
-  //   dispatch(disableList(listUrl))
-  // }, [dispatch, listUrl])
+  const handleDisableList = useCallback(() => {
+    dispatch(disableList(listUrl))
+  }, [dispatch, listUrl])
 
   const { targetRef, tooltip, tooltipVisible } = useTooltip(
     <div>
-      {/* <Text>{list && listVersionLabel(list.version)}</Text> */}
-      <LinkExternal color="text" external href={`https://tokenlists.org/token-list?url=${listUrl}`}>
+      <Text>{list && listVersionLabel(list.version)}</Text>
+      <LinkExternal external href={`https://tokenlists.org/token-list?url=${listUrl}`}>
         {t('See')}
       </LinkExternal>
-      {/* <Button variant="danger" scale="xs" onClick={handleRemoveList} disabled={Object.keys(listsByUrl).length === 1}>
+      <Button variant="danger" scale="xs" onClick={handleRemoveList} disabled={Object.keys(listsByUrl).length === 1}>
         {t('Remove')}
       </Button>
       {pending && (
         <Button variant="text" onClick={handleAcceptListUpdate} style={{ fontSize: '12px' }}>
           {t('Update list')}
         </Button>
-      )} */}
+      )}
     </div>,
     { placement: 'right-end', trigger: 'click', isInPortal: false },
   )
@@ -126,7 +144,7 @@ const ListRow = memo(function ListRow({ listUrl }: { listUrl: string }) {
           </span>
         </RowFixed>
       </Column>
-      {/* <Toggle
+      <Toggle
         checked={isActive}
         onChange={() => {
           if (isActive) {
@@ -135,7 +153,7 @@ const ListRow = memo(function ListRow({ listUrl }: { listUrl: string }) {
             handleEnableList()
           }
         }}
-      /> */}
+      />
     </RowWrapper>
   )
 })
@@ -264,7 +282,7 @@ function ManageLists({
   return (
     <Wrapper>
       <AutoColumn gap="14px">
-        {/* <Row>
+        <Row>
           <Input
             id="list-add-input"
             scale="lg"
@@ -277,7 +295,7 @@ function ManageLists({
           <Text color="failure" style={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
             {addError}
           </Text>
-        ) : null} */}
+        ) : null}
       </AutoColumn>
       {tempList && (
         <AutoColumn style={{ marginTop: 8 }}>
