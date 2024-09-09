@@ -299,6 +299,14 @@
       "logoURI": "https://tokens.pancakeswap.finance/images/symbol/usdt.png"
     },
     {
+      "name": "Graph Token",
+      "address": "0x9623063377AD1B27544C965cCd7342f7EA7e88C7",
+      "symbol": "GRT",
+      "decimals": 18,
+      "chainId": 42161,
+      "logoURI": "https://tokens.pancakeswap.finance/images/arbitrum/0x9623063377AD1B27544C965cCd7342f7EA7e88C7.png"
+    },
+    {
       "name": "Wrapped BNB",
       "symbol": "WBNB",
       "address": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
