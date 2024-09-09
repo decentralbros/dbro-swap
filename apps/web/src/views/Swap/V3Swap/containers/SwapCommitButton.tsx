@@ -228,8 +228,6 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     try {
       setLoadSwap(true)
 
-      const txConfirms = chainId === ChainId.BASE ? 4 : 2
-
       if (!inputCurrency.isNative) {
         const hash: `0x${string}` = await writeContract(config, {
           abi,
@@ -239,9 +237,9 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
           chainId,
         })
 
-        if (chainId === ChainId.BASE) {
+        if (chainId !== ChainId.ETHEREUM) {
           await waitForTransactionReceipt(config, {
-            confirmations: txConfirms,
+            confirmations: 4,
             hash,
             chainId,
           })
@@ -256,17 +254,11 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         account,
         to: transaction.to,
         data: transaction.data,
-        gasPrice: BigInt(transaction.gasPrice * 10),
+        gasPrice: BigInt(transaction.gasPrice * 5),
         value: transaction.value,
       })
 
       addTransaction({ hash: tx })
-
-      // await waitForTransactionReceipt(config, {
-      //   confirmations: txConfirms,
-      //   hash: tx,
-      //   chainId,
-      // })
 
       reset()
       setLoadSwap(false)
