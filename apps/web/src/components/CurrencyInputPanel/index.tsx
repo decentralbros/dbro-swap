@@ -158,12 +158,12 @@ const CurrencyInputPanel = memo(function CurrencyInputPanel({
 
   const [balance, setBalance] = useState<string | undefined>(undefined)
 
-  useEffect(() => {
-    const fetchBalance = async () => {
-      if (!currency || !account) {
-        return
-      }
+  const fetchBalance = async () => {
+    if (!currency || !account) {
+      return
+    }
 
+    try {
       let params: Balance
 
       if (!currency.isNative) {
@@ -182,8 +182,12 @@ const CurrencyInputPanel = memo(function CurrencyInputPanel({
       const data = await response.json()
 
       setBalance(data.toFixed(6))
+    } catch {
+      setBalance('0.000000')
     }
+  }
 
+  useEffect(() => {
     if (!hideBalance && !!currency) {
       fetchBalance()
     }
