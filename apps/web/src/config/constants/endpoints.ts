@@ -65,13 +65,13 @@ export const ASSET_CDN = 'https://islandswap.finance'
 
 export const V3_SUBGRAPH_URLS = {
   ...V3_SUBGRAPHS,
-  [ChainId.POLYGON_ZKEVM]: `${THE_GRAPH_PROXY_API}/exchange-v3-polygon-zkevm`,
+  [ChainId.POLYGON_ZKEVM]: `https://gateway.thegraph.com/api/${THE_GRAPH_KEY}/subgraphs/id/7HroSeAFxfJtYqpbgcfAnNSgkzzcZXZi6c75qLPheKzQ`,
   [ChainId.BASE]: `https://gateway.thegraph.com/api/${THE_GRAPH_KEY}/subgraphs/id/BHWNsedAHtmTCzXxCCDfhPmm6iN9rxUhoRHdHKyujic3`,
   [ChainId.ETHEREUM]: `https://gateway.thegraph.com/api/${THE_GRAPH_KEY}/subgraphs/id/CJYGNhb7RvnhfBDjqpRnD3oxgyhibzc7fkAMa38YV3oS`,
   [ChainId.BSC]: `${THE_GRAPH_PROXY_API}/exchange-v3-bsc`,
   [ChainId.ARBITRUM_ONE]: `https://gateway.thegraph.com/api/${THE_GRAPH_KEY}/subgraphs/id/251MHFNN1rwjErXD2efWMpNS73SANZN8Ua192zw6iXve`,
-  [ChainId.ZKSYNC]: `${THE_GRAPH_PROXY_API}/exchange-v3-zksync`,
-  [ChainId.LINEA]: `${THE_GRAPH_PROXY_API}/exchange-v3-linea`,
+  [ChainId.ZKSYNC]: `https://gateway.thegraph.com/api/${THE_GRAPH_KEY}/subgraphs/id/3dKr3tYxTuwiRLkU9vPj3MvZeUmeuGgWURbFC72ZBpYY`,
+  [ChainId.LINEA]: `https://gateway.thegraph.com/api/${THE_GRAPH_KEY}/subgraphs/id/6gCTVX98K3A9Hf9zjvgEKwjz7rtD4C1V173RYEdbeMFX`,
   [ChainId.OPBNB]: `${THE_GRAPH_PROXY_API}/exchange-v3-opbnb`,
 }
 
