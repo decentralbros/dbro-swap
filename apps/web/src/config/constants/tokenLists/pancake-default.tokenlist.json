@@ -299,6 +299,14 @@
       "logoURI": "https://tokens.pancakeswap.finance/images/symbol/usdt.png"
     },
     {
+      "name": "Decentral Bros",
+      "symbol": "DBRO",
+      "address": "0x6a4e0F83D7882BcACFF89aaF6f60D24E13191E9F",
+      "chainId": 8453,
+      "decimals": 8,
+      "logoURI": "https://www.decentralbros.xyz/logo192.png"
+    },
+    {
       "name": "Graph Token",
       "address": "0x9623063377AD1B27544C965cCd7342f7EA7e88C7",
       "symbol": "GRT",

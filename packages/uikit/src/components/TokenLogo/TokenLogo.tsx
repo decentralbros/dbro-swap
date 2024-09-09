@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { DefaultTokenIcon } from "../Svg";
 
 const BAD_SRCS: { [imageSrc: string]: true } = {};
 
@@ -30,7 +29,7 @@ const TokenLogo: React.FC<React.PropsWithChildren<TokenLogoProps>> = ({ srcs, al
     );
   }
 
-  return <DefaultTokenIcon color="disabled" {...rest} />;
+  return <img src="/logo.webp" {...rest} alt={alt} />;
 };
 
 export default TokenLogo;
