@@ -10,7 +10,7 @@ export const SEO: DefaultSeoProps = {
     site: '@IslandSwap',
   },
   openGraph: {
-    title: "🏝️ IslandSwap - Everyone's Favorite DEX",
+    title: "IslandSwap - Everyone's Favorite DEX",
     description: 'Trade, earn, and own crypto on the all-in-one multichain DEX',
     images: [{ url: 'https://islandswap.finance/islandswap.jpg' }],
   },
