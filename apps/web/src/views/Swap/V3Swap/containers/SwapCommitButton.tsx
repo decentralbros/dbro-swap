@@ -1,4 +1,4 @@
-import { TradeType } from '@pancakeswap/sdk'
+import { ChainId, TradeType } from '@pancakeswap/sdk'
 import { SmartRouterTrade } from '@pancakeswap/smart-router'
 import { Currency, CurrencyAmount, Token } from '@pancakeswap/swap-sdk-core'
 import { Box, Button, Dots, useModal } from '@pancakeswap/uikit'
@@ -6,7 +6,8 @@ import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 
 import { useTranslation } from '@pancakeswap/localization'
 import { getUniversalRouterAddress } from '@pancakeswap/universal-router-sdk'
-import { sendTransaction } from '@wagmi/core'
+import { parseUnits } from '@pancakeswap/utils/viem/parseUnits'
+import { sendTransaction, waitForTransactionReceipt, writeContract } from '@wagmi/core'
 import { CommitButton } from 'components/CommitButton'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import SettingsModal, { withCustomOnDismiss } from 'components/Menu/GlobalSettings/SettingsModal'
@@ -22,6 +23,7 @@ import { useTransactionAdder } from 'state/transactions/hooks'
 import { useCurrencyBalances } from 'state/wallet/hooks'
 import { config } from 'utils/wagmi'
 import { useAccount, useChainId } from 'wagmi'
+import { abi } from '../abi'
 import { useSlippageAdjustedAmounts } from '../hooks'
 import { useConfirmModalState } from '../hooks/useConfirmModalState'
 import { useSwapCurrency } from '../hooks/useSwapCurrency'
@@ -226,23 +228,23 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     try {
       setLoadSwap(true)
 
-      // if (!inputCurrency.isNative) {
-      //   const hash: `0x${string}` = await writeContract(config, {
-      //     abi,
-      //     address: inputCurrency.address as `0x${string}`,
-      //     functionName: 'approve',
-      //     args: [ZEROX_ADDRESS as `0x${string}`, parseUnits(typedValue, inputCurrency.decimals)],
-      //     chainId,
-      //   })
+      if (!inputCurrency.isNative) {
+        const hash: `0x${string}` = await writeContract(config, {
+          abi,
+          address: inputCurrency.address as `0x${string}`,
+          functionName: 'approve',
+          args: [ZEROX_ADDRESS as `0x${string}`, parseUnits(typedValue, inputCurrency.decimals)],
+          chainId,
+        })
 
-      //   if (chainId !== ChainId.ETHEREUM) {
-      //     await waitForTransactionReceipt(config, {
-      //       confirmations: 4,
-      //       hash,
-      //       chainId,
-      //     })
-      //   }
-      // }
+        if (chainId !== ChainId.ETHEREUM) {
+          await waitForTransactionReceipt(config, {
+            confirmations: 4,
+            hash,
+            chainId,
+          })
+        }
+      }
 
       const response = await fetch(`/api/swap?${qs.stringify(swapParams)}`)
       const quote = await response.json()
