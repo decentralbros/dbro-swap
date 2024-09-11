@@ -16,8 +16,6 @@ const handler: NextApiHandler = async (req, res) => {
 
   const data = await request.json()
 
-  console.dir(data)
-
   return res.json(data)
 }
 

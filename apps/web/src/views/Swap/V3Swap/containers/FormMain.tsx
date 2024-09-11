@@ -112,6 +112,12 @@ export function FormMain({ pricingAndSlippage, inputAmount, outputAmount, tradeL
   //   return typedValue && (isTypingInput ? estimate : typedValue)
   // }, [typedValue, isTypingInput, estimate])
 
+  const chainId = useChainId()
+  const swapParams = useSwapValues()
+  const [estimate, setEstimate] = useState<string>('')
+  const [inputUSD, setInputUSD] = useState<string>('0.00')
+  const [outputUSD, setOutputUSD] = useState<string>('0.00')
+
   const fetchOutputUSD = async (buyAmount: number) => {
     if (!inputCurrency || !outputCurrency || !swapParams) return
 
@@ -126,11 +132,27 @@ export function FormMain({ pricingAndSlippage, inputAmount, outputAmount, tradeL
 
       const response = await fetch(`${ISLANDSWAP_API}/balance/usd?${qs.stringify(params)}`)
       const usd = await response.json()
-      if (usd && estimate) {
+      if (Number(usd) && estimate) {
         setOutputUSD((Number(usd) * buyAmount).toFixed(2))
       }
     } catch {
       setOutputUSD('0.00')
+    }
+  }
+
+  const estimateOutput = async () => {
+    try {
+      const response = await fetch(`/api/quote?${qs.stringify(swapParams)}`)
+      const quote = await response.json()
+
+      if (quote.buyAmount && outputCurrency?.decimals) {
+        const buyAmount = quote.buyAmount / 10 ** outputCurrency.decimals
+        setEstimate(String(buyAmount))
+        fetchOutputUSD(buyAmount)
+      }
+    } catch {
+      setEstimate('')
+      setInputUSD('0.00')
     }
   }
 
@@ -155,27 +177,6 @@ export function FormMain({ pricingAndSlippage, inputAmount, outputAmount, tradeL
       }
     } catch {
       setInputUSD('0.00')
-    }
-  }
-
-  const chainId = useChainId()
-  const swapParams = useSwapValues()
-  const [estimate, setEstimate] = useState<string>('')
-  const [inputUSD, setInputUSD] = useState<string>('0.00')
-  const [outputUSD, setOutputUSD] = useState<string>('0.00')
-
-  const estimateOutput = async () => {
-    try {
-      const response = await fetch(`/api/quote?${qs.stringify(swapParams)}`)
-      const quote = await response.json()
-
-      if (quote.buyAmount && outputCurrency?.decimals) {
-        const buyAmount = quote.buyAmount / 10 ** outputCurrency.decimals
-        setEstimate(String(buyAmount))
-        fetchOutputUSD(buyAmount)
-      }
-    } catch {
-      setEstimate('')
     }
   }
 

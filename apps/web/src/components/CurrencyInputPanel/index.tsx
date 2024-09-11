@@ -72,7 +72,7 @@ interface Balance {
 
 const CurrencyInputPanel = memo(function CurrencyInputPanel({
   value,
-  usdValue = '',
+  usdValue = '0.00',
   onUserInput,
   onInputBlur,
   onPercentInput,
