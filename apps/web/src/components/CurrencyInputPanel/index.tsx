@@ -8,7 +8,6 @@ import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { styled } from 'styled-components'
 import { safeGetAddress } from 'utils'
 
-import { useStablecoinPriceAmount } from 'hooks/useStablecoinPrice'
 import { StablePair } from 'views/AddLiquidity/AddStableLiquidity/hooks/useStableLPDerivedMintInfo'
 
 import { FiatLogo } from 'components/Logo/CurrencyLogo'
@@ -111,14 +110,14 @@ const CurrencyInputPanel = memo(function CurrencyInputPanel({
   const token = pair ? pair.liquidityToken : currency?.isToken ? currency : null
   const tokenAddress = token ? safeGetAddress(token.address) : null
 
-  const amountInDollar = useStablecoinPriceAmount(
-    showUSDPrice ? currency ?? undefined : undefined,
-    value !== undefined && Number.isFinite(+value) ? +value : undefined,
-    {
-      hideIfPriceImpactTooHigh: true,
-      enabled: Boolean(value !== undefined && Number.isFinite(+value)),
-    },
-  )
+  // const amountInDollar = useStablecoinPriceAmount(
+  //   showUSDPrice ? currency ?? undefined : undefined,
+  //   value !== undefined && Number.isFinite(+value) ? +value : undefined,
+  //   {
+  //     hideIfPriceImpactTooHigh: true,
+  //     enabled: Boolean(value !== undefined && Number.isFinite(+value)),
+  //   },
+  // )
 
   const [onPresentCurrencyModal] = useModal(
     <CurrencySearchModal
@@ -291,7 +290,7 @@ const CurrencyInputPanel = memo(function CurrencyInputPanel({
                 {inputLoading ? (
                   <Loading width="14px" height="14px" />
                 ) : showUSDPrice && usdValue ? (
-                  <Text fontSize="12px" color="textSubtle" ellipsis>
+                  <Text fontSize="12px" color="textSubtle" style={{ zIndex: 1 }} ellipsis>
                     {`~${usdValue} USD`}
                   </Text>
                 ) : (
