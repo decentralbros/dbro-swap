@@ -390,6 +390,7 @@ export default function IncreaseLiquidityV3({ currencyA: baseCurrency, currencyB
             <Box mt="16px">
               <LockedDeposit locked={depositADisabled} mb="8px">
                 <CurrencyInputPanel
+                  usdValue=""
                   disableCurrencySelect
                   showUSDPrice
                   maxAmount={maxAmounts[Field.CURRENCY_A]}
@@ -409,6 +410,7 @@ export default function IncreaseLiquidityV3({ currencyA: baseCurrency, currencyB
               </LockedDeposit>
               <LockedDeposit locked={depositBDisabled} mt="8px">
                 <CurrencyInputPanel
+                  usdValue=""
                   disableCurrencySelect
                   showUSDPrice
                   maxAmount={maxAmounts[Field.CURRENCY_B]}

@@ -142,6 +142,7 @@ export default function StableFormView({
         </Text>
 
         <CurrencyInputPanel
+          usdValue=""
           showUSDPrice
           maxAmount={maxAmounts[Field.CURRENCY_A]}
           onMax={() => onFieldAInput(maxAmounts[Field.CURRENCY_A]?.toExact() ?? '')}
@@ -162,6 +163,7 @@ export default function StableFormView({
         />
 
         <CurrencyInputPanel
+          usdValue=""
           showUSDPrice
           disableCurrencySelect
           maxAmount={maxAmounts[Field.CURRENCY_B]}

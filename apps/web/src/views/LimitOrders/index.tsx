@@ -368,6 +368,7 @@ const LimitOrders = () => {
                 <Wrapper id="limit-order-page" style={{ minHeight: '412px' }}>
                   <AutoColumn gap="sm">
                     <CurrencyInputPanel
+                      usdValue=""
                       label={independentField === Field.OUTPUT ? t('From (estimated)') : t('From')}
                       value={formattedAmounts.input}
                       showQuickInputButton
@@ -396,6 +397,7 @@ const LimitOrders = () => {
                       color={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? 'primary' : 'text'}
                     />
                     <CurrencyInputPanel
+                      usdValue=""
                       value={formattedAmounts.output}
                       onUserInput={handleTypeOutput}
                       label={independentField === Field.INPUT ? t('To (estimated)') : t('To')}

@@ -147,6 +147,7 @@ export default function V2FormView({
 
         <Box mb="8px">
           <CurrencyInputPanel
+            usdValue=""
             maxAmount={maxAmounts[Field.CURRENCY_A]}
             showUSDPrice
             onMax={() => {
@@ -170,6 +171,7 @@ export default function V2FormView({
         </Box>
 
         <CurrencyInputPanel
+          usdValue=""
           showUSDPrice
           onPercentInput={(percent) => {
             if (maxAmounts[Field.CURRENCY_B]) {

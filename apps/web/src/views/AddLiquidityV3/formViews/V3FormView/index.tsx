@@ -525,6 +525,7 @@ export default function V3FormView({
         <LockedDeposit locked={depositADisabled} mb="8px">
           <Box mb="8px">
             <CurrencyInputPanel
+              usdValue=""
               showUSDPrice
               maxAmount={maxAmounts[Field.CURRENCY_A]}
               onMax={() => onFieldAInput(maxAmounts[Field.CURRENCY_A]?.toExact() ?? '')}
@@ -546,6 +547,7 @@ export default function V3FormView({
 
         <LockedDeposit locked={depositBDisabled} mb="8px">
           <CurrencyInputPanel
+            usdValue=""
             showUSDPrice
             maxAmount={maxAmounts[Field.CURRENCY_B]}
             onMax={() => onFieldBInput(maxAmounts[Field.CURRENCY_B]?.toExact() ?? '')}

@@ -587,6 +587,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
       {showDetailed && (
         <Box my="16px">
           <CurrencyInputPanel
+            usdValue=""
             value={formattedAmounts[Field.LIQUIDITY]}
             onUserInput={onLiquidityInput}
             onPercentInput={(percent) => {
@@ -610,6 +611,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
             <ArrowDownIcon width="24px" my="16px" />
           </ColumnCenter>
           <CurrencyInputPanel
+            usdValue=""
             hideBalance
             value={formattedAmounts[Field.CURRENCY_A]}
             onUserInput={onCurrencyAInput}
@@ -627,6 +629,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
             <AddIcon width="24px" my="16px" />
           </ColumnCenter>
           <CurrencyInputPanel
+            usdValue=""
             hideBalance
             value={formattedAmounts[Field.CURRENCY_B]}
             onUserInput={onCurrencyBInput}
