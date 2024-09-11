@@ -8,7 +8,6 @@ import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { styled } from 'styled-components'
 import { safeGetAddress } from 'utils'
 
-import { formatNumber } from '@pancakeswap/utils/formatBalance'
 import { useStablecoinPriceAmount } from 'hooks/useStablecoinPrice'
 import { StablePair } from 'views/AddLiquidity/AddStableLiquidity/hooks/useStableLPDerivedMintInfo'
 
@@ -33,6 +32,7 @@ const CurrencySelectButton = styled(Button).attrs({ variant: 'text', scale: 'sm'
 
 interface CurrencyInputPanelProps {
   value: string | undefined
+  usdValue: string | undefined
   onUserInput: (value: string) => void
   onInputBlur?: () => void
   onPercentInput?: (percent: number) => void
@@ -73,6 +73,7 @@ interface Balance {
 
 const CurrencyInputPanel = memo(function CurrencyInputPanel({
   value,
+  usdValue,
   onUserInput,
   onInputBlur,
   onPercentInput,
@@ -289,9 +290,9 @@ const CurrencyInputPanel = memo(function CurrencyInputPanel({
               <Flex maxWidth="200px">
                 {inputLoading ? (
                   <Loading width="14px" height="14px" />
-                ) : showUSDPrice && Number.isFinite(amountInDollar) ? (
+                ) : showUSDPrice && usdValue ? (
                   <Text fontSize="12px" color="textSubtle" ellipsis>
-                    {`~${amountInDollar ? formatNumber(amountInDollar) : 0} USD`}
+                    {`~${usdValue} USD`}
                   </Text>
                 ) : (
                   <Box height="18px" />

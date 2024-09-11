@@ -15,8 +15,9 @@ import { currencyId } from 'utils/currencyId'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
 
 import { Flex, Text } from '@pancakeswap/uikit'
+import { ISLANDSWAP_API } from 'config/constants/endpoints'
 import qs from 'qs'
-import { useAccount } from 'wagmi'
+import { useAccount, useChainId } from 'wagmi'
 import useWarningImport from '../../hooks/useWarningImport'
 import { FormContainer } from '../components'
 import { useIsWrapping } from '../hooks'
@@ -111,22 +112,53 @@ export function FormMain({ pricingAndSlippage, inputAmount, outputAmount, tradeL
   //   return typedValue && (isTypingInput ? estimate : typedValue)
   // }, [typedValue, isTypingInput, estimate])
 
+  const chainId = useChainId()
   const swapParams = useSwapValues()
   const [estimate, setEstimate] = useState<string>('')
+  const [inputUSD, setInputUSD] = useState<string>('0.00')
 
   const estimateOutput = async () => {
-    const response = await fetch(`/api/quote?${qs.stringify(swapParams)}`)
-    const quote = await response.json()
+    try {
+      const response = await fetch(`/api/quote?${qs.stringify(swapParams)}`)
+      const quote = await response.json()
 
-    if (quote.buyAmount && outputCurrency?.decimals) {
-      const buyAmount = quote.buyAmount / 10 ** outputCurrency.decimals
-      setEstimate(String(buyAmount))
+      if (quote.buyAmount && outputCurrency?.decimals) {
+        const buyAmount = quote.buyAmount / 10 ** outputCurrency.decimals
+        setEstimate(String(buyAmount))
+      }
+    } catch {
+      setEstimate('')
+    }
+  }
+
+  const fetchInputUSD = async () => {
+    if (!inputCurrency || !swapParams) return
+
+    try {
+      const params = {
+        chainId,
+        address: account,
+        native: inputCurrency.isNative,
+        contract: swapParams.sellToken,
+        decimals: inputCurrency.decimals,
+      }
+
+      const response = await fetch(`${ISLANDSWAP_API}/balance/usd?${qs.stringify(params)}`)
+      const usd = await response.json()
+      const value = isWrapping ? Number(typedValue) : Number(inputValue)
+
+      if (usd && value) {
+        setInputUSD((Number(usd) * value).toFixed(2))
+      }
+    } catch {
+      setInputUSD('0.00')
     }
   }
 
   useEffect(() => {
     if (parseFloat(typedValue) > 0) {
       estimateOutput()
+      fetchInputUSD()
     } else {
       setEstimate('')
     }
@@ -145,7 +177,8 @@ export function FormMain({ pricingAndSlippage, inputAmount, outputAmount, tradeL
       </Flex>
       <CurrencyInputPanel
         id="swap-currency-input"
-        showUSDPrice={false}
+        showUSDPrice
+        usdValue={inputUSD}
         showMaxButton
         showCommonBases
         inputLoading={!isWrapping && inputLoading}
@@ -168,12 +201,13 @@ export function FormMain({ pricingAndSlippage, inputAmount, outputAmount, tradeL
         id="swap-currency-output"
         disabled
         showUSDPrice={false}
+        inputUSD=""
         showCommonBases
         showMaxButton={false}
         inputLoading={!isWrapping && outputLoading}
         currencyLoading={!loadedUrlParams}
         label={isTypingInput && !isWrapping ? t('To (estimated)') : t('To')}
-        value={isWrapping ? typedValue : estimate}
+        value={isWrapping ? typedValue : Number(estimate).toFixed(6)}
         currency={outputCurrency}
         onUserInput={handleTypeOutput}
         onCurrencySelect={handleOutputSelect}
