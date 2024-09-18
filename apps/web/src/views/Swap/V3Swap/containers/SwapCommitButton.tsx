@@ -217,11 +217,10 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
 
   const swapParams = useSwapValues()
 
-  const handleSwap = async () => {
+  const handleSwap = useCallback(async () => {
     if (!swapParams || !inputCurrency || !outputCurrency) {
       reset()
       setLoadSwap(false)
-
       return
     }
 
@@ -267,7 +266,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
       reset()
       setLoadSwap(false)
     }
-  }
+  }, [swapParams, inputCurrency, outputCurrency, chainId, typedValue, account, reset, addTransaction])
 
   return (
     <Box mt="0.25rem">

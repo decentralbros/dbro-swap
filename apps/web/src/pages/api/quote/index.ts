@@ -7,7 +7,7 @@ const handler: NextApiHandler = async (req, res) => {
 
   const { searchParams } = url
 
-  const request = await fetch(`http://api.0x.org/swap/allowance-holder/price?${searchParams}`, {
+  const request = await fetch(`https://api.0x.org/swap/allowance-holder/price?${searchParams}`, {
     headers: {
       '0x-api-key': process.env.ZERO_X_KEY as string,
       '0x-version': 'v2',
