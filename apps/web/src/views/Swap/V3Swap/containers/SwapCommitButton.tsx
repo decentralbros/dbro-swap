@@ -258,7 +258,9 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         value: transaction.value,
       })
 
-      addTransaction({ hash: tx })
+      if (chainId !== ChainId.ETHEREUM) {
+        addTransaction({ hash: tx })
+      }
 
       reset()
       setLoadSwap(false)
