@@ -2,7 +2,6 @@ import { ResetCSS, ScrollToTopButtonV2, ToastListener } from '@pancakeswap/uikit
 import BigNumber from 'bignumber.js'
 import GlobalCheckClaimStatus from 'components/GlobalCheckClaimStatus'
 import { PageMeta } from 'components/Layout/Page'
-import { NetworkModal } from 'components/NetworkModal'
 import { FixedSubgraphHealthIndicator } from 'components/SubgraphHealthIndicator/FixedSubgraphHealthIndicator'
 import TransactionsDetailModal from 'components/TransactionDetailModal'
 import 'core-js/features/array/to-sorted'
@@ -141,7 +140,6 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
       </ShowMenu>
       <ToastListener />
       <FixedSubgraphHealthIndicator />
-      <NetworkModal pageSupportedChains={Component.chains} />
       <TransactionsDetailModal />
       {isShowScrollToTopButton && <ScrollToTopButtonV2 />}
       {/* {shouldScreenWallet && <Blocklist />} */}

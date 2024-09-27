@@ -40,21 +40,19 @@ const config: (
         {
           label: t('Bridge'),
           href: 'https://app.across.to/bridge',
-          showOnMobile: false,
           type: DropdownMenuItemType.EXTERNAL_LINK,
         },
       ],
     },
     // {
-    //   label: t('NFT'),
-    //   href: `/nfts`,
-    //   showOnMobile: false,
-    //   items: [],
-    //   supportChainIds: SUPPORT_ONLY_BSC,
-    // },
-    // {
     //   label: t('Lottery'),
     //   href: '/lottery',
+    //   showOnMobile: false,
+    //   items: [],
+    // },
+    // {
+    //   label: t('NFT'),
+    //   href: `/nfts`,
     //   showOnMobile: false,
     //   items: [],
     //   supportChainIds: SUPPORT_ONLY_BSC,

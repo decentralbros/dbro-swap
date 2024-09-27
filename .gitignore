@@ -55,6 +55,7 @@ vite.config.ts.timestamp-*.mjs
 
 # store for local dev scripts
 scripts/dev/**
+.temp
 
 # typescript
 *.tsbuildinfo
