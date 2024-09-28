@@ -44,12 +44,25 @@ const config: (
         },
       ],
     },
-    // {
-    //   label: t('Lottery'),
-    //   href: '/lottery',
-    //   showOnMobile: false,
-    //   items: [],
-    // },
+    {
+      label: t('Lottery'),
+      href: '/lottery',
+      showOnMobile: false,
+      items: [
+        {
+          label: t('Contests'),
+          href: '/lottery/contests',
+        },
+        {
+          label: t('Lottery'),
+          href: '/lottery',
+        },
+        {
+          label: t('Prizes'),
+          href: '/lottery/prizes',
+        },
+      ],
+    },
     // {
     //   label: t('NFT'),
     //   href: `/nfts`,

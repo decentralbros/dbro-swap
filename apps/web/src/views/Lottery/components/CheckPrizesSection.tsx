@@ -1,13 +1,14 @@
-import { useEffect, useState } from 'react'
-import { styled } from 'styled-components'
-import { Button, Heading, Flex, useModal, AutoRenewIcon } from '@pancakeswap/uikit'
-import { useAccount } from 'wagmi'
-import { FetchStatus, LotteryStatus } from 'config/constants/types'
 import { useTranslation } from '@pancakeswap/localization'
-import { useGetUserLotteriesGraphData, useLottery } from 'state/lottery/hooks'
+import { Button, Flex, Heading, useModal } from '@pancakeswap/uikit'
 import ConnectWalletButton from 'components/ConnectWalletButton'
-import ClaimPrizesModal from './ClaimPrizesModal'
+import { FetchStatus, LotteryStatus } from 'config/constants/types'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import { useGetUserLotteriesGraphData, useLottery } from 'state/lottery/hooks'
+import { styled } from 'styled-components'
+import { useAccount } from 'wagmi'
 import useGetUnclaimedRewards from '../hooks/useGetUnclaimedRewards'
+import ClaimPrizesModal from './ClaimPrizesModal'
 
 const TicketImage = styled.img`
   height: 60px;
@@ -111,15 +112,15 @@ const CheckPrizesSection = () => {
         </Flex>
       )
     }
-    const checkNowText = () => {
-      if (lotteryIsNotClaimable) {
-        return `${t('Calculating rewards')}...`
-      }
-      if (isFetchingRewards) {
-        return t('Checking')
-      }
-      return t('Check Now')
-    }
+    // const checkNowText = () => {
+    //   if (lotteryIsNotClaimable) {
+    //     return `${t('Calculating rewards')}...`
+    //   }
+    //   if (isFetchingRewards) {
+    //     return t('Checking')
+    //   }
+    //   return t('Check Now')
+    // }
     return (
       <Flex alignItems="center" justifyContent="center">
         <TicketImage src="/images/lottery/ticket-l.png" alt="lottery ticket" />
@@ -127,14 +128,9 @@ const CheckPrizesSection = () => {
           <Heading textAlign="center" color="#F4EEFF" mb="24px">
             {t('Are you a winner?')}
           </Heading>
-          <Button
-            disabled={isCheckNowDisabled}
-            onClick={fetchAllRewards}
-            isLoading={isFetchingRewards}
-            endIcon={isFetchingRewards ? <AutoRenewIcon color="currentColor" spin /> : null}
-          >
-            {checkNowText()}
-          </Button>
+          <Link href="/lottery/prizes">
+            <Button>{t('Check Now')}</Button>
+          </Link>
         </Flex>
         <TicketImage src="/images/lottery/ticket-r.png" alt="lottery ticket" />
       </Flex>
