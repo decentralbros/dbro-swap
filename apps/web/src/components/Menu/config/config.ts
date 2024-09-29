@@ -50,12 +50,12 @@ const config: (
       showOnMobile: false,
       items: [
         {
-          label: t('Contests'),
-          href: '/lottery/contests',
-        },
-        {
           label: t('Lottery'),
           href: '/lottery',
+        },
+        {
+          label: t('Contests'),
+          href: '/lottery/contests',
         },
         {
           label: t('Prizes'),
