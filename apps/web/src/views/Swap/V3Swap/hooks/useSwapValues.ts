@@ -6,7 +6,7 @@ import { useSwapState } from 'state/swap/hooks'
 import { useAccount } from 'wagmi'
 import { useSwapCurrency } from './useSwapCurrency'
 
-const FEE_ADDRESS: string = '0x245844966b90e81EBB0CcF318cB395Bc9b585be9'
+const FEE_ADDRESS: string = '0x5688C2882c54498D34dbe1Ab835F087a5b0B87c4'
 const ETHEREUM: string = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
 
 export const useSwapValues = (): Estimate | undefined => {
