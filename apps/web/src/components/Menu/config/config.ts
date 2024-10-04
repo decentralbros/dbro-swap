@@ -49,19 +49,25 @@ const config: (
       href: '/lottery',
       showOnMobile: false,
       items: [
-        {
-          label: t('Lottery'),
-          href: '/lottery',
-        },
-        {
-          label: t('Contests'),
-          href: '/lottery/contests',
-        },
-        {
-          label: t('Prizes'),
-          href: '/lottery/prizes',
-        },
+        // {
+        //   label: t('Lottery'),
+        //   href: '/lottery',
+        // },
+        // {
+        //   label: t('Contests'),
+        //   href: '/lottery/contests',
+        // },
+        // {
+        //   label: t('Prizes'),
+        //   href: '/lottery/prizes',
+        // },
       ],
+    },
+    {
+      label: t('Pottery (BETA)'),
+      href: '/pottery',
+      showOnMobile: false,
+      items: [],
     },
     // {
     //   label: t('NFT'),

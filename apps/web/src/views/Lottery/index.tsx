@@ -94,12 +94,7 @@ const Lottery = () => {
             )}
           </Flex>
         </PageSection> */}
-        <PageSection
-          dividerPosition="top"
-          dividerFill={{ light: theme.colors.background }}
-          clipFill={{ light: '#9A9FD0', dark: '#66578D' }}
-          index={2}
-        >
+        <PageSection dividerPosition="top" dividerFill={{ light: theme.colors.background }} index={2}>
           <HowToPlay />
         </PageSection>
       </LotteryPage>

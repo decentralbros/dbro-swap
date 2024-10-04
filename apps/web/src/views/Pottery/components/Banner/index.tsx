@@ -1,17 +1,17 @@
-import { styled } from 'styled-components'
-import { useMemo } from 'react'
-import { Flex, Box, Text, Balance, SkeletonV2 } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
-import { useCakePrice } from 'hooks/useCakePrice'
-import StakeToWinButton from 'views/Pottery/components/Banner/StakeToWinButton'
-import { LockTimer } from 'views/Pottery/components/Timer'
-import { PotteryDepositStatus } from 'state/types'
-import { OutlineText, DarkTextStyle } from 'views/Pottery/components/TextStyle'
-import TicketsDecorations from 'views/Pottery/components/Banner/TicketsDecorations'
+import { Balance, Box, Flex, SkeletonV2, Text } from '@pancakeswap/uikit'
 import { getBalanceNumber } from '@pancakeswap/utils/formatBalance'
+import { useCakePrice } from 'hooks/useCakePrice'
 import { useVaultApy } from 'hooks/useVaultApy'
-import { weeksToSeconds } from 'views/Pools/components/utils/formatSecondsToWeeks'
+import { useMemo } from 'react'
 import { usePotteryData } from 'state/pottery/hook'
+import { PotteryDepositStatus } from 'state/types'
+import { styled } from 'styled-components'
+import { weeksToSeconds } from 'views/Pools/components/utils/formatSecondsToWeeks'
+import StakeToWinButton from 'views/Pottery/components/Banner/StakeToWinButton'
+import TicketsDecorations from 'views/Pottery/components/Banner/TicketsDecorations'
+import { DarkTextStyle, OutlineText } from 'views/Pottery/components/TextStyle'
+import { LockTimer } from 'views/Pottery/components/Timer'
 
 const PotteryBanner = styled(Flex)`
   position: relative;
@@ -103,7 +103,7 @@ const Banner: React.FC<React.PropsWithChildren<BannerProps>> = ({ handleScroll }
               bold
               defaultType
             >
-              {t('The PancakeSwap')}
+              {t('The IslandSwap')}
             </OutlineText>
             <OutlineText fontSize={['24px', '24px', '24px', '24px', '32px']} bold ml="4px">
               {t('Pottery')}
@@ -125,7 +125,7 @@ const Banner: React.FC<React.PropsWithChildren<BannerProps>> = ({ handleScroll }
           ) : null}
           <Box style={{ marginTop: '30px' }}>
             <Text color="white" bold as="span">
-              {t('Deposit CAKE for')}
+              {t('Deposit DBRO for')}
             </Text>
             <DarkTextStyle ml="3px" bold as="span">
               {t('10 Weeks')}
