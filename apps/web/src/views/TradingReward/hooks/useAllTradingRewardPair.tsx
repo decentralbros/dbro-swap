@@ -1,7 +1,6 @@
 import { ChainId } from '@pancakeswap/chains'
 import { useQuery } from '@tanstack/react-query'
 import BigNumber from 'bignumber.js'
-import { TRADING_REWARD_API } from 'config/constants/endpoints'
 import { useTradingRewardContract, useTradingRewardTopTraderContract } from 'hooks/useContract'
 import { getTradingRewardContract } from 'utils/contractHelpers'
 
@@ -66,9 +65,7 @@ const fetchCampaignPairs = async (campaignIds: Array<string>, type: RewardType) 
   const newData: { [campaignId in string]: { [chainId in string]: Array<string> } } = {}
   await Promise.all(
     campaignIds.map(async (campaignId: string) => {
-      const pair = await fetch(`${TRADING_REWARD_API}/campaign/pair/campaignId/${campaignId}/type/${type}`)
-      const pairResult = await pair.json()
-      newData[campaignId] = pairResult.data
+      newData[campaignId] = {}
     }),
   )
   return newData
@@ -126,9 +123,13 @@ const fetchRewardInfo = async (campaignIds: Array<string>, type: RewardType) => 
   const newData: { [key in string]: RewardInfo } = {}
   await Promise.all(
     campaignIds.map(async (campaignId: string) => {
-      const reward = await fetch(`${TRADING_REWARD_API}/reward/campaignId/${campaignId}/type/${type}`)
-      const rewardResult = await reward.json()
-      newData[campaignId] = rewardResult.data as RewardInfo
+      newData[campaignId] = {
+        rewardToken: 'string',
+        rewardTokenDecimal: 0,
+        rewardPrice: 'string',
+        rewardToLockRatio: 'string',
+        rewardFeeRatio: 'string',
+      }
     }),
   )
   return newData
@@ -156,9 +157,7 @@ const useAllTradingRewardPair = ({ status, type }: UseAllTradingRewardPairProps)
 
     queryFn: async () => {
       try {
-        const campaignsResponse = await fetch(`${TRADING_REWARD_API}/campaign/status/${status}/type/${type}`)
-        const campaignsResult = await campaignsResponse.json()
-        const campaignIds: Array<string> = campaignsResult.data
+        const campaignIds: Array<string> = ['string']
 
         const [campaignPairs, campaignIdsIncentive, qualification, rewardInfo] = await Promise.all([
           fetchCampaignPairs(campaignIds, type),

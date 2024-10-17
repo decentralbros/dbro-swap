@@ -1,9 +1,9 @@
 import { useUserCakeLockStatus } from 'hooks/useUserCakeLockStatus'
 import { useMemo } from 'react'
 import { useCompetitionStatus } from './useCompetitionStatus'
-import { useVotingStatus } from './useVotingStatus'
-import { useTradingRewardStatus } from './useTradingRewardStatus'
 import { useIfoStatus } from './useIfoStatus'
+import { useTradingRewardStatus } from './useTradingRewardStatus'
+import { useVotingStatus } from './useVotingStatus'
 
 export const useMenuItemsStatus = (): Record<string, string> => {
   const ifoStatus = useIfoStatus()
