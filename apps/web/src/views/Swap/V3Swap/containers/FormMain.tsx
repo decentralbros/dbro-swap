@@ -118,7 +118,7 @@ export function FormMain({ pricingAndSlippage, inputAmount, outputAmount, tradeL
   const [inputUSD, setInputUSD] = useState<string>('0.00')
   const [outputUSD, setOutputUSD] = useState<string>('0.00')
 
-  const fetchOutputUSD = async (buyAmount: number) => {
+  const fetchOutputUSD = useCallback(async () => {
     if (!inputCurrency || !outputCurrency || !swapParams) return
 
     try {
@@ -132,31 +132,28 @@ export function FormMain({ pricingAndSlippage, inputAmount, outputAmount, tradeL
 
       const response = await fetch(`${ISLANDSWAP_API}/balance/usd?${qs.stringify(params)}`)
       const usd = await response.json()
-      if (Number(usd) && estimate) {
-        setOutputUSD((Number(usd) * buyAmount).toFixed(2))
-      }
+      setOutputUSD((Number(usd) * Number(estimate)).toFixed(2))
     } catch {
       setOutputUSD('0.00')
     }
-  }
+  }, [account, chainId, estimate, inputCurrency, outputCurrency, swapParams])
 
-  const estimateOutput = async () => {
+  const estimateOutput = useCallback(async () => {
+    if (!outputCurrency) return
+
     try {
       const response = await fetch(`/api/quote?${qs.stringify(swapParams)}`)
       const quote = await response.json()
 
-      if (quote.buyAmount && outputCurrency?.decimals) {
-        const buyAmount = quote.buyAmount / 10 ** outputCurrency.decimals
-        setEstimate(String(buyAmount))
-        fetchOutputUSD(buyAmount)
-      }
+      const buyAmount = quote.buyAmount / 10 ** outputCurrency.decimals
+      setEstimate(String(buyAmount))
     } catch {
       setEstimate('')
       setInputUSD('0.00')
     }
-  }
+  }, [outputCurrency, swapParams])
 
-  const fetchInputUSD = async () => {
+  const fetchInputUSD = useCallback(async () => {
     if (!inputCurrency || !swapParams) return
 
     try {
@@ -178,17 +175,22 @@ export function FormMain({ pricingAndSlippage, inputAmount, outputAmount, tradeL
     } catch {
       setInputUSD('0.00')
     }
-  }
+  }, [inputCurrency, swapParams, chainId, account, isWrapping, typedValue, inputValue])
 
   useEffect(() => {
     if (parseFloat(typedValue) > 0) {
       fetchInputUSD()
       estimateOutput()
-    } else {
-      setEstimate('')
     }
     // eslint-disable-next-line
   }, [typedValue])
+
+  useEffect(() => {
+    if (estimate) {
+      fetchOutputUSD()
+    }
+    // eslint-disable-next-line
+  }, [estimate])
 
   const inputLoading = typedValue ? !isTypingInput && tradeLoading : false
   const outputLoading = typedValue ? isTypingInput && tradeLoading : false
