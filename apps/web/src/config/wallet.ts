@@ -102,16 +102,6 @@ const walletsConfig = <config extends Config = Config, context = unknown>({
       connectorId: ConnectorNames.WalletConnect,
     },
     {
-      id: 'brave',
-      title: 'Brave Wallet',
-      icon: `/images/wallets/brave.png`,
-      connectorId: ConnectorNames.Injected,
-      get installed() {
-        return typeof window !== 'undefined' && Boolean(window.ethereum?.isBraveWallet)
-      },
-      downloadLink: 'https://brave.com/wallet/',
-    },
-    {
       id: 'math',
       title: 'MathWallet',
       icon: `/images/wallets/mathwallet.png`,
@@ -120,6 +110,16 @@ const walletsConfig = <config extends Config = Config, context = unknown>({
         return typeof window !== 'undefined' && Boolean(window.ethereum?.isMathWallet)
       },
       qrCode,
+    },
+    {
+      id: 'brave',
+      title: 'Brave Wallet',
+      icon: `/images/wallets/brave.png`,
+      connectorId: ConnectorNames.Injected,
+      get installed() {
+        return typeof window !== 'undefined' && Boolean(window.ethereum?.isBraveWallet)
+      },
+      downloadLink: 'https://brave.com/wallet/',
     },
     // {
     //   id: 'binance',

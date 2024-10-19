@@ -1,8 +1,8 @@
-import { Button, useModal, WaitIcon, ButtonProps } from '@pancakeswap/uikit'
-import { useTranslation } from '@pancakeswap/localization'
-import { useLottery } from 'state/lottery/hooks'
 import { useTheme } from '@pancakeswap/hooks'
+import { useTranslation } from '@pancakeswap/localization'
+import { Button, ButtonProps, useModal, WaitIcon } from '@pancakeswap/uikit'
 import { LotteryStatus } from 'config/constants/types'
+import { useLottery } from 'state/lottery/hooks'
 import BuyTicketsModal from './BuyTicketsModal/BuyTicketsModal'
 
 interface BuyTicketsButtonProps extends ButtonProps {
@@ -28,7 +28,7 @@ const BuyTicketsButton: React.FC<React.PropsWithChildren<BuyTicketsButtonProps>>
     }
     return (
       <>
-        <WaitIcon mr="4px" color="textDisabled" /> {t('On sale soon!')}
+        <WaitIcon mr="4px" color="black" /> {t('On sale soon!')}
       </>
     )
   }

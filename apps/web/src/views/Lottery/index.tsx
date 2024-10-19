@@ -1,16 +1,21 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { Flex, Heading, PageSection } from '@pancakeswap/uikit'
+import { Box, Flex, Heading, PageSection, Skeleton } from '@pancakeswap/uikit'
 import useTheme from 'hooks/useTheme'
 import { useState } from 'react'
 import { useFetchLottery, useLottery } from 'state/lottery/hooks'
 import { styled } from 'styled-components'
+import AllHistoryCard from './components/AllHistoryCard'
 import CheckPrizesSection from './components/CheckPrizesSection'
+import Countdown from './components/Countdown'
 import Hero from './components/Hero'
+import HistoryTabMenu from './components/HistoryTabMenu'
 import HowToPlay from './components/HowToPlay'
+import NextDrawCard from './components/NextDrawCard'
+import YourHistoryCard from './components/YourHistoryCard'
 import useGetNextLotteryEvent from './hooks/useGetNextLotteryEvent'
 import useShowMoreUserHistory from './hooks/useShowMoreUserRounds'
 import useStatusTransitions from './hooks/useStatusTransitions'
-import { GET_TICKETS_BG, TITLE_BG } from './pageSectionStyles'
+import { FINISHED_ROUNDS_BG, FINISHED_ROUNDS_BG_DARK, GET_TICKETS_BG, TITLE_BG } from './pageSectionStyles'
 
 const LotteryPage = styled.div`
   min-height: calc(100vh - 64px);
@@ -39,7 +44,6 @@ const Lottery = () => {
           containerProps={{ style: { marginTop: '-30px' } }}
           background={GET_TICKETS_BG}
           concaveDivider
-          clipFill={{ light: '#7645D9' }}
           dividerPosition="top"
           index={2}
         >
@@ -50,7 +54,7 @@ const Lottery = () => {
 
             <CheckPrizesSection />
 
-            {/* <Flex alignItems="center" justifyContent="center" mb="48px">
+            <Flex alignItems="center" justifyContent="center" mb="48px">
               {nextEventTime && (postCountdownText || preCountdownText) ? (
                 <Countdown
                   nextEventTime={nextEventTime}
@@ -60,14 +64,11 @@ const Lottery = () => {
               ) : (
                 <Skeleton height="41px" width="250px" />
               )}
-            </Flex> */}
-            {/* <NextDrawCard /> */}
+            </Flex>
+            <NextDrawCard />
           </Flex>
         </PageSection>
-        {/* <PageSection background={CHECK_PRIZES_BG} hasCurvedDivider={false} index={2}>
-          <CheckPrizesSection />
-        </PageSection> */}
-        {/* <PageSection
+        <PageSection
           position="relative"
           innerProps={{ style: { margin: '0', width: '100%' } }}
           background={isDark ? FINISHED_ROUNDS_BG_DARK : FINISHED_ROUNDS_BG}
@@ -93,7 +94,7 @@ const Lottery = () => {
               />
             )}
           </Flex>
-        </PageSection> */}
+        </PageSection>
         <PageSection dividerPosition="top" dividerFill={{ light: theme.colors.background }} index={2}>
           <HowToPlay />
         </PageSection>

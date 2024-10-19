@@ -79,7 +79,8 @@ const TicketContainer = styled(Flex)`
 
 const StyledBuyTicketButton = styled(BuyTicketsButton)<{ disabled: boolean }>`
   background: ${({ theme, disabled }) =>
-    disabled ? theme.colors.disabled : 'linear-gradient(180deg, #7645d9 0%, #452a7a 100%)'};
+    disabled ? theme.colors.disabled : 'linear-gradient(180deg, #1BF696 0%, #0E7B4B 100%)'};
+  color: #000;
   width: 200px;
   ${({ theme }) => theme.mediaQueries.xs} {
     width: 240px;
@@ -251,7 +252,7 @@ const Hero = () => {
         justifyContent="center"
       >
         <ButtonWrapper>
-          <StyledBuyTicketButton disabled={false} themeMode="light" />
+          <StyledBuyTicketButton disabled={false} themeMode="dark" />
         </ButtonWrapper>
         <TicketSvgWrapper>
           <TicketPurchaseCard width="100%" />
