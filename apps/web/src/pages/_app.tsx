@@ -13,7 +13,6 @@ import useThemeCookie from 'hooks/useThemeCookie'
 import useUserAgent from 'hooks/useUserAgent'
 import { useVercelFeatureFlagOverrides } from 'hooks/useVercelToolbar'
 import { useWeb3WalletView } from 'hooks/useWeb3WalletView'
-import { useInitGlobalWorker } from 'hooks/useWorker'
 import { Updaters } from 'index'
 import { NextPage } from 'next'
 import { DefaultSeo } from 'next-seo'
@@ -37,7 +36,6 @@ BigNumber.config({
 })
 
 function GlobalHooks() {
-  useInitGlobalWorker()
   useWeb3WalletView()
   useVercelFeatureFlagOverrides()
   usePollBlockNumber()
