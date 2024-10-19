@@ -276,6 +276,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         id="swap-button"
         width="100%"
         data-dd-action-name="Swap commit button"
+        style={{ color: '#000' }}
         variant={loadSwap ? 'danger' : 'primary'}
         disabled={loadSwap}
         onClick={handleSwap}

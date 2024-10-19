@@ -90,17 +90,36 @@ const walletsConfig = <config extends Config = Config, context = unknown>({
       downloadLink: 'https://metamask.app.link/dapp/islandswap.finance/',
     },
     {
-      id: 'BinanceW3W',
-      title: 'Binance Web3 Wallet',
-      icon: `/images/wallets/binance.png`,
-      connectorId: isBinanceWeb3WalletInstalled() ? ConnectorNames.Injected : ConnectorNames.BinanceW3W,
+      id: 'coinbase',
+      title: 'Coinbase Wallet',
+      icon: `/images/wallets/coinbase.png`,
+      connectorId: ConnectorNames.WalletLink,
+    },
+    {
+      id: 'walletconnect',
+      title: 'WalletConnect',
+      icon: `/images/wallets/walletconnect.png`,
+      connectorId: ConnectorNames.WalletConnect,
+    },
+    {
+      id: 'brave',
+      title: 'Brave Wallet',
+      icon: `/images/wallets/brave.png`,
+      connectorId: ConnectorNames.Injected,
       get installed() {
-        if (isBinanceWeb3WalletInstalled()) {
-          return true
-        }
-        // still showing the SDK if not installed
-        return undefined
+        return typeof window !== 'undefined' && Boolean(window.ethereum?.isBraveWallet)
       },
+      downloadLink: 'https://brave.com/wallet/',
+    },
+    {
+      id: 'math',
+      title: 'MathWallet',
+      icon: `/images/wallets/mathwallet.png`,
+      connectorId: ConnectorNames.Injected,
+      get installed() {
+        return typeof window !== 'undefined' && Boolean(window.ethereum?.isMathWallet)
+      },
+      qrCode,
     },
     // {
     //   id: 'binance',
@@ -120,12 +139,6 @@ const walletsConfig = <config extends Config = Config, context = unknown>({
     //   },
     // },
     {
-      id: 'coinbase',
-      title: 'Coinbase Wallet',
-      icon: `/images/wallets/coinbase.png`,
-      connectorId: ConnectorNames.WalletLink,
-    },
-    {
       id: 'trust',
       title: 'Trust Wallet',
       icon: `/images/wallets/trust.png`,
@@ -141,12 +154,7 @@ const walletsConfig = <config extends Config = Config, context = unknown>({
       },
       qrCode,
     },
-    {
-      id: 'walletconnect',
-      title: 'WalletConnect',
-      icon: `/images/wallets/walletconnect.png`,
-      connectorId: ConnectorNames.WalletConnect,
-    },
+
     {
       id: 'opera',
       title: 'Opera Wallet',
@@ -156,16 +164,6 @@ const walletsConfig = <config extends Config = Config, context = unknown>({
         return typeof window !== 'undefined' && Boolean(window.ethereum?.isOpera)
       },
       downloadLink: 'https://www.opera.com/crypto/next',
-    },
-    {
-      id: 'brave',
-      title: 'Brave Wallet',
-      icon: `/images/wallets/brave.png`,
-      connectorId: ConnectorNames.Injected,
-      get installed() {
-        return typeof window !== 'undefined' && Boolean(window.ethereum?.isBraveWallet)
-      },
-      downloadLink: 'https://brave.com/wallet/',
     },
     {
       id: 'rabby',
@@ -182,15 +180,19 @@ const walletsConfig = <config extends Config = Config, context = unknown>({
         desktop: 'https://chrome.google.com/webstore/detail/rabby/acmacodkjbdgmoleebolmdjonilkdbch',
       },
     },
+
     {
-      id: 'math',
-      title: 'MathWallet',
-      icon: `/images/wallets/mathwallet.png`,
-      connectorId: ConnectorNames.Injected,
+      id: 'BinanceW3W',
+      title: 'Binance Web3 Wallet',
+      icon: `/images/wallets/binance.png`,
+      connectorId: isBinanceWeb3WalletInstalled() ? ConnectorNames.Injected : ConnectorNames.BinanceW3W,
       get installed() {
-        return typeof window !== 'undefined' && Boolean(window.ethereum?.isMathWallet)
+        if (isBinanceWeb3WalletInstalled()) {
+          return true
+        }
+        // still showing the SDK if not installed
+        return undefined
       },
-      qrCode,
     },
     {
       id: 'tokenpocket',
