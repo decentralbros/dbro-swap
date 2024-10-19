@@ -52,142 +52,142 @@ const config = {
   ],
   reactStrictMode: true,
   swcMinify: true,
-  images: {
-    contentDispositionType: 'attachment',
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'static-nft.pancakeswap.com',
-        pathname: '/mainnet/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'assets.pancakeswap.finance',
-        pathname: '/web/**',
-      },
-    ],
-  },
-  async rewrites() {
-    return [
-      {
-        source: '/info/token/:address',
-        destination: '/info/tokens/:address',
-      },
-      {
-        source: '/info/pool/:address',
-        destination: '/info/pools/:address',
-      },
-      {
-        source: '/.well-known/vercel/flags',
-        destination: '/api/vercel/flags',
-      },
-    ]
-  },
-  async headers() {
-    return [
-      {
-        source: '/favicon.ico',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, immutable, max-age=31536000',
-          },
-        ],
-      },
-      {
-        source: '/logo.png',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, immutable, max-age=31536000',
-          },
-        ],
-      },
-      {
-        source: '/images/:all*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, immutable, max-age=31536000',
-          },
-        ],
-      },
-      {
-        source: '/images/tokens/:all*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, immutable, max-age=604800',
-          },
-        ],
-      },
-    ]
-  },
-  async redirects() {
-    return [
-      {
-        source: '/send',
-        destination: '/swap',
-        permanent: true,
-      },
-      {
-        source: '/create/:currency*',
-        destination: '/add/:currency*',
-        permanent: true,
-      },
-      {
-        source: '/farms/archived',
-        destination: '/farms/history',
-        permanent: true,
-      },
-      {
-        source: '/pool',
-        destination: '/liquidity',
-        permanent: true,
-      },
-      {
-        source: '/staking',
-        destination: '/pools',
-        permanent: true,
-      },
-      {
-        source: '/syrup',
-        destination: '/pools',
-        permanent: true,
-      },
-      {
-        source: '/collectibles',
-        destination: '/nfts',
-        permanent: true,
-      },
-      {
-        source: '/info/pools',
-        destination: '/info/pairs',
-        permanent: true,
-      },
-      {
-        source: '/info/pools/:address',
-        destination: '/info/pairs/:address',
-        permanent: true,
-      },
-      {
-        source: '/api/v3/:chainId/farms/liquidity/:address',
-        destination: 'https://farms-api.pancakeswap.com/v3/:chainId/liquidity/:address',
-        permanent: false,
-      },
-      {
-        source: '/images/tokens/:address',
-        destination: 'https://tokens.pancakeswap.finance/images/:address',
-        permanent: false,
-      },
-    ]
-  },
-  // typescript: {
-  //   ignoreBuildErrors: true,
+  // images: {
+  //   contentDispositionType: 'attachment',
+  //   remotePatterns: [
+  //     {
+  //       protocol: 'https',
+  //       hostname: 'static-nft.pancakeswap.com',
+  //       pathname: '/mainnet/**',
+  //     },
+  //     {
+  //       protocol: 'https',
+  //       hostname: 'assets.pancakeswap.finance',
+  //       pathname: '/web/**',
+  //     },
+  //   ],
   // },
-  // eslint: {
-  //   ignoreDuringBuilds: true,
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: '/info/token/:address',
+  //       destination: '/info/tokens/:address',
+  //     },
+  //     {
+  //       source: '/info/pool/:address',
+  //       destination: '/info/pools/:address',
+  //     },
+  //     {
+  //       source: '/.well-known/vercel/flags',
+  //       destination: '/api/vercel/flags',
+  //     },
+  //   ]
   // },
+  // async headers() {
+  //   return [
+  //     {
+  //       source: '/favicon.ico',
+  //       headers: [
+  //         {
+  //           key: 'Cache-Control',
+  //           value: 'public, immutable, max-age=31536000',
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       source: '/logo.png',
+  //       headers: [
+  //         {
+  //           key: 'Cache-Control',
+  //           value: 'public, immutable, max-age=31536000',
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       source: '/images/:all*',
+  //       headers: [
+  //         {
+  //           key: 'Cache-Control',
+  //           value: 'public, immutable, max-age=31536000',
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       source: '/images/tokens/:all*',
+  //       headers: [
+  //         {
+  //           key: 'Cache-Control',
+  //           value: 'public, immutable, max-age=604800',
+  //         },
+  //       ],
+  //     },
+  //   ]
+  // },
+  // async redirects() {
+  //   return [
+  //     {
+  //       source: '/send',
+  //       destination: '/swap',
+  //       permanent: true,
+  //     },
+  //     {
+  //       source: '/create/:currency*',
+  //       destination: '/add/:currency*',
+  //       permanent: true,
+  //     },
+  //     {
+  //       source: '/farms/archived',
+  //       destination: '/farms/history',
+  //       permanent: true,
+  //     },
+  //     {
+  //       source: '/pool',
+  //       destination: '/liquidity',
+  //       permanent: true,
+  //     },
+  //     {
+  //       source: '/staking',
+  //       destination: '/pools',
+  //       permanent: true,
+  //     },
+  //     {
+  //       source: '/syrup',
+  //       destination: '/pools',
+  //       permanent: true,
+  //     },
+  //     {
+  //       source: '/collectibles',
+  //       destination: '/nfts',
+  //       permanent: true,
+  //     },
+  //     {
+  //       source: '/info/pools',
+  //       destination: '/info/pairs',
+  //       permanent: true,
+  //     },
+  //     {
+  //       source: '/info/pools/:address',
+  //       destination: '/info/pairs/:address',
+  //       permanent: true,
+  //     },
+  //     {
+  //       source: '/api/v3/:chainId/farms/liquidity/:address',
+  //       destination: 'https://farms-api.pancakeswap.com/v3/:chainId/liquidity/:address',
+  //       permanent: false,
+  //     },
+  //     {
+  //       source: '/images/tokens/:address',
+  //       destination: 'https://tokens.pancakeswap.finance/images/:address',
+  //       permanent: false,
+  //     },
+  //   ]
+  // },
+  typescript: {
+    ignoreBuildErrors: false,
+  },
+  eslint: {
+    ignoreDuringBuilds: false,
+  },
   webpack: (webpackConfig, { webpack, isServer }) => {
     // tree shake sentry tracing
     webpackConfig.plugins.push(

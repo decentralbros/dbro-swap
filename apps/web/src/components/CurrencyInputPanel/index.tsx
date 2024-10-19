@@ -93,7 +93,7 @@ const CurrencyInputPanel = memo(function CurrencyInputPanel({
   showCommonBases,
   commonBasesType,
   showSearchInput,
-  disabled,
+  disabled = false,
   error,
   showUSDPrice,
   tokensToShow,
@@ -181,9 +181,9 @@ const CurrencyInputPanel = memo(function CurrencyInputPanel({
       const response = await fetch(`${ISLANDSWAP_API}/balance/token?${qs.stringify(params)}`)
       const data = await response.json()
 
-      setBalance(data.toFixed(6))
+      setBalance(data.toFixed(3))
     } catch {
-      setBalance('0.000000')
+      setBalance('0.00')
     }
   }, [account, currency])
 

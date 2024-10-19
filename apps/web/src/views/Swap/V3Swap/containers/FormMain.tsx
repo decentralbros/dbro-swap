@@ -234,7 +234,7 @@ export function FormMain({ pricingAndSlippage, inputAmount, outputAmount, tradeL
         inputLoading={!isWrapping && outputLoading}
         currencyLoading={!loadedUrlParams}
         label={isTypingInput && !isWrapping ? t('To (estimated)') : t('To')}
-        value={isWrapping ? typedValue : Number(estimate).toFixed(6)}
+        value={isWrapping ? typedValue : Number(estimate).toFixed(2)}
         currency={outputCurrency}
         onUserInput={handleTypeOutput}
         onCurrencySelect={handleOutputSelect}
