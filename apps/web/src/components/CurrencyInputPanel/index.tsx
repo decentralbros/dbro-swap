@@ -1,7 +1,7 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { Currency, CurrencyAmount, Pair, Percent, Token } from '@pancakeswap/sdk'
 import { WrappedTokenInfo } from '@pancakeswap/token-lists'
-import { ArrowDropDownIcon, Box, Button, CopyButton, Flex, Loading, Skeleton, Text, useModal } from '@pancakeswap/uikit'
+import { ArrowDropDownIcon, Button, CopyButton, Flex, Skeleton, Text, useModal } from '@pancakeswap/uikit'
 import { CurrencyLogo, DoubleCurrencyLogo, Swap as SwapUI } from '@pancakeswap/widgets-internal'
 import { ISLANDSWAP_API } from 'config/constants/endpoints'
 import { memo, useCallback, useEffect, useMemo, useState } from 'react'
@@ -158,7 +158,7 @@ const CurrencyInputPanel = memo(function CurrencyInputPanel({
 
   const [balance, setBalance] = useState<string | undefined>(undefined)
 
-  const fetchBalance = async () => {
+  const fetchBalance = useCallback(async () => {
     if (!currency || !account) {
       return
     }
@@ -185,7 +185,7 @@ const CurrencyInputPanel = memo(function CurrencyInputPanel({
     } catch {
       setBalance('0.000000')
     }
-  }
+  }, [account, currency])
 
   useEffect(() => {
     if (!hideBalance && !!currency) {
@@ -284,17 +284,13 @@ const CurrencyInputPanel = memo(function CurrencyInputPanel({
       }
       bottom={
         <>
-          {!!showUSDPrice && (
+          {showUSDPrice && (
             <Flex justifyContent="flex-end" mr="1rem">
               <Flex maxWidth="200px">
-                {inputLoading ? (
-                  <Loading width="14px" height="14px" />
-                ) : showUSDPrice && usdValue ? (
+                {usdValue && (
                   <Text fontSize="12px" color="textSubtle" style={{ zIndex: 1 }} ellipsis>
                     {`~${usdValue} USD`}
                   </Text>
-                ) : (
-                  <Box height="18px" />
                 )}
               </Flex>
             </Flex>
