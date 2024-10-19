@@ -14,8 +14,6 @@ import {
 
 import { vars } from "../../css/vars.css";
 import { Image } from "../Image";
-import LangSelector from "../LangSelector/LangSelector";
-import { ThemeSwitcher } from "../ThemeSwitcher";
 import { FooterProps } from "./types";
 
 const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
@@ -43,7 +41,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
     >
       <Flex flexDirection="column" width={["100%", null, "1200px;"]}>
         <StyledIconMobileContainer>
-          <Image src="/tree.webp" alt="islandswap" height={50} width={50} />
+          <Image src="/logo.webp" alt="islandswap" height={50} width={50} />
         </StyledIconMobileContainer>
         <Flex
           order={[2, null, 1]}
@@ -77,7 +75,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
           ))}
           {/* <Box display={["none", null, "block"]}>
             {isXl ? (
-              <Image src="/tree.png" alt="islandswap" height={50} width={50} />
+              <Image src="/logo.png" alt="islandswap" height={50} width={50} />
             ) : (
               <Image src="/tree-left.png" alt="islandswap" height={50} width={50} />
             )}
@@ -90,7 +88,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
           flexDirection={["column", null, "row"]}
           justifyContent="space-between"
         >
-          <Flex order={[2, null, 1]} alignItems="center">
+          {/* <Flex order={[2, null, 1]} alignItems="center">
             {isMounted && <ThemeSwitcher isDark={isDark} toggleTheme={toggleTheme} />}
             <LangSelector
               currentLang={currentLang}
@@ -99,7 +97,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
               color="textSubtle"
               dropdownPosition="top-right"
             />
-          </Flex>
+          </Flex> */}
           {/* <Flex order={[1, null, 2]} mb={["24px", null, "0"]} justifyContent="space-between" alignItems="center">
             <Box mr="20px">
               <CakePrice chainId={chainId} cakePriceUsd={cakePriceUsd} color="textSubtle" />

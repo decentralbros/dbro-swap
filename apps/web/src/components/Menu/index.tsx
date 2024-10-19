@@ -1,10 +1,8 @@
 import { languageList, useTranslation } from '@pancakeswap/localization'
 import { Text, Menu as UikitMenu, footerLinks, useModal } from '@pancakeswap/uikit'
-import { usePhishingBanner } from '@pancakeswap/utils/user'
 import { NextLinkFromReactRouter } from '@pancakeswap/widgets-internal'
 import USCitizenConfirmModal from 'components/Modal/USCitizenConfirmModal'
 import { NetworkSwitcher } from 'components/NetworkSwitcher'
-import PhishingWarningBanner from 'components/PhishingWarningBanner'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { usePerpUrl } from 'hooks/usePerpUrl'
 import useTheme from 'hooks/useTheme'
@@ -12,8 +10,6 @@ import { IdType, useUserNotUsCitizenAcknowledgement } from 'hooks/useUserIsUsCit
 import { useRouter } from 'next/router'
 import { useCallback, useMemo } from 'react'
 import { getOptionsUrl } from 'utils/getOptionsUrl'
-import GlobalSettings from './GlobalSettings'
-import { SettingsMode } from './GlobalSettings/types'
 import UserMenu from './UserMenu'
 import { UseMenuItemsParams, useMenuItems } from './hooks/useMenuItems'
 import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
@@ -73,7 +69,7 @@ const Menu = (props) => {
     },
     [perpConfirmed, optionsConfirmed, onPerpConfirmModalPresent, onOptionsConfirmModalPresent],
   )
-  const [showPhishingWarningBanner] = usePhishingBanner()
+  // const [showPhishingWarningBanner] = usePhishingBanner()
 
   const menuItems = useMenuItems({
     onClick: onSubMenuClick,
@@ -96,13 +92,13 @@ const Menu = (props) => {
         linkComponent={LinkComponent}
         rightSide={
           <>
-            <GlobalSettings mode={SettingsMode.GLOBAL} />
+            {/* <GlobalSettings mode={SettingsMode.GLOBAL} /> */}
             <NetworkSwitcher />
             <UserMenu />
           </>
         }
         chainId={chainId}
-        banner={showPhishingWarningBanner && typeof window !== 'undefined' && <PhishingWarningBanner />}
+        banner={false}
         isDark={isDark}
         toggleTheme={toggleTheme}
         currentLang={currentLanguage.code}

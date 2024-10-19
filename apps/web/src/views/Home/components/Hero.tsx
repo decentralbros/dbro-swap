@@ -154,7 +154,7 @@ const Hero = () => {
           </Text>
           <Text
             mb="24px"
-            color={theme.isDark ? '#B8ADD2' : '#7A6EAA'}
+            color={theme.isDark ? '#FFF' : '#000'}
             maxWidth={600}
             fontSize={['20px', '20px', null, '24px']}
             textAlign={isMobile ? 'center' : 'left'}

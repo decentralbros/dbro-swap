@@ -6,7 +6,7 @@ import { PageMeta } from './types'
 export const DEFAULT_META: PageMeta = {
   title: 'IslandSwap',
   description: 'Trade, earn, and own crypto on the all-in-one multichain DEX',
-  image: `https://islandswap.finance/tree.png`,
+  image: `https://islandswap.finance/logo.png`,
 }
 
 interface PathList {
