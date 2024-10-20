@@ -44,12 +44,12 @@ const config: (
         },
       ],
     },
-    {
-      label: t('Lottery'),
-      href: '/lottery',
-      showOnMobile: false,
-      items: [],
-    },
+    // {
+    //   label: t('Lottery'),
+    //   href: '/lottery',
+    //   showOnMobile: false,
+    //   items: [],
+    // },
     // {
     //   label: t('NFT'),
     //   href: `/nfts`,
