@@ -111,7 +111,7 @@ const Menu = (props) => {
         activeItem={activeMenuItem?.href}
         activeSubItem={activeSubMenuItem?.href}
         buyCakeLabel={t('Trade')}
-        buyCakeLink="https://islandswap.finance"
+        buyCakeLink="https://decentralbros.finance"
         {...props}
       />
     </>

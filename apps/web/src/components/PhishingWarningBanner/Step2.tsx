@@ -2,14 +2,14 @@ import { useTranslation } from '@pancakeswap/localization'
 import { Box, Text } from '@pancakeswap/uikit'
 import { useMemo } from 'react'
 
-const domain = 'https://islandswap.finance'
+const domain = 'https://decentralbros.finance'
 
 export const Step2 = () => {
   const { t } = useTranslation()
 
   const warningTextAsParts = useMemo(() => {
     const warningText = t("please make sure you're visiting %domain% - check the URL carefully.", { domain })
-    return warningText.split(/(https:\/\/islandswap.finance)/g)
+    return warningText.split(/(https:\/\/decentralbros.finance)/g)
   }, [t])
 
   return (

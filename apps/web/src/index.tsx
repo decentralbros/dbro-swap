@@ -53,7 +53,7 @@ export function Blocklist() {
               {t('We have detected that this address is associated with a Prohibited Activity')}{' '}
               <Link
                 style={{ display: 'inline-block' }}
-                href="https://islandswap.finance/terms-of-service"
+                href="https://decentralbros.finance/terms-of-service"
                 target="_blank"
               >
                 {t('Learn more')}

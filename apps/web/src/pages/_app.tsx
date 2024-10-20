@@ -66,8 +66,8 @@ function MyApp(props: AppProps<{ initialReduxState: any; dehydratedState: any }>
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1, viewport-fit=cover"
         />
-        <meta name="description" content="Cheaper and faster than Uniswap? Discover IslandSwap." />
-        <meta name="theme-color" content="#1FC7D4" />
+        <meta name="description" content="Cheaper and faster than Uniswap? Discover Decentral Bros." />
+        <meta name="theme-color" content="#1bf696" />
         {/* {(Component as NextPageWithLayout).mp && (
           // eslint-disable-next-line @next/next/no-sync-scripts
           <script src="https://public.bnbstatic.com/static/js/mp-webview-sdk/webview-v1.0.0.min.js" id="mp-webview" />

@@ -15,8 +15,8 @@ export const injectedConnector = injected({
 })
 
 export const coinbaseConnector = coinbaseWallet({
-  appName: 'IslandsSwap',
-  appLogoUrl: 'https://islandswap.com/logo.png',
+  appName: 'Decentral Bros',
+  appLogoUrl: 'https://decentralbros.com/logo.png',
 })
 
 export const walletConnectConnector = walletConnect({

@@ -8,8 +8,8 @@ self.addEventListener('push', function onPush(event) {
     // eslint-disable-next-line no-restricted-globals
     self.registration.showNotification(data.title, {
       body: data.body,
-      icon: 'https://islandswap.finance/logo.png',
-      image: 'https://islandswap.finance/logo.png',
+      icon: 'https://decentralbros.finance/logo.png',
+      image: 'https://decentralbros.finance/logo.png',
     }),
   )
 })

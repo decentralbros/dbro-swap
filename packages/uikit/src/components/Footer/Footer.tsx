@@ -41,7 +41,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
     >
       <Flex flexDirection="column" width={["100%", null, "1200px;"]}>
         <StyledIconMobileContainer>
-          <Image src="/logo.webp" alt="islandswap" height={50} width={50} />
+          <Image src="/logo.webp" alt="decentral bros" height={50} width={50} />
         </StyledIconMobileContainer>
         <Flex
           order={[2, null, 1]}
@@ -75,9 +75,9 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
           ))}
           {/* <Box display={["none", null, "block"]}>
             {isXl ? (
-              <Image src="/logo.png" alt="islandswap" height={50} width={50} />
+              <Image src="/logo.png" alt="decentral bros" height={50} width={50} />
             ) : (
-              <Image src="/tree-left.png" alt="islandswap" height={50} width={50} />
+              <Image src="/tree-left.png" alt="decentral bros" height={50} width={50} />
             )}
           </Box> */}
         </Flex>

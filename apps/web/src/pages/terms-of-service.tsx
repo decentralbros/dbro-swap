@@ -33,14 +33,14 @@ export const Container = styled(Flex)`
 const TermsOfService = () => {
   return (
     <Container>
-      <Text as="h1">IslandSwap Terms of Service</Text>
+      <Text as="h1">Decentral Bros Terms of Service</Text>
       <Text as="h3">Last modified: Aug 22, 2024</Text>
       <Text as="p">
         <Text as="span">
           These Terms of Service (the “Agreement”) explains the terms and conditions by which you may access and use
         </Text>
-        <Link m="0 4px" display="inline !important" href="https://islandswap.finance">
-          https://islandswap.finance
+        <Link m="0 4px" display="inline !important" href="https://decentralbros.finance">
+          https://decentralbros.finance
         </Link>
         <Text as="span">
           and any subdomains associated with the Website. You must read this Agreement carefully as it governs your use
@@ -60,8 +60,8 @@ const TermsOfService = () => {
       <Text as="p">
         The Website provides access to (a) a decentralized protocol on various public blockchains, including but not
         limited to BNB Chain, Aptos and Ethereum, that allow users to trade certain compatible digital assets (“the
-        IslandSwap protocol” or the “Protocol”), among other services. The Website is one, but not the exclusive, means
-        of accessing the Protocol.
+        Decentral Bros protocol” or the “Protocol”), among other services. The Website is one, but not the exclusive,
+        means of accessing the Protocol.
       </Text>
       <Text as="p">
         To access the Website, you must use non-custodial wallet software, which allows you to interact with public
@@ -79,8 +79,8 @@ const TermsOfService = () => {
           material modifications, we will notify you by updating the date at the top of the Agreement and by maintaining
           a current version of the Agreement at
         </Text>
-        <Link m="0 4px" display="inline !important" href="https://islandswap.finance/terms-of-service">
-          https://islandswap.finance/terms-of-service.
+        <Link m="0 4px" display="inline !important" href="https://decentralbros.finance/terms-of-service">
+          https://decentralbros.finance/terms-of-service.
         </Link>
         <Text as="span">
           All modifications will be effective when they are posted, and your continued accessing or use of the Website
@@ -97,13 +97,13 @@ const TermsOfService = () => {
         The Website is distinct from the Protocol and is one, but not the exclusive, means of accessing the Protocol.
         The Protocol itself has three versions, designated as v1, v2, and v3, each of which comprises open-source or
         source-available self-executing smart contracts that are deployed on various public blockchains, such as BNB
-        Chain, Aptos and Ethereum. IslandSwap does not control or operate any version of the Protocol on any blockchain
-        network. By using the Website, you understand that you are not buying or selling digital assets from us and that
-        we do not operate any liquidity pools on the Protocol or control trade execution on the Protocol. When traders
-        pay fees for trades, those fees accrue to liquidity providers for the Protocol. As a general matter, the
-        IslandSwap team is not a liquidity provider into Protocol liquidity pools and liquidity providers are
-        independent third parties. The Protocol was initially deployed on the BNB Chain blockchain, and has since been
-        deployed on several other blockchain networks.
+        Chain, Aptos and Ethereum. Decentral Bros does not control or operate any version of the Protocol on any
+        blockchain network. By using the Website, you understand that you are not buying or selling digital assets from
+        us and that we do not operate any liquidity pools on the Protocol or control trade execution on the Protocol.
+        When traders pay fees for trades, those fees accrue to liquidity providers for the Protocol. As a general
+        matter, the Decentral Bros team is not a liquidity provider into Protocol liquidity pools and liquidity
+        providers are independent third parties. The Protocol was initially deployed on the BNB Chain blockchain, and
+        has since been deployed on several other blockchain networks.
       </Text>
 
       <Text as="h3">Eligibility</Text>
@@ -127,9 +127,9 @@ const TermsOfService = () => {
 
       <Text as="h3">Intellectual Property Rights</Text>
       <Text as="p">
-        IslandSwap owns all intellectual property and other rights in the Website and its contents, including (but not
-        limited to) software, text, images, trademarks, service marks, copyrights, patents, designs, and its “look and
-        feel.” Unlike the Website, versions 1-3 of the Protocol are comprised entirely of open-source or
+        Decentral Bros owns all intellectual property and other rights in the Website and its contents, including (but
+        not limited to) software, text, images, trademarks, service marks, copyrights, patents, designs, and its “look
+        and feel.” Unlike the Website, versions 1-3 of the Protocol are comprised entirely of open-source or
         source-available software running on public blockchains.
       </Text>
       <Text as="p">
@@ -242,10 +242,10 @@ const TermsOfService = () => {
       </Text>
       <Text as="p">
         We may provide information about tokens in the Website sourced from third-party data partners through features
-        such as rarity scores, token explorer or token lists (which includes the IslandSwap default token list and
-        IslandSwap expanded list hosted at tokenlists.org). We may also provide warning labels for certain tokens. The
-        provision of informational materials does not make trades in those tokens solicited; we are not attempting to
-        induce you to make any purchase as a result of information provided. All such information provided by the
+        such as rarity scores, token explorer or token lists (which includes the Decentral Bros default token list and
+        Decentral Bros expanded list hosted at tokenlists.org). We may also provide warning labels for certain tokens.
+        The provision of informational materials does not make trades in those tokens solicited; we are not attempting
+        to induce you to make any purchase as a result of information provided. All such information provided by the
         Website is for informational purposes only and should not be construed as investment advice or a recommendation
         that a particular token is a safe or sound investment. You should not take, or refrain from taking, any action
         based on any information contained in the Website. By providing token information for your convenience, we do
@@ -291,7 +291,7 @@ const TermsOfService = () => {
         to understand the inherent risks associated with using cryptographic and blockchain-based systems, and that you
         have a working knowledge of the usage and intricacies of digital assets such as ether (ETH), so-called
         stablecoins, and other digital tokens such as those following the Ethereum Token Standard (ERC-20), or standards
-        of any other digital tokens which are transacted on IslandSwap.
+        of any other digital tokens which are transacted on Decentral Bros.
       </Text>
       <Text as="p">
         In particular, you understand that the markets for these digital assets are nascent and highly volatile due to
@@ -316,7 +316,7 @@ const TermsOfService = () => {
       <Text as="p">
         Finally, you understand that we do not create, own, or operate cross-chain bridges and we do not make any
         representation or warranty about the safety or soundness of any cross-chain bridge, including its use for
-        IslandSwap governance.
+        Decentral Bros governance.
       </Text>
       <Text as="p">
         In summary, you acknowledge that we are not responsible for any of these variables or risks, do not own or
@@ -400,10 +400,10 @@ const TermsOfService = () => {
       <Text as="h3">Dispute Resolution</Text>
       <Text as="p">
         We will use our best efforts to resolve any potential disputes through informal, good faith negotiations. If a
-        potential dispute arises, you must contact us by sending an email to info@islandswap.come so that we can attempt
-        to resolve it without resorting to formal dispute resolution. If we aren't able to reach an informal resolution
-        within sixty days of your email, then you and we both agree to resolve the potential dispute according to the
-        process set forth below.
+        potential dispute arises, you must contact us by sending an email to info@decentralbros.come so that we can
+        attempt to resolve it without resorting to formal dispute resolution. If we aren't able to reach an informal
+        resolution within sixty days of your email, then you and we both agree to resolve the potential dispute
+        according to the process set forth below.
       </Text>
       <Text as="p">
         Any claim or controversy arising out of or relating to the Website, this Agreement, or any other acts or
@@ -446,8 +446,8 @@ const TermsOfService = () => {
       <Text as="h3">Gas Fees</Text>
       <Text as="p">
         Blockchain transactions require the payment of transaction fees to the appropriate network (“Gas Fees”). Except
-        as otherwise expressly set forth in the terms of another offer by IslandSwap, you will be solely responsible to
-        pay the Gas Fees for any transaction that you initiate.
+        as otherwise expressly set forth in the terms of another offer by Decentral Bros, you will be solely responsible
+        to pay the Gas Fees for any transaction that you initiate.
       </Text>
     </Container>
   )

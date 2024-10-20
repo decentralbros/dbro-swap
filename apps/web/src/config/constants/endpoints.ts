@@ -61,7 +61,7 @@ export const INFO_CLIENT_ETH = V2_SUBGRAPH_URLS[ChainId.ETHEREUM]
 
 export const BLOCKS_CLIENT_WITH_CHAIN = BLOCKS_SUBGRAPH_URLS
 
-export const ASSET_CDN = 'https://islandswap.finance'
+export const ASSET_CDN = 'https://decentralbros.finance'
 
 export const V3_SUBGRAPH_URLS = {
   ...V3_SUBGRAPHS,
