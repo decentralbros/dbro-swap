@@ -1,12 +1,12 @@
-# 🌴 IslandSwap 🌴
+# DBRO Swap ⚡
 
 <p >
-  <a href="https://islandswap.finance">
-      <img src="https://islandswap.finance/readme.jpg" height="200">
+  <a href="https://decentralbros.finance">
+      <img src="https://decentralbros.finance/readme.jpg" height="200">
   </a>
 </p>
 
-This project contains the main features of the IslandSwap application.
+This project contains the main features of the DBRO Swap application.
 
 If you want to contribute, please refer to the [contributing guidelines](./CONTRIBUTING.md) of this project.
 

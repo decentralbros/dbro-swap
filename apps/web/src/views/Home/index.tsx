@@ -30,7 +30,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
             background: #faf9fa;
           }
           [data-theme='dark'] #home-1 .page-bg {
-            background: #08060b;
+            background: #000;
           }
           #home-2 .page-bg {
             background: linear-gradient(180deg, #ffffff 22%, #d7caec 100%);

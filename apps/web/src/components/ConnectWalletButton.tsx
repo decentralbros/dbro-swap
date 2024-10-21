@@ -27,7 +27,7 @@ const ConnectWalletButton = ({ children, ...props }: ButtonProps) => {
 
   return (
     <>
-      <Button onClick={() => setOpen(true)} {...props}>
+      <Button onClick={() => setOpen(true)} {...props} style={{ color: '#000' }}>
         {children || <Trans>Connect Wallet</Trans>}
       </Button>
       <style jsx global>{`

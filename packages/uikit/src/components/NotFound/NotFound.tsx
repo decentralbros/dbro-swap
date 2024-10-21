@@ -31,14 +31,16 @@ const NotFound = ({
       href: "/",
       passHref: true,
     },
-    <Button scale="sm">{t("Back Home")}</Button>
+    <Button scale="sm" style={{ color: "#000" }}>
+      {t("Back Home")}
+    </Button>
   );
 
   return (
     <>
       {children}
       <StyledNotFound>
-        <Image src="/tree.webp" alt="islandswap" width={100} height={100} />
+        <Image src="/logo.webp" alt="dbro swap" width={100} height={100} />
         <Heading scale="xxl">{statusCode}</Heading>
         <Text mb="16px">{t("Oops, page not found.")}</Text>
         {linkElement}

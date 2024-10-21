@@ -294,7 +294,7 @@ export const Title = styled.div`
 //   }, [t])
 // }
 
-const useIslandSwapData = () => {
+const useDecentralBrosData = () => {
   const { t } = useTranslation()
 
   return useMemo(() => {
@@ -381,11 +381,11 @@ const EcoSystemSection: React.FC = () => {
   const { t } = useTranslation()
   const { theme } = useTheme()
   const { isMobile, isMd } = useMatchBreakpoints()
-  const islandSwapData = useIslandSwapData()
+  const decentralBrosData = useDecentralBrosData()
 
   return (
     <Flex justifyContent="center" alignItems="center" flexDirection="column" pt={isMobile ? '24px' : '60px'}>
-      <Image src="/tree-left.png" alt="islandswap" height={100} width={100} />
+      <Image src="/tree-left.png" alt="dbro swap" height={100} width={100} />
       <Text textAlign="center" p="20px">
         <Text
           fontSize={['32px', null, null, '40px']}
@@ -425,7 +425,7 @@ const EcoSystemSection: React.FC = () => {
           <Flex flexDirection="column">
             <Title>{t('Trade')}</Title>
             <FeatureBoxesWrapper>
-              {islandSwapData.map((item) => (
+              {decentralBrosData.map((item) => (
                 <FeatureBox
                   key={`${item.title}Block`}
                   className="type-a"
@@ -433,7 +433,7 @@ const EcoSystemSection: React.FC = () => {
                   description={item.description}
                   defaultImage={item.defaultImage}
                   image={item.image}
-                  width={100 / islandSwapData.length}
+                  width={100 / decentralBrosData.length}
                   ctaTitle={item.ctaTitle}
                   path={item.path}
                 />

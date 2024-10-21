@@ -1,17 +1,17 @@
 import { DefaultSeoProps } from 'next-seo'
 
 export const SEO: DefaultSeoProps = {
-  titleTemplate: '%s | IslandSwap',
-  defaultTitle: 'IslandSwap',
+  titleTemplate: '%s | DBRO Swap',
+  defaultTitle: 'DBRO Swap',
   description: 'Trade, earn, and own crypto on the all-in-one multichain DEX',
   twitter: {
     cardType: 'summary_large_image',
-    handle: '@IslandSwap',
-    site: '@IslandSwap',
+    handle: '@DecentralBros_',
+    site: '@DecentralBros_',
   },
   openGraph: {
-    title: "IslandSwap - Everyone's Favorite DEX",
+    title: "DBRO Swap - Everyone's Favorite DEX",
     description: 'Trade, earn, and own crypto on the all-in-one multichain DEX',
-    images: [{ url: 'https://islandswap.finance/islandswap.jpg' }],
+    images: [{ url: 'https://decentralbros.finance/logo.png' }],
   },
 }

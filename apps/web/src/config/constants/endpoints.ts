@@ -4,7 +4,7 @@ export const THE_GRAPH_PROXY_API = 'https://thegraph.pancakeswap.com'
 
 export const GRAPH_API_PROFILE = `${THE_GRAPH_PROXY_API}/profile`
 
-export const ISLANDSWAP_API = process.env.NEXT_PUBLIC_ISLANDSWAP_API
+export const DBRO_API = process.env.NEXT_PUBLIC_DBRO_API
 
 export const GRAPH_API_LOTTERY = `${THE_GRAPH_PROXY_API}/lottery-bsc`
 export const SNAPSHOT_BASE_URL = process.env.NEXT_PUBLIC_SNAPSHOT_BASE_URL
@@ -61,7 +61,7 @@ export const INFO_CLIENT_ETH = V2_SUBGRAPH_URLS[ChainId.ETHEREUM]
 
 export const BLOCKS_CLIENT_WITH_CHAIN = BLOCKS_SUBGRAPH_URLS
 
-export const ASSET_CDN = 'https://islandswap.finance'
+export const ASSET_CDN = 'https://decentralbros.finance'
 
 export const V3_SUBGRAPH_URLS = {
   ...V3_SUBGRAPHS,

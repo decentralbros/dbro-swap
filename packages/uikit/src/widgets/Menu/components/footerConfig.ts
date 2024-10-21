@@ -7,7 +7,7 @@ export const footerLinks: (t: ContextApi["t"]) => FooterLinkType[] = (t) => [
     items: [
       {
         label: t("Trade"),
-        href: "https://islandswap.finance/swap",
+        href: "https://decentralbros.finance/swap",
       },
       // {
       //   label: t("Earn"),
@@ -19,7 +19,7 @@ export const footerLinks: (t: ContextApi["t"]) => FooterLinkType[] = (t) => [
       // },
       // {
       //   label: t("NFT"),
-      //   href: "https://islandswap.finance/nfts",
+      //   href: "https://decentralbros.finance/nfts",
       // },
       // {
       //   label: t("Tokenomics"),
@@ -35,7 +35,7 @@ export const footerLinks: (t: ContextApi["t"]) => FooterLinkType[] = (t) => [
       // },
       // {
       //   label: t("Lottery"),
-      //   href: "https://islandswap.finance/lottery",
+      //   href: "https://decentralbros.finance/lottery",
       // },
     ],
   },
@@ -65,7 +65,7 @@ export const footerLinks: (t: ContextApi["t"]) => FooterLinkType[] = (t) => [
       // },
       {
         label: t("Github"),
-        href: "https://github.com/decentralbros/islandswap",
+        href: "https://github.com/decentralbros",
       },
       // {
       //   label: t("Bug Bounty"),
@@ -99,7 +99,7 @@ export const footerLinks: (t: ContextApi["t"]) => FooterLinkType[] = (t) => [
     items: [
       {
         label: t("Terms Of Service"),
-        href: "https://islandswap.finance/terms-of-service",
+        href: "https://decentralbros.finance/terms-of-service",
       },
       // {
       //   label: t("Blog"),

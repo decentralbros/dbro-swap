@@ -99,6 +99,7 @@ const SlippageTabs = () => {
               setSlippageInput('')
               setUserSlippageTolerance(1)
             }}
+            style={{ color: userSlippageTolerance === 1 ? '#000' : '' }}
             variant={userSlippageTolerance === 1 ? 'primary' : 'tertiary'}
           >
             1.0%
@@ -111,6 +112,7 @@ const SlippageTabs = () => {
               setSlippageInput('')
               setUserSlippageTolerance(2)
             }}
+            style={{ color: userSlippageTolerance === 2 ? '#000' : '' }}
             variant={userSlippageTolerance === 2 ? 'primary' : 'tertiary'}
           >
             2.0%
@@ -123,6 +125,7 @@ const SlippageTabs = () => {
               setSlippageInput('')
               setUserSlippageTolerance(3)
             }}
+            style={{ color: userSlippageTolerance === 3 ? '#000' : '' }}
             variant={userSlippageTolerance === 3 ? 'primary' : 'tertiary'}
           >
             3.0%
@@ -138,8 +141,8 @@ const SlippageTabs = () => {
                 onChange={(event) => {
                   if (!Number.isNaN(Number(event.target.value))) setUserSlippageTolerance(Number(event.target.value))
                 }}
-                isSuccess={userSlippageTolerance <= 5}
-                isWarning={userSlippageTolerance >= 6 || userSlippageTolerance <= 0}
+                isSuccess={userSlippageTolerance <= 3}
+                isWarning={userSlippageTolerance >= 4 || userSlippageTolerance <= 0}
               />
             </Box>
             <Text color="primary" bold ml="8px">

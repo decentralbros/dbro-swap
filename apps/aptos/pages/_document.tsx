@@ -34,9 +34,9 @@ class MyDocument extends Document {
       <Html translate="no">
         <Head>
           <link rel="preconnect" href="https://fonts.gstatic.com" />
-          <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&amp;display=swap" rel="stylesheet" />
-          <link rel="shortcut icon" href="https://islandswap.finance/favicon.ico" />
-          <link rel="apple-touch-icon" href="https://islandswap.finance/logo.png" />
+          <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap" rel="stylesheet" />
+          <link rel="shortcut icon" href="https://decentralbros.finance/favicon.ico" />
+          <link rel="apple-touch-icon" href="https://decentralbros.finance/logo.png" />
         </Head>
         <body>
           <Main />

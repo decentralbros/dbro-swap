@@ -10,7 +10,7 @@ interface Props {
 
 const blink = keyframes`
   0%,  100% { transform: scaleY(1); }
-  50% { transform:  scaleY(0.1); }
+  40% { transform:  scaleY(0.1); }
 `;
 
 const StyledLink = styled("a")`
@@ -35,7 +35,7 @@ const StyledLink = styled("a")`
     .eye {
       transform-origin: center 60%;
       animation-name: ${blink};
-      animation-duration: 350ms;
+      animation-duration: 340ms;
       animation-iteration-count: 1;
     }
   }
@@ -46,8 +46,8 @@ const Logo: React.FC<React.PropsWithChildren<Props>> = ({ href }) => {
   const isAbsoluteUrl = href.startsWith("http");
   const innerLogo = (
     <>
-      <Image src="/tree.webp" alt="islandswap" height={50} width={50} className="mobile-icon" />
-      <Image src="/tree.webp" alt="islandswap" height={50} width={50} className="desktop-icon" />
+      <Image src="/logo.webp" alt="dbro swap" height={40} width={40} className="mobile-icon" />
+      <Image src="/logo.webp" alt="dbro swap" height={40} width={40} className="desktop-icon" />
 
       {/* <LogoIcon className="mobile-icon" />
       <LogoWithTextIcon className="desktop-icon" /> */}
@@ -57,11 +57,11 @@ const Logo: React.FC<React.PropsWithChildren<Props>> = ({ href }) => {
   return (
     <Flex alignItems="center">
       {isAbsoluteUrl ? (
-        <StyledLink as="a" href={href} aria-label="IslandSwap home page">
+        <StyledLink as="a" href={href} aria-label="DBRO Swap home page">
           {innerLogo}
         </StyledLink>
       ) : (
-        <StyledLink href={href} as={linkComponent} aria-label="IslandSwap home page">
+        <StyledLink href={href} as={linkComponent} aria-label="DBRO Swap home page">
           {innerLogo}
         </StyledLink>
       )}

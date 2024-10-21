@@ -23,7 +23,7 @@ const Page: React.FC<
   const { chainId } = useActiveChainId()
   const isBSC = chainId === ChainId.BSC
   const externalText = isBSC ? t('Bridge assets to BNB Chain') : ''
-  const externalLinkUrl = isBSC ? 'https://bridge.islandswap.finance/' : ''
+  const externalLinkUrl = isBSC ? 'https://bridge.decentralbros.finance/' : ''
 
   return (
     <Swap.Page

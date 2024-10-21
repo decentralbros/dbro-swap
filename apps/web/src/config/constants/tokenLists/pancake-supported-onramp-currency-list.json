@@ -1,5 +1,5 @@
 {
-  "name": "IslandSwap OnRamp List",
+  "name": "DBRO Swap OnRamp List",
   "timestamp": "2024-10-18T11:45:00Z",
   "version": {
     "major": 4,
@@ -7,7 +7,7 @@
     "patch": 0
   },
   "tags": {},
-  "logoURI": "https://islandswap.finance/logo.png",
+  "logoURI": "https://decentralbros.finance/logo.png",
   "keywords": ["island", "default"],
   "tokens": [
     {

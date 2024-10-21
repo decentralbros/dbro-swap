@@ -154,7 +154,7 @@ const Hero = () => {
           </Text>
           <Text
             mb="24px"
-            color={theme.isDark ? '#B8ADD2' : '#7A6EAA'}
+            color={theme.isDark ? '#FFF' : '#000'}
             maxWidth={600}
             fontSize={['20px', '20px', null, '24px']}
             textAlign={isMobile ? 'center' : 'left'}
@@ -165,11 +165,13 @@ const Hero = () => {
           </Text>
 
           <Flex justifyContent={isMobile || isMd ? 'center' : 'start'}>
-            {!account && <ConnectWalletButton style={{ borderRadius: isXs ? 12 : undefined }} scale="md" mr="8px" />}
+            {!account && (
+              <ConnectWalletButton style={{ borderRadius: isXs ? 12 : undefined, color: '#000' }} scale="md" mr="8px" />
+            )}
             <NextLinkFromReactRouter to="/swap">
               <Button
                 scale="md"
-                style={{ borderRadius: isXs ? 12 : undefined, color: 'primary' }}
+                style={{ borderRadius: isXs ? 12 : undefined, color: !account ? 'primary' : '#000' }}
                 variant={!account ? 'secondary' : 'primary'}
               >
                 {t('Trade Now')}
@@ -190,7 +192,7 @@ const Hero = () => {
                 src="/logo.webp"
                 width={isMobile ? width * 2 : width / 2}
                 height={isMobile ? height * 2 : height / 2}
-                alt="IslandSwap Logo"
+                alt="DBRO Swap Logo"
               />
             </CakeBox>
           </BunnyWrapper>

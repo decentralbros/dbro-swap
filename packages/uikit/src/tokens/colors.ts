@@ -2,7 +2,7 @@ export const baseColors = {
   white: "white",
   failure: "#ED4B9E",
   failure33: "#ED4B9E33",
-  primary: "#10c0fc", // buttons, primary text
+  primary: "#1bf696", // buttons, primary text
   primary0f: "#1FC7D40f",
   primary3D: "#1FC7D43D",
   primaryBright: "#53DEE9",
@@ -26,7 +26,7 @@ export const additionalColors = {
 export const lightColors = {
   ...baseColors,
   ...additionalColors,
-  secondary: "#7645D9",
+  secondary: "#1bf696",
   secondary80: "#7645D980",
   background: "#FAF9FA",
   backgroundDisabled: "#E9EAEB",
@@ -59,18 +59,18 @@ export const lightColors = {
 export const darkColors = {
   ...baseColors,
   ...additionalColors,
-  secondary: "#7364ff", // "favorite" text
+  secondary: "#1bf696", // "favorite" text
   secondary80: "#7364ff80",
-  background: "#08060B",
+  background: "#000000",
   backgroundDisabled: "#3c3742",
-  backgroundAlt: "#0c0e25", // header
+  backgroundAlt: "#08060B", // header
   backgroundAlt2: "rgba(39, 38, 44, 0.7)",
   cardBorder: "#383241",
   contrast: "#FFFFFF",
   dropdown: "#1E1D20",
   dropdownDeep: "#100C18",
   invertedContrast: "#FFFFFF", // button text
-  input: "#050611", // swap input
+  input: "#000000", // swap input
   inputSecondary: "#262130",
   primaryDark: "#0098A1",
   tertiary: "#353547",

@@ -4,9 +4,9 @@ import { ASSET_CDN } from './endpoints'
 import { PageMeta } from './types'
 
 export const DEFAULT_META: PageMeta = {
-  title: 'IslandSwap',
+  title: 'DBRO Swap',
   description: 'Trade, earn, and own crypto on the all-in-one multichain DEX',
-  image: `https://islandswap.finance/tree.png`,
+  image: `https://decentralbros.finance/logo.png`,
 }
 
 interface PathList {
@@ -18,11 +18,11 @@ const getPathList = (t: ContextApi['t']): PathList => {
   return {
     paths: {
       '/': { title: t('Home') },
-      '/swap': { basePath: true, title: t('Exchange'), image: `https://islandswap.finance/islandswap.jpg` },
-      '/staking': { basePath: true, title: t('Earn'), image: `https://islandswap.finance/islandswap.jpg` },
-      '/nfts': { title: t('NFT Marketplace'), image: `https://islandswap.finance/islandswap.jpg` },
-      '/lottery': { title: t('Lottery'), image: `https://islandswap.finance/islandswap.jpg` },
-      '/affiliates': { title: t('Affiliate Program'), image: `https://islandswap.finance/islandswap.jpg` },
+      '/swap': { basePath: true, title: t('Exchange'), image: `https://decentralbros.finance/decentralbros.jpg` },
+      '/staking': { basePath: true, title: t('Earn'), image: `https://decentralbros.finance/decentralbros.jpg` },
+      '/nfts': { title: t('NFT Marketplace'), image: `https://decentralbros.finance/decentralbros.jpg` },
+      '/lottery': { title: t('Lottery'), image: `https://decentralbros.finance/decentralbros.jpg` },
+      '/affiliates': { title: t('Affiliate Program'), image: `https://decentralbros.finance/decentralbros.jpg` },
 
       // everything else
       '/limit-orders': { basePath: true, title: t('Limit Orders'), image: `${ASSET_CDN}/web/og/limit.jpg` },
@@ -62,7 +62,7 @@ const getPathList = (t: ContextApi['t']): PathList => {
       '/pancake-squad': { basePath: true, title: t('Pancake Squad') },
       '/pottery': { basePath: true, title: t('Pottery'), image: `${ASSET_CDN}/web/og/pottery.jpg` },
     },
-    defaultTitleSuffix: t('IslandSwap'),
+    defaultTitleSuffix: t('decentralbros'),
   }
 }
 

@@ -15,7 +15,9 @@ const NotSupport = () => {
 
   return (
     <StyledNotFound>
-      <Text mb="16px">{t('Unavailable for legal reasons')}</Text>
+      <Text mb="16px" style={{ color: '#000' }}>
+        {t('Unavailable for legal reasons')}
+      </Text>
     </StyledNotFound>
   )
 }

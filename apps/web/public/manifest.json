@@ -1,8 +1,8 @@
 {
-  "short_name": "IslandSwap",
-  "name": "IslandSwap",
-  "description": "IslandSwap, everyone's favorite DEX",
-  "homepage_url": "https://islandswap.finance",
+  "short_name": "DBRO Swap",
+  "name": "DBRO Swap",
+  "description": "DBRO Swap, everyone's favorite DEX",
+  "homepage_url": "https://decentralbros.finance",
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#ffffff",
