@@ -1,8 +1,8 @@
-# Contributing to the IslandSwap ecosystem 🌴
+# Contributing to the DBRO Swap ecosystem ⚡
 
 Thanks for taking the time to contribute !
 
-- Before opening a pull request, please read the [contributing guidelines](https://github.com/decentralbros/islandswap/blob/master/CONTRIBUTING.md) first
+- Before opening a pull request, please read the [contributing guidelines](https://github.com/decentralbros/dbro-swap/blob/master/CONTRIBUTING.md) first
 - If your PR is work in progress, open it as `draft`
 - Before requesting a review, all the checks need to pass
 - Explain what your PR does

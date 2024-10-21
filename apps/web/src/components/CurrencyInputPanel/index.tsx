@@ -3,7 +3,7 @@ import { Currency, CurrencyAmount, Pair, Percent, Token } from '@pancakeswap/sdk
 import { WrappedTokenInfo } from '@pancakeswap/token-lists'
 import { ArrowDropDownIcon, Button, CopyButton, Flex, Skeleton, Text, useModal } from '@pancakeswap/uikit'
 import { CurrencyLogo, DoubleCurrencyLogo, Swap as SwapUI } from '@pancakeswap/widgets-internal'
-import { ISLANDSWAP_API } from 'config/constants/endpoints'
+import { DBRO_API } from 'config/constants/endpoints'
 import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { styled } from 'styled-components'
 import { safeGetAddress } from 'utils'
@@ -178,7 +178,7 @@ const CurrencyInputPanel = memo(function CurrencyInputPanel({
         params = { address: account, chainId: currency.chainId, native: true }
       }
 
-      const response = await fetch(`${ISLANDSWAP_API}/balance/token?${qs.stringify(params)}`)
+      const response = await fetch(`${DBRO_API}/balance/token?${qs.stringify(params)}`)
       const data = await response.json()
 
       setBalance(data.toFixed(3))

@@ -4,7 +4,7 @@ import { ASSET_CDN } from './endpoints'
 import { PageMeta } from './types'
 
 export const DEFAULT_META: PageMeta = {
-  title: 'Decentral Bros',
+  title: 'DBRO Swap',
   description: 'Trade, earn, and own crypto on the all-in-one multichain DEX',
   image: `https://decentralbros.finance/logo.png`,
 }

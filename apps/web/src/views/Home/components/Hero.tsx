@@ -192,7 +192,7 @@ const Hero = () => {
                 src="/logo.webp"
                 width={isMobile ? width * 2 : width / 2}
                 height={isMobile ? height * 2 : height / 2}
-                alt="Decentral Bros Logo"
+                alt="DBRO Swap Logo"
               />
             </CakeBox>
           </BunnyWrapper>

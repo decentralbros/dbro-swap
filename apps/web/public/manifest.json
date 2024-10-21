@@ -1,7 +1,7 @@
 {
-  "short_name": "Decentral Bros",
-  "name": "Decentral Bros",
-  "description": "Decentral Bros, everyone's favorite DEX",
+  "short_name": "DBRO Swap",
+  "name": "DBRO Swap",
+  "description": "DBRO Swap, everyone's favorite DEX",
   "homepage_url": "https://decentralbros.finance",
   "start_url": ".",
   "display": "standalone",

@@ -15,7 +15,7 @@ import { currencyId } from 'utils/currencyId'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
 
 import { Flex, Text } from '@pancakeswap/uikit'
-import { ISLANDSWAP_API } from 'config/constants/endpoints'
+import { DBRO_API } from 'config/constants/endpoints'
 import qs from 'qs'
 import { useAccount, useChainId } from 'wagmi'
 import useWarningImport from '../../hooks/useWarningImport'
@@ -130,7 +130,7 @@ export function FormMain({ pricingAndSlippage, inputAmount, outputAmount, tradeL
         decimals: outputCurrency.decimals,
       }
 
-      const response = await fetch(`${ISLANDSWAP_API}/balance/usd?${qs.stringify(params)}`)
+      const response = await fetch(`${DBRO_API}/balance/usd?${qs.stringify(params)}`)
       const usd = await response.json()
       setOutputUSD((Number(usd) * Number(estimate)).toFixed(2))
     } catch {
@@ -165,7 +165,7 @@ export function FormMain({ pricingAndSlippage, inputAmount, outputAmount, tradeL
         decimals: inputCurrency.decimals,
       }
 
-      const response = await fetch(`${ISLANDSWAP_API}/balance/usd?${qs.stringify(params)}`)
+      const response = await fetch(`${DBRO_API}/balance/usd?${qs.stringify(params)}`)
       const usd = await response.json()
       const value = isWrapping ? Number(typedValue) : Number(inputValue)
 

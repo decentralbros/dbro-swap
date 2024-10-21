@@ -66,7 +66,7 @@ function MyApp(props: AppProps<{ initialReduxState: any; dehydratedState: any }>
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1, viewport-fit=cover"
         />
-        <meta name="description" content="Cheaper and faster than Uniswap? Discover Decentral Bros." />
+        <meta name="description" content="Cheaper and faster than Uniswap? Discover DBRO Swap." />
         <meta name="theme-color" content="#1bf696" />
         {/* {(Component as NextPageWithLayout).mp && (
           // eslint-disable-next-line @next/next/no-sync-scripts

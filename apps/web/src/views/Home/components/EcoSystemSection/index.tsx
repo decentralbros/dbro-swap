@@ -385,7 +385,7 @@ const EcoSystemSection: React.FC = () => {
 
   return (
     <Flex justifyContent="center" alignItems="center" flexDirection="column" pt={isMobile ? '24px' : '60px'}>
-      <Image src="/tree-left.png" alt="decentral bros" height={100} width={100} />
+      <Image src="/tree-left.png" alt="dbro swap" height={100} width={100} />
       <Text textAlign="center" p="20px">
         <Text
           fontSize={['32px', null, null, '40px']}

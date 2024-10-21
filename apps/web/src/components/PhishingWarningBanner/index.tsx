@@ -103,7 +103,7 @@ const CONFIG: BannerConfig[] = [
     component: Step2,
     stripeImage: `/phishing.png`,
     stripeImageWidth: '50px',
-    stripeImageAlt: 'Decentral Bros Warning!',
+    stripeImageAlt: 'DBRO Swap Warning!',
   },
   // {
   //   component: FeeRefund,

@@ -27,8 +27,8 @@ body:
       required: true
   - type: textarea
     attributes:
-      label: How does this feature benefit IslandSwap users?
-      description: Explain how this feature will be beneficial for the IslandSwap community and ecosystem.
+      label: How does this feature benefit DBRO Swap users?
+      description: Explain how this feature will be beneficial for the DBRO Swap community and ecosystem.
     validations:
       required: true
   - type: textarea
