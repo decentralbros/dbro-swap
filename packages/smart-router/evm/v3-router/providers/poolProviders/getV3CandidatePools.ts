@@ -97,7 +97,7 @@ const createFallbackTvlRefGetter = () => {
     const refs: V3PoolTvlReference[] = [
       {
         address: '0x1234567890123456789012345678901234567890',
-        tvlUSD: 1000000000000000000000n, // Using bigint notation
+        tvlUSD: 1000000000000000000000n,
       },
       {
         address: '0x0987654321098765432109876543210987654321',
