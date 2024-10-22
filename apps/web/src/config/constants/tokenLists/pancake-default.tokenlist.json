@@ -33,17 +33,6 @@
       "pairs": []
     },
     {
-      "asset": "c10042221_t0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
-      "type": "ARBITRUM",
-      "chainId": 42161,
-      "address": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
-      "name": "Dai Stablecoin",
-      "symbol": "DAI",
-      "decimals": 18,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/arbitrum/assets/0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1/logo.png",
-      "pairs": []
-    },
-    {
       "asset": "c10042221_t0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
       "type": "ARBITRUM",
       "chainId": 42161,
@@ -107,17 +96,6 @@
       "symbol": "axlUSDC",
       "decimals": 6,
       "logoURI": "https://assets-cdn.trustwallet.com/blockchains/base/assets/0xEB466342C4d449BC9f53A865D5Cb90586f405215/logo.png",
-      "pairs": []
-    },
-    {
-      "asset": "c8453_t0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
-      "type": "BASE",
-      "chainId": 8453,
-      "address": "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
-      "name": "Dai",
-      "symbol": "DAI",
-      "decimals": 18,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/base/assets/0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb/logo.png",
       "pairs": []
     },
     {
@@ -822,19 +800,6 @@
       "pairs": []
     },
     {
-      "chainId": 1,
-      "asset": "c60_t0x0Ae055097C6d159879521C384F1D2123D1f195e6",
-      "type": "ERC20",
-      "chainId": 1,
-      "address": "0x0Ae055097C6d159879521C384F1D2123D1f195e6",
-      "name": "xDai",
-      "symbol": "STAKE",
-      "decimals": 18,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/ethereum/assets/0x0Ae055097C6d159879521C384F1D2123D1f195e6/logo.png",
-      "pairs": []
-    },
-    {
-      "chainId": 1,
       "asset": "c60_t0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e",
       "type": "ERC20",
       "chainId": 1,
@@ -1928,19 +1893,6 @@
       "pairs": []
     },
     {
-      "chainId": 1,
-      "asset": "c60_t0x6B175474E89094C44Da98b954EedeAC495271d0F",
-      "type": "ERC20",
-      "chainId": 1,
-      "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-      "name": "Dai",
-      "symbol": "DAI",
-      "decimals": 18,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/ethereum/assets/0x6B175474E89094C44Da98b954EedeAC495271d0F/logo.png",
-      "pairs": []
-    },
-    {
-      "chainId": 1,
       "asset": "c60_t0x6B3595068778DD592e39A122f4f5a5cF09C90fE2",
       "type": "ERC20",
       "chainId": 1,
@@ -1952,7 +1904,6 @@
       "pairs": []
     },
     {
-      "chainId": 1,
       "asset": "c60_t0x6BFf2fE249601ed0Db3a87424a2E923118BB0312",
       "type": "ERC20",
       "chainId": 1,
@@ -3597,17 +3548,6 @@
       "pairs": []
     },
     {
-      "asset": "c60_t0xf4CD3d3Fda8d7Fd6C5a500203e38640A70Bf9577",
-      "type": "ERC20",
-      "chainId": 1,
-      "address": "0xf4CD3d3Fda8d7Fd6C5a500203e38640A70Bf9577",
-      "name": "YfDAI.finance",
-      "symbol": "Yf-DAI",
-      "decimals": 18,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/ethereum/assets/0xf4CD3d3Fda8d7Fd6C5a500203e38640A70Bf9577/logo.png",
-      "pairs": []
-    },
-    {
       "asset": "c60_t0xF4d861575ecC9493420A3f5a14F85B13f0b50EB3",
       "type": "ERC20",
       "chainId": 1,
@@ -3619,7 +3559,6 @@
       "pairs": []
     },
     {
-      "chainId": 1,
       "asset": "c60_t0xF629cBd94d3791C9250152BD8dfBDF380E2a3B9c",
       "type": "ERC20",
       "chainId": 1,
