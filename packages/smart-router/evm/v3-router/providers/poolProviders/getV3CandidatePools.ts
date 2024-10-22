@@ -94,16 +94,18 @@ const createFallbackTvlRefGetter = () => {
     if (cached) {
       return cached
     }
-    return [
+    const refs: V3PoolTvlReference[] = [
       {
         address: '0x1234567890123456789012345678901234567890',
         tvlUSD: 1000000000000000000000n, // Using bigint notation
       },
       {
         address: '0x0987654321098765432109876543210987654321',
-        tvlUSD: '500000000000000000000', // Representing $500,000 in wei as a string
+        tvlUSD: '500000000000000000000',
       },
     ]
+    cache.set(currencyA.chainId, refs)
+    return refs
   }
 }
 
