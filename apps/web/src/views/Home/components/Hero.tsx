@@ -169,11 +169,7 @@ const Hero = () => {
               <ConnectWalletButton style={{ borderRadius: isXs ? 12 : undefined, color: '#000' }} scale="md" mr="8px" />
             )}
             <NextLinkFromReactRouter to="/swap">
-              <Button
-                scale="md"
-                style={{ borderRadius: isXs ? 12 : undefined, color: !account ? 'primary' : '#000' }}
-                variant={!account ? 'secondary' : 'primary'}
-              >
+              <Button scale="md" style={{ borderRadius: isXs ? 12 : undefined, color: 'primary' }} variant="secondary">
                 {t('Trade Now')}
               </Button>
             </NextLinkFromReactRouter>
