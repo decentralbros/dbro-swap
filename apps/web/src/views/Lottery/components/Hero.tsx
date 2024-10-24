@@ -225,7 +225,7 @@ const Hero = () => {
   const getHeroHeading = () => {
     return (
       <Heading mb="24px" scale="xl" color="#ffffff">
-        {t('Tickets on sale soon')}
+        {t('Get your tickets now!')}
       </Heading>
     )
   }
