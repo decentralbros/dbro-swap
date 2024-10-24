@@ -129,7 +129,7 @@ const CheckPrizesSection = () => {
             {t('Are you a winner?')}
           </Heading>
           <Link href="/lottery/prizes">
-            <Button>{t('Check Now')}</Button>
+            <Button style={{ color: '#000' }}>{t('Check Now')}</Button>
           </Link>
         </Flex>
         <TicketImage src="/images/lottery/ticket-r.png" alt="lottery ticket" />
