@@ -12,9 +12,7 @@ const IntroSteps = [
     title: <Trans>Your first step in the DeFi world</Trans>,
     icon: '/images/wallets/bunny.webp',
     description: (
-      <Trans>
-        A Web3 Wallet allows you to send and receive crypto assets like bitcoin, BNB, ETH, NFTs and much more.
-      </Trans>
+      <Trans>A Web3 Wallet allows you to send and receive crypto assets like ETH, NFTs, and much more.</Trans>
     ),
   },
   {
@@ -23,7 +21,7 @@ const IntroSteps = [
     description: (
       <Trans>
         Instead of setting up new accounts and passwords for every website, simply set up your wallet in one go, and
-        connect it to your favorite DApps.
+        connect it to your favorite dApps.
       </Trans>
     ),
   },
