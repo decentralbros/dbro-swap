@@ -34,7 +34,7 @@ const TermsOfService = () => {
   return (
     <Container>
       <Text as="h1">DBRO Swap Terms of Service</Text>
-      <Text as="h3">Last modified: Aug 22, 2024</Text>
+      <Text as="h3">Last modified: Oct 22, 2024</Text>
       <Text as="p">
         <Text as="span">
           These Terms of Service (the “Agreement”) explains the terms and conditions by which you may access and use
@@ -373,7 +373,7 @@ const TermsOfService = () => {
         Similarly, the Protocol is provided "AS IS", at your own risk, and without warranties of any kind. Although we
         contributed to the initial code for the Protocol, we do not provide, own, or control the Protocol, which is run
         autonomously without any headcount by smart contracts deployed on various blockchains. Upgrades and
-        modifications to the Protocol are generally managed in a community-driven way by holders of the CAKE token. No
+        modifications to the Protocol are generally managed in a community-driven way by holders of the DBRO token. No
         developer or entity involved in creating the Protocol will be liable for any claims or damages whatsoever
         associated with your use, inability to use, or your interaction with other users of, the Protocol, including any
         direct, indirect, incidental, special, exemplary, punitive or consequential damages, or loss of profits,
@@ -400,7 +400,7 @@ const TermsOfService = () => {
       <Text as="h3">Dispute Resolution</Text>
       <Text as="p">
         We will use our best efforts to resolve any potential disputes through informal, good faith negotiations. If a
-        potential dispute arises, you must contact us by sending an email to info@decentralbros.come so that we can
+        potential dispute arises, you must contact us by sending an email to team@decentralbros.xyz so that we can
         attempt to resolve it without resorting to formal dispute resolution. If we aren't able to reach an informal
         resolution within sixty days of your email, then you and we both agree to resolve the potential dispute
         according to the process set forth below.
@@ -409,12 +409,12 @@ const TermsOfService = () => {
         Any claim or controversy arising out of or relating to the Website, this Agreement, or any other acts or
         omissions for which you may contend that we are liable, including (but not limited to) any claim or controversy
         as to arbitrability ("Dispute"), shall be finally and exclusively settled by arbitration under the Arbitration
-        Rules of the Hong Kong International Arbitration Centre. You understand that you are required to resolve all
+        Rules of the United States International Arbitration Centre. You understand that you are required to resolve all
         Disputes by binding arbitration. The arbitration shall be held on a confidential basis before a single
         arbitrator, who shall be selected pursuant to Arbitration Rules of the Centre. The arbitration will be held in
-        Hong Kong, unless you and we both agree to hold it elsewhere. Unless we agree otherwise, the arbitrator may not
-        consolidate your claims with those of any other party. Any judgment on the award rendered by the arbitrator may
-        be entered in any court of competent jurisdiction.
+        United States, unless you and we both agree to hold it elsewhere. Unless we agree otherwise, the arbitrator may
+        not consolidate your claims with those of any other party. Any judgment on the award rendered by the arbitrator
+        may be entered in any court of competent jurisdiction.
       </Text>
 
       <Text as="h3">Class Action and Jury Trial Waiver</Text>
@@ -427,13 +427,13 @@ const TermsOfService = () => {
 
       <Text as="h3">Governing Law</Text>
       <Text as="p">
-        You agree that the laws of Hong Kong, without regard to principles of conflict of laws, govern this Agreement
-        and any Dispute between you and us. You further agree that the Website shall be deemed to be based solely in the
-        State of Hong Kong, and that although the Website may be available in other jurisdictions, its availability does
-        not give rise to general or specific personal jurisdiction in any forum outside Hong Kong. Any arbitration
-        conducted pursuant to this Agreement shall be governed by the Arbitration Rules of the Centre. You agree that
-        the courts of Hong Kong are the proper forum for any appeals of an arbitration award or for court proceedings in
-        the event that this Agreement's binding arbitration clause is found to be unenforceable.
+        You agree that the laws of United States, without regard to principles of conflict of laws, govern this
+        Agreement and any Dispute between you and us. You further agree that the Website shall be deemed to be based
+        solely in the United States, and that although the Website may be available in other jurisdictions, its
+        availability does not give rise to general or specific personal jurisdiction in any forum outside United States.
+        Any arbitration conducted pursuant to this Agreement shall be governed by the Arbitration Rules of the Centre.
+        You agree that the courts of United States are the proper forum for any appeals of an arbitration award or for
+        court proceedings in the event that this Agreement's binding arbitration clause is found to be unenforceable.
       </Text>
 
       <Text as="h3">Entire Agreement</Text>
