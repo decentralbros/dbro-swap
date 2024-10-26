@@ -2,7 +2,6 @@ import { useTranslation } from '@pancakeswap/localization'
 import { Button, Flex, Heading, useModal } from '@pancakeswap/uikit'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import { FetchStatus, LotteryStatus } from 'config/constants/types'
-import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useGetUserLotteriesGraphData, useLottery } from 'state/lottery/hooks'
 import { styled } from 'styled-components'
@@ -125,12 +124,10 @@ const CheckPrizesSection = () => {
       <Flex alignItems="center" justifyContent="center">
         <TicketImage src="/images/lottery/ticket-l.png" alt="lottery ticket" />
         <Flex mx={['4px', null, '16px']} flexDirection="column">
-          <Heading textAlign="center" color="#F4EEFF" mb="24px">
+          {/* <Heading textAlign="center" color="#F4EEFF" mb="24px">
             {t('Are you a winner?')}
-          </Heading>
-          <Link href="/lottery/prizes">
-            <Button style={{ color: '#000' }}>{t('Check Now')}</Button>
-          </Link>
+          </Heading> */}
+          <Button style={{ color: '#000' }}>{t('Check Now')}</Button>
         </Flex>
         <TicketImage src="/images/lottery/ticket-r.png" alt="lottery ticket" />
       </Flex>

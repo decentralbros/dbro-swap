@@ -1,3 +1,4 @@
+import { ChainId } from '@pancakeswap/chains'
 import { useTranslation } from '@pancakeswap/localization'
 import { bscTokens } from '@pancakeswap/tokens'
 import {
@@ -5,7 +6,6 @@ import {
   BalanceInput,
   Button,
   Flex,
-  HelpIcon,
   Modal,
   Skeleton,
   Text,
@@ -32,7 +32,7 @@ import { fetchUserTicketsAndLotteries } from 'state/lottery'
 import { useLottery } from 'state/lottery/hooks'
 import { styled } from 'styled-components'
 import { parseEther } from 'viem'
-import { useAccount } from 'wagmi'
+import { useAccount, useChainId } from 'wagmi'
 import EditNumbersModal from './EditNumbersModal'
 import NumTicketsToBuyButton from './NumTicketsToBuyButton'
 import { useTicketsReducer } from './useTicketsReducer'
@@ -284,6 +284,8 @@ const BuyTicketsModal: React.FC<React.PropsWithChildren<BuyTicketsModalProps>> =
 
   const isApproveDisabled = isApproved || disableBuying
 
+  const chainId = useChainId()
+
   if (buyingStage === BuyingStage.EDIT) {
     return (
       <EditNumbersModal
@@ -376,13 +378,13 @@ const BuyTicketsModal: React.FC<React.PropsWithChildren<BuyTicketsModalProps>> =
       <Flex flexDirection="column">
         <Flex mb="8px" justifyContent="space-between">
           <Text color="textSubtle" fontSize="14px">
-            {t('Cost')} (DBRO)
+            1 Ticket
           </Text>
           <Text color="textSubtle" fontSize="14px">
-            {priceTicketInCake && getFullDisplayBalance(priceTicketInCake.times(ticketsToBuy || 0))} DBRO
+            100,000 DBRO
           </Text>
         </Flex>
-        <Flex mb="8px" justifyContent="space-between">
+        {/* <Flex mb="8px" justifyContent="space-between">
           <Flex>
             <Text display="inline" bold fontSize="14px" mr="4px">
               {discountValue && totalCost ? percentageDiscount() : 0}%
@@ -397,27 +399,27 @@ const BuyTicketsModal: React.FC<React.PropsWithChildren<BuyTicketsModalProps>> =
           <Text fontSize="14px" color="textSubtle">
             ~{discountValue} DBRO
           </Text>
-        </Flex>
+        </Flex> */}
         <Flex borderTop={`1px solid ${theme.colors.cardBorder}`} pt="8px" mb="24px" justifyContent="space-between">
           <Text color="textSubtle" fontSize="16px">
             {t('You pay')}
           </Text>
           <Text fontSize="16px" bold>
-            ~{totalCost} DBRO
+            {totalCost} DBRO
           </Text>
         </Flex>
 
         {account ? (
           <>
             <ApproveConfirmButtons
-              isApproveDisabled={isApproveDisabled}
+              isApproveDisabled
               isApproving={isApproving}
-              isConfirmDisabled={disableBuying}
+              isConfirmDisabled={chainId !== ChainId.BASE}
               isConfirming={isConfirming}
               onApprove={handleApprove}
               onConfirm={handleConfirm}
               buttonArrangement={ButtonArrangement.SEQUENTIAL}
-              confirmLabel={t('Buy Instantly')}
+              confirmLabel={t('Buy Now')}
               confirmId="lotteryBuyInstant"
             />
             {isApproved && (
@@ -447,7 +449,7 @@ const BuyTicketsModal: React.FC<React.PropsWithChildren<BuyTicketsModalProps>> =
 
         <Text mt="24px" fontSize="12px" color="textSubtle">
           {t(
-            '"Buy Instantly" chooses random numbers, with no duplicates among your tickets. Prices are set before each round starts, equal to $5 at that time. Purchases are final.',
+            '"Buy Now" chooses random numbers, with no duplicates among your tickets. Prices are set before each round starts. All purchases are final.',
           )}
         </Text>
       </Flex>
