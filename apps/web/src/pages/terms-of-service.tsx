@@ -33,421 +33,226 @@ export const Container = styled(Flex)`
 const TermsOfService = () => {
   return (
     <Container>
-      <Text as="h1">DBRO Swap Terms of Service</Text>
-      <Text as="h3">Last modified: Oct 22, 2024</Text>
+      <Text as="h1">TERMS AND CONDITIONS</Text>
+      <Text as="h3">Last modified: Oct 28, 2024</Text>
+
+      <Text as="h3">1. Introduction</Text>
       <Text as="p">
-        <Text as="span">
-          These Terms of Service (the “Agreement”) explains the terms and conditions by which you may access and use
-        </Text>
-        <Link m="0 4px" display="inline !important" href="https://decentralbros.finance">
-          https://decentralbros.finance
-        </Link>
-        <Text as="span">
-          and any subdomains associated with the Website. You must read this Agreement carefully as it governs your use
-          of the Website. By accessing or using the Website, you signify that you have read, understand, and agree to be
-          bound by this Agreement in its entirety. If you do not agree, you are not authorized to access or use the
-          Website and should not use the Website.
-        </Text>
+        The following Standard Terms and Conditions upon which Decentral Bros, LLC (along with its affiliates and
+        subsidiaries, the “Company”) offers access to their “website” (the below mentioned sites and any software
+        provided by the Company for use with these sites, including (www.decentralbros.xyz, www.decentralbros.finance,
+        www.decentralbros.social & www.decentralbros.tech) These Terms and Conditions shall manage your usage of the
+        Website, as the customer, irrespective of whether or not you are an Account holder ("You") and the use of its
+        services provided via the Site (the "Services"). Minors or persons below the age of 18 years old shall not be
+        allowed to use this Website, even if they are in accordance with all other policies listed herein. By using this
+        Website, you agreed to accept all terms and conditions herein and agree to be legally bound by these Terms and
+        all terms, policies, and guidelines incorporated by reference in these Terms. You shall not use this Website if
+        you disagree with any of these Website Standard Terms and Conditions.
+        <br />
+        <br />
+        If at any time, you do not wish to accept the Terms and Conditions, you may not use the Site. Any terms and
+        conditions proposed by you which are in addition to or which conflict with these Terms and Conditions are
+        expressly rejected by the Company and will have no force or effect.
+        <br />
+        <br />
+        You understand and agree that the Company may discontinue or change the Site at any time, without notice. You
+        also understand and agree that the Company may discontinue or restrict your use of this Site for any reason
+        without notice.
       </Text>
 
-      <Text as="p" fontWeight="600">
-        NOTICE: This Agreement contains important information, including a binding arbitration provision and a class
-        action waiver, both of which impact your rights as to how disputes are resolved. The Website is only available
-        to you — and you should only access the Website — if you agree completely with these terms.
+      <Text as="h3">2. Intellectual Property Rights</Text>
+      <Text as="p">
+        Other than the content you own, under these Terms, the company and/or its licensors own all the intellectual
+        property rights and materials contained in this Website.
+        <br />
+        <br />
+        You are granted a limited license only for purposes of viewing the material contained on this Website
       </Text>
 
-      <Text as="h3">Introduction</Text>
+      <Text as="h3">3. Terms of Use</Text>
       <Text as="p">
-        The Website provides access to (a) a decentralized protocol on various public blockchains, including but not
-        limited to BNB Chain, Aptos and Ethereum, that allow users to trade certain compatible digital assets (“the DBRO
-        Swap protocol” or the “Protocol”), among other services. The Website is one, but not the exclusive, means of
-        accessing the Protocol.
-      </Text>
-      <Text as="p">
-        To access the Website, you must use non-custodial wallet software, which allows you to interact with public
-        blockchains. Your relationship with that non-custodial wallet provider is governed by the applicable terms of
-        service of that third party, not this Agreement. Wallets are not operated by, maintained by, or affiliated with
-        us, and we do not have custody or control over the contents of your wallet and have no ability to retrieve or
-        transfer its contents. By connecting your wallet to our Website, you agree to be bound by this Agreement and all
-        of the terms incorporated herein by reference.
-      </Text>
-
-      <Text as="h3">Modification of this Agreement</Text>
-      <Text as="p">
-        <Text as="span">
-          We reserve the right, in our sole discretion, to modify this Agreement from time to time. If we make any
-          material modifications, we will notify you by updating the date at the top of the Agreement and by maintaining
-          a current version of the Agreement at
-        </Text>
-        <Link m="0 4px" display="inline !important" href="https://decentralbros.finance/terms-of-service">
-          https://decentralbros.finance/terms-of-service.
-        </Link>
-        <Text as="span">
-          All modifications will be effective when they are posted, and your continued accessing or use of the Website
-          will serve as confirmation of your acceptance of those modifications. If you do not agree with any
-          modifications to this Agreement, you must immediately stop accessing and using the Website.
-        </Text>
+        The Company grants you a limited, revocable, non-exclusive, non-sublicensable license to access the Site and to
+        view, copy, and print the portions of the Content available to you on the Site. Except as expressly permitted
+        above, any use of any portion of the Content without the prior written permission of its owner is strictly
+        prohibited and will terminate the license granted in this Agreement and your account with us. You represent and
+        warrant that your use of the Site and the Content will be consistent with these above - listed terms of the
+        license provided and will not infringe upon or violate the rights of any other party or breach any contract or
+        legal duty to any other parties, or violate any applicable law. The Site may contain links to third-party Web
+        sites ("Third-Party Sites") and third-party content ("Third-Party Content") as a service to those interested in
+        this information. You use links to Third-Party Sites, and any Third-Party Content or service provided there at
+        your own risk. The Company does not monitor or have any control over and makes no claim or representation
+        regarding, Third-Party Content or Third-Party Sites.
       </Text>
 
-      <Text as="h3">Description of Services provided through the Website</Text>
-      <Text as="p">The Website provides a web or mobile-based means of accessing the Protocol.</Text>
-
-      <Text as="h3">Website for accessing Protocol</Text>
+      <Text as="h3">4. User Restrictions</Text>
       <Text as="p">
-        The Website is distinct from the Protocol and is one, but not the exclusive, means of accessing the Protocol.
-        The Protocol itself has three versions, designated as v1, v2, and v3, each of which comprises open-source or
-        source-available self-executing smart contracts that are deployed on various public blockchains, such as BNB
-        Chain, Aptos and Ethereum. DBRO Swap does not control or operate any version of the Protocol on any blockchain
-        network. By using the Website, you understand that you are not buying or selling digital assets from us and that
-        we do not operate any liquidity pools on the Protocol or control trade execution on the Protocol. When traders
-        pay fees for trades, those fees accrue to liquidity providers for the Protocol. As a general matter, the DBRO
-        Swap team is not a liquidity provider into Protocol liquidity pools and liquidity providers are independent
-        third parties. The Protocol was initially deployed on the BNB Chain blockchain, and has since been deployed on
-        several other blockchain networks.
+        You are specifically restricted from all of the following:
+        <ul>
+          <li>
+            publishing any Website material in any other public or private media forum without the prior consent of the
+            Company
+          </li>
+          <li>selling, sublicensing, and/or otherwise commercializing any Website material;</li>
+          <li>publicly performing and/or showing any Website material;</li>
+          <li>using this Website in any way that is or may be damaging to this Website;</li>
+          <li>using this Website in any way that impacts user access to this Website;</li>
+          <li>
+            using this Website contrary to applicable laws and regulations, or in any way may cause harm to the Website,
+            or to any person or business entity;
+          </li>
+          <li>
+            engaging in any data mining, data harvesting, data extracting or any other similar activity in relation to
+            this Website;
+          </li>
+          <li>using this Website to engage in any advertising or marketing.</li>
+        </ul>
+        <br />
+        Certain areas of this Website are restricted from being accessed by you and the Company may further restrict
+        access by you to any areas of this Website, at any time, without your consent. Any user ID and password you may
+        have for this Website are confidential and you must maintain confidentiality as well.
       </Text>
 
-      <Text as="h3">Eligibility</Text>
+      <Text as="h3">5. Copyright</Text>
       <Text as="p">
-        To access or use the Website, you must be able to form a legally binding contract with us. Accordingly, you
-        represent that you are at least the age of majority in your jurisdiction (e.g., 18 years old in the United
-        States) and have the full right, power, and authority to enter into and comply with the terms and conditions of
-        this Agreement on behalf of yourself and any company or legal entity for which you may access or use the
-        Website.
-      </Text>
-      <Text as="p">
-        You further represent that you are not (a) the subject of economic or trade sanctions administered or enforced
-        by any governmental authority or otherwise designated on any list of prohibited or restricted parties (including
-        but not limited to the list maintained by the Office of Foreign Assets Control of the U.S. Department of the
-        Treasury) or (b) a citizen, resident, or organized in a jurisdiction or territory that is the subject of
-        comprehensive country-wide, territory-wide, or regional economic sanctions by the United States. Finally, you
-        represent that your access and use of the Website will fully comply with all applicable laws and regulations,
-        and that you will not access or use the Website to conduct, promote, or otherwise facilitate any illegal
-        activity.
+        The content on the Site, including all information, data, logos, marks, designs, graphics, pictures, sound
+        files, other files, and their selection and arrangement, is called "Content". Content provided by Users is
+        called "User Content". User Content is that User's property. The Company’s only right to that User Content is
+        the limited licenses to it granted in these Terms contained in the section, “Your Content”. Other than the User
+        Content, the Site, all Content and all software available on the Site or used to create and operate the Site is
+        the property of the Company or its licensors and is protected by international copyright laws, and all rights to
+        the Site, such Content and such software are expressly reserved. All trademarks, registered trademarks, product
+        names, and company names or logos mentioned in the Site are the property of their respective owners. Reference
+        to any products, services, processes or other information (by trade name, trademark, manufacturer, supplier or
+        otherwise) does not constitute or imply endorsement, sponsorship or recommendation thereof by the Company.
       </Text>
 
-      <Text as="h3">Intellectual Property Rights</Text>
+      <Text as="h3">6. Your Content Uploaded and/or Shared to the Website</Text>
       <Text as="p">
-        DBRO Swap owns all intellectual property and other rights in the Website and its contents, including (but not
-        limited to) software, text, images, trademarks, service marks, copyrights, patents, designs, and its “look and
-        feel.” Unlike the Website, versions 1-3 of the Protocol are comprised entirely of open-source or
-        source-available software running on public blockchains.
-      </Text>
-      <Text as="p">
-        By using the Website to list, post, promote, or display NFTs, you grant us a worldwide, non-exclusive,
-        sublicensable, royalty-free license to use, copy, modify, and display any content, including but not limited to
-        text, materials, images, files, communications, comments, feedback, suggestions, ideas, concepts, questions,
-        data, or otherwise, that you post on or through the Website for our current and future business purposes,
-        including to provide, promote, and improve the services. This includes any digital file, art, or other material
-        linked to or associated with any NFTs that are displayed.
-      </Text>
-      <Text as="p">
-        You represent and warrant that you have, or have obtained, all rights, licenses, consents, permissions, power
-        and/or authority necessary to grant the rights granted herein for any NFTs that you list, post, promote, or
-        display on or through the Website. You represent and warrant that such content does not contain material subject
-        to copyright, trademark, publicity rights, or other intellectual property rights, unless you have necessary
-        permission or are otherwise legally entitled to post the material and to grant us the license described above,
-        and that the content does not violate any laws.
+        In these Website Standard Terms and Conditions, “Your Content” shall mean any audio, video text, images, or
+        other material you choose to display on this Website. By displaying Your Content, you grant a non-exclusive,
+        worldwide irrevocable, sub-licensable license to use, reproduce, adapt, publish, translate, and distribute it in
+        any and all media.
+        <br />
+        <br />
+        Your Content must be your own and must not be invading any third-party’s rights. The Company reserves the right
+        to remove any of Your Content from this Website at any time without notice.
       </Text>
 
-      <Text as="h3">Additional Rights</Text>
+      <Text as="h3">7. Privacy Statement</Text>
       <Text as="p">
-        We reserve the following rights, which do not constitute obligations of ours: (a) with or without notice to you,
-        to modify, substitute, eliminate or add to the Website; (b) to review, modify, filter, disable, delete and
-        remove any and all content and information from the Website; and (c) to cooperate with any law enforcement,
-        court or government investigation or order or third party requesting or directing that we disclose information
-        or content or information that you provide.
+        We are committed to protecting your privacy. Authorized employees within the company, on a need to know basis
+        only, use any information collected from individual customers. We constantly review our systems and data to
+        ensure the best possible service to our customers. We will investigate any such actions with a view to
+        prosecuting and/or taking civil proceedings to recover damages against those responsible as needed. We will not
+        sell, share, or rent your personal information to any third party or use your e-mail address for unsolicited
+        mail. Any emails sent by this Company will only be in connection with the provision of agreed services and
+        products. Client records are regarded as confidential and therefore will not be divulged to any third party,
+        other than if legally required to do so to the appropriate authorities.
       </Text>
 
-      <Text as="h3">Prohibited Activity</Text>
+      <Text as="h3">8. Log Files</Text>
       <Text as="p">
-        You agree not to engage in, or attempt to engage in, any of the following categories of prohibited activity in
-        relation to your access and use of the Website:
-      </Text>
-      <ul>
-        <li>
-          Intellectual Property Infringement. Activity that infringes on or violates any copyright, trademark, service
-          mark, patent, right of publicity, right of privacy, or other proprietary or intellectual property rights under
-          the law.
-        </li>
-        <li>
-          Cyberattack. Activity that seeks to interfere with or compromise the integrity, security, or proper
-          functioning of any computer, server, network, personal device, or other information technology system,
-          including (but not limited to) the deployment of viruses and denial of service attacks.
-        </li>
-        <li>
-          Fraud and Misrepresentation. Activity that seeks to defraud us or any other person or entity, including (but
-          not limited to) providing any false, inaccurate, or misleading information in order to unlawfully obtain the
-          property of another.
-        </li>
-        <li>
-          Market Manipulation. Activity that violates any applicable law, rule, or regulation concerning the integrity
-          of trading markets, including (but not limited to) the manipulative tactics commonly known as “rug pulls”,
-          pumping and dumping, and wash trading.
-        </li>
-        <li>
-          Securities and Derivatives Violations. Activity that violates any applicable law, rule, or regulation
-          concerning the trading of securities or derivatives, including (but not limited to) the unregistered offering
-          of securities and the offering of leveraged and margined commodity products to retail customers in the United
-          States.
-        </li>
-        <li>
-          Sale of Stolen Property. Buying, selling, or transferring of stolen items, fraudulently obtained items, items
-          taken without authorization, and/or any other illegally obtained items.
-        </li>
-        <li>
-          Data Mining or Scraping. Activity that involves data mining, robots, scraping, or similar data gathering or
-          extraction methods of content or information from the Website.
-        </li>
-        <li>
-          Objectionable Content. Activity that involves soliciting information from anyone under the age of 18 or that
-          is otherwise harmful, threatening, abusive, harassing, tortious, excessively violent, defamatory, vulgar,
-          obscene, pornographic, libelous, invasive of another’s privacy, hateful, discriminatory, or otherwise
-          objectionable.
-        </li>
-        <li>
-          Any Other Unlawful Conduct. Activity that violates any applicable law, rule, or regulation of the United
-          States or another relevant jurisdiction, including (but not limited to) the restrictions and regulatory
-          requirements imposed by U.S. law.
-        </li>
-      </ul>
-
-      <Text as="h3">Initial Farm Offering</Text>
-      <Text as="p">
-        You represent that you are not a user from the following countries or regions when participating in our Initial
-        Farm Offerings:
-      </Text>
-      <Text as="p">
-        Belarus, Cuba, Crimea Region, Democratic Republic of Congo, Iran, Iraq, New Zealand, North Korea, South Sudan,
-        Sudan, Syria, United States of America and its territories (American Samoa, Guam, Puerto Rico, the Northern
-        Mariana Islands, and the U.S. Virgin Islands), Zimbabwe.
+        We may use IP addresses to analyze trends, administer the site, track user’s movement, and gather broad
+        demographic information for aggregate use. IP addresses are not linked to personally identifiable information.
+        Additionally, for systems administration, detecting usage patterns, and troubleshooting purposes, our web
+        servers automatically log standard access information including browser type, access times/open mail, URL
+        requested, and referral URL. This information is not shared with third parties and is used only within this
+        Company on a need-to-know basis. Any individually identifiable information related to this data will never be
+        used in any way different to that stated above without your explicit permission.
       </Text>
 
-      <Text as="h3">Not Registered with the SEC or Any Other Agency</Text>
+      <Text as="h3">9. Cookies</Text>
       <Text as="p">
-        We are not registered with the U.S. Securities and Exchange Commission as a national securities exchange or in
-        any other capacity. You understand and acknowledge that we do not broker trading orders on your behalf. We also
-        do not facilitate the execution or settlement of your trades, which occur entirely on the public distributed
-        blockchains like Ethereum. As a result, we do not (and cannot) guarantee market best pricing or best execution
-        through the Website or when using our Smart Router feature, which routes trades across liquidity pools on the
-        Protocol only. Any references in the Website to “best price” do not constitute a representation or warranty
-        about pricing available through the Website, on the Protocol, or elsewhere.
+        Like most interactive web sites this Company’s website [or ISP] uses cookies to enable us to retrieve user
+        details for each visit. Cookies may be used in some areas of our site to enable the functionality of this area
+        and ease of use for those people visiting. Some of our affiliate partners may also use cookies.
       </Text>
 
-      <Text as="h3">Non-Solicitation; No Investment Advice</Text>
+      <Text as="h3">10. Account Registration</Text>
       <Text as="p">
-        You agree and understand that: (a) all trades you submit through the Website are considered unsolicited, which
-        means that they are solely initiated by you; (b) you have not received any investment advice from us in
-        connection with any trades, including those you place via our Smart Router API; and (c) we do not conduct a
-        suitability review of any trades you submit.
-      </Text>
-      <Text as="p">
-        We may provide information about tokens in the Website sourced from third-party data partners through features
-        such as rarity scores, token explorer or token lists (which includes the DBRO Swap default token list and DBRO
-        Swap expanded list hosted at tokenlists.org). We may also provide warning labels for certain tokens. The
-        provision of informational materials does not make trades in those tokens solicited; we are not attempting to
-        induce you to make any purchase as a result of information provided. All such information provided by the
-        Website is for informational purposes only and should not be construed as investment advice or a recommendation
-        that a particular token is a safe or sound investment. You should not take, or refrain from taking, any action
-        based on any information contained in the Website. By providing token information for your convenience, we do
-        not make any investment recommendations to you or opine on the merits of any transaction or opportunity. You
-        alone are responsible for determining whether any investment, investment strategy or related transaction is
-        appropriate for you based on your personal investment objectives, financial circumstances, and risk tolerance.
+        These terms will apply to email subscriptions and access to any future implementation of any services provided
+        by the Company through the site which may require account registration. Please review our Privacy Policy to
+        understand how the Company may collect or use the information you provide in registration to any services
+        offered through the site. If you register for an account on the Site, you agree to (a) provide accurate,
+        current, and complete information as may be prompted by any registration forms on the Site ("Registration
+        Data"); (b) maintain the security of your password; (c) maintain and promptly update the Registration Data, and
+        any other information you provide to the Site, and to keep it accurate, current and complete; and (d) accept all
+        risks of unauthorized access to the Registration Data and any other information you provide to the Site. You are
+        responsible for all activity on your Site account.
       </Text>
 
-      <Text as="h3">Non-Custodial and No Fiduciary Duties</Text>
+      <Text as="h3">11. No warranties</Text>
       <Text as="p">
-        The Website is a purely non-custodial application, meaning we do not ever have custody, possession, or control
-        of your digital assets at any time. It further means you are solely responsible for the custody of the
-        cryptographic private keys to the digital asset wallets you hold and you should never share your wallet
-        credentials or seed phrase with anyone. We accept no responsibility for, or liability to you, in connection with
-        your use of a wallet and make no representations or warranties regarding how the Website will operate with any
-        specific wallet. Likewise, you are solely responsible for any associated wallet and we are not liable for any
-        acts or omissions by you in connection with or as a result of your wallet being compromised.
-      </Text>
-      <Text as="p">
-        This Agreement is not intended to, and does not, create or impose any fiduciary duties on us. To the fullest
-        extent permitted by law, you acknowledge and agree that we owe no fiduciary duties or liabilities to you or any
-        other party, and that to the extent any such duties or liabilities may exist at law or in equity, those duties
-        and liabilities are hereby irrevocably disclaimed, waived, and eliminated. You further agree that the only
-        duties and obligations that we owe you are those set out expressly in this Agreement.
-      </Text>
-
-      <Text as="h3">Compliance and Tax Obligations</Text>
-      <Text as="p">
-        The Website may not be available or appropriate for use in your jurisdiction. By accessing or using the Website,
-        you agree that you are solely and entirely responsible for compliance with all laws and regulations that may
-        apply to you.
-      </Text>
-      <Text as="p">
-        Specifically, your use of the Website or the Protocol may result in various tax consequences, such as income or
-        capital gains tax, value-added tax, goods and services tax, or sales tax in certain jurisdictions.It is your
-        responsibility to determine whether taxes apply to any transactions you initiate or receive and, if so, to
-        report and/or remit the correct tax to the appropriate tax authority.
+        This Website is provided “as is,” with all faults, and the Company expresses no representations or warranties of
+        any kind related to this Website or the materials contained on this Website. Also, nothing contained on this
+        Website shall be interpreted or construed as advice and is only disseminated to you, the customer, for
+        informational purposes.
+        <br />
+        <br />
+        The Company does not warrant that the service from this site will be uninterrupted, timely or error-free,
+        although it is the Company’s goal to provide these services to each user to the best of their ability. By using
+        this service you thereby indemnify this Company, its employees, agents, and affiliates against any loss or
+        damage, in whatever manner, however caused.
+        <br />
+        <br />
+        While the Company attempts to make your access to and use of the Site safe, the Company does not represent or
+        warrant that the Site or any Content are free of viruses, phishing attempts, or other bad actors attempting to
+        defraud you as a customer. You shall defend, indemnify and hold harmless Company and the other Released Parties
+        from any loss, damages, liabilities, costs, expenses, claims, and proceedings arising out of your use of the
+        Site and from the use of the Site by any person to whom you give access to your account, including any claims
+        made by any person that any of your User Content infringes the rights, including the intellectual property
+        rights, of any third party.
       </Text>
 
-      <Text as="h3">Assumption of Risk</Text>
+      <Text as="h3">12. Limitation of liability</Text>
       <Text as="p">
-        By accessing and using the Website, you represent that you are financially and technically sophisticated enough
-        to understand the inherent risks associated with using cryptographic and blockchain-based systems, and that you
-        have a working knowledge of the usage and intricacies of digital assets such as ether (ETH), so-called
-        stablecoins, and other digital tokens such as those following the Ethereum Token Standard (ERC-20), or standards
-        of any other digital tokens which are transacted on DBRO Swap.
-      </Text>
-      <Text as="p">
-        In particular, you understand that the markets for these digital assets are nascent and highly volatile due to
-        risk factors including (but not limited to) adoption, speculation, technology, security, and regulation. You
-        understand that anyone can create a token, including fake versions of existing tokens and tokens that falsely
-        claim to represent projects, and acknowledge and accept the risk that you may mistakenly trade those or other
-        tokens. So-called stablecoins may not be as stable as they purport to be, may not be fully or adequately
-        collateralized, and may be subject to panics and runs.
-      </Text>
-      <Text as="p">
-        Further, you understand that smart contract transactions automatically execute and settle, and that
-        blockchain-based transactions are irreversible when confirmed. You acknowledge and accept that the cost and
-        speed of transacting with cryptographic and blockchain-based systems such as Ethereum are variable and may
-        increase dramatically at any time. You further acknowledge and accept the risk of selecting to trade in Expert
-        Modes, which can expose you to potentially significant price slippage and higher costs.
-      </Text>
-      <Text as="p">
-        If you act as a liquidity provider to the Protocol through the Website, you understand that your digital assets
-        may lose some or all of their value while they are supplied to the Protocol through the Website due to the
-        fluctuation of prices of tokens in a trading pair or liquidity pool.
-      </Text>
-      <Text as="p">
-        Finally, you understand that we do not create, own, or operate cross-chain bridges and we do not make any
-        representation or warranty about the safety or soundness of any cross-chain bridge, including its use for DBRO
-        Swap governance.
-      </Text>
-      <Text as="p">
-        In summary, you acknowledge that we are not responsible for any of these variables or risks, do not own or
-        control the Protocol, and cannot be held liable for any resulting losses that you experience while accessing or
-        using the Website. Accordingly, you understand and agree to assume full responsibility for all of the risks of
-        accessing and using the Website to interact with the Protocol.
+        In no event shall Company, nor any of its officers, directors, and employees, shall be held liable for anything
+        arising out of or in any way connected with your use of this Website whether such liability is under contract.
+        The company, including its officers, directors, and employees shall not be held liable for any indirect,
+        consequential or special liability arising out of or in any way related to your use of this Website.
       </Text>
 
-      <Text as="h3">Third-Party Resources and Promotions</Text>
+      <Text as="h3">13. Indemnification</Text>
       <Text as="p">
-        The Website may contain references or links to third-party resources, including (but not limited to)
-        information, materials, products, or services, that we do not own or control. In addition, third parties may
-        offer promotions related to your access and use of the Website. We do not approve, monitor, endorse, warrant or
-        assume any responsibility for any such resources or promotions. If you access any such resources or participate
-        in any such promotions, you do so at your own risk, and you understand that this Agreement does not apply to
-        your dealings or relationships with any third parties. You expressly relieve us of any and all liability arising
-        from your use of any such resources or participation in any such promotions.
+        You, as the website and/or ecosystem user, shall indemnify and hold harmless the Company and its directors,
+        officers, employees, agents, stockholders, affiliates, subcontractors, and customers from and against all
+        allegations, claims, actions, suits, demands, damages, liabilities, obligations, losses, settlements, judgments,
+        costs and expenses (including without limitation attorneys’ fees and costs) which arise out of, relate to or
+        result from any act or omission of Company. You also agree to indemnify the Company in any way related to your
+        breach of any of the provisions of these Terms and Conditions.
       </Text>
 
-      <Text as="h3">Release of Claims</Text>
+      <Text as="h3">14. Severability</Text>
       <Text as="p">
-        You expressly agree that you assume all risks in connection with your access and use of the Website. You further
-        expressly waive and release us from any and all liability, claims, causes of action, or damages arising from or
-        in any way relating to your use of the Website. If you are a California resident, you waive the benefits and
-        protections of California Civil Code § 1542, which provides: "[a] general release does not extend to claims that
-        the creditor or releasing party does not know or suspect to exist in his or her favor at the time of executing
-        the release and that, if known by him or her, would have materially affected his or her settlement with the
-        debtor or released party."
+        If any provision of these Terms is found to be invalid under any applicable law, such provisions shall be
+        deleted without affecting the remaining provisions herein.
       </Text>
 
-      <Text as="h3">Indemnity</Text>
+      <Text as="h3">15. Variation of Terms</Text>
       <Text as="p">
-        You agree to hold harmless, release, defend, and indemnify us and our officers, directors, employees,
-        contractors, agents, affiliates, and subsidiaries from and against all claims, damages, obligations, losses,
-        liabilities, costs, and expenses arising from: (a) your access and use of the Website; (b) your violation of any
-        term or condition of this Agreement, the right of any third party, or any other applicable law, rule, or
-        regulation; and (c) any other party's access and use of the Website with your assistance or using any device or
-        account that you own or control.
+        The company is permitted to revise these Terms at any time as it sees fit, and by using this Website you are
+        expected to review these Terms on a regular basis.
       </Text>
 
-      <Text as="h3">No Warranties</Text>
+      <Text as="h3">16. Assignment</Text>
       <Text as="p">
-        The Website is provided on an "AS IS" and "AS AVAILABLE" basis. TO THE FULLEST EXTENT PERMITTED BY LAW, WE
-        DISCLAIM ANY REPRESENTATIONS AND WARRANTIES OF ANY KIND, WHETHER EXPRESS, IMPLIED, OR STATUTORY, INCLUDING (BUT
-        NOT LIMITED TO) THE WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. You acknowledge and
-        agree that your use of the Website is at your own risk. We do not represent or warrant that access to the
-        Website will be continuous, uninterrupted, timely, or secure; that the information contained in the Website will
-        be accurate, reliable, complete, or current; or that the Website will be free from errors, defects, viruses, or
-        other harmful elements. No advice, information, or statement that we make should be treated as creating any
-        warranty concerning the Website. We do not endorse, guarantee, or assume responsibility for any advertisements,
-        offers, or statements made by third parties concerning the Website.
-      </Text>
-      <Text as="p">
-        Similarly, the Protocol is provided "AS IS", at your own risk, and without warranties of any kind. Although we
-        contributed to the initial code for the Protocol, we do not provide, own, or control the Protocol, which is run
-        autonomously without any headcount by smart contracts deployed on various blockchains. Upgrades and
-        modifications to the Protocol are generally managed in a community-driven way by holders of the DBRO token. No
-        developer or entity involved in creating the Protocol will be liable for any claims or damages whatsoever
-        associated with your use, inability to use, or your interaction with other users of, the Protocol, including any
-        direct, indirect, incidental, special, exemplary, punitive or consequential damages, or loss of profits,
-        cryptocurrencies, tokens, or anything else of value. We do not endorse, guarantee, or assume responsibility for
-        any advertisements, offers, or statements made by third parties concerning the Website.
+        The Company is allowed to assign, transfer, and subcontract its rights and/or obligations under these Terms
+        without any notification. The Company may also, at any time and without notification, sell their interest in the
+        Website and/or financial interest in Decentral Bros to a third party for consideration. However, you are not
+        allowed to assign, transfer, or subcontract any of your rights and/or obligations under these Terms.
       </Text>
 
-      <Text as="h3">Limitation of Liability</Text>
+      <Text as="h3">17. Entire Agreement</Text>
       <Text as="p">
-        UNDER NO CIRCUMSTANCES SHALL WE OR ANY OF OUR OFFICERS, DIRECTORS, EMPLOYEES, CONTRACTORS, AGENTS, AFFILIATES,
-        OR SUBSIDIARIES BE LIABLE TO YOU FOR ANY INDIRECT, PUNITIVE, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR EXEMPLARY
-        DAMAGES, INCLUDING (BUT NOT LIMITED TO) DAMAGES FOR LOSS OF PROFITS, GOODWILL, USE, DATA, OR OTHER INTANGIBLE
-        PROPERTY, ARISING OUT OF OR RELATING TO ANY ACCESS OR USE OF THE INTERFACE, NOR WILL WE BE RESPONSIBLE FOR ANY
-        DAMAGE, LOSS, OR INJURY RESULTING FROM HACKING, TAMPERING, OR OTHER UNAUTHORIZED ACCESS OR USE OF THE INTERFACE
-        OR THE INFORMATION CONTAINED WITHIN IT. WE ASSUME NO LIABILITY OR RESPONSIBILITY FOR ANY: (A) ERRORS, MISTAKES,
-        OR INACCURACIES OF CONTENT; (B) PERSONAL INJURY OR PROPERTY DAMAGE, OF ANY NATURE WHATSOEVER, RESULTING FROM ANY
-        ACCESS OR USE OF THE INTERFACE; (C) UNAUTHORIZED ACCESS OR USE OF ANY SECURE SERVER OR DATABASE IN OUR CONTROL,
-        OR THE USE OF ANY INFORMATION OR DATA STORED THEREIN; (D) INTERRUPTION OR CESSATION OF FUNCTION RELATED TO THE
-        INTERFACE; (E) BUGS, VIRUSES, TROJAN HORSES, OR THE LIKE THAT MAY BE TRANSMITTED TO OR THROUGH THE INTERFACE;
-        (F) ERRORS OR OMISSIONS IN, OR LOSS OR DAMAGE INCURRED AS A RESULT OF THE USE OF, ANY CONTENT MADE AVAILABLE
-        THROUGH THE INTERFACE; AND (G) THE DEFAMATORY, OFFENSIVE, OR ILLEGAL CONDUCT OF ANY THIRD PARTY.
+        These Terms constitute the entire agreement between the Company and you in relation to your use of this Website
+        and supersede all prior agreements and understandings.
       </Text>
 
-      <Text as="h3">Dispute Resolution</Text>
+      <Text as="h3">18. Governing Law & Jurisdiction</Text>
       <Text as="p">
-        We will use our best efforts to resolve any potential disputes through informal, good faith negotiations. If a
-        potential dispute arises, you must contact us by sending an email to team@decentralbros.xyz so that we can
-        attempt to resolve it without resorting to formal dispute resolution. If we aren't able to reach an informal
-        resolution within sixty days of your email, then you and we both agree to resolve the potential dispute
-        according to the process set forth below.
-      </Text>
-      <Text as="p">
-        Any claim or controversy arising out of or relating to the Website, this Agreement, or any other acts or
-        omissions for which you may contend that we are liable, including (but not limited to) any claim or controversy
-        as to arbitrability ("Dispute"), shall be finally and exclusively settled by arbitration under the Arbitration
-        Rules of the United States International Arbitration Centre. You understand that you are required to resolve all
-        Disputes by binding arbitration. The arbitration shall be held on a confidential basis before a single
-        arbitrator, who shall be selected pursuant to Arbitration Rules of the Centre. The arbitration will be held in
-        United States, unless you and we both agree to hold it elsewhere. Unless we agree otherwise, the arbitrator may
-        not consolidate your claims with those of any other party. Any judgment on the award rendered by the arbitrator
-        may be entered in any court of competent jurisdiction.
-      </Text>
-
-      <Text as="h3">Class Action and Jury Trial Waiver</Text>
-      <Text as="p">
-        You must bring any and all Disputes against us in your individual capacity and not as a plaintiff in or member
-        of any purported class action, collective action, private attorney general action, or other representative
-        proceeding. This provision applies to class arbitration. You and we both agree to waive the right to demand a
-        trial by jury.
-      </Text>
-
-      <Text as="h3">Governing Law</Text>
-      <Text as="p">
-        You agree that the laws of United States, without regard to principles of conflict of laws, govern this
-        Agreement and any Dispute between you and us. You further agree that the Website shall be deemed to be based
-        solely in the United States, and that although the Website may be available in other jurisdictions, its
-        availability does not give rise to general or specific personal jurisdiction in any forum outside United States.
-        Any arbitration conducted pursuant to this Agreement shall be governed by the Arbitration Rules of the Centre.
-        You agree that the courts of United States are the proper forum for any appeals of an arbitration award or for
-        court proceedings in the event that this Agreement's binding arbitration clause is found to be unenforceable.
-      </Text>
-
-      <Text as="h3">Entire Agreement</Text>
-      <Text as="p">
-        These terms constitute the entire agreement between you and us with respect to the subject matter hereof. This
-        Agreement supersedes any and all prior or contemporaneous written and oral agreements, communications and other
-        understandings (if any) relating to the subject matter of the terms.
-      </Text>
-
-      <Text as="h3">Gas Fees</Text>
-      <Text as="p">
-        Blockchain transactions require the payment of transaction fees to the appropriate network (“Gas Fees”). Except
-        as otherwise expressly set forth in the terms of another offer by DBRO Swap, you will be solely responsible to
-        pay the Gas Fees for any transaction that you initiate.
+        These Terms will be governed by and interpreted in accordance with the laws of the United States, State of
+        Colorado, and you submit to the non-exclusive jurisdiction of the United States and those courts located herein
+        for the resolution of any disputes.
       </Text>
     </Container>
   )
