@@ -40,7 +40,7 @@ const TermsOfService = () => {
       <Text as="p">
         The following Standard Terms and Conditions upon which Decentral Bros, LLC (along with its affiliates and
         subsidiaries, the “Company”) offers access to their “website” (the below mentioned sites and any software
-        provided by the Company for use with these sites, including (www.decentralbros.xyz, www.decentralbros.finance,
+        provided by the Company for use with these sites, including (www.decentralbros.xyz, decentralbros.finance,
         www.decentralbros.social & www.decentralbros.tech) These Terms and Conditions shall manage your usage of the
         Website, as the customer, irrespective of whether or not you are an Account holder ("You") and the use of its
         services provided via the Site (the "Services"). Minors or persons below the age of 18 years old shall not be
