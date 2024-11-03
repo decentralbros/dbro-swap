@@ -27,6 +27,7 @@ const InputRow = styled.div<{ selected: boolean }>`
 `
 const CurrencySelectButton = styled(Button).attrs({ variant: 'text', scale: 'sm' })`
   padding: 0px;
+  margin-bottom: 8px;
 `
 
 interface CurrencyInputPanelProps {
@@ -213,7 +214,6 @@ const CurrencyInputPanel = memo(function CurrencyInputPanel({
               data-dd-action-name="Select currency"
               selected={!!currency}
               onClick={onCurrencySelectClick}
-              marginBottom="8px"
             >
               <Flex alignItems="center" justifyContent="space-between">
                 {pair ? (
