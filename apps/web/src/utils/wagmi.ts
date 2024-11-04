@@ -82,7 +82,6 @@ export const config = createConfig({
   syncConnectedChain: true,
   transports,
   ...CLIENT_CONFIG,
-
   connectors: [
     metaMaskConnector,
     injectedConnector,

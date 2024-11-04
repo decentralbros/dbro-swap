@@ -6,7 +6,7 @@ import { useChainId } from 'wagmi'
 export const useIsSmartContract = (address?: Address): boolean => {
   const chainId = useChainId()
 
-  const { data } = useQuery({
+  const { data = false } = useQuery({
     queryKey: ['useIsSmartContract', chainId, address],
     queryFn: async () => {
       if (!address) return false
@@ -15,12 +15,15 @@ export const useIsSmartContract = (address?: Address): boolean => {
 
       if (!client) return false
 
-      const code = await client.getBytecode({ address })
-
-      return code && code !== '0x'
+      try {
+        const code = await client.getBytecode({ address })
+        return Boolean(code && code !== '0x')
+      } catch {
+        return false
+      }
     },
     enabled: !!address,
   })
 
-  return !!data
+  return data
 }
