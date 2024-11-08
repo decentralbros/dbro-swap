@@ -186,6 +186,7 @@ const Hero = () => {
             <CakeBox>
               <Image
                 src="/logo.webp"
+                priority
                 width={isMobile ? width * 2 : width / 2}
                 height={isMobile ? height * 2 : height / 2}
                 alt="DBRO Swap Logo"

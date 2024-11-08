@@ -1,7 +1,6 @@
 import { useTheme } from '@pancakeswap/hooks'
 import { useTranslation } from '@pancakeswap/localization'
-import { Button, ButtonProps, useModal, WaitIcon } from '@pancakeswap/uikit'
-import { LotteryStatus } from 'config/constants/types'
+import { Button, ButtonProps, useModal } from '@pancakeswap/uikit'
 import { useLottery } from 'state/lottery/hooks'
 import BuyTicketsModal from './BuyTicketsModal/BuyTicketsModal'
 
@@ -23,14 +22,7 @@ const BuyTicketsButton: React.FC<React.PropsWithChildren<BuyTicketsButtonProps>>
   } = useLottery()
 
   const getBuyButtonText = () => {
-    if (status === LotteryStatus.OPEN) {
-      return t('Buy Tickets')
-    }
-    return (
-      <>
-        <WaitIcon mr="4px" color="black" /> {t('On sale soon!')}
-      </>
-    )
+    return t('Buy Tickets!')
   }
 
   const themeStr = themeMode ?? (isDark ? 'dark' : 'light')

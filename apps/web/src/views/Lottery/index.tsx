@@ -15,7 +15,6 @@ import YourHistoryCard from './components/YourHistoryCard'
 import useGetNextLotteryEvent from './hooks/useGetNextLotteryEvent'
 import useShowMoreUserHistory from './hooks/useShowMoreUserRounds'
 import useStatusTransitions from './hooks/useStatusTransitions'
-import { FINISHED_ROUNDS_BG, FINISHED_ROUNDS_BG_DARK, GET_TICKETS_BG, TITLE_BG } from './pageSectionStyles'
 
 const LotteryPage = styled.div`
   min-height: calc(100vh - 64px);
@@ -37,19 +36,13 @@ const Lottery = () => {
   return (
     <>
       <LotteryPage>
-        <PageSection background={TITLE_BG} index={1} hasCurvedDivider={false}>
+        <PageSection index={1} position="relative" hasCurvedDivider={false}>
           <Hero />
         </PageSection>
-        <PageSection
-          containerProps={{ style: { marginTop: '-30px' } }}
-          background={GET_TICKETS_BG}
-          concaveDivider
-          dividerPosition="top"
-          index={2}
-        >
+        <PageSection containerProps={{ style: { marginTop: '-30px' } }} index={2}>
           <Flex alignItems="center" justifyContent="center" flexDirection="column" pt="24px">
             <Heading scale="xl" color="#ffffff" mb="24px" textAlign="center">
-              {t('Get your tickets now!')}
+              {t('Are you a winner?')}
             </Heading>
 
             <CheckPrizesSection />
@@ -68,13 +61,7 @@ const Lottery = () => {
             <NextDrawCard />
           </Flex>
         </PageSection>
-        <PageSection
-          position="relative"
-          innerProps={{ style: { margin: '0', width: '100%' } }}
-          background={isDark ? FINISHED_ROUNDS_BG_DARK : FINISHED_ROUNDS_BG}
-          hasCurvedDivider={false}
-          index={2}
-        >
+        <PageSection position="relative" innerProps={{ style: { margin: '0', width: '100%' } }} index={2}>
           <Flex width="100%" flexDirection="column" alignItems="center" justifyContent="center">
             <Heading mb="24px" scale="xl">
               {t('Finished Rounds')}

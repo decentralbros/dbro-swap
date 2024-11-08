@@ -1,3 +1,4 @@
+import { ChainId } from '@pancakeswap/chains'
 import { useTranslation } from '@pancakeswap/localization'
 import { bscTokens } from '@pancakeswap/tokens'
 import {
@@ -5,11 +6,9 @@ import {
   BalanceInput,
   Button,
   Flex,
-  HelpIcon,
   Modal,
   Skeleton,
   Text,
-  Ticket,
   useToast,
   useTooltip,
 } from '@pancakeswap/uikit'
@@ -26,13 +25,14 @@ import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import { useLotteryV2Contract } from 'hooks/useContract'
 import useTheme from 'hooks/useTheme'
 import useTokenBalance from 'hooks/useTokenBalance'
+import Image from 'next/image'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useAppDispatch } from 'state'
 import { fetchUserTicketsAndLotteries } from 'state/lottery'
 import { useLottery } from 'state/lottery/hooks'
 import { styled } from 'styled-components'
 import { parseEther } from 'viem'
-import { useAccount } from 'wagmi'
+import { useAccount, useChainId } from 'wagmi'
 import EditNumbersModal from './EditNumbersModal'
 import NumTicketsToBuyButton from './NumTicketsToBuyButton'
 import { useTicketsReducer } from './useTicketsReducer'
@@ -160,7 +160,7 @@ const BuyTicketsModal: React.FC<React.PropsWithChildren<BuyTicketsModalProps>> =
       const limitedMaxPurchase = limitNumberByMaxTicketsPerBuy(maxBalancePurchase)
       let maxPurchase = limitedMaxPurchase
 
-      // If the users' max CAKE balance purchase is less than the contract limit - factor the discount logic into the max number of tickets they can purchase
+      // If the users' max DBRO balance purchase is less than the contract limit - factor the discount logic into the max number of tickets they can purchase
       if (limitedMaxPurchase.lt(maxNumberTicketsPerBuyOrClaim)) {
         // Get max tickets purchasable with the users' balance, as well as using the discount to buy tickets
         const { overallTicketBuy: maxPlusDiscountTickets } = getMaxTicketBuyWithDiscount(limitedMaxPurchase)
@@ -258,7 +258,7 @@ const BuyTicketsModal: React.FC<React.PropsWithChildren<BuyTicketsModalProps>> =
   })
 
   const getErrorMessage = () => {
-    if (userNotEnoughCake) return t('Insufficient CAKE balance')
+    if (userNotEnoughCake) return t('Insufficient DBRO balance')
     return t('The maximum number of tickets you can buy in one transaction is %maxTickets%', {
       maxTickets: maxNumberTicketsPerBuyOrClaim.toString(),
     })
@@ -284,6 +284,8 @@ const BuyTicketsModal: React.FC<React.PropsWithChildren<BuyTicketsModalProps>> =
 
   const isApproveDisabled = isApproved || disableBuying
 
+  const chainId = useChainId()
+
   if (buyingStage === BuyingStage.EDIT) {
     return (
       <EditNumbersModal
@@ -300,7 +302,7 @@ const BuyTicketsModal: React.FC<React.PropsWithChildren<BuyTicketsModalProps>> =
   }
 
   return (
-    <StyledModal title={t('Buy Tickets')} onDismiss={onDismiss} headerBackground={theme.colors.gradientCardHeader}>
+    <StyledModal title={t('Buy Tickets')} onDismiss={onDismiss}>
       {tooltipVisible && tooltip}
       <Flex alignItems="center" justifyContent="space-between" mb="8px">
         <Text color="textSubtle">{t('Buy')}:</Text>
@@ -308,7 +310,7 @@ const BuyTicketsModal: React.FC<React.PropsWithChildren<BuyTicketsModalProps>> =
           <Text mr="4px" bold>
             {t('Tickets')}
           </Text>
-          <Ticket />
+          <Image src="/images/lottery/ticket-r.png" width={35} height={35} alt="ticket" />
         </Flex>
       </Flex>
       <BalanceInput
@@ -318,7 +320,7 @@ const BuyTicketsModal: React.FC<React.PropsWithChildren<BuyTicketsModalProps>> =
         onUserInput={handleInputChange}
         currencyValue={
           cakePriceBusd.gt(0) &&
-          `~${ticketsToBuy ? getFullDisplayBalance(priceTicketInCake.times(new BigNumber(ticketsToBuy))) : '0.00'} CAKE`
+          `~${ticketsToBuy ? getFullDisplayBalance(priceTicketInCake.times(new BigNumber(ticketsToBuy))) : '0.00'} DBRO`
         }
       />
       <Flex alignItems="center" justifyContent="flex-end" mt="4px" mb="12px">
@@ -331,7 +333,7 @@ const BuyTicketsModal: React.FC<React.PropsWithChildren<BuyTicketsModalProps>> =
           {account && (
             <Flex justifyContent="flex-end">
               <Text fontSize="12px" color="textSubtle" mr="4px">
-                CAKE {t('Balance')}:
+                DBRO {t('Balance')}:
               </Text>
               {hasFetchedBalance ? (
                 <Text fontSize="12px" color="textSubtle">
@@ -376,13 +378,13 @@ const BuyTicketsModal: React.FC<React.PropsWithChildren<BuyTicketsModalProps>> =
       <Flex flexDirection="column">
         <Flex mb="8px" justifyContent="space-between">
           <Text color="textSubtle" fontSize="14px">
-            {t('Cost')} (CAKE)
+            1 Ticket
           </Text>
           <Text color="textSubtle" fontSize="14px">
-            {priceTicketInCake && getFullDisplayBalance(priceTicketInCake.times(ticketsToBuy || 0))} CAKE
+            100,000 DBRO
           </Text>
         </Flex>
-        <Flex mb="8px" justifyContent="space-between">
+        {/* <Flex mb="8px" justifyContent="space-between">
           <Flex>
             <Text display="inline" bold fontSize="14px" mr="4px">
               {discountValue && totalCost ? percentageDiscount() : 0}%
@@ -395,29 +397,29 @@ const BuyTicketsModal: React.FC<React.PropsWithChildren<BuyTicketsModalProps>> =
             </Flex>
           </Flex>
           <Text fontSize="14px" color="textSubtle">
-            ~{discountValue} CAKE
+            ~{discountValue} DBRO
           </Text>
-        </Flex>
+        </Flex> */}
         <Flex borderTop={`1px solid ${theme.colors.cardBorder}`} pt="8px" mb="24px" justifyContent="space-between">
           <Text color="textSubtle" fontSize="16px">
             {t('You pay')}
           </Text>
           <Text fontSize="16px" bold>
-            ~{totalCost} CAKE
+            {totalCost} DBRO
           </Text>
         </Flex>
 
         {account ? (
           <>
             <ApproveConfirmButtons
-              isApproveDisabled={isApproveDisabled}
+              isApproveDisabled
               isApproving={isApproving}
-              isConfirmDisabled={disableBuying}
+              isConfirmDisabled={chainId !== ChainId.BASE}
               isConfirming={isConfirming}
               onApprove={handleApprove}
               onConfirm={handleConfirm}
               buttonArrangement={ButtonArrangement.SEQUENTIAL}
-              confirmLabel={t('Buy Instantly')}
+              confirmLabel={t('Buy Now')}
               confirmId="lotteryBuyInstant"
             />
             {isApproved && (
@@ -447,7 +449,7 @@ const BuyTicketsModal: React.FC<React.PropsWithChildren<BuyTicketsModalProps>> =
 
         <Text mt="24px" fontSize="12px" color="textSubtle">
           {t(
-            '"Buy Instantly" chooses random numbers, with no duplicates among your tickets. Prices are set before each round starts, equal to $5 at that time. Purchases are final.',
+            '"Buy Now" chooses random numbers, with no duplicates among your tickets. Prices are set before each round starts. All purchases are final.',
           )}
         </Text>
       </Flex>

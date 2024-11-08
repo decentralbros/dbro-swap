@@ -1,6 +1,6 @@
-import { styled } from 'styled-components'
-import { ChevronRightIcon, Button as UIKitButton, AutoRenewIcon, ChevronDownIcon, Box, Flex } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
+import { AutoRenewIcon, Box, ChevronDownIcon, ChevronRightIcon, Button as UIKitButton } from '@pancakeswap/uikit'
+import { styled } from 'styled-components'
 
 export enum ButtonArrangement {
   ROW = 'row',
@@ -81,7 +81,7 @@ const ApproveConfirmButtons: React.FC<React.PropsWithChildren<ApproveConfirmButt
   const ApproveConfirmRow = () => {
     return (
       <StyledApproveConfirmButtonRow>
-        <Box>
+        {/* <Box>
           <Button
             disabled={isApproveDisabled}
             onClick={onApprove}
@@ -95,7 +95,7 @@ const ApproveConfirmButtons: React.FC<React.PropsWithChildren<ApproveConfirmButt
         <Flex justifyContent="center">
           <ChevronRight />
           <ChevronBottom />
-        </Flex>
+        </Flex> */}
         <Box>
           <Button
             id={confirmId}
