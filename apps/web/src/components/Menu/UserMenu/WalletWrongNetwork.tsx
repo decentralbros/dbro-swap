@@ -27,7 +27,7 @@ const WalletWrongNetwork: React.FC<React.PropsWithChildren<WalletWrongNetworkPro
     <>
       <Text mb="24px">{t('You’re connected to the wrong network.')}</Text>
       {canSwitch ? (
-        <Button onClick={handleSwitchNetwork} mb="24px">
+        <Button onClick={handleSwitchNetwork} mb="24px" style={{ color: '#000' }}>
           {t('Switch Network')}
         </Button>
       ) : (
