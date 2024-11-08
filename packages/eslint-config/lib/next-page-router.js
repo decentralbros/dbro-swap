@@ -8,10 +8,6 @@ module.exports = {
             name: "next/navigation",
             message: "Please use next/router instead of next/navigation",
           },
-          {
-            name: "next/image",
-            message: "Please use image or figure instead of next/image",
-          },
         ],
       },
     ],

@@ -1,7 +1,6 @@
 import { useTranslation } from '@pancakeswap/localization'
 import {
   Box,
-  BunnyPlaceholderIcon,
   Button,
   CardBody,
   CardRibbon,
@@ -16,6 +15,7 @@ import { LotteryStatus } from 'config/constants/types'
 import { useGetUserLotteriesGraphData, useLottery } from 'state/lottery/hooks'
 import { LotteryRound } from 'state/types'
 import { styled } from 'styled-components'
+import Image from 'next/image'
 import ViewTicketsModal from '../ViewTicketsModal'
 import WinningNumbers from '../WinningNumbers'
 
@@ -104,7 +104,7 @@ const PreviousRoundCardBody: React.FC<
             <>
               <Flex flexDirection="column" alignItems="center" width={['240px', null, null, '480px']}>
                 <Text mb="8px">{t('Please specify Round')}</Text>
-                <BunnyPlaceholderIcon height="64px" width="64px" />
+                <Image src="/images/cake.svg" height={64} width={64} alt="dbro logo" />
               </Flex>
             </>
           )}
