@@ -14,6 +14,7 @@ const TicketImage = styled.img`
   ${({ theme }) => theme.mediaQueries.sm} {
     height: 100px;
   }
+  width: auto;
 `
 
 const TornTicketImage = styled.img`
@@ -66,7 +67,7 @@ const CheckPrizesSection = () => {
       return (
         <Flex alignItems="center" justifyContent="center">
           <TicketImage src="/images/lottery/ticket-l.png" alt="lottery ticket" />
-          <Flex mx={['4px', null, '16px']} flexDirection="column" alignItems="center">
+          <Flex width="300px" mx={['4px', null, '16px']} flexDirection="column" alignItems="center">
             <Heading textAlign="center" color="#F4EEFF">
               {t('Connect your wallet')}
             </Heading>
@@ -123,10 +124,11 @@ const CheckPrizesSection = () => {
     return (
       <Flex alignItems="center" justifyContent="center">
         <TicketImage src="/images/lottery/ticket-l.png" alt="lottery ticket" />
-        <Flex mx={['4px', null, '16px']} flexDirection="column">
-          {/* <Heading textAlign="center" color="#F4EEFF" mb="24px">
-            {t('Are you a winner?')}
-          </Heading> */}
+        <Flex width="300px" mx={['4px', null, '16px']} flexDirection="column" alignItems="center">
+          <Heading textAlign="center" color="#F4EEFF" mb="24px">
+            Did you win?
+          </Heading>
+
           <Button style={{ color: '#000' }}>{t('Check Now')}</Button>
         </Flex>
         <TicketImage src="/images/lottery/ticket-r.png" alt="lottery ticket" />

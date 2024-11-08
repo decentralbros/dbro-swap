@@ -39,9 +39,9 @@ const Lottery = () => {
         <PageSection index={1} position="relative" hasCurvedDivider={false}>
           <Hero />
         </PageSection>
-        <PageSection containerProps={{ style: { marginTop: '-30px' } }} index={2}>
-          <Flex alignItems="center" justifyContent="center" flexDirection="column" pt="24px">
-            <Heading scale="xl" color="#ffffff" mb="24px" textAlign="center">
+        <PageSection position="relative" innerProps={{ style: { margin: '-30px', width: '100%' } }} index={2}>
+          <Flex width="100%" alignItems="center" justifyContent="center" flexDirection="column" pt="24px">
+            <Heading scale="xl" mb="24px" textAlign="center">
               {t('Are you a winner?')}
             </Heading>
 
@@ -58,6 +58,7 @@ const Lottery = () => {
                 <Skeleton height="41px" width="250px" />
               )}
             </Flex>
+
             <NextDrawCard />
           </Flex>
         </PageSection>

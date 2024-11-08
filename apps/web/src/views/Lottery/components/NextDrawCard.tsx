@@ -39,10 +39,6 @@ const Grid = styled.div`
 const StyledCard = styled(Card)`
   width: 100%;
 
-  ${({ theme }) => theme.mediaQueries.sm} {
-    width: 520px;
-  }
-
   ${({ theme }) => theme.mediaQueries.md} {
     width: 756px;
   }
