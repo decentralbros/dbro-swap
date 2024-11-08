@@ -39,7 +39,12 @@ const Lottery = () => {
         <PageSection index={1} position="relative" hasCurvedDivider={false}>
           <Hero />
         </PageSection>
-        <PageSection position="relative" innerProps={{ style: { margin: '-30px', width: '100%' } }} index={2}>
+        <PageSection
+          position="relative"
+          innerProps={{ style: { margin: '-30px', width: '100%' } }}
+          index={2}
+          hasCurvedDivider={false}
+        >
           <Flex width="100%" alignItems="center" justifyContent="center" flexDirection="column" pt="24px">
             <Heading scale="xl" mb="24px" textAlign="center">
               {t('Are you a winner?')}
@@ -62,7 +67,12 @@ const Lottery = () => {
             <NextDrawCard />
           </Flex>
         </PageSection>
-        <PageSection position="relative" innerProps={{ style: { margin: '0', width: '100%' } }} index={2}>
+        <PageSection
+          position="relative"
+          innerProps={{ style: { margin: '0', width: '100%' } }}
+          index={2}
+          hasCurvedDivider={false}
+        >
           <Flex width="100%" flexDirection="column" alignItems="center" justifyContent="center">
             <Heading mb="24px" scale="xl">
               {t('Finished Rounds')}
@@ -83,7 +93,12 @@ const Lottery = () => {
             )}
           </Flex>
         </PageSection>
-        <PageSection dividerPosition="top" dividerFill={{ light: theme.colors.background }} index={2}>
+        <PageSection
+          dividerPosition="top"
+          dividerFill={{ light: theme.colors.background }}
+          index={2}
+          hasCurvedDivider={false}
+        >
           <HowToPlay />
         </PageSection>
       </LotteryPage>

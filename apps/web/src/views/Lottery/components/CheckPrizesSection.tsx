@@ -17,12 +17,12 @@ const TicketImage = styled.img`
   width: auto;
 `
 
-const TornTicketImage = styled.img`
-  height: 54px;
-  ${({ theme }) => theme.mediaQueries.sm} {
-    height: 84px;
-  }
-`
+// const TornTicketImage = styled.img`
+//   height: 54px;
+//   ${({ theme }) => theme.mediaQueries.sm} {
+//     height: 84px;
+//   }
+// `
 
 const CheckPrizesSection = () => {
   const { t } = useTranslation()
@@ -74,44 +74,44 @@ const CheckPrizesSection = () => {
             <Heading textAlign="center" color="#F4EEFF" mb="24px">
               {t("to check if you've won!")}
             </Heading>
-            <ConnectWalletButton width="190px" />
+            <ConnectWalletButton width="190px" marginBottom="24px" />
           </Flex>
           <TicketImage src="/images/lottery/ticket-r.png" alt="lottery ticket" />
         </Flex>
       )
     }
-    if (hasCheckedForRewards && !hasRewardsToClaim) {
-      return (
-        <Flex alignItems="center" justifyContent="center">
-          <TornTicketImage src="/images/lottery/torn-ticket-l.png" alt="torn lottery ticket" />
-          <Flex mx={['4px', null, '16px']} flexDirection="column">
-            <Heading textAlign="center" color="#F4EEFF">
-              {t('No prizes to collect')}...
-            </Heading>
-            <Heading textAlign="center" color="#F4EEFF">
-              {t('Better luck next time!')}
-            </Heading>
-          </Flex>
-          <TornTicketImage src="/images/lottery/torn-ticket-r.png" alt="torn lottery ticket" />
-        </Flex>
-      )
-    }
-    if (hasCheckedForRewards && hasRewardsToClaim) {
-      return (
-        <Flex alignItems="center" justifyContent="center">
-          <TicketImage src="/images/lottery/ticket-l.png" alt="lottery ticket" />
-          <Flex mx={['4px', null, '16px']} flexDirection="column">
-            <Heading textAlign="center" color="#F4EEFF">
-              {t('Congratulations!')}
-            </Heading>
-            <Heading textAlign="center" color="#F4EEFF">
-              {t('Why not play again')}
-            </Heading>
-          </Flex>
-          <TicketImage src="/images/lottery/ticket-r.png" alt="lottery ticket" />
-        </Flex>
-      )
-    }
+    // if (hasCheckedForRewards && !hasRewardsToClaim) {
+    //   return (
+    //     <Flex alignItems="center" justifyContent="center">
+    //       <TornTicketImage src="/images/lottery/torn-ticket-l.png" alt="torn lottery ticket" />
+    //       <Flex mx={['4px', null, '16px']} flexDirection="column">
+    //         <Heading textAlign="center" color="#F4EEFF">
+    //           {t('No prizes to collect')}...
+    //         </Heading>
+    //         <Heading textAlign="center" color="#F4EEFF">
+    //           {t('Better luck next time!')}
+    //         </Heading>
+    //       </Flex>
+    //       <TornTicketImage src="/images/lottery/torn-ticket-r.png" alt="torn lottery ticket" />
+    //     </Flex>
+    //   )
+    // }
+    // if (hasCheckedForRewards && hasRewardsToClaim) {
+    //   return (
+    //     <Flex alignItems="center" justifyContent="center">
+    //       <TicketImage src="/images/lottery/ticket-l.png" alt="lottery ticket" />
+    //       <Flex mx={['4px', null, '16px']} flexDirection="column">
+    //         <Heading textAlign="center" color="#F4EEFF">
+    //           {t('Congratulations!')}
+    //         </Heading>
+    //         <Heading textAlign="center" color="#F4EEFF">
+    //           {t('Why not play again')}
+    //         </Heading>
+    //       </Flex>
+    //       <TicketImage src="/images/lottery/ticket-r.png" alt="lottery ticket" />
+    //     </Flex>
+    //   )
+    // }
     // const checkNowText = () => {
     //   if (lotteryIsNotClaimable) {
     //     return `${t('Calculating rewards')}...`
@@ -125,11 +125,13 @@ const CheckPrizesSection = () => {
       <Flex alignItems="center" justifyContent="center">
         <TicketImage src="/images/lottery/ticket-l.png" alt="lottery ticket" />
         <Flex width="300px" mx={['4px', null, '16px']} flexDirection="column" alignItems="center">
-          <Heading textAlign="center" color="#F4EEFF" mb="24px">
-            Did you win?
+          <Heading textAlign="center" color="transparent">
+            {t('Connect your wallet')}
           </Heading>
-
-          <Button style={{ color: '#000' }}>{t('Check Now')}</Button>
+          <Heading textAlign="center" color="transparent" mb="24px">
+            {t("to check if you've won!")}
+          </Heading>
+          <Button style={{ color: '#000', marginBottom: '24px', width: '190px' }}>{t('Check Now')}</Button>
         </Flex>
         <TicketImage src="/images/lottery/ticket-r.png" alt="lottery ticket" />
       </Flex>
