@@ -2,12 +2,12 @@ import { ChainId } from '@pancakeswap/chains'
 import { ERC20Token } from '@pancakeswap/sdk'
 
 export const CAKE_MAINNET = new ERC20Token(
-  ChainId.BASE,
-  '0x6a4e0F83D7882BcACFF89aaF6f60D24E13191E9F',
-  8,
-  'DBRO',
-  'Decentral Bros',
-  'https://decentralbros.finance/',
+  ChainId.BSC,
+  '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82',
+  18,
+  'CAKE',
+  'PancakeSwap Token',
+  'https://pancakeswap.finance/',
 )
 
 export const CAKE_TESTNET = new ERC20Token(
@@ -200,11 +200,11 @@ export const CAKE = {
   ),
   [ChainId.BASE]: new ERC20Token(
     ChainId.BASE,
-    '0x6a4e0F83D7882BcACFF89aaF6f60D24E13191E9F',
-    8,
-    'DBRO',
-    'Decentral Bros ',
-    'https://decentralbros.finance/',
+    '0x3055913c90Fcc1A6CE9a358911721eEb942013A1',
+    18,
+    'CAKE',
+    'PancakeSwap Token',
+    'https://pancakeswap.finance/',
   ),
   [ChainId.BASE_TESTNET]: new ERC20Token(
     ChainId.BASE_TESTNET,

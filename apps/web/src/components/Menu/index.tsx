@@ -13,6 +13,8 @@ import { getOptionsUrl } from 'utils/getOptionsUrl'
 import UserMenu from './UserMenu'
 import { UseMenuItemsParams, useMenuItems } from './hooks/useMenuItems'
 import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
+import GlobalSettings from './GlobalSettings'
+import { SettingsMode } from './GlobalSettings/types'
 
 const LinkComponent = (linkProps) => {
   return <NextLinkFromReactRouter to={linkProps.href} {...linkProps} prefetch={false} />
@@ -92,7 +94,7 @@ const Menu = (props) => {
         linkComponent={LinkComponent}
         rightSide={
           <>
-            {/* <GlobalSettings mode={SettingsMode.GLOBAL} /> */}
+            <GlobalSettings mode={SettingsMode.GLOBAL} />
             <NetworkSwitcher />
             <UserMenu />
           </>

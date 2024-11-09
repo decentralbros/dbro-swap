@@ -1,6 +1,6 @@
 import { ChainId, chainNames } from '@pancakeswap/chains'
 import memoize from 'lodash/memoize'
-import { Chain, arbitrum, base, mainnet } from 'wagmi/chains'
+import { Chain, arbitrum, base, baseSepolia, mainnet } from 'wagmi/chains'
 
 export const CHAIN_QUERY_NAME = chainNames
 
@@ -45,6 +45,7 @@ export const L2_CHAIN_IDS: ChainId[] = [
   // ChainId.LINEA_TESTNET,
   // ChainId.LINEA,
   ChainId.BASE,
+  ChainId.BASE_SEPOLIA,
   // ChainId.BASE_TESTNET,
   // ChainId.OPBNB,
   // ChainId.OPBNB_TESTNET,
@@ -58,6 +59,7 @@ export const CHAINS: [Chain, ...Chain[]] = [
   // sepolia,
   arbitrum,
   base,
+  baseSepolia,
   // bscTestnet,
   // polygonZkEvm,
   // polygonZkEvmTestnet,

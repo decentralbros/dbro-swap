@@ -18,11 +18,9 @@ import {
   QuestionHelper,
   RowFixed,
   Text,
-  ThemeSwitcher,
   Toggle,
 } from '@pancakeswap/uikit'
 import { useUserSingleHopOnly } from '@pancakeswap/utils/user'
-import useTheme from 'hooks/useTheme'
 import { ReactNode, useCallback, useState } from 'react'
 import {
   useMMLinkedPoolByDefault,
@@ -34,6 +32,7 @@ import {
   useUserV3SwapEnable,
 } from 'state/user/smartRouter'
 import { styled } from 'styled-components'
+import { useUserShowTestnet } from 'state/user/hooks/useUserShowTestnet'
 import TransactionSettings from './TransactionSettings'
 import { SettingsMode } from './types'
 
@@ -92,7 +91,7 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
   // const [speedQuote, setSpeedQuote] = useSpeedQuote()
   // const [subgraphHealth, setSubgraphHealth] = useSubgraphHealthIndicatorManager()
   // const [userUsernameVisibility, setUserUsernameVisibility] = useUserUsernameVisibility()
-  // const [showTestnet, setShowTestnet] = useUserShowTestnet()
+  const [showTestnet, setShowTestnet] = useUserShowTestnet()
   // const { enabled } = useWebNotifications()
 
   // const { onChangeRecipient } = useSwapActionHandlers()
@@ -100,7 +99,7 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
   // const [tokenRisk, setTokenRisk] = useUserTokenRisk()
 
   const { t } = useTranslation()
-  const { isDark, setTheme } = useTheme()
+  // const { isDark, setTheme } = useTheme()
 
   // if (showConfirmExpertModal) {
   //   return (
@@ -129,10 +128,10 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
           <>
             <Flex pb="24px" flexDirection="column">
               <PreTitle mb="24px">{t('Global')}</PreTitle>
-              <Flex justifyContent="space-between" mb="24px">
+              {/* <Flex justifyContent="space-between" mb="24px">
                 <Text>{t('Dark mode')}</Text>
                 <ThemeSwitcher isDark={isDark} toggleTheme={() => setTheme(isDark ? 'light' : 'dark')} />
-              </Flex>
+              </Flex> */}
               {/* <Flex justifyContent="space-between" alignItems="center" mb="24px">
                 <Flex alignItems="center">
                   <Text>{t('Subgraph Health Indicator')}</Text>
@@ -183,7 +182,7 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
                   <WebNotiToggle enabled={enabled} />
                 </Suspense>
               </Flex> */}
-              {/* <Flex justifyContent="space-between" alignItems="center" mb="24px">
+              <Flex justifyContent="space-between" alignItems="center" mb="24px">
                 <Flex alignItems="center">
                   <Text>{t('Show testnet')}</Text>
                 </Flex>
@@ -195,7 +194,7 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
                     setShowTestnet((s) => !s)
                   }}
                 />
-              </Flex> */}
+              </Flex>
               {/* {chainId === ChainId.BSC && (
                 <>
                   <Flex justifyContent="space-between" alignItems="center" mb="24px">

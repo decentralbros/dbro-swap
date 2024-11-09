@@ -159,7 +159,7 @@ const SubmitLockButton = ({ onDismiss }: { onDismiss?: () => void }) => {
 
   return (
     <Button mt="16px" disabled={disabled} width="100%" onClick={increaseLockAmount}>
-      {t('Add CAKE')}
+      {t('Add DBRO')}
     </Button>
   )
 }
