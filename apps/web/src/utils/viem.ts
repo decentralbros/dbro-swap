@@ -1,7 +1,7 @@
 import { ChainId } from '@pancakeswap/chains'
 import first from 'lodash/first'
 import { PublicClient, createPublicClient, fallback, http } from 'viem'
-import { base } from 'viem/chains'
+import { mainnet } from 'viem/chains'
 
 import { CHAINS } from 'config/chains'
 import { PUBLIC_NODES } from 'config/nodes'
@@ -73,19 +73,20 @@ export const CLIENT_CONFIG = {
   pollingInterval: 6_000,
 }
 
-export const publicClient = ({ chainId }: { chainId?: number }) => {
+export const publicClient = ({ chainId }: { chainId?: ChainId }) => {
   if (chainId && viemClients[chainId]) {
     return viemClients[chainId]
   }
   let httpString: string | undefined
 
-  if (process.env.NODE_ENV === 'test' && chainId === base.id) {
+  if (process.env.NODE_ENV === 'test' && chainId === mainnet.id) {
     httpString = PUBLIC_MAINNET
   } else {
     httpString = chainId && first(PUBLIC_NODES[chainId]) ? first(PUBLIC_NODES[chainId]) : undefined
   }
 
-  const chain = CHAINS.find((c) => c.id === chainId || ChainId.BASE)
+  const findChain = chainId === 56 ? ChainId.BASE : chainId
 
+  const chain = CHAINS.find((c) => c.id === findChain)
   return createPublicClient({ chain, transport: http(httpString), ...CLIENT_CONFIG })
 }
