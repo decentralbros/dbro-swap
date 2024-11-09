@@ -137,7 +137,7 @@ const WrongNetworkSelect = ({ switchNetwork, chainId }) => {
         <ChainLogo chainId={localChainId} />
         <Text pl="12px">{chainNameConverter(localChainName)}</Text>
       </UserMenuItem>
-      <Button mx="16px" my="8px" scale="sm" onClick={() => switchNetwork(localChainId)}>
+      <Button mx="16px" my="8px" scale="sm" style={{ color: '#000' }} onClick={() => switchNetwork(localChainId)}>
         {t('Switch network in wallet')}
       </Button>
     </>
