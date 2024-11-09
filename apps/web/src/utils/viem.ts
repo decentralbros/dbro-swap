@@ -73,9 +73,7 @@ export const CLIENT_CONFIG = {
   pollingInterval: 6_000,
 }
 
-export const publicClient = () => {
-  const chainId = ChainId.BASE
-
+export const publicClient = ({ chainId }: { chainId?: number }) => {
   if (chainId && viemClients[chainId]) {
     return viemClients[chainId]
   }
@@ -87,6 +85,7 @@ export const publicClient = () => {
     httpString = chainId && first(PUBLIC_NODES[chainId]) ? first(PUBLIC_NODES[chainId]) : undefined
   }
 
-  const chain = CHAINS.find((c) => c.id === chainId)
+  const chain = CHAINS.find((c) => c.id === chainId || ChainId.BASE)
+
   return createPublicClient({ chain, transport: http(httpString), ...CLIENT_CONFIG })
 }
