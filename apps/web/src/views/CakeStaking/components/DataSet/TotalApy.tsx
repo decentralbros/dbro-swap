@@ -12,13 +12,14 @@ import {
 } from 'views/CakeStaking/hooks/useAPR'
 import { useVeCakeTotalSupply } from 'views/CakeStaking/hooks/useVeCakeTotalSupply'
 
-const GradientText = styled(Text)`
-  font-weight: 600;
-  background: linear-gradient(269deg, #1c94e5 7.46%, #0058b9 99.29%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-`
+// const GradientText = styled(Text)`
+//   font-weight: 600;
+//   background: #1bf696;
+//   background-clip: text;
+//   -webkit-background-clip: text;
+//   -webkit-text-fill-color: transparent;
+// `
+
 interface TotalApyProps {
   veCake: string
   cakeAmount: number
@@ -92,7 +93,7 @@ export const TotalApy: React.FC<React.PropsWithChildren<TotalApyProps>> = ({ veC
     <Box>
       <Box>
         <Text bold as="span">
-          🔹{t('Total APR')}
+          🔹{t('Reward Rate')}
         </Text>
         <Text ml="4px" as="span">
           {t('is the sum of veCAKE Pool APR, Revenue sharing APR and Birbes APY from Guages voting.')}
@@ -184,22 +185,21 @@ export const TotalApy: React.FC<React.PropsWithChildren<TotalApyProps>> = ({ veC
 
   return (
     <Flex width="100%" flexDirection="column">
-      <Flex justifyContent="space-between">
+      {/* <Flex justifyContent="space-between">
         <TooltipText fontSize="14px" color="textSubtle" ref={totalAprRef}>
-          {t('Total APR')}
+          {t('Reward Rate')}
         </TooltipText>
         <Flex>
-          <Text>🔹</Text>
-          <GradientText>{t('Up to %apr%%', { apr: totalApy.toFixed(2) })} </GradientText>
+          <GradientText>&bull; {t('20%', { apr: totalApy.toFixed(2) })} </GradientText>
         </Flex>
-      </Flex>
-      <Box ml="25px">
+      </Flex> */}
+      {/* <Box ml="25px">
         <Flex mt="4px" justifyContent="space-between">
           <TooltipText fontSize="14px" color="textSubtle" ref={veCakePoolAprRef}>
             {t('veCAKE Pool APR')}
           </TooltipText>
           {shouldShow4yrApr ? (
-            <Text>{t('Up to %apr%%', { apr: cakePoolApr.toFixed(2) })} </Text>
+            <Text>{t('20%', { apr: cakePoolApr.toFixed(2) })} </Text>
           ) : (
             <Text>{`${cakePoolApr.toFixed(2)}%`} </Text>
           )}
@@ -209,7 +209,7 @@ export const TotalApy: React.FC<React.PropsWithChildren<TotalApyProps>> = ({ veC
             {t('Revenue Sharing APR')}
           </TooltipText>
           {shouldShow4yrApr ? (
-            <Text>{t('Up to %apr%%', { apr: revenueSharingApr.toFixed(2) })} </Text>
+            <Text>{t('20%', { apr: revenueSharingApr.toFixed(2) })} </Text>
           ) : (
             <Text>{`${revenueSharingApr.toFixed(2)}%`} </Text>
           )}
@@ -219,12 +219,12 @@ export const TotalApy: React.FC<React.PropsWithChildren<TotalApyProps>> = ({ veC
             {t('Bribe APR')}
           </TooltipText>
           {shouldShow4yrApr ? (
-            <GradientText>{t('Up to %apr%%', { apr: bribeApr.toFixed(2) })} </GradientText>
+            <GradientText>{t('20%', { apr: bribeApr.toFixed(2) })} </GradientText>
           ) : (
             <GradientText>{`${bribeApr.toFixed(2)}%`} </GradientText>
           )}
         </Flex>
-      </Box>
+      </Box> */}
       {totalAprTooltipVisible && totalAprTooltips}
       {veCakePoolAprTooltipVisible && veCakePoolAprTooltips}
       {revenueSharingPoolAprTooltipVisible && revenueSharingPoolAprTooltips}

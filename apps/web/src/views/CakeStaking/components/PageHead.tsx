@@ -43,7 +43,7 @@ const Heading = () => {
   return (
     <Flex alignItems="baseline" justifyContent={staking ? 'space-between' : undefined}>
       <Text lineHeight="110%" bold color="secondary" mb="16px" fontSize={['32px', '32px', '64px', '64px']}>
-        {t('DBRO Staking')}
+        {t('DBRO Hybrid Staking')}
       </Text>
       {/* {isMobile ? (
         <Link
@@ -91,9 +91,7 @@ const Description = () => {
     <Grid justifyContent="space-between" gridTemplateColumns={staking ? '1fr' : ['4fr 1fr', '4fr 1fr', '1fr']}>
       <DescriptionContent fullSize={staking}>
         <Text color="textSubtle" lineHeight="120%">
-          {t(
-            'Enjoy the benefits of weekly DBRO yield, revenue share, gauges voting, farm yield boosting, participating in IFOs, and so much more!',
-          )}
+          {t('Enjoy the benefits of staking DBRO with a high APY and token wrapped DBRO utility NFTs!')}
         </Text>
       </DescriptionContent>
       {/* {isMobile && !staking ? <MobileHeadBunny /> : null} */}

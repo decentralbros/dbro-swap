@@ -1,14 +1,12 @@
-import { ChainId } from '@pancakeswap/chains'
 import { useTranslation } from '@pancakeswap/localization'
-import { CAKE } from '@pancakeswap/tokens'
 import { AutoRow, Balance, BalanceInput, BalanceInputProps, Button, Flex, FlexGap, Text } from '@pancakeswap/uikit'
 import { formatBigInt, getDecimalAmount, getFullDisplayBalance } from '@pancakeswap/utils/formatBalance'
 import BN from 'bignumber.js'
-import { TokenImage } from 'components/TokenImage'
 import { useCakePrice } from 'hooks/useCakePrice'
 import { useAtom, useAtomValue } from 'jotai'
 import { useCallback, useMemo, useState } from 'react'
 import { cakeLockAmountAtom } from 'state/vecake/atoms'
+import Image from 'next/image'
 import { useBSCCakeBalance } from '../hooks/useBSCCakeBalance'
 import { useWriteApproveAndIncreaseLockAmountCallback } from '../hooks/useContractWrite'
 import { LockCakeDataSet } from './DataSet'
@@ -65,7 +63,7 @@ const CakeInput: React.FC<{
 
   const appendComponent = (
     <Flex alignSelf="center" width={40} mr={12}>
-      <TokenImage width={40} height={40} token={CAKE[ChainId.BSC]} />
+      <Image width={40} height={40} src="/logo.webp" alt="logo" />
     </Flex>
   )
 
@@ -87,7 +85,7 @@ const CakeInput: React.FC<{
             return (
               <Button
                 key={p}
-                style={{ flex: 1 }}
+                style={{ flex: 1, color: p === percent ? '#000' : '#1bf696' }}
                 scale="sm"
                 variant={p === percent ? 'primary' : 'tertiary'}
                 onClick={() => handlePercentChange(p)}
@@ -98,7 +96,7 @@ const CakeInput: React.FC<{
           })}
           <Button
             scale="sm"
-            style={{ flex: 1 }}
+            style={{ flex: 1, color: percent === 100 ? '#000' : '#1bf696' }}
             variant={percent === 100 ? 'primary' : 'tertiary'}
             onClick={() => handlePercentChange(100)}
           >
@@ -128,7 +126,7 @@ export const LockCakeForm: React.FC<{
           {t('add')}
         </Text>
         <Text color="textSubtle" textTransform="uppercase" fontSize={16} bold>
-          {t('$DBRO')}
+          {t('DBRO')}
         </Text>
       </FlexGap>
       <CakeInput value={value} onUserInput={onChange} disabled={disabled} />

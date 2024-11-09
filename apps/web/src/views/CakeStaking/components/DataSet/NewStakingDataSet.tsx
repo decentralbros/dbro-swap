@@ -1,5 +1,5 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { AutoRow, Box, Text, TooltipText, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { AutoRow, Box, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { getDecimalAmount, getFullDisplayBalance } from '@pancakeswap/utils/formatBalance'
 import BN from 'bignumber.js'
 import { WEEK } from 'config/constants/veCake'
@@ -11,14 +11,13 @@ import { useProxyVeCakeBalance } from 'views/CakeStaking/hooks/useProxyVeCakeBal
 import { useTargetUnlockTime } from 'views/CakeStaking/hooks/useTargetUnlockTime'
 import { useVeCakeAmount } from 'views/CakeStaking/hooks/useVeCakeAmount'
 import { MyVeCakeCard } from '../MyVeCakeCard'
-import { Tooltips } from '../Tooltips'
 import { DataRow } from './DataBox'
-import { TotalApy } from './TotalApy'
 import { formatDate } from './format'
 
 const ValueText = styled(Text)`
   font-size: 16px;
   font-weight: 400;
+  color: #1bf696;
 `
 
 interface NewStakingDataSetProps {
@@ -55,56 +54,68 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
   return (
     <>
       <Text fontSize={12} bold color={isDesktop ? 'textSubtle' : undefined} textTransform="uppercase">
-        {t('lock overview')}
+        {t('staking overview')}
       </Text>
       <Box padding={['16px 0', '16px 0', 12]}>
         {customVeCakeCard ?? <MyVeCakeCard type="row" value={veCake} />}
+
         <AutoRow px={['0px', '0px', '16px']} py={['16px', '16px', '12px']} gap="8px">
           {customDataRow}
-          <TotalApy veCake={veCake} cakeAmount={cakeAmount} cakeLockWeeks={cakeLockWeeks} />
           <DataRow
             label={
-              <Text fontSize={14} color="textSubtle" textTransform="uppercase">
-                {t('CAKE to be locked')}
+              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                {t('Staked DBRO')}
               </Text>
             }
-            value={<ValueText>{cakeAmount}</ValueText>}
+            value={<ValueText>&bull; 3,000,000</ValueText>}
           />
           <DataRow
             label={
-              <Tooltips
-                content={t(
-                  'The ratio factor between the amount of CAKE locked and the final veCAKE number. Extend your lock duration for a higher ratio factor.',
-                )}
-              >
-                <TooltipText fontSize={14} fontWeight={400} color="textSubtle">
-                  {t('Factor')}
-                </TooltipText>
-              </Tooltips>
-            }
-            value={<ValueText>{factor}</ValueText>}
-          />
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle">
-                {t('Duration')}
+              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                {t('Reward Rate')}
               </Text>
             }
-            value={<ValueText>{cakeLockWeeks} weeks</ValueText>}
+            value={<ValueText>&bull; 20%</ValueText>}
           />
           <DataRow
             label={
-              <Tooltips
-                content={t(
-                  'Once locked, your CAKE will be staked in veCAKE contract until this date. Early withdrawal is not available.',
-                )}
-              >
-                <TooltipText fontSize={14} fontWeight={400} color="textSubtle">
-                  {t('Unlock on')}
-                </TooltipText>
-              </Tooltips>
+              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                {t('Min. Stake')}
+              </Text>
             }
-            value={<ValueText>{unlockOn}</ValueText>}
+            value={<ValueText>&bull; 25k DBRO</ValueText>}
+          />
+          <DataRow
+            label={
+              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                {t('Max Stake')}
+              </Text>
+            }
+            value={<ValueText>&bull; 5M DBRO</ValueText>}
+          />
+          <DataRow
+            label={
+              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                {t('Claim Threshold')}
+              </Text>
+            }
+            value={<ValueText>&bull; 500k</ValueText>}
+          />
+          <DataRow
+            label={
+              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                {t('unwrapping Fee')}
+              </Text>
+            }
+            value={<ValueText>&bull; 1%</ValueText>}
+          />
+          <DataRow
+            label={
+              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                {t('Reward Wallet')}
+              </Text>
+            }
+            value={<ValueText>&bull; 5,000,000</ValueText>}
           />
         </AutoRow>
       </Box>
