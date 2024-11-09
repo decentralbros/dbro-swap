@@ -1,6 +1,7 @@
 import { Grid, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { useLockModal } from 'views/CakeStaking/hooks/useLockModal'
 import { useCakeLockStatus } from 'views/CakeStaking/hooks/useVeCakeUserInfo'
+import { ChainId } from '@pancakeswap/chains'
 import { CakeLockStatus } from '../../types'
 import { ApproveAndLockModal } from '../ApproveAndLockModal'
 import { CakePoolLockStatus } from '../CakePoolLockStatus'
@@ -16,7 +17,7 @@ const customCols = {
 }
 
 export const LockCake = () => {
-  const { status } = useCakeLockStatus()
+  const { status } = useCakeLockStatus(ChainId.BASE)
   const { isMobile } = useMatchBreakpoints()
 
   const { modal, modalData } = useLockModal()

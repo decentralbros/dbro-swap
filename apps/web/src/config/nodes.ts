@@ -99,8 +99,8 @@ export const PUBLIC_NODES: Record<ChainId, string[] | readonly string[]> = {
   ].filter(notEmpty),
   [ChainId.BSC_TESTNET]: ['https://data-seed-prebsc-1-s1.binance.org:8545'],
   [ChainId.ETHEREUM]: [
-    getNodeRealUrl(ChainId.ETHEREUM, process.env.NEXT_PUBLIC_NODE_REAL_API_ETH) || '',
     process.env.NEXT_PUBLIC_NODIES_ETH || '',
+    getNodeRealUrl(ChainId.ETHEREUM, process.env.NEXT_PUBLIC_NODE_REAL_API_ETH) || '',
     getGroveUrl(ChainId.ETHEREUM, process.env.NEXT_PUBLIC_GROVE_API_KEY) || '',
     'https://ethereum.publicnode.com',
     'https://eth.llamarpc.com',
@@ -111,8 +111,8 @@ export const PUBLIC_NODES: Record<ChainId, string[] | readonly string[]> = {
     'https://eth-goerli.public.blastapi.io',
   ].filter(notEmpty),
   [ChainId.ARBITRUM_ONE]: [
-    ...ARBITRUM_NODES,
     process.env.NEXT_PUBLIC_NODIES_ARB || '',
+    ...ARBITRUM_NODES,
     getNodeRealUrl(ChainId.ARBITRUM_ONE, process.env.NEXT_PUBLIC_NODE_REAL_API_ETH) || '',
     getGroveUrl(ChainId.ARBITRUM_ONE, process.env.NEXT_PUBLIC_GROVE_API_KEY) || '',
   ].filter(notEmpty),
@@ -145,8 +145,8 @@ export const PUBLIC_NODES: Record<ChainId, string[] | readonly string[]> = {
     'https://opbnb.publicnode.com',
   ],
   [ChainId.BASE]: [
-    'https://base.publicnode.com',
     process.env.NEXT_PUBLIC_NODIES_BASE || '',
+    'https://base.publicnode.com',
     getGroveUrl(ChainId.BASE, process.env.NEXT_PUBLIC_GROVE_API_KEY) || '',
     // process.env.NEXT_PUBLIC_NODE_REAL_BASE_PRODUCTION,
     ...base.rpcUrls.default.http,
