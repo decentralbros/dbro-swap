@@ -6,7 +6,6 @@ import { CrossChainVeCakeModal } from 'components/CrossChainVeCakeModal'
 import { CROSS_CHIAN_CONFIG } from 'components/CrossChainVeCakeModal/constants'
 import Page from 'components/Layout/Page'
 import { useCakeDistributed } from 'hooks/useCakeDistributed'
-import useTheme from 'hooks/useTheme'
 import { useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { useGauges } from 'views/GaugesVoting/hooks/useGauges'
@@ -25,8 +24,7 @@ const CakeStaking = () => {
   const totalCakeDistributed = useCakeDistributed()
   const [cakeRewardModalVisible, setCakeRewardModalVisible] = useState(false)
   const totalIFOSold = useTotalIFOSold()
-  const { isDesktop, isMobile } = useMatchBreakpoints()
-  const { theme } = useTheme()
+  const { isDesktop } = useMatchBreakpoints()
   const handleDismiss = useCallback(() => setCakeRewardModalVisible(false), [])
   const [isOpen, setIsOpen] = useState(false)
 
@@ -35,7 +33,7 @@ const CakeStaking = () => {
       <ModalV2 isOpen={cakeRewardModalVisible} closeOnOverlayClick onDismiss={handleDismiss}>
         <CakeRewardsCard onDismiss={handleDismiss} />
       </ModalV2>
-      <StyledPageHeader background={isMobile ? theme.colors.gradientInverseBubblegum : undefined}>
+      <StyledPageHeader background="#000">
         <PageHead />
         <LockCake />
         <Heading scale="xl" color="secondary" mt={['40px', '40px', '45px']} mb={['24px', '24px', '48px']}>
@@ -98,7 +96,7 @@ const CakeStaking = () => {
                 variant="secondary"
                 width="100%"
                 onClick={() => {
-                  window.open('https://twitter.com/pancakeswap', '_blank', 'noopener noreferrer')
+                  window.open('https://x.com/DecentralBros_', '_blank', 'noopener noreferrer')
                 }}
               >
                 {t('Learn More')}

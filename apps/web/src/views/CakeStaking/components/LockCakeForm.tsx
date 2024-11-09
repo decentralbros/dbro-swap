@@ -40,7 +40,7 @@ const CakeInput: React.FC<{
   const handlePercentChange = useCallback(
     (p: number) => {
       if (p > 0) {
-        onUserInput(getFullDisplayBalance(new BN(cakeBalance.toString()).multipliedBy(p).dividedBy(100), 18, 18))
+        onUserInput(getFullDisplayBalance(new BN(cakeBalance.toString()).multipliedBy(p).dividedBy(100), 8, 8))
       } else {
         onUserInput('')
       }
@@ -128,7 +128,7 @@ export const LockCakeForm: React.FC<{
           {t('add')}
         </Text>
         <Text color="textSubtle" textTransform="uppercase" fontSize={16} bold>
-          {t('CAKE')}
+          {t('$DBRO')}
         </Text>
       </FlexGap>
       <CakeInput value={value} onUserInput={onChange} disabled={disabled} />

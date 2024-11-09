@@ -10,7 +10,6 @@ import { useAccount } from 'wagmi'
 import { useBSCCakeBalance } from '../../hooks/useBSCCakeBalance'
 import { NewStakingDataSet } from '../DataSet'
 import { LockCakeForm } from '../LockCakeForm'
-import { LockWeeksForm } from '../LockWeeksForm'
 import { StyledCard } from './styled'
 
 export const NotLocking = () => {
@@ -58,7 +57,7 @@ export const NotLockingCard: React.FC<React.PropsWithChildren<NotLockingCardProp
 
   return (
     <StyledCard innerCardProps={{ padding: hideCardPadding ? 0 : ['24px 16px', '24px 16px', '24px'] }}>
-      {!hideTitle && <Heading scale="md">{t('Lock CAKE to get veCAKE')}</Heading>}
+      {!hideTitle && <Heading scale="md">{t('Stake DBRO to earn DBRO')}</Heading>}
       <Grid
         gridTemplateColumns={isDesktop ? '1fr 1fr' : '1fr'}
         gridColumnGap="24px"
@@ -68,7 +67,6 @@ export const NotLockingCard: React.FC<React.PropsWithChildren<NotLockingCardProp
         mb={32}
       >
         <LockCakeForm fieldOnly />
-        <LockWeeksForm fieldOnly />
       </Grid>
       <NewStakingDataSet
         cakeAmount={Number(cakeLockAmount)}
@@ -77,8 +75,13 @@ export const NotLockingCard: React.FC<React.PropsWithChildren<NotLockingCardProp
       />
       <ColumnCenter>
         {account ? (
-          <Button disabled={disabled} width={['100%', '100%', '50%']} onClick={handleModalOpen}>
-            {t('Lock CAKE')}
+          <Button
+            disabled={disabled}
+            style={{ color: '#000' }}
+            width={['100%', '100%', '50%']}
+            onClick={handleModalOpen}
+          >
+            {t('Stake DBRO')}
           </Button>
         ) : (
           <ConnectWalletButton width={['100%', '100%', '50%']} />
