@@ -22,7 +22,7 @@ import { useSwapActionHandlers } from 'state/swap/useSwapActionHandlers'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { useCurrencyBalances } from 'state/wallet/hooks'
 import { config } from 'utils/wagmi'
-import { useAccount, useChainId } from 'wagmi'
+import { useAccount, useChainId, useReadContract } from 'wagmi'
 import { abi } from '../abi'
 import { useSlippageAdjustedAmounts } from '../hooks'
 import { useConfirmModalState } from '../hooks/useConfirmModalState'
@@ -32,7 +32,8 @@ import { CommitButtonProps } from '../types'
 import { ConfirmSwapModal } from './ConfirmSwapModal'
 
 const SettingsModalWithCustomDismiss = withCustomOnDismiss(SettingsModal)
-const ZEROX_ADDRESS = '0x0000000000001fF3684f28c67538d4D072C22734'
+const ZEROX_ADDRESS = '0x0000000000001fF3684f28c67538d4D072C22734' as `0x${string}`
+const ETHEREUM = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE' as `0x${string}`
 
 interface SwapCommitButtonPropsType {
   trade?: SmartRouterTrade<TradeType>
@@ -217,6 +218,13 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
 
   const swapParams = useSwapValues()
 
+  const { data: allowance } = useReadContract({
+    abi,
+    address: inputCurrency && !inputCurrency.isNative ? (inputCurrency.address as `0x${string}`) : ETHEREUM,
+    functionName: 'allowance',
+    args: [account as `0x${string}`, ZEROX_ADDRESS],
+  })
+
   const handleSwap = useCallback(async () => {
     if (!swapParams || !inputCurrency || !outputCurrency) {
       reset()
@@ -226,22 +234,28 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
 
     try {
       setLoadSwap(true)
+      const amount = parseUnits(typedValue, inputCurrency.decimals)
 
-      if (!inputCurrency.isNative) {
-        const hash: `0x${string}` = await writeContract(config, {
-          abi,
-          address: inputCurrency.address as `0x${string}`,
-          functionName: 'approve',
-          args: [ZEROX_ADDRESS as `0x${string}`, parseUnits(typedValue, inputCurrency.decimals)],
-          chainId,
-        })
+      if (!inputCurrency.isNative && allowance !== undefined) {
+        const currentAllowance = BigInt(allowance) * BigInt(10 ** inputCurrency.decimals)
+        const requestedAllowance = BigInt(amount) * BigInt(10 ** inputCurrency.decimals)
 
-        if (chainId !== ChainId.ETHEREUM) {
-          await waitForTransactionReceipt(config, {
-            confirmations: 4,
-            hash,
+        if (currentAllowance < requestedAllowance) {
+          const hash: `0x${string}` = await writeContract(config, {
+            abi,
+            address: inputCurrency.address as `0x${string}`,
+            functionName: 'approve',
+            args: [ZEROX_ADDRESS, amount],
             chainId,
           })
+
+          if (chainId !== ChainId.ETHEREUM) {
+            await waitForTransactionReceipt(config, {
+              confirmations: 4,
+              hash,
+              chainId,
+            })
+          }
         }
       }
 
@@ -263,12 +277,12 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
       }
 
       reset()
-      setLoadSwap(false)
     } catch {
       reset()
+    } finally {
       setLoadSwap(false)
     }
-  }, [swapParams, inputCurrency, outputCurrency, chainId, typedValue, account, reset, addTransaction])
+  }, [allowance, swapParams, inputCurrency, outputCurrency, chainId, typedValue, account, reset, addTransaction])
 
   return (
     <Box mt="0.25rem">
