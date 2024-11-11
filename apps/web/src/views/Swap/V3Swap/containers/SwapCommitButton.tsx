@@ -299,7 +299,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         disabled={loadSwap}
         onClick={handleSwap}
       >
-        {(loadSwap && <Dots>{t('Swap')}</Dots>) || t('Swap')}
+        {(loadSwap && <Dots>{t('Swapping')}</Dots>) || t('Swap')}
       </CommitButton>
     </Box>
   )
