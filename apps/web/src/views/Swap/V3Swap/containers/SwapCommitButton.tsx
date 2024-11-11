@@ -224,7 +224,8 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     functionName: 'allowance',
     args: [account as `0x${string}`, ZEROX_ADDRESS],
     query: {
-      enabled: account !== undefined,
+      enabled: Boolean(account),
+      refetchInterval: 3_000,
     },
   })
 
