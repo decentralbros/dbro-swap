@@ -204,6 +204,7 @@ export function FormMain({ pricingAndSlippage, inputAmount, outputAmount, tradeL
       </Flex>
       <CurrencyInputPanel
         id="swap-currency-input"
+        disabled={!account}
         showUSDPrice
         usdValue={inputUSD}
         showMaxButton
