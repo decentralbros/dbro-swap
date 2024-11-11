@@ -223,6 +223,9 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     address: inputCurrency && !inputCurrency.isNative ? (inputCurrency.address as `0x${string}`) : ETHEREUM,
     functionName: 'allowance',
     args: [account as `0x${string}`, ZEROX_ADDRESS],
+    query: {
+      enabled: account !== undefined,
+    },
   })
 
   const handleSwap = useCallback(async () => {
