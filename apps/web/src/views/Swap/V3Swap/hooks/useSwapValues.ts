@@ -21,6 +21,8 @@ export const useSwapValues = (): Estimate | undefined => {
 
   const buyToken: string = outputCurrency.isNative ? ETHEREUM : outputCurrency.address
 
+  const swapFeeToken: string = !inputCurrency.isNative && !outputCurrency.isNative ? inputCurrency.address : ETHEREUM
+
   const sellAmount = parseUnits(typedValue, inputCurrency.decimals)
 
   const estimate: Estimate = {
@@ -31,7 +33,7 @@ export const useSwapValues = (): Estimate | undefined => {
     taker: account as string,
     swapFeeRecipient: FEE_ADDRESS,
     swapFeeBps: 100, // 1%
-    swapFeeToken: ETHEREUM,
+    swapFeeToken,
     slippageBps: allowedSlippage * 100, // 100 is 1%
   }
 

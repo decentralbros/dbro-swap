@@ -1,8 +1,5 @@
-import { ChainId } from '@pancakeswap/chains'
-import { useTranslation } from '@pancakeswap/localization'
 import { Swap } from '@pancakeswap/widgets-internal'
 import { EXCHANGE_HELP_URLS } from 'config/constants'
-import { useActiveChainId } from 'hooks/useActiveChainId'
 
 const Page: React.FC<
   React.PropsWithChildren<{
@@ -19,20 +16,14 @@ const Page: React.FC<
   helpUrl = EXCHANGE_HELP_URLS,
   ...props
 }) => {
-  const { t } = useTranslation()
-  const { chainId } = useActiveChainId()
-  const isBSC = chainId === ChainId.BSC
-  const externalText = isBSC ? t('Bridge assets to BNB Chain') : ''
-  const externalLinkUrl = isBSC ? 'https://bridge.decentralbros.finance/' : ''
-
   return (
     <Swap.Page
       removePadding={removePadding}
       noMinHeight={noMinHeight}
       hideFooterOnDesktop={hideFooterOnDesktop}
       helpUrl={helpUrl}
-      externalText={externalText}
-      externalLinkUrl={externalLinkUrl}
+      externalText=""
+      externalLinkUrl=""
       {...props}
     >
       {children}
