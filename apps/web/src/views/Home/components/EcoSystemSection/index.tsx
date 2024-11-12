@@ -308,7 +308,7 @@ const useDecentralBrosData = () => {
         path: '/swap',
       },
       {
-        title: t('Hybrid Staking'),
+        title: t('Staking'),
         description: t('Coming soon...'),
         ctaTitle: t('Stake Now'),
         image: `/old-logo.jpg`,
