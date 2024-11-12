@@ -1,6 +1,10 @@
 import { Box, PageSection, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { styled } from 'styled-components'
+import { useTheme } from '@pancakeswap/hooks'
 import Hero from './components/Hero'
+import { InnerWedgeWrapper, OuterWedgeWrapper, WedgeTopLeft } from './components/WedgeSvgs'
+import EcoSystemSection from './components/EcoSystemSection'
+import Footer from './components/Footer'
 
 const StyledHeroSection = styled(PageSection)`
   padding-top: 16px;
@@ -11,8 +15,8 @@ const StyledHeroSection = styled(PageSection)`
 `
 
 const Home: React.FC<React.PropsWithChildren> = () => {
-  // const { theme } = useTheme()
-  // const HomeSectionContainerStyles = { margin: '0', width: '100%', maxWidth: '968px', padding: '0px 16px' }
+  const { theme } = useTheme()
+  const HomeSectionContainerStyles = { margin: '0', width: '100%', maxWidth: '968px', padding: '0px 16px' }
   const { isMobile } = useMatchBreakpoints()
 
   return (
@@ -83,7 +87,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         <MetricsSection />
       </PageSection> */}
 
-      {/* <PageSection
+      <PageSection
         innerProps={{ style: { ...HomeSectionContainerStyles, maxWidth: 'auto' } }}
         background={theme.colors.background}
         containerProps={{
@@ -98,7 +102,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
           </InnerWedgeWrapper>
         </OuterWedgeWrapper>
         <EcoSystemSection />
-      </PageSection> */}
+      </PageSection>
 
       {/* <PageSection
         innerProps={{ style: HomeSectionContainerStyles }}
@@ -157,14 +161,14 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         <NewsSection />
       </PageSection> */}
 
-      {/* <PageSection
+      <PageSection
         innerProps={{ style: HomeSectionContainerStyles }}
-        background="linear-gradient(180deg, #7645D9 0%, #5121B1 100%)"
+        background="linear-gradient(180deg, #000 0%, #0E7B4B 100%)"
         index={2}
-        hasCurvedDivider={false}
+        hasCurvedDivider
       >
         <Footer />
-      </PageSection> */}
+      </PageSection>
     </Box>
   )
 }

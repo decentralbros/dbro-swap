@@ -303,25 +303,25 @@ const useDecentralBrosData = () => {
         title: t('Swap'),
         description: t('Trade crypto instantly across multiple chains'),
         ctaTitle: t('Trade Now'),
-        image: `/images/home/new/trade-swap.png`,
-        defaultImage: `/images/home/new/trade-swap.png`,
+        image: `/images/affiliates-program/real-time-reporting.png`,
+        defaultImage: `/images/affiliates-program/real-time-reporting.png`,
         path: '/swap',
       },
-      // {
-      //   title: t('Simple Staking'),
-      //   description: t('Earn rewards hassle-free with single-sided staking'),
-      //   ctaTitle: t('Stake Now'),
-      //   image: `${ASSET_CDN}/web/landing/earn-fixed-staking.png`,
-      //   defaultImage: `${ASSET_CDN}/web/landing/earn-fixed-staking-purple.png`,
-      //   path: '/simple-staking',
-      // },
       {
-        title: t('NFT Marketplace'),
-        description: t('Trade unique NFTs on BNB Chain'),
-        ctaTitle: t('Trade Now'),
-        image: `/images/home/new/nft-marketplace.png`,
-        defaultImage: `/images/home/new/nft-marketplace.png`,
-        path: '/nfts',
+        title: t('Hybrid Staking'),
+        description: t('Coming soon...'),
+        ctaTitle: t('Stake Now'),
+        image: `/old-logo.jpg`,
+        defaultImage: `/old-logo.jpg`,
+        path: '/',
+      },
+      {
+        title: t('Lottery'),
+        description: t('Coming soon...'),
+        ctaTitle: t('Buy Tickets'),
+        image: `/images/lottery/ticket-r.png`,
+        defaultImage: `/images/lottery/ticket-r.png`,
+        path: '/',
         className: 'adjust-height',
       },
       // {
@@ -356,8 +356,22 @@ const FeatureBox: React.FC<{
       onClick={onClick ? () => onClick() : () => path && push(path)}
     >
       <ImageBox>
-        <Image className="default" src={defaultImage} width={108} height={108} alt={title} />
-        <Image className="hover" src={image} width={108} height={108} alt={title} />
+        <Image
+          className="default"
+          src={defaultImage}
+          width={108}
+          height={108}
+          alt={title}
+          style={{ borderRadius: '100%' }}
+        />
+        <Image
+          className="hover"
+          src={image}
+          width={108}
+          height={108}
+          alt={title}
+          style={{ borderRadius: '100%', transform: 'scale(108%)' }}
+        />
       </ImageBox>
       <Box>
         <Text fontSize="20px" mb="8px" lineHeight="110%" fontWeight={600} color={theme.colors.text}>
@@ -385,7 +399,7 @@ const EcoSystemSection: React.FC = () => {
 
   return (
     <Flex justifyContent="center" alignItems="center" flexDirection="column" pt={isMobile ? '24px' : '60px'}>
-      <Image src="/tree-left.png" alt="dbro swap" height={100} width={100} />
+      {/* <Image src="/logo.webp" alt="dbro swap" height={100} width={100} /> */}
       <Text textAlign="center" p="20px">
         <Text
           fontSize={['32px', null, null, '40px']}
@@ -415,8 +429,8 @@ const EcoSystemSection: React.FC = () => {
           justifyContent="center"
         >
           <Image
-            style={{ marginLeft: isMobile ? -32 : -72 }}
-            src="/bunny.png"
+            style={{ marginLeft: isMobile ? -32 : -72, transform: 'scaleX(-1)' }}
+            src="/images/wallets/bunny.webp"
             alt="trader girl"
             width={344}
             height={360}
