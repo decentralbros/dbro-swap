@@ -225,7 +225,7 @@ const HowToPlay: React.FC<React.PropsWithChildren> = () => {
     {
       label: t('Step %number%', { number: 1 }),
       title: t('Buy Tickets'),
-      subtitle: t('Prices are set when the round starts, equal to 5 USD in CAKE per ticket.'),
+      subtitle: t('Prices are set when the round starts, equal to 500K DBRO per ticket.'),
     },
     {
       label: t('Step %number%', { number: 2 }),
@@ -257,7 +257,7 @@ const HowToPlay: React.FC<React.PropsWithChildren> = () => {
         ))}
       </StepContainer>
       <Divider />
-      <GappedFlex flexDirection={['column', 'column', 'column', 'row']}>
+      {/* <GappedFlex flexDirection={['column', 'column', 'column', 'row']}>
         <Flex flex="2" flexDirection="column">
           <Heading mb="24px" scale="lg" color="secondary">
             {t('Winning Criteria')}
@@ -342,7 +342,7 @@ const HowToPlay: React.FC<React.PropsWithChildren> = () => {
         <Flex flex="1" justifyContent="center">
           <PoolAllocations />
         </Flex>
-      </GappedFlex>
+      </GappedFlex> */}
       {/* <Divider /> */}
       {/* <Flex justifyContent="center" alignItems="center" flexDirection={['column', 'column', 'row']}>
         <Image width={240} height={172} src="/images/lottery/tombola.png" alt="tombola bunny" mr="8px" mb="16px" />

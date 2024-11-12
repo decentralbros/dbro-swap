@@ -313,7 +313,7 @@ const useDecentralBrosData = () => {
         ctaTitle: t('Stake Now'),
         image: `/old-logo.jpg`,
         defaultImage: `/old-logo.jpg`,
-        path: '/',
+        path: '/staking',
       },
       {
         title: t('Lottery'),
@@ -321,7 +321,7 @@ const useDecentralBrosData = () => {
         ctaTitle: t('Buy Tickets'),
         image: `/images/lottery/ticket-r.png`,
         defaultImage: `/images/lottery/ticket-r.png`,
-        path: '/',
+        path: '/lottery',
         className: 'adjust-height',
       },
       // {

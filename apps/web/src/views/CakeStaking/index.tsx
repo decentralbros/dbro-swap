@@ -36,7 +36,7 @@ const CakeStaking = () => {
       <StyledPageHeader background="#000">
         <PageHead />
         <LockCake />
-        <Heading scale="xl" color="secondary" mt={['40px', '40px', '45px']} mb={['24px', '24px', '48px']}>
+        {/* <Heading scale="xl" color="secondary" mt={['40px', '40px', '45px']} mb={['24px', '24px', '48px']}>
           {t('Benefits of veCAKE')}
         </Heading>
         <Grid
@@ -78,9 +78,9 @@ const CakeStaking = () => {
             dataText={`${gaugesVotingCount ?? 0}`}
             onClick={() => {}}
           />
-        </Grid>
+        </Grid> */}
       </StyledPageHeader>
-      <Page title={t('CAKE Staking')}>
+      {/* <Page title={t('CAKE Staking')}>
         <Heading scale="xl" mb={['24px', '24px', '48px']} mt={['16px', '16px', 0]}>
           {t('Enjoy on Every Chains')}
         </Heading>
@@ -158,7 +158,7 @@ const CakeStaking = () => {
           />
           <BenefitCard type="more" />
         </Grid>
-      </Page>
+      </Page> */}
       <CrossChainVeCakeModal isOpen={isOpen} setIsOpen={setIsOpen} onDismiss={() => setIsOpen(false)} />
     </>
   )
@@ -166,9 +166,11 @@ const CakeStaking = () => {
 
 const StyledPageHeader = styled(PageHeader)`
   padding-top: 32px;
+  padding-bottom: 32px;
 
   ${({ theme }) => theme.mediaQueries.lg} {
     padding-top: 56px;
+    padding-bottom: 56px;
   }
 `
 

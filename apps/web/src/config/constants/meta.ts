@@ -18,11 +18,11 @@ const getPathList = (t: ContextApi['t']): PathList => {
   return {
     paths: {
       '/': { title: t('Home') },
-      '/swap': { basePath: true, title: t('Exchange'), image: `https://decentralbros.finance/decentralbros.jpg` },
-      '/staking': { basePath: true, title: t('Earn'), image: `https://decentralbros.finance/decentralbros.jpg` },
-      '/nfts': { title: t('NFT Marketplace'), image: `https://decentralbros.finance/decentralbros.jpg` },
-      '/lottery': { title: t('Lottery'), image: `https://decentralbros.finance/decentralbros.jpg` },
-      '/affiliates': { title: t('Affiliate Program'), image: `https://decentralbros.finance/decentralbros.jpg` },
+      '/swap': { title: t('Exchange'), image: `https://decentralbros.finance/logo.png` },
+      '/staking': { title: t('Earn'), image: `https://decentralbros.finance/logo.png` },
+      '/lottery': { title: t('Lottery'), image: `https://decentralbros.finance/logo.png` },
+      '/nfts': { title: t('NFT Marketplace'), image: `https://decentralbros.finance/logo.png` },
+      '/affiliates': { title: t('Affiliate Program'), image: `https://decentralbros.finance/logo.png` },
 
       // everything else
       '/limit-orders': { basePath: true, title: t('Limit Orders'), image: `${ASSET_CDN}/web/og/limit.jpg` },

@@ -1,11 +1,10 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { ArrowForwardIcon, Box, Button, Flex, Grid, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { ArrowForwardIcon, Box, Button, Flex, Grid, Text, Heading } from '@pancakeswap/uikit'
 import { NextLinkFromReactRouter } from '@pancakeswap/widgets-internal'
 import { useMemo } from 'react'
 import styled, { css } from 'styled-components'
 import { useCakeLockStatus } from '../hooks/useVeCakeUserInfo'
 import { CakeLockStatus } from '../types'
-import { HeadBunny, MobileHeadBunny } from './HeadImage'
 
 export const PageHead = () => {
   const { t } = useTranslation()
@@ -13,7 +12,7 @@ export const PageHead = () => {
   return (
     <Flex justifyContent="space-between" flexDirection="row">
       <Flex flex="1" flexDirection="column" mr={[0, 0, '8px']}>
-        <Heading />
+        <Header />
         <Description />
         <NextLinkFromReactRouter
           to="/swap?chain=base&outputCurrency=0x6a4e0F83D7882BcACFF89aaF6f60D24E13191E9F"
@@ -28,23 +27,34 @@ export const PageHead = () => {
         </NextLinkFromReactRouter>
       </Flex>
 
-      <Box>
+      {/* <Box>
         <HeadBunny />
-      </Box>
+      </Box> */}
     </Flex>
   )
 }
 
-const Heading = () => {
+const Header = () => {
   const { t } = useTranslation()
   const { status } = useCakeLockStatus()
   const staking = useMemo(() => status === CakeLockStatus.Locking, [status])
 
   return (
-    <Flex alignItems="baseline" justifyContent={staking ? 'space-between' : undefined}>
-      <Text lineHeight="110%" bold color="secondary" mb="16px" fontSize={['32px', '32px', '64px', '64px']}>
-        {t('DBRO Hybrid Staking')}
+    <Flex alignItems="baseline" justifyContent={staking ? 'space-between' : undefined} flexDirection="column">
+      {/* <Text lineHeight="110%" bold color="secondary" mb="16px" fontSize={['32px', '32px', '64px', '64px']}>
+        {t('Hybrid Staking')}
       </Text>
+
+      <Text lineHeight="100%" bold color="secondary" mb="16px" fontSize={['16px', '32px', '64px', '64px']}>
+        {t('Coming soon')}
+      </Text> */}
+
+      <Heading style={{ zIndex: 1 }} mb="8px" scale="md" color="#ffffff" id="lottery-hero-title">
+        {t('Hybrid Staking')}
+      </Heading>
+      <Heading mb="24px" scale="xl" color="secondary">
+        {t('Coming soon!')}
+      </Heading>
       {/* {isMobile ? (
         <Link
           external

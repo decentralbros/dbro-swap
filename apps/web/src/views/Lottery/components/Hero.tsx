@@ -226,9 +226,12 @@ const Hero = ({ lotteryStatus }: { lotteryStatus: number }) => {
       <Heading style={{ zIndex: 1 }} mb="8px" scale="md" color="#ffffff" id="lottery-hero-title">
         {t('The DBRO Swap Lottery')}
       </Heading>
-      <Heading mb="24px" scale="xl" color="#ffffff">
+      {/* <Heading mb="24px" scale="xl" color="#ffffff">
         {t('Get your tickets now!')}
-      </Heading>{' '}
+      </Heading> */}
+      <Heading mb="24px" scale="xl" color="secondary">
+        {t('Coming soon!')}
+      </Heading>
       <TicketContainer
         position="relative"
         width={['240px', '288px']}

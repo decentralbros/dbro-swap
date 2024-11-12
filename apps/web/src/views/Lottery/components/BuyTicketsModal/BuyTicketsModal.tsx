@@ -412,9 +412,9 @@ const BuyTicketsModal: React.FC<React.PropsWithChildren<BuyTicketsModalProps>> =
         {account ? (
           <>
             <ApproveConfirmButtons
-              isApproveDisabled
+              isApproveDisabled={chainId !== ChainId.BASE_SEPOLIA}
               isApproving={isApproving}
-              isConfirmDisabled={chainId !== ChainId.BASE}
+              isConfirmDisabled={chainId !== ChainId.BASE_SEPOLIA}
               isConfirming={isConfirming}
               onApprove={handleApprove}
               onConfirm={handleConfirm}
