@@ -437,7 +437,7 @@ const EcoSystemSection: React.FC = () => {
             unoptimized
           />
           <Flex flexDirection="column">
-            <Title>{t('Trade')}</Title>
+            <Title>{t('Earn')}</Title>
             <FeatureBoxesWrapper>
               {decentralBrosData.map((item) => (
                 <FeatureBox

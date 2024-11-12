@@ -1,9 +1,9 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { Button, Flex, Heading, useModal } from '@pancakeswap/uikit'
 import ConnectWalletButton from 'components/ConnectWalletButton'
-import { FetchStatus, LotteryStatus } from 'config/constants/types'
+import { FetchStatus } from 'config/constants/types'
 import { useEffect, useState } from 'react'
-import { useGetUserLotteriesGraphData, useLottery } from 'state/lottery/hooks'
+import { useLottery } from 'state/lottery/hooks'
 import { styled } from 'styled-components'
 import { useAccount } from 'wagmi'
 import useGetUnclaimedRewards from '../hooks/useGetUnclaimedRewards'
@@ -32,7 +32,6 @@ const CheckPrizesSection = () => {
     currentRound: { status },
   } = useLottery()
   const { fetchAllRewards, unclaimedRewards, fetchStatus } = useGetUnclaimedRewards()
-  const userLotteryData = useGetUserLotteriesGraphData()
   const [hasCheckedForRewards, setHasCheckedForRewards] = useState(false)
   const [hasRewardsToClaim, setHasRewardsToClaim] = useState(false)
   const [onPresentClaimModal] = useModal(<ClaimPrizesModal roundsToClaim={unclaimedRewards} />, false)
