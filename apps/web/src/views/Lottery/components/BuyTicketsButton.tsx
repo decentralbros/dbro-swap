@@ -21,15 +21,17 @@ const BuyTicketsButton: React.FC<React.PropsWithChildren<BuyTicketsButtonProps>>
     currentRound: { status },
   } = useLottery()
 
-  const getBuyButtonText = () => {
-    return t('Buy Tickets!')
-  }
-
   const themeStr = themeMode ?? (isDark ? 'dark' : 'light')
 
   return (
-    <Button data-theme={themeStr} {...props} disabled={disabled} onClick={onPresentBuyTicketsModal}>
-      {getBuyButtonText()}
+    <Button
+      style={{ color: '#000' }}
+      data-theme={themeStr}
+      {...props}
+      disabled={disabled}
+      onClick={onPresentBuyTicketsModal}
+    >
+      {t('Buy Tickets!')}
     </Button>
   )
 }

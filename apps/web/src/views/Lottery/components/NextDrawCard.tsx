@@ -14,13 +14,14 @@ import {
   Text,
   useModal,
 } from '@pancakeswap/uikit'
-import { getBalanceNumber } from '@pancakeswap/utils/formatBalance'
 import { LotteryStatus } from 'config/constants/types'
-import { useCakePrice } from 'hooks/useCakePrice'
 import { useState } from 'react'
 import { useLottery } from 'state/lottery/hooks'
 import { styled } from 'styled-components'
-import { useAccount } from 'wagmi'
+import { useAccount, useReadContract } from 'wagmi'
+import deployedContracts from 'config/constants/deployedContracts'
+import { formatUnits } from '@pancakeswap/utils/viem/formatUnits'
+import { ChainId } from '@pancakeswap/chains'
 import { dateTimeOptions } from '../helpers'
 import BuyTicketsButton from './BuyTicketsButton'
 import RewardBrackets from './RewardBrackets'
@@ -49,7 +50,7 @@ const NextDrawWrapper = styled.div`
   padding: 24px;
 `
 
-const NextDrawCard = () => {
+const NextDrawCard = ({ lotteryStatus }: { lotteryStatus: number }) => {
   const {
     t,
     currentLanguage: { locale },
@@ -60,26 +61,23 @@ const NextDrawCard = () => {
 
   const [onPresentViewTicketsModal] = useModal(<ViewTicketsModal roundId={currentLotteryId} roundStatus={status} />)
   const [isExpanded, setIsExpanded] = useState(false)
-  const ticketBuyIsDisabled = status !== LotteryStatus.OPEN || isTransitioning
-
-  const cakePriceBusd = useCakePrice()
-  const prizeInBusd = amountCollectedInCake.times(cakePriceBusd)
   const endTimeMs = parseInt(endTime, 10) * 1000
   const endDate = new Date(endTimeMs)
   const isLotteryOpen = status === LotteryStatus.OPEN
   const userTicketCount = userTickets?.tickets?.length || 0
+  const contractConfig = deployedContracts[ChainId.BASE_SEPOLIA].DBROLottery
+
+  const { data: potBalance } = useReadContract({
+    address: contractConfig.address as `0x${string}`,
+    abi: contractConfig.abi,
+    functionName: 'getPot',
+    chainId: ChainId.BASE_SEPOLIA,
+  })
 
   const getPrizeBalances = () => {
-    if (status === LotteryStatus.CLOSE || status === LotteryStatus.CLAIMABLE) {
-      return (
-        <Heading scale="xl" color="secondary" textAlign={['center', null, null, 'left']}>
-          {t('Calculating')}...
-        </Heading>
-      )
-    }
     return (
       <>
-        {prizeInBusd.isNaN() ? (
+        {!potBalance ? (
           <Skeleton my="7px" height={40} width={160} />
         ) : (
           <Balance
@@ -89,19 +87,7 @@ const NextDrawCard = () => {
             lineHeight="1"
             bold
             prefix="~$"
-            value={getBalanceNumber(prizeInBusd)}
-            decimals={0}
-          />
-        )}
-        {prizeInBusd.isNaN() ? (
-          <Skeleton my="2px" height={14} width={90} />
-        ) : (
-          <Balance
-            fontSize="14px"
-            color="textSubtle"
-            textAlign={['center', null, null, 'left']}
-            unit=" CAKE"
-            value={getBalanceNumber(amountCollectedInCake)}
+            value={Number(formatUnits(BigInt(String(potBalance)), 8)) ?? 0}
             decimals={0}
           />
         )}
@@ -136,7 +122,12 @@ const NextDrawCard = () => {
     <StyledCard>
       <CardHeader p="16px 24px">
         <Flex justifyContent="space-between">
-          <Heading mr="12px">{t('Next Draw')}</Heading>
+          <Heading mr="12px">
+            {t('Current Status: ')}
+            {lotteryStatus !== undefined
+              ? ['Pending', 'Open', 'Closed', 'Completed'][Number(lotteryStatus)]
+              : 'Loading...'}
+          </Heading>
           <Text>
             {currentLotteryId && `#${getNextDrawId()}`} {Boolean(endTime) && getNextDrawDateTime()}
           </Text>
@@ -186,7 +177,7 @@ const NextDrawCard = () => {
                 )}
               </Flex>
             )}
-            <BuyTicketsButton disabled={ticketBuyIsDisabled} maxWidth="280px" />
+            <BuyTicketsButton disabled={lotteryStatus !== 1} maxWidth="280px" />
           </Flex>
         </Grid>
       </CardBody>

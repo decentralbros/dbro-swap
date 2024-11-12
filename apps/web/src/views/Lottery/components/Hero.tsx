@@ -210,25 +210,8 @@ const StarsDecorations = styled(Box)`
   }
 `
 
-const Hero = () => {
+const Hero = ({ lotteryStatus }: { lotteryStatus: number }) => {
   const { t } = useTranslation()
-  const {
-    currentRound: { amountCollectedInCake, status },
-    isTransitioning,
-  } = useLottery()
-
-  const cakePriceBusd = useCakePrice()
-  const prizeInBusd = amountCollectedInCake.times(cakePriceBusd)
-  // const prizeTotal = getBalanceNumber(prizeInBusd)
-  const ticketBuyIsDisabled = status !== LotteryStatus.OPEN || isTransitioning
-
-  const getHeroHeading = () => {
-    return (
-      <Heading mb="24px" scale="xl" color="#ffffff">
-        {t('Get your tickets now!')}
-      </Heading>
-    )
-  }
 
   return (
     <Flex flexDirection="column" alignItems="center" justifyContent="center">
@@ -243,7 +226,9 @@ const Hero = () => {
       <Heading style={{ zIndex: 1 }} mb="8px" scale="md" color="#ffffff" id="lottery-hero-title">
         {t('The DBRO Swap Lottery')}
       </Heading>
-      {getHeroHeading()}
+      <Heading mb="24px" scale="xl" color="#ffffff">
+        {t('Get your tickets now!')}
+      </Heading>{' '}
       <TicketContainer
         position="relative"
         width={['240px', '288px']}
@@ -252,7 +237,7 @@ const Hero = () => {
         justifyContent="center"
       >
         <ButtonWrapper>
-          <StyledBuyTicketButton disabled={false} themeMode="dark" />
+          <StyledBuyTicketButton disabled={lotteryStatus !== 1} themeMode="dark" />
         </ButtonWrapper>
         <TicketSvgWrapper>
           <TicketPurchaseCard width="100%" />

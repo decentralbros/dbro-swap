@@ -36,9 +36,6 @@ const CheckPrizesSection = () => {
   const [hasCheckedForRewards, setHasCheckedForRewards] = useState(false)
   const [hasRewardsToClaim, setHasRewardsToClaim] = useState(false)
   const [onPresentClaimModal] = useModal(<ClaimPrizesModal roundsToClaim={unclaimedRewards} />, false)
-  const isFetchingRewards = fetchStatus === FetchStatus.Fetching
-  const lotteryIsNotClaimable = status === LotteryStatus.CLOSE
-  const isCheckNowDisabled = !userLotteryData.account || lotteryIsNotClaimable
 
   useEffect(() => {
     if (fetchStatus === FetchStatus.Fetched) {

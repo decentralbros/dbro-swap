@@ -4,6 +4,9 @@ import useTheme from 'hooks/useTheme'
 import { useState } from 'react'
 import { useFetchLottery, useLottery } from 'state/lottery/hooks'
 import { styled } from 'styled-components'
+import { useReadContract } from 'wagmi'
+import deployedContracts from 'config/constants/deployedContracts'
+import { ChainId } from '@pancakeswap/chains'
 import AllHistoryCard from './components/AllHistoryCard'
 import CheckPrizesSection from './components/CheckPrizesSection'
 import Countdown from './components/Countdown'
@@ -32,76 +35,94 @@ const Lottery = () => {
   const endTimeAsInt = parseInt(endTime, 10)
   const { nextEventTime, postCountdownText, preCountdownText } = useGetNextLotteryEvent(endTimeAsInt, status)
   const { numUserRoundsRequested, handleShowMoreUserRounds } = useShowMoreUserHistory()
+  const contractConfig = deployedContracts[84532].DBROLottery
+
+  const { data: lotteryId } = useReadContract({
+    address: contractConfig.address as `0x${string}`,
+    abi: contractConfig.abi,
+    functionName: 'currentLotteryId',
+    chainId: ChainId.BASE_SEPOLIA,
+  })
+
+  // Read contract states
+  const { data: lotteryStatus } = useReadContract({
+    address: contractConfig.address as `0x${string}`,
+    abi: contractConfig.abi,
+    functionName: 'status',
+    chainId: ChainId.BASE_SEPOLIA,
+  })
 
   return (
     <>
-      <LotteryPage>
-        <PageSection index={1} position="relative" hasCurvedDivider={false}>
-          <Hero />
-        </PageSection>
-        <PageSection
-          position="relative"
-          innerProps={{ style: { margin: '-30px', width: '100%' } }}
-          index={2}
-          hasCurvedDivider={false}
-        >
-          <Flex width="100%" alignItems="center" justifyContent="center" flexDirection="column" pt="24px">
-            <Heading scale="xl" mb="24px" textAlign="center">
-              {t('Are you a winner?')}
-            </Heading>
+      {lotteryStatus && (
+        <LotteryPage>
+          <PageSection index={1} position="relative" hasCurvedDivider={false}>
+            <Hero lotteryStatus={Number(lotteryStatus)} />
+          </PageSection>
+          <PageSection
+            position="relative"
+            innerProps={{ style: { margin: '-30px', width: '100%' } }}
+            index={2}
+            hasCurvedDivider={false}
+          >
+            <Flex width="100%" alignItems="center" justifyContent="center" flexDirection="column" pt="24px">
+              <Heading scale="xl" mb="24px" textAlign="center">
+                {t('Are you a winner?')}
+              </Heading>
 
-            <CheckPrizesSection />
+              <CheckPrizesSection />
 
-            <Flex alignItems="center" justifyContent="center" mb="48px">
-              {nextEventTime && (postCountdownText || preCountdownText) ? (
-                <Countdown
-                  nextEventTime={nextEventTime}
-                  postCountdownText={postCountdownText}
-                  preCountdownText={preCountdownText}
+              <Flex alignItems="center" justifyContent="center" mb="48px">
+                {nextEventTime && (postCountdownText || preCountdownText) ? (
+                  <Countdown
+                    nextEventTime={nextEventTime}
+                    postCountdownText={postCountdownText}
+                    preCountdownText={preCountdownText}
+                  />
+                ) : (
+                  <Skeleton height="41px" width="250px" />
+                )}
+              </Flex>
+
+              <NextDrawCard lotteryStatus={Number(lotteryStatus)} />
+            </Flex>
+          </PageSection>
+          <PageSection
+            position="relative"
+            innerProps={{ style: { margin: '0', width: '100%' } }}
+            index={2}
+            hasCurvedDivider={false}
+          >
+            <Flex width="100%" flexDirection="column" alignItems="center" justifyContent="center">
+              <Heading mb="24px" scale="xl">
+                {t('Finished Rounds')}
+              </Heading>
+              <Box mb="24px">
+                <HistoryTabMenu
+                  activeIndex={historyTabMenuIndex}
+                  setActiveIndex={(index) => setHistoryTabMenuIndex(index)}
                 />
+              </Box>
+              {historyTabMenuIndex === 0 ? (
+                <AllHistoryCard />
               ) : (
-                <Skeleton height="41px" width="250px" />
+                <YourHistoryCard
+                  handleShowMoreClick={handleShowMoreUserRounds}
+                  numUserRoundsRequested={numUserRoundsRequested}
+                />
               )}
             </Flex>
-
-            <NextDrawCard />
-          </Flex>
-        </PageSection>
-        <PageSection
-          position="relative"
-          innerProps={{ style: { margin: '0', width: '100%' } }}
-          index={2}
-          hasCurvedDivider={false}
-        >
-          <Flex width="100%" flexDirection="column" alignItems="center" justifyContent="center">
-            <Heading mb="24px" scale="xl">
-              {t('Finished Rounds')}
-            </Heading>
-            <Box mb="24px">
-              <HistoryTabMenu
-                activeIndex={historyTabMenuIndex}
-                setActiveIndex={(index) => setHistoryTabMenuIndex(index)}
-              />
-            </Box>
-            {historyTabMenuIndex === 0 ? (
-              <AllHistoryCard />
-            ) : (
-              <YourHistoryCard
-                handleShowMoreClick={handleShowMoreUserRounds}
-                numUserRoundsRequested={numUserRoundsRequested}
-              />
-            )}
-          </Flex>
-        </PageSection>
-        <PageSection
-          dividerPosition="top"
-          dividerFill={{ light: theme.colors.background }}
-          index={2}
-          hasCurvedDivider={false}
-        >
-          <HowToPlay />
-        </PageSection>
-      </LotteryPage>
+          </PageSection>
+          <PageSection
+            dividerPosition="top"
+            dividerFill={{ light: theme.colors.background }}
+            index={2}
+            hasCurvedDivider={false}
+          >
+            <HowToPlay />
+          </PageSection>
+        </LotteryPage>
+      )}
     </>
   )
 }
