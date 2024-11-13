@@ -13,7 +13,6 @@ const TokenLogo: React.FC<React.PropsWithChildren<TokenLogoProps>> = ({ srcs, al
   const [, refresh] = useState<number>(0);
 
   const src: string | undefined = srcs.find((s) => !BAD_SRCS[s]);
-
   if (src) {
     return (
       <img
