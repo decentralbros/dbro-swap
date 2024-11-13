@@ -225,7 +225,7 @@ const HowToPlay: React.FC<React.PropsWithChildren> = () => {
     {
       label: t('Step %number%', { number: 1 }),
       title: t('Buy Tickets'),
-      subtitle: t('Prices are set when the round starts, equal to 500K DBRO per ticket.'),
+      subtitle: t('Prices are set when the round starts, equal to 100K DBRO per ticket.'),
     },
     {
       label: t('Step %number%', { number: 2 }),
