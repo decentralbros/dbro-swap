@@ -11,6 +11,7 @@ import { FixedSizeList } from 'react-window'
 import { styled } from 'styled-components'
 import { wrappedCurrency } from 'utils/wrappedCurrency'
 import { useAccount } from 'wagmi'
+import { partners } from 'config/constants/partners'
 import { useIsUserAddedToken } from '../../hooks/Tokens'
 import { useCombinedActiveList } from '../../state/lists/hooks'
 import { useCurrencyBalance } from '../../state/wallet/hooks'
@@ -18,6 +19,8 @@ import { isTokenOnList } from '../../utils'
 import { RowBetween, RowFixed } from '../Layout/Row'
 import CircleLoader from '../Loader/CircleLoader'
 import ImportRow from './ImportRow'
+
+const PARTNERS = partners
 
 function currencyKey(currency: Currency): string {
   return currency?.isToken ? currency.address : currency?.isNative ? currency.symbol : ''
@@ -77,6 +80,7 @@ function CurrencyRow({
   const customAdded = useIsUserAddedToken(currency)
 
   const balance = useCurrencyBalance(account ?? undefined, currency)
+  const isPartner = PARTNERS.includes(currency?.symbol)
 
   // only show add or remove buttons if not on selected list
   return (
@@ -91,7 +95,7 @@ function CurrencyRow({
 
       <Column>
         <Text bold>{currency?.symbol}</Text>
-        <Text color="textSubtle" small ellipsis maxWidth="200px">
+        <Text color={isPartner ? 'secondary' : 'textSubtle'} small ellipsis maxWidth="200px">
           {!isOnSelectedList && customAdded && `${t('Added by user')} •`} {currency?.name}
         </Text>
       </Column>

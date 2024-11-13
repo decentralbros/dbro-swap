@@ -1,6 +1,6 @@
 {
   "name": "DBRO Swap OnRamp List",
-  "timestamp": "2024-10-18T11:45:00Z",
+  "timestamp": "2024-11-13T11:45:00Z",
   "version": {
     "major": 4,
     "minor": 0,
@@ -8,7 +8,7 @@
   },
   "tags": {},
   "logoURI": "https://decentralbros.finance/logo.png",
-  "keywords": ["island", "default"],
+  "keywords": ["dbro", "default"],
   "tokens": [
     {
       "asset": "c10042221_t0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
@@ -19,17 +19,6 @@
       "symbol": "WETH",
       "decimals": 18,
       "logoURI": "https://assets-cdn.trustwallet.com/blockchains/arbitrum/assets/0x82aF49447D8a07e3bd95BD0d56f35241523fBab1/logo.png",
-      "pairs": []
-    },
-    {
-      "asset": "c10042221_t0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
-      "type": "ARBITRUM",
-      "chainId": 42161,
-      "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
-      "name": "Bridged USDC",
-      "symbol": "USDC.e",
-      "decimals": 6,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/arbitrum/assets/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/logo.png",
       "pairs": []
     },
     {
@@ -66,17 +55,6 @@
       "pairs": []
     },
     {
-      "asset": "c8453_t0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
-      "type": "BASE",
-      "chainId": 8453,
-      "address": "0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
-      "name": "USD Base Coin",
-      "symbol": "USDbC",
-      "decimals": 6,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/base/assets/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA/logo.png",
-      "pairs": []
-    },
-    {
       "asset": "c8453_t0x78a087d713Be963Bf307b18F2Ff8122EF9A63ae9",
       "type": "BASE",
       "chainId": 8453,
@@ -88,25 +66,14 @@
       "pairs": []
     },
     {
-      "asset": "c8453_t0xEB466342C4d449BC9f53A865D5Cb90586f405215",
+      "asset": "c8453_t0x5985c6c9db08964c05629DC59E76bc2858F5C6c8",
       "type": "BASE",
       "chainId": 8453,
-      "address": "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
-      "name": "Axelar Wrapped USDC",
-      "symbol": "axlUSDC",
-      "decimals": 6,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/base/assets/0xEB466342C4d449BC9f53A865D5Cb90586f405215/logo.png",
-      "pairs": []
-    },
-    {
-      "asset": "c8453_t0x9EaF8C1E34F05a589EDa6BAfdF391Cf6Ad3CB239",
-      "type": "BASE",
-      "chainId": 8453,
-      "address": "0x9EaF8C1E34F05a589EDa6BAfdF391Cf6Ad3CB239",
-      "name": "yearn.finance",
-      "symbol": "YFI",
+      "address": "0x5985c6c9db08964c05629DC59E76bc2858F5C6c8",
+      "name": "XAG Silver Chads",
+      "symbol": "XAG",
       "decimals": 18,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/base/assets/0x9EaF8C1E34F05a589EDa6BAfdF391Cf6Ad3CB239/logo.png",
+      "logoURI": "https://decentralbros.finance/images/partners/xag.webp",
       "pairs": []
     },
     {
