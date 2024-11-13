@@ -9,10 +9,14 @@ export const footerLinks: (t: ContextApi["t"]) => FooterLinkType[] = (t) => [
         label: t("Trade"),
         href: "https://decentralbros.finance/swap",
       },
-      // {
-      //   label: t("Earn"),
-      //   href: "https://pancakeswap.finance/farms",
-      // },
+      {
+        label: t("Lottery"),
+        href: "https://decentralbros.finance/lottery",
+      },
+      {
+        label: t("Staking"),
+        href: "https://decentralbros.finance/staking",
+      },
       // {
       //   label: t("Game"),
       //   href: "https://pancakeswap.games/",
@@ -32,10 +36,6 @@ export const footerLinks: (t: ContextApi["t"]) => FooterLinkType[] = (t) => [
       // {
       //   label: t("Merchandise"),
       //   href: "https://merch.pancakeswap.finance/",
-      // },
-      // {
-      //   label: t("Lottery"),
-      //   href: "https://decentralbros.finance/lottery",
       // },
     ],
   },
@@ -73,7 +73,7 @@ export const footerLinks: (t: ContextApi["t"]) => FooterLinkType[] = (t) => [
       // },
       // {
       //   label: t("v4"),
-      //   href: "https://pancakeswap.finance/v4",
+      //   href: "https://decentralbros.finance/v4",
       // },
     ],
   },
