@@ -55,18 +55,16 @@
       "pairs": []
     },
     {
-      "asset": "c8453_t0x78a087d713Be963Bf307b18F2Ff8122EF9A63ae9",
       "type": "BASE",
       "chainId": 8453,
-      "address": "0x78a087d713Be963Bf307b18F2Ff8122EF9A63ae9",
-      "name": "Baseswap",
-      "symbol": "BSWAP",
+      "address": "0x8a24D7260cD02d3DFD8EEfb66bC17ad4B17D494c",
+      "name": "Based Street Bets",
+      "symbol": "BSB",
       "decimals": 18,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/base/assets/0x78a087d713Be963Bf307b18F2Ff8122EF9A63ae9/logo.png",
+      "logoURI": "https://decentralbros.finance/images/tokens/bsb.webp",
       "pairs": []
     },
     {
-      "asset": "c8453_t0x5985c6c9db08964c05629DC59E76bc2858F5C6c8",
       "type": "BASE",
       "chainId": 8453,
       "address": "0x5985c6c9db08964c05629DC59E76bc2858F5C6c8",
@@ -74,28 +72,6 @@
       "symbol": "XAG",
       "decimals": 18,
       "logoURI": "https://decentralbros.finance/images/partners/xag.webp",
-      "pairs": []
-    },
-    {
-      "asset": "c8453_t0xB6fe221Fe9EeF5aBa221c348bA20A1Bf5e73624c",
-      "type": "BASE",
-      "chainId": 8453,
-      "address": "0xB6fe221Fe9EeF5aBa221c348bA20A1Bf5e73624c",
-      "name": "Rocket Pool ETH",
-      "symbol": "rETH",
-      "decimals": 18,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/base/assets/0xB6fe221Fe9EeF5aBa221c348bA20A1Bf5e73624c/logo.png",
-      "pairs": []
-    },
-    {
-      "asset": "c8453_t0x9A86980D3625b4A6E69D8a4606D51cbc019e2002",
-
-      "chainId": 8453,
-      "address": "0x9A86980D3625b4A6E69D8a4606D51cbc019e2002",
-      "name": "FOMO BULL CLUB",
-      "symbol": "FOMO",
-      "decimals": 18,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/base/assets/0x9A86980D3625b4A6E69D8a4606D51cbc019e2002/logo.png",
       "pairs": []
     },
     {
@@ -622,6 +598,16 @@
       "symbol": "TUSD",
       "decimals": 18,
       "logoURI": "https://assets-cdn.trustwallet.com/blockchains/ethereum/assets/0x0000000000085d4780B73119b644AE5ecd22b376/logo.png",
+      "pairs": []
+    },
+    {
+      "type": "ERC20",
+      "chainId": 1,
+      "address": "0xfC70CbB442D5c115eE1497d22b421B1f9Bd9f3Da",
+      "name": "Biblical Truth",
+      "symbol": "BTRU",
+      "decimals": 18,
+      "logoURI": "https://decentralbros.finance/images/partners/btru.webp",
       "pairs": []
     },
     {

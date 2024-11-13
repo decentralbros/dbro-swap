@@ -1,1 +1,1 @@
-export const partners = ['DBRO', 'XAG']
+export const partners = ['DBRO', 'XAG', 'BTRU']
