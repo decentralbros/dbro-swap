@@ -11,17 +11,6 @@
   "keywords": ["dbro", "default"],
   "tokens": [
     {
-      "asset": "c10042221_t0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
-      "type": "ARBITRUM",
-      "chainId": 42161,
-      "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
-      "name": "Wrapped Ether",
-      "symbol": "WETH",
-      "decimals": 18,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/arbitrum/assets/0x82aF49447D8a07e3bd95BD0d56f35241523fBab1/logo.png",
-      "pairs": []
-    },
-    {
       "asset": "c10042221_t0x9623063377AD1B27544C965cCd7342f7EA7e88C7",
       "type": "ARBITRUM",
       "chainId": 42161,
