@@ -48,7 +48,16 @@ const config: (
       label: t('Lottery'),
       href: '/lottery',
       showOnMobile: false,
-      items: [],
+      items: [
+        {
+          label: t('DBRO'),
+          href: '/lottery',
+        },
+        {
+          label: t('XAG'),
+          href: '/lottery/xag',
+        },
+      ],
     },
     {
       label: t('Staking'),

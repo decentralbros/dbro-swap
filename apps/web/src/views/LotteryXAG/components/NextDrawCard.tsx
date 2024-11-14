@@ -1,0 +1,202 @@
+import { useTranslation } from '@pancakeswap/localization'
+import {
+  Balance,
+  Box,
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  ExpandableLabel,
+  Flex,
+  Heading,
+  Skeleton,
+  Text,
+  useModal,
+} from '@pancakeswap/uikit'
+import { LotteryStatus } from 'config/constants/types'
+import { useState } from 'react'
+import { useLottery } from 'state/lottery/hooks'
+import { styled } from 'styled-components'
+import { useAccount, useReadContract } from 'wagmi'
+import deployedContracts from 'config/constants/deployedContracts'
+import { formatUnits } from '@pancakeswap/utils/viem/formatUnits'
+import { ChainId } from '@pancakeswap/chains'
+import { dateTimeOptions } from '../helpers'
+import BuyTicketsButton from './BuyTicketsButton'
+import RewardBrackets from './RewardBrackets'
+import ViewTicketsModal from './ViewTicketsModal'
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: auto;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    grid-column-gap: 32px;
+    grid-template-columns: auto 1fr;
+  }
+`
+
+const StyledCard = styled(Card)`
+  width: 100%;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    width: 756px;
+  }
+`
+
+const NextDrawWrapper = styled.div`
+  background: ${({ theme }) => theme.colors.background};
+  padding: 24px;
+`
+
+const NextDrawCard = ({ lotteryStatus }: { lotteryStatus: number }) => {
+  const {
+    t,
+    currentLanguage: { locale },
+  } = useTranslation()
+  const { address: account } = useAccount()
+  const { currentLotteryId, isTransitioning, currentRound } = useLottery()
+  const { endTime, amountCollectedInCake, userTickets, status } = currentRound
+
+  const [onPresentViewTicketsModal] = useModal(<ViewTicketsModal roundId={currentLotteryId} roundStatus={status} />)
+  const [isExpanded, setIsExpanded] = useState(false)
+  const endTimeMs = parseInt(endTime, 10) * 1000
+  const endDate = new Date(endTimeMs)
+  const isLotteryOpen = status === LotteryStatus.OPEN
+  const userTicketCount = userTickets?.tickets?.length || 0
+  const contractConfig = deployedContracts[ChainId.BASE_SEPOLIA].DBROLottery
+
+  const { data: potBalance } = useReadContract({
+    address: contractConfig.address as `0x${string}`,
+    abi: contractConfig.abi,
+    functionName: 'getPot',
+    chainId: ChainId.BASE_SEPOLIA,
+  })
+
+  const getPrizeBalances = () => {
+    return (
+      <>
+        {!potBalance ? (
+          <Skeleton my="7px" height={40} width={160} />
+        ) : (
+          <Balance
+            fontSize="40px"
+            color="secondary"
+            textAlign={['center', null, null, 'left']}
+            lineHeight="1"
+            bold
+            prefix="~$"
+            value={Number(formatUnits(BigInt(String(potBalance)), 8)) ?? 0}
+            decimals={0}
+          />
+        )}
+      </>
+    )
+  }
+
+  const getNextDrawId = () => {
+    if (status === LotteryStatus.OPEN) {
+      return `${currentLotteryId} |`
+    }
+    if (status === LotteryStatus.PENDING) {
+      return ''
+    }
+    return parseInt(currentLotteryId, 10) + 1
+  }
+
+  const getNextDrawDateTime = () => {
+    if (status === LotteryStatus.OPEN) {
+      return `${t('Draw')}: ${endDate.toLocaleString(locale, dateTimeOptions)}`
+    }
+    return ''
+  }
+
+  const ticketRoundText =
+    userTicketCount > 1
+      ? t('You have %amount% tickets this round', { amount: userTicketCount })
+      : t('You have %amount% ticket this round', { amount: userTicketCount })
+  const [youHaveText, ticketsThisRoundText] = ticketRoundText.split(userTicketCount.toString())
+
+  return (
+    <StyledCard>
+      <CardHeader p="16px 24px">
+        <Flex justifyContent="space-between">
+          <Heading mr="12px">
+            {t('Current Status: ')}
+            {lotteryStatus !== undefined
+              ? ['Pending', 'Open', 'Closed', 'Completed'][Number(lotteryStatus)]
+              : 'Loading...'}
+          </Heading>
+          <Text>
+            {currentLotteryId && `#${getNextDrawId()}`} {Boolean(endTime) && getNextDrawDateTime()}
+          </Text>
+        </Flex>
+      </CardHeader>
+      <CardBody>
+        <Grid>
+          <Flex justifyContent={['center', null, null, 'flex-start']}>
+            <Heading>{t('Prize Pot')}</Heading>
+          </Flex>
+          <Flex flexDirection="column" mb="18px">
+            {getPrizeBalances()}
+          </Flex>
+          <Box display={['none', null, null, 'flex']}>
+            <Heading>{t('Your tickets')}</Heading>
+          </Box>
+          <Flex flexDirection={['column', null, null, 'row']} alignItems={['center', null, null, 'flex-start']}>
+            {isLotteryOpen && (
+              <Flex
+                flexDirection="column"
+                mr={[null, null, null, '24px']}
+                alignItems={['center', null, null, 'flex-start']}
+              >
+                {account && (
+                  <Flex justifyContent={['center', null, null, 'flex-start']}>
+                    <Text display="inline">{youHaveText} </Text>
+                    {!userTickets?.isLoading ? (
+                      <Balance value={userTicketCount} decimals={0} display="inline" bold mx="4px" />
+                    ) : (
+                      <Skeleton mx="4px" height={20} width={40} />
+                    )}
+                    <Text display="inline"> {ticketsThisRoundText}</Text>
+                  </Flex>
+                )}
+                {!userTickets?.isLoading && userTicketCount > 0 && (
+                  <Button
+                    onClick={onPresentViewTicketsModal}
+                    height="auto"
+                    width="fit-content"
+                    p="0"
+                    mb={['32px', null, null, '0']}
+                    variant="text"
+                    scale="sm"
+                  >
+                    {t('View your tickets')}
+                  </Button>
+                )}
+              </Flex>
+            )}
+            <BuyTicketsButton disabled={lotteryStatus !== 1} maxWidth="280px" />
+          </Flex>
+        </Grid>
+      </CardBody>
+      <CardFooter p="0">
+        {isExpanded && (
+          <NextDrawWrapper>
+            <RewardBrackets lotteryNodeData={currentRound} />
+          </NextDrawWrapper>
+        )}
+        {(status === LotteryStatus.OPEN || status === LotteryStatus.CLOSE) && (
+          <Flex p="8px 24px" alignItems="center" justifyContent="center">
+            <ExpandableLabel expanded={isExpanded} onClick={() => setIsExpanded(!isExpanded)}>
+              {isExpanded ? t('Hide') : t('Details')}
+            </ExpandableLabel>
+          </Flex>
+        )}
+      </CardFooter>
+    </StyledCard>
+  )
+}
+
+export default NextDrawCard
