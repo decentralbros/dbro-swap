@@ -14,7 +14,7 @@ import {
 } from '@pancakeswap/widgets-internal'
 import { ASSET_CDN } from 'config/constants/endpoints'
 import styled from 'styled-components'
-import { useFourYearTotalVeCakeApr } from 'views/CakeStaking/hooks/useAPR'
+import { useFourYearTotalVeCakeApr } from 'views/StakingDBRO/hooks/useAPR'
 
 const floatingAsset = `${ASSET_CDN}/web/banners/vecake/floating-item.png`
 const bgDesktop = `${ASSET_CDN}/web/banners/vecake/bg-desktop.png`

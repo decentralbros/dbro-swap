@@ -12,8 +12,8 @@ import {
   useModal,
 } from '@pancakeswap/uikit'
 import { Pool } from '@pancakeswap/widgets-internal'
-import { LearnMoreLink } from 'views/CakeStaking/components/SyrupPool'
-import { useIsMigratedToVeCake } from 'views/CakeStaking/hooks/useIsMigratedToVeCake'
+import { LearnMoreLink } from 'views/StakingDBRO/components/SyrupPool'
+import { useIsMigratedToVeCake } from 'views/StakingDBRO/hooks/useIsMigratedToVeCake'
 
 import { Token } from '@pancakeswap/sdk'
 import { getBalanceNumber } from '@pancakeswap/utils/formatBalance'

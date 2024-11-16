@@ -16,9 +16,9 @@ import { useActiveChainId } from 'hooks/useActiveChainId'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 
 // TODO should be common hooks
-import { useCakeLockStatus } from 'views/CakeStaking/hooks/useVeCakeUserInfo'
-import { useIsMigratedToVeCake } from 'views/CakeStaking/hooks/useIsMigratedToVeCake'
-import { useIsUserDelegated } from 'views/CakeStaking/hooks/useIsUserDelegated'
+import { useCakeLockStatus } from 'views/StakingDBRO/hooks/useVeCakeUserInfo'
+import { useIsMigratedToVeCake } from 'views/StakingDBRO/hooks/useIsMigratedToVeCake'
+import { useIsUserDelegated } from 'views/StakingDBRO/hooks/useIsUserDelegated'
 
 import { useUserIfoInfo } from '../hooks/useUserIfoInfo'
 

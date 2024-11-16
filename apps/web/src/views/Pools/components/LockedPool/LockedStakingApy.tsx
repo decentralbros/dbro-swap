@@ -3,7 +3,7 @@ import { memo } from 'react'
 
 import { Token } from '@pancakeswap/sdk'
 import { LightGreyCard } from 'components/Card'
-import { useIsUserDelegated } from 'views/CakeStaking/hooks/useIsUserDelegated'
+import { useIsUserDelegated } from 'views/StakingDBRO/hooks/useIsUserDelegated'
 import LockDurationRow from './Common/LockDurationRow'
 import LockedStaking from './LockedStaking'
 import useUserDataInVaultPresenter from './hooks/useUserDataInVaultPresenter'

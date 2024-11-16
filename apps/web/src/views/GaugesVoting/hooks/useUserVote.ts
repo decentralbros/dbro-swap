@@ -7,9 +7,9 @@ import { useGaugesVotingContract } from 'hooks/useContract'
 import { useEffect, useMemo } from 'react'
 import { publicClient as getPublicClient } from 'utils/viem'
 import { Address, Hex, isAddressEqual, zeroAddress } from 'viem'
-import { useCurrentBlockTimestamp } from 'views/CakeStaking/hooks/useCurrentBlockTimestamp'
-import { useVeCakeUserInfo } from 'views/CakeStaking/hooks/useVeCakeUserInfo'
-import { CakePoolType } from 'views/CakeStaking/types'
+import { useCurrentBlockTimestamp } from 'views/StakingDBRO/hooks/useCurrentBlockTimestamp'
+import { useVeCakeUserInfo } from 'views/StakingDBRO/hooks/useVeCakeUserInfo'
+import { CakePoolType } from 'views/StakingDBRO/types'
 import { useCurrentEpochStart, useNextEpochStart } from './useEpochTime'
 
 export type VotedSlope = {

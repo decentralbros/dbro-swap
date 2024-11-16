@@ -4,8 +4,8 @@ import { useGaugesVotingContract } from 'hooks/useContract'
 import { useMemo } from 'react'
 import { publicClient as getPublicClient } from 'utils/viem'
 import { Hex, isAddressEqual, zeroAddress } from 'viem'
-import { useVeCakeUserInfo } from 'views/CakeStaking/hooks/useVeCakeUserInfo'
-import { CakePoolType } from 'views/CakeStaking/types'
+import { useVeCakeUserInfo } from 'views/StakingDBRO/hooks/useVeCakeUserInfo'
+import { CakePoolType } from 'views/StakingDBRO/types'
 import { useGauges } from './useGauges'
 
 export type VoteSlope = {

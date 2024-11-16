@@ -5,8 +5,8 @@ import BN from 'bignumber.js'
 import { useVeCakeBalance } from 'hooks/useTokenBalance'
 import { useMemo } from 'react'
 import styled from 'styled-components'
-import { Tooltips } from 'views/CakeStaking/components/Tooltips'
-import { useCakeLockStatus } from 'views/CakeStaking/hooks/useVeCakeUserInfo'
+import { Tooltips } from 'views/StakingDBRO/components/Tooltips'
+import { useCakeLockStatus } from 'views/StakingDBRO/hooks/useVeCakeUserInfo'
 import { useEpochVotePower } from '../hooks/useEpochVotePower'
 
 const StyledBox = styled(Box)`

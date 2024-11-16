@@ -11,7 +11,7 @@ import {
 import { Pool } from '@pancakeswap/widgets-internal'
 import { useMemo } from 'react'
 import { css, keyframes, styled } from 'styled-components'
-import { useIsMigratedToVeCake } from 'views/CakeStaking/hooks/useIsMigratedToVeCake'
+import { useIsMigratedToVeCake } from 'views/StakingDBRO/hooks/useIsMigratedToVeCake'
 
 import { useTranslation } from '@pancakeswap/localization'
 import { Token } from '@pancakeswap/sdk'
@@ -30,8 +30,8 @@ import {
   VeCakeMigrateCard,
   VeCakeUpdateCard,
   VeCakeUpdateCardTableView,
-} from 'views/CakeStaking/components/SyrupPool'
-import { useIsUserDelegated } from 'views/CakeStaking/hooks/useIsUserDelegated'
+} from 'views/StakingDBRO/components/SyrupPool'
+import { useIsUserDelegated } from 'views/StakingDBRO/hooks/useIsUserDelegated'
 import WithdrawAllButton from '../../LockedPool/Buttons/WithdrawAllButton'
 import LockDurationRow from '../../LockedPool/Common/LockDurationRow'
 import YieldBoostRow from '../../LockedPool/Common/YieldBoostRow'

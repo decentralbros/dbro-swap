@@ -2,7 +2,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import { Button, Card, CardBody, CardFooter, Flex, Image, Text } from '@pancakeswap/uikit'
 import NextLink from 'next/link'
 import { styled } from 'styled-components'
-import { useFourYearTotalVeCakeApr } from 'views/CakeStaking/hooks/useAPR'
+import { useFourYearTotalVeCakeApr } from 'views/StakingDBRO/hooks/useAPR'
 
 const CardWrapper = styled(Flex)`
   position: relative;

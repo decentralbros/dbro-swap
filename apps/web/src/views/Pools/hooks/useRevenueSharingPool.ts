@@ -8,7 +8,7 @@ import { ONE_WEEK_DEFAULT } from '@pancakeswap/pools'
 import BigNumber from 'bignumber.js'
 import { useInitialBlockTimestamp } from 'state/block/hooks'
 import { useQuery } from '@tanstack/react-query'
-import { useCurrentBlockTimestamp } from 'views/CakeStaking/hooks/useCurrentBlockTimestamp'
+import { useCurrentBlockTimestamp } from 'views/StakingDBRO/hooks/useCurrentBlockTimestamp'
 
 interface RevenueSharingPool {
   balanceOfAt: string

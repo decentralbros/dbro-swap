@@ -18,8 +18,8 @@ import Trans from 'components/Trans'
 import { ReactNode, useMemo } from 'react'
 import { DeserializedLockedVaultUser } from 'state/types'
 import { VaultPosition, getVaultPosition } from 'utils/cakePool'
-import { useIsMigratedToVeCake } from 'views/CakeStaking/hooks/useIsMigratedToVeCake'
-import { useIsUserDelegated } from 'views/CakeStaking/hooks/useIsUserDelegated'
+import { useIsMigratedToVeCake } from 'views/StakingDBRO/hooks/useIsMigratedToVeCake'
+import { useIsUserDelegated } from 'views/StakingDBRO/hooks/useIsUserDelegated'
 
 const tagConfig: Record<VaultPosition, TagProps> = {
   [VaultPosition.None]: {},

@@ -63,7 +63,20 @@ const config: (
       label: t('Staking'),
       href: '/staking',
       showOnMobile: false,
-      items: [],
+      items: [
+        {
+          label: t('Learn'),
+          href: '/staking/learn',
+        },
+        {
+          label: t('Staking'),
+          href: '/staking',
+        },
+        {
+          label: t('Redeem'),
+          href: '/staking/redeem',
+        },
+      ],
     },
     // {
     //   label: t('NFT'),

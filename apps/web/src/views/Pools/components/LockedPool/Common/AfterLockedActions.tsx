@@ -3,7 +3,7 @@ import { Box, Flex, Message, MessageText, useMatchBreakpoints } from '@pancakesw
 import Trans from 'components/Trans'
 import { ReactNode, memo } from 'react'
 import { VaultPosition } from 'utils/cakePool'
-import { useIsMigratedToVeCake } from 'views/CakeStaking/hooks/useIsMigratedToVeCake'
+import { useIsMigratedToVeCake } from 'views/StakingDBRO/hooks/useIsMigratedToVeCake'
 import WithdrawAllButton from '../Buttons/WithdrawAllButton'
 import { AfterLockedActionsPropsType } from '../types'
 

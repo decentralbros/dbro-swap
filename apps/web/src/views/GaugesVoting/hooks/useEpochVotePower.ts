@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import useAccountActiveChain from 'hooks/useAccountActiveChain'
 import { useVeCakeContract } from 'hooks/useContract'
 import { Address, isAddressEqual, zeroAddress } from 'viem'
-import { useVeCakeUserInfo } from 'views/CakeStaking/hooks/useVeCakeUserInfo'
+import { useVeCakeUserInfo } from 'views/StakingDBRO/hooks/useVeCakeUserInfo'
 import { useNextEpochStart } from './useEpochTime'
 
 export const useEpochVotePower = () => {
