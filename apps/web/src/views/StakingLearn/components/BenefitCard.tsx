@@ -28,61 +28,60 @@ export const BENEFITS: Record<BenefitCardType, BenefitItem> = {
   },
   earnCake: {
     headImg: '/images/cake-staking/benefit-earn-cake.png',
-    title: <Trans>Earn CAKE</Trans>,
-    subTitle: <Trans>Total Distributed</Trans>,
-    btnText: <Trans>Check Reward</Trans>,
-    desc: [<Trans>Weekly revenue sharing</Trans>, <Trans>Weekly CAKE pool rewards</Trans>],
+    title: <Trans>Earn DBRO</Trans>,
+    subTitle: <Trans>Contract Pool</Trans>,
+    btnText: <Trans>Check Rewards</Trans>,
+    link: '/staking',
+    desc: [
+      <Trans>Daily reward rate of 20%</Trans>,
+      <Trans>Low fees on Base network</Trans>,
+      <Trans>Claim threshold of only 500k</Trans>,
+    ],
     key: 'benefit-earn-cake',
   },
   gaugesVoting: {
     headImg: '/images/cake-staking/benefit-gauges-voting.png',
-    title: <Trans>Gauges Voting</Trans>,
-    subTitle: <Trans>Number of Gauges to Vote</Trans>,
-    btnText: <Trans>Check Gauges</Trans>,
-    link: '/gauges-voting',
+    title: <Trans>Wrapped NFTs</Trans>,
+    subTitle: <Trans>NFTs minted</Trans>,
+    btnText: <Trans>Redeem Rewards</Trans>,
+    link: '/staking/redeem',
     desc: [
-      <Trans>Boost rewards on your favorite farms</Trans>,
-      <Trans>Claim additional incentives from other protocols</Trans>,
+      <Trans>Unstake for DBRO wrapped utility NFTs</Trans>,
+      <Trans>Unwrap NFTs for DBRO tokens</Trans>,
+      <Trans>Fee of only 1% to Unwrap</Trans>,
     ],
     key: 'benefit-gauges-voting.',
   },
   farmBoost: {
     headImg: '/images/cake-staking/benefit-farm-boost.png',
-    title: <Trans>Farm Boost</Trans>,
-    subTitle: <Trans>Farming Boost Up To</Trans>,
-    btnText: <Trans>Check Farms</Trans>,
-    link: '/farms',
-    desc: [<Trans>Boost your farm earnings</Trans>, <Trans>Supports multi-chain boosts</Trans>],
+    title: <Trans>Workshops</Trans>,
+    btnText: <Trans>Check Workshops</Trans>,
+    link: 'https://workshop.decentralbros.xyz',
+    desc: [<Trans>Access our live coding workshops and benefit from team mentorship</Trans>],
     key: 'benefit-farm-boost',
   },
   snapshotVoting: {
     headImg: '/images/cake-staking/benefit-snapshot-voting.png',
-    title: <Trans>Snapshot Voting</Trans>,
-    subTitle: <Trans>Number of Proposals</Trans>,
-    btnText: <Trans>Check Snapshot Voting</Trans>,
-    link: '/voting',
-    desc: [<Trans>Use your veCAKE to vote on important governance proposals</Trans>],
+    title: <Trans>Custom Dev Builds</Trans>,
+    btnText: <Trans>Book Consultation</Trans>,
+    link: 'https://www.decentralbros.xyz',
+    desc: [<Trans>Use your utility NFTs for major discounts on custom development services</Trans>],
     key: 'benefit-snapshot-voting',
   },
   ifo: {
     headImg: '/images/cake-staking/benefit-ifo.png',
-    title: <Trans>IFO</Trans>,
-    subTitle: <Trans>Tokens Sold Through IFOs</Trans>,
-    btnText: <Trans>Check IFOs</Trans>,
-    link: '/ifo',
-    desc: [<Trans>Participate in IFO public sales</Trans>, <Trans>Supports multi-chain IFOs</Trans>],
+    title: <Trans>Merchandise</Trans>,
+    btnText: <Trans>Check Store</Trans>,
+    link: 'https://www.decentralbros.xyz',
+    desc: [<Trans>Discounted DBRO merchandise including shirts, hats, and more</Trans>],
     key: 'benefit-ifo',
   },
   more: {
     headImg: '/images/cake-staking/benefit-more.png',
-    title: <Trans>And So Much More...</Trans>,
-    btnText: <Trans>Learn more</Trans>,
-    desc: [
-      <Trans>Boost your winning in Trading Rewards campaigns. Regardless which chain you are trading on.</Trans>,
-      <Trans>Boost your earnings in fixed staking.</Trans>,
-      <Trans>More to come...</Trans>,
-    ],
-    link: 'https://docs.pancakeswap.finance/products',
+    title: <Trans>Web3 Build Shells</Trans>,
+    btnText: <Trans>Learn More</Trans>,
+    desc: [<Trans>Gain exclusive to pre-built templates for your own unique dApps</Trans>],
+    link: 'https://www.decentralbros.xyz',
     key: 'benefit-more',
   },
 }
@@ -121,7 +120,13 @@ export const BenefitCard: React.FC<{
   const button = comingSoon ? (
     comingSoonButton
   ) : info.btnText ? (
-    <Button width="100%" mt="auto" variant={onClick ? 'primary' : 'secondary'} onClick={onClick}>
+    <Button
+      width="100%"
+      mt="auto"
+      variant={onClick ? 'primary' : 'secondary'}
+      style={{ color: onClick ? '#000' : '#1bf696' }}
+      onClick={onClick}
+    >
       {info.btnText}
     </Button>
   ) : null
@@ -130,9 +135,9 @@ export const BenefitCard: React.FC<{
     <StyledCard innerCardProps={{ p: ['16px', '16px', '24px'] }}>
       <FlexGap flexDirection="column" gap="16px" height="100%" justifyContent="space-between">
         <FlexGap gap="16px" alignItems="center">
-          <HeadImage>
+          {/* <HeadImage>
             <img srcSet={`${info.headImg} 2x`} alt="earn-cake" />
-          </HeadImage>
+          </HeadImage> */}
           <FlexGap flexDirection="column" gap="8px">
             <Flex>
               <Heading as="h3" scale="lg" color="secondary">

@@ -30,14 +30,14 @@ const StakingLearn = () => {
 
   return (
     <>
-      <ModalV2 isOpen={cakeRewardModalVisible} closeOnOverlayClick onDismiss={handleDismiss}>
+      {/* <ModalV2 isOpen={cakeRewardModalVisible} closeOnOverlayClick onDismiss={handleDismiss}>
         <CakeRewardsCard onDismiss={handleDismiss} />
-      </ModalV2>
+      </ModalV2> */}
       <StyledPageHeader background="#000">
-        <PageHead />
-        <LockCake />
-        {/* <Heading scale="xl" color="secondary" mt={['40px', '40px', '45px']} mb={['24px', '24px', '48px']}>
-          {t('Benefits of veCAKE')}
+        {/* <PageHead />
+        <LockCake /> */}
+        <Heading scale="xl" color="secondary" mb={['24px', '24px', '48px']}>
+          {t('Earn With Hybrid Staking')}
         </Heading>
         <Grid
           maxWidth="820px"
@@ -51,14 +51,12 @@ const StakingLearn = () => {
             headSlot={
               <QuestionHelper
                 size="20px"
-                text={t(
-                  'Claim freshly cooked CAKE rewards weekly on Thursday from veCAKE gauge emission as well as trading revenue sharing.',
-                )}
+                text={t('Claim freshly earned DBRO rewards, or unstake at any time!')}
                 placement="top"
                 ml="4px"
               />
             }
-            dataText={`${formatNumber(Number(formatBigInt(totalCakeDistributed)))} CAKE`}
+            dataText={`${0} DBRO`}
             onClick={() => {
               setCakeRewardModalVisible(true)
             }}
@@ -67,9 +65,7 @@ const StakingLearn = () => {
             headSlot={
               <QuestionHelper
                 size="20px"
-                text={t(
-                  'Use your veCAKE to vote on your favourite farms, position managers, reward pools, and any CAKE emission products, increase their allocations, and get more CAKE rewards.',
-                )}
+                text={t('Use your DBRO rewards to unlock token wrapped utility NFTs!')}
                 placement="top"
                 ml="4px"
               />
@@ -78,10 +74,10 @@ const StakingLearn = () => {
             dataText={`${gaugesVotingCount ?? 0}`}
             onClick={() => {}}
           />
-        </Grid> */}
+        </Grid>
       </StyledPageHeader>
-      {/* <Page title={t('CAKE Staking')}>
-        <Heading scale="xl" mb={['24px', '24px', '48px']} mt={['16px', '16px', 0]}>
+      <Page title={t('Learn More')}>
+        {/* <Heading scale="xl" mb={['24px', '24px', '48px']} mt={['16px', '16px', 0]}>
           {t('Enjoy on Every Chains')}
         </Heading>
         <Grid maxWidth="820px" gridGap="24px" gridTemplateColumns="1fr" alignItems="center" mx="auto">
@@ -103,9 +99,9 @@ const StakingLearn = () => {
               </Button>
             }
           />
-        </Grid>
+        </Grid> */}
         <Heading scale="xl" mb={['24px', '24px', '48px']} mt={['16px', '16px', '32px']}>
-          {t('Enjoy These Benefits')}
+          {t('Utility NFT Benefits')}
         </Heading>
         <Grid
           maxWidth="820px"
@@ -114,52 +110,17 @@ const StakingLearn = () => {
           alignItems="center"
           mx="auto"
         >
-          <BenefitCard
-            type="farmBoost"
-            headSlot={
-              <QuestionHelper
-                size="20px"
-                text={t(
-                  'Boost your PancakeSwap farming APR by up to 2.5x. Aquire more veCAKE to receive a higher boost.',
-                )}
-                placement="top"
-                ml="4px"
-              />
-            }
-            dataText="2.5x"
-          />
-          <BenefitCard
-            type="snapshotVoting"
-            headSlot={
-              <QuestionHelper
-                size="20px"
-                text={t(
-                  'Use veCAKE as your Snapshot voting power to vote on governance proposals. Including important protocol decisions, and adding new farming gauges.',
-                )}
-                placement="top"
-                ml="4px"
-              />
-            }
-            dataText={`${snapshotProposalsCount}`}
-          />
+          <BenefitCard type="farmBoost" headSlot={<></>} dataText="2.5x" />
+          <BenefitCard type="snapshotVoting" headSlot={<></>} dataText={`${snapshotProposalsCount}`} />
           <BenefitCard
             type="ifo"
-            headSlot={
-              <QuestionHelper
-                size="20px"
-                text={t(
-                  'Use your veCAKE as your IFO Public Sales commit credits. Aquire more veCAKE to commit more in the next PancakeSwap IFOs.',
-                )}
-                placement="top"
-                ml="4px"
-              />
-            }
+            headSlot={<></>}
             dataText={`$${formatAmount(totalIFOSold, { notation: 'standard' })}`}
           />
           <BenefitCard type="more" />
         </Grid>
-      </Page> */}
-      <CrossChainVeCakeModal isOpen={isOpen} setIsOpen={setIsOpen} onDismiss={() => setIsOpen(false)} />
+      </Page>
+      {/* <CrossChainVeCakeModal isOpen={isOpen} setIsOpen={setIsOpen} onDismiss={() => setIsOpen(false)} /> */}
     </>
   )
 }
