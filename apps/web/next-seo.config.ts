@@ -12,6 +12,6 @@ export const SEO: DefaultSeoProps = {
   openGraph: {
     title: "DBRO Swap - Everyone's Favorite DEX",
     description: 'Trade, earn, and own crypto on the all-in-one multichain DEX',
-    images: [{ url: 'https://decentralbros.finance/logo.png' }],
+    images: [{ url: 'https://decentralbros.finance/dbro-swap.jpg' }],
   },
 }

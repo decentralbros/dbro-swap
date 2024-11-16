@@ -71,7 +71,7 @@ export const BENEFITS: Record<BenefitCardType, BenefitItem> = {
   ifo: {
     headImg: '/images/cake-staking/benefit-ifo.png',
     title: <Trans>Merchandise</Trans>,
-    btnText: <Trans>Check Store</Trans>,
+    btnText: <Trans>Browse Store</Trans>,
     link: 'https://www.decentralbros.xyz',
     desc: [<Trans>Discounted DBRO merchandise including shirts, hats, and more</Trans>],
     key: 'benefit-ifo',
