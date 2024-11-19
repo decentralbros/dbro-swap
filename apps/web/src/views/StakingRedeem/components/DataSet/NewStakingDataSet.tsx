@@ -80,22 +80,6 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
           <DataRow
             label={
               <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Min. Stake')}
-              </Text>
-            }
-            value={<ValueText>&bull; 25k DBRO</ValueText>}
-          />
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Max Stake')}
-              </Text>
-            }
-            value={<ValueText>&bull; 5M DBRO</ValueText>}
-          />
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
                 {t('Claim Threshold')}
               </Text>
             }

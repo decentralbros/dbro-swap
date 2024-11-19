@@ -50,7 +50,7 @@ const Header = () => {
       </Text> */}
 
       <Heading style={{ zIndex: 1 }} mb="8px" scale="md" color="#ffffff" id="lottery-hero-title">
-        {t('Hybrid Staking')}
+        {t('Redeem DBRO Rewards')}
       </Heading>
       <Heading mb="24px" scale="xl" color="secondary">
         {t('Coming soon!')}

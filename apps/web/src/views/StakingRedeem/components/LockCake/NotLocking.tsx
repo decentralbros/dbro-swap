@@ -57,7 +57,7 @@ export const NotLockingCard: React.FC<React.PropsWithChildren<NotLockingCardProp
 
   return (
     <StyledCard innerCardProps={{ padding: hideCardPadding ? 0 : ['24px 16px', '24px 16px', '24px'] }}>
-      {!hideTitle && <Heading scale="md">{t('Stake DBRO to earn DBRO')}</Heading>}
+      {!hideTitle && <Heading scale="md">{t('UnWrap DBRO Utility NFTs')}</Heading>}
       <Grid
         gridTemplateColumns={isDesktop ? '1fr 1fr' : '1fr'}
         gridColumnGap="24px"
@@ -67,6 +67,8 @@ export const NotLockingCard: React.FC<React.PropsWithChildren<NotLockingCardProp
         mb={32}
       >
         <LockCakeForm fieldOnly />
+
+        <img src="/images/swap/nft.png" alt="dbro nft" height="auto" width="300px" />
       </Grid>
       <NewStakingDataSet
         cakeAmount={Number(cakeLockAmount)}
@@ -81,11 +83,20 @@ export const NotLockingCard: React.FC<React.PropsWithChildren<NotLockingCardProp
             width={['100%', '100%', '50%']}
             onClick={handleModalOpen}
           >
-            {t('Stake DBRO')}
+            {t('Claim NFT Rewards')}
           </Button>
         ) : (
           <ConnectWalletButton width={['100%', '100%', '50%']} />
         )}
+
+        <Button
+          disabled={disabled}
+          style={{ color: '#000', marginTop: 24 }}
+          width={['100%', '100%', '50%']}
+          onClick={handleModalOpen}
+        >
+          {t('Unwrap Tokens')}
+        </Button>
       </ColumnCenter>
     </StyledCard>
   )
