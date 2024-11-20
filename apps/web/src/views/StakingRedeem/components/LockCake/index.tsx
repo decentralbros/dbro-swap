@@ -32,11 +32,11 @@ export const LockCake = () => {
         justifyItems={status === CakeLockStatus.Expired ? 'end' : 'start'}
         mx="auto"
       >
-        {status === CakeLockStatus.Migrate ? <CakePoolLockStatus /> : <LockedVeCakeStatus status={status} />}
         {status === CakeLockStatus.NotLocked ? <NotLocking /> : null}
         {status === CakeLockStatus.Locking ? <Staking /> : null}
         {status === CakeLockStatus.Expired ? <Expired /> : null}
         {status === CakeLockStatus.Migrate ? <Migrate /> : null}
+        {status === CakeLockStatus.Migrate ? <CakePoolLockStatus /> : <LockedVeCakeStatus status={status} />}
       </Grid>
     </>
   )

@@ -58,18 +58,7 @@ export const NotLockingCard: React.FC<React.PropsWithChildren<NotLockingCardProp
   return (
     <StyledCard innerCardProps={{ padding: hideCardPadding ? 0 : ['24px 16px', '24px 16px', '24px'] }}>
       {!hideTitle && <Heading scale="md">{t('Redeem DBRO Utility NFTs')}</Heading>}
-      <Grid
-        gridTemplateColumns={isDesktop ? '1fr 1fr' : '1fr'}
-        gridColumnGap="24px"
-        gridRowGap={isDesktop ? '0' : '24px'}
-        padding={[0, 0, 12]}
-        mt={32}
-        mb={32}
-      >
-        <LockCakeForm fieldOnly />
 
-        <img src="/images/swap/nft.png" alt="dbro nft" height="auto" width="300px" />
-      </Grid>
       <NewStakingDataSet
         cakeAmount={Number(cakeLockAmount)}
         customVeCakeCard={customVeCakeCard}
@@ -77,33 +66,62 @@ export const NotLockingCard: React.FC<React.PropsWithChildren<NotLockingCardProp
       />
 
       <br />
-      <ColumnCenter>
-        {account ? (
-          <Button
-            disabled={disabled}
-            style={{ color: '#000' }}
-            width={['100%', '100%', '50%']}
-            onClick={handleModalOpen}
-          >
-            {t('Claim NFT Rewards')}
-          </Button>
-        ) : (
-          <ConnectWalletButton width={['100%', '100%', '50%']} />
-        )}
 
-        <br />
+      <Grid
+        gridTemplateColumns={isDesktop ? '1fr 1fr' : '1fr'}
+        gridColumnGap="24px"
+        gridRowGap={isDesktop ? '0' : '24px'}
+        padding={[0, 0]}
+        mt={32}
+        mb={32}
+        display="flex"
+        justifyContent="space-between"
+      >
+        <ColumnCenter>
+          <LockCakeForm fieldOnly />
 
-        {account ? (
-          <>
-            <Button disabled style={{ color: '#000' }} width={['100%', '100%', '50%']} onClick={handleModalOpen}>
-              {t('Unwrap NFTs')}
-            </Button>{' '}
-            <br />
-          </>
-        ) : (
-          <Skeleton />
-        )}
-      </ColumnCenter>
+          {account ? (
+            <Button
+              disabled={disabled}
+              style={{ color: '#000', marginTop: '18px' }}
+              width="100%"
+              onClick={handleModalOpen}
+            >
+              {t('Claim NFTs')}
+            </Button>
+          ) : (
+            <ConnectWalletButton width="100%" />
+          )}
+
+          <br />
+
+          {account ? (
+            <>
+              <Button disabled style={{ color: '#000' }} width="100%" onClick={handleModalOpen}>
+                {t('Unstake Tokens')}
+              </Button>{' '}
+              <br />
+            </>
+          ) : (
+            <Skeleton />
+          )}
+
+          {account ? (
+            <>
+              <Button disabled style={{ color: '#000' }} width="100%" onClick={handleModalOpen}>
+                {t('Unwrap NFTs')}
+              </Button>{' '}
+              <br />
+            </>
+          ) : (
+            <Skeleton />
+          )}
+        </ColumnCenter>
+
+        <ColumnCenter>
+          <img src="/images/swap/nft.png" alt="dbro nft" height="auto" width="300px" />
+        </ColumnCenter>
+      </Grid>
     </StyledCard>
   )
 }
