@@ -57,7 +57,7 @@ export const NotLockingCard: React.FC<React.PropsWithChildren<NotLockingCardProp
 
   return (
     <StyledCard innerCardProps={{ padding: hideCardPadding ? 0 : ['24px 16px', '24px 16px', '24px'] }}>
-      {!hideTitle && <Heading scale="md">{t('UnWrap DBRO Utility NFTs')}</Heading>}
+      {!hideTitle && <Heading scale="md">{t('Redeem DBRO Utility NFTs')}</Heading>}
       <Grid
         gridTemplateColumns={isDesktop ? '1fr 1fr' : '1fr'}
         gridColumnGap="24px"
@@ -75,6 +75,8 @@ export const NotLockingCard: React.FC<React.PropsWithChildren<NotLockingCardProp
         customVeCakeCard={customVeCakeCard}
         customDataRow={customDataRow}
       />
+
+      <br />
       <ColumnCenter>
         {account ? (
           <Button
@@ -88,19 +90,16 @@ export const NotLockingCard: React.FC<React.PropsWithChildren<NotLockingCardProp
         ) : (
           <ConnectWalletButton width={['100%', '100%', '50%']} />
         )}
-      </ColumnCenter>
-      <br />
-      <br />
-      <ColumnCenter>
+
+        <br />
+
         {account ? (
-          <Button
-            disabled={disabled}
-            style={{ color: '#000' }}
-            width={['100%', '100%', '50%']}
-            onClick={handleModalOpen}
-          >
-            {t('Unrap NFTs')}
-          </Button>
+          <>
+            <Button disabled style={{ color: '#000' }} width={['100%', '100%', '50%']} onClick={handleModalOpen}>
+              {t('Unwrap NFTs')}
+            </Button>{' '}
+            <br />
+          </>
         ) : (
           <Skeleton />
         )}
