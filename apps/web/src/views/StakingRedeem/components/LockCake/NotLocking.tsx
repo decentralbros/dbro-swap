@@ -80,13 +80,11 @@ export const NotLockingCard: React.FC<React.PropsWithChildren<NotLockingCardProp
         <ColumnCenter>
           <LockCakeForm fieldOnly />
 
+          <br />
+          <br />
+
           {account ? (
-            <Button
-              disabled={disabled}
-              style={{ color: '#000', marginTop: '18px' }}
-              width="100%"
-              onClick={handleModalOpen}
-            >
+            <Button disabled={disabled} style={{ color: '#000' }} width="100%" onClick={handleModalOpen}>
               {t('Claim NFTs')}
             </Button>
           ) : (
