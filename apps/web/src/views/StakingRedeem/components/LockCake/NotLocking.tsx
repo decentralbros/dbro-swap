@@ -1,5 +1,5 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { Box, Button, ColumnCenter, Grid, Heading, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { Box, Button, ColumnCenter, Grid, Heading, Skeleton, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { getDecimalAmount } from '@pancakeswap/utils/formatBalance'
 import BN from 'bignumber.js'
 import ConnectWalletButton from 'components/ConnectWalletButton'
@@ -88,15 +88,22 @@ export const NotLockingCard: React.FC<React.PropsWithChildren<NotLockingCardProp
         ) : (
           <ConnectWalletButton width={['100%', '100%', '50%']} />
         )}
-
-        <Button
-          disabled={disabled}
-          style={{ color: '#000', marginTop: 24 }}
-          width={['100%', '100%', '50%']}
-          onClick={handleModalOpen}
-        >
-          {t('Unwrap Tokens')}
-        </Button>
+      </ColumnCenter>
+      <br />
+      <br />
+      <ColumnCenter>
+        {account ? (
+          <Button
+            disabled={disabled}
+            style={{ color: '#000' }}
+            width={['100%', '100%', '50%']}
+            onClick={handleModalOpen}
+          >
+            {t('Unrap NFTs')}
+          </Button>
+        ) : (
+          <Skeleton />
+        )}
       </ColumnCenter>
     </StyledCard>
   )
