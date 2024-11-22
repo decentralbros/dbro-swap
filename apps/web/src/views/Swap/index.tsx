@@ -7,9 +7,17 @@ import { useContext, useEffect, useState } from 'react'
 import { useTranslation } from '@pancakeswap/localization'
 
 import { useSwapHotTokenDisplay } from 'hooks/useSwapHotTokenDisplay'
+import styled from 'styled-components'
 import { SwapFeaturesContext } from './SwapFeaturesContext'
 import { V3SwapForm } from './V3Swap'
 import { StyledInputCurrencyWrapper, StyledSwapContainer } from './styles'
+
+const GradientContainer = styled.div`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to bottom, #1bf696, #000 50%, #000);
+`
 
 export default function Swap() {
   const { t } = useTranslation()
@@ -59,7 +67,7 @@ export default function Swap() {
   // )
 
   return (
-    <>
+    <GradientContainer>
       <Page title={t('Swap')}>
         <Flex
           width={['328px', '100%']}
@@ -133,6 +141,6 @@ export default function Swap() {
           </Flex>
         </Flex>
       </Page>
-    </>
+    </GradientContainer>
   )
 }

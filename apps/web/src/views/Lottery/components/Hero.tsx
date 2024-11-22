@@ -224,7 +224,10 @@ const Hero = ({ lotteryStatus }: { lotteryStatus: number }) => {
         <img src="/images/lottery/ticket-r.png" width="121px" height="72px" alt="" />
       </StarsDecorations>
       <Heading style={{ zIndex: 1 }} mb="8px" scale="md" color="#ffffff" id="lottery-hero-title">
-        {t('The DBRO Lottery')}
+        {t('The One & Only')}
+      </Heading>
+      <Heading style={{ zIndex: 1 }} mb="8px" scale="md" color="#ffffff" id="lottery-hero-title">
+        {t('DBRO Lottery')}
       </Heading>
       {/* <Heading mb="24px" scale="xl" color="#ffffff">
         {t('Get your tickets now!')}

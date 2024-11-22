@@ -408,7 +408,7 @@ const EcoSystemSection: React.FC = () => {
           bold
           color={theme.colors.text}
         >
-          {t('Discover the')}
+          {t('Explore The')}
         </Text>
         <Text
           fontSize={['32px', null, null, '40px']}
@@ -437,7 +437,7 @@ const EcoSystemSection: React.FC = () => {
             unoptimized
           />
           <Flex flexDirection="column">
-            <Title>{t('Earn')}</Title>
+            <Title>{t('Learn To Earn')}</Title>
             <FeatureBoxesWrapper>
               {decentralBrosData.map((item) => (
                 <FeatureBox
