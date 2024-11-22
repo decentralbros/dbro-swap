@@ -136,20 +136,20 @@ const Hero = () => {
         <Flex flex="1" flexDirection="column">
           <Text textAlign={isMobile || isMd ? 'center' : 'left'} pr={isMobile ? 0 : '10px'} mb="16px">
             <StyledText display="inline-block" lineHeight="110%" fontWeight={600} color="text" mr="8px">
-              {t('Earn')}
+              {t('Never')}
             </StyledText>
             <StyledText
               display="inline-block"
               fontWeight={600}
               lineHeight="110%"
-              color="secondary"
+              color="text"
               mr={isMobile ? 0 : '8px'}
             >
-              {t('DBRO')}
+              {t('Stop')}
             </StyledText>
             {isMobile && <br />}
-            <StyledText display="inline-block" lineHeight="110%" fontWeight={600} color="text">
-              {t('Daily')}
+            <StyledText display="inline-block" lineHeight="110%" color="secondary" fontWeight={600}>
+              {t('Winning')}
             </StyledText>
           </Text>
           <Text
