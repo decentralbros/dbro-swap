@@ -4,9 +4,9 @@ import { NextLinkFromReactRouter } from '@pancakeswap/widgets-internal'
 
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import useTheme from 'hooks/useTheme'
-import Image from 'next/image'
 import { styled } from 'styled-components'
 import { useAccount } from 'wagmi'
+import LightningBolt from './LightingBolt'
 
 // const BgWrapper = styled.div`
 //   z-index: -1;
@@ -136,7 +136,7 @@ const Hero = () => {
         <Flex flex="1" flexDirection="column">
           <Text textAlign={isMobile || isMd ? 'center' : 'left'} pr={isMobile ? 0 : '10px'} mb="16px">
             <StyledText display="inline-block" lineHeight="110%" fontWeight={600} color="text" mr="8px">
-              {t("Everyone's")}
+              {t('The')}
             </StyledText>
             <StyledText
               display="inline-block"
@@ -145,11 +145,11 @@ const Hero = () => {
               color="secondary"
               mr={isMobile ? 0 : '8px'}
             >
-              {t('Favorite')}
+              {t('Swap')}
             </StyledText>
             {isMobile && <br />}
             <StyledText display="inline-block" lineHeight="110%" fontWeight={600} color="text">
-              {t('DEX')}
+              {t('Spot')}
             </StyledText>
           </Text>
           <Text
@@ -161,7 +161,7 @@ const Hero = () => {
             lineHeight="110%"
             fontWeight={600}
           >
-            {t('Trade, earn, and own crypto on the all-in-one multichain DEX')}
+            {t('Swap, stack, and surf the blockchain waves – all from one epic hub')}
           </Text>
 
           <Flex justifyContent={isMobile || isMd ? 'center' : 'start'}>
@@ -184,13 +184,7 @@ const Hero = () => {
         >
           <BunnyWrapper>
             <CakeBox>
-              <Image
-                src="/logo.webp"
-                priority
-                width={isMobile ? width * 2 : width / 2}
-                height={isMobile ? height * 2 : height / 2}
-                alt="DBRO Swap Logo"
-              />
+              <LightningBolt />
             </CakeBox>
           </BunnyWrapper>
         </Flex>

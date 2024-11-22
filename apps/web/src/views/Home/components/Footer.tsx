@@ -138,7 +138,7 @@ const Footer = () => {
 
       <Wrapper>
         <Text mb="24px" fontWeight={600} color="#F4EEFF" textAlign="center" fontSize={isMobile ? 32 : 40}>
-          {t("Join Everyone's Favorite DEX Now!")}
+          {t('Where Smart Traders Meet!')}
         </Text>
         {!account && <ConnectWalletButton mt="24px" />}
       </Wrapper>
