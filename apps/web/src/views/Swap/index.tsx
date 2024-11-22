@@ -13,9 +13,8 @@ import { V3SwapForm } from './V3Swap'
 import { StyledInputCurrencyWrapper, StyledSwapContainer } from './styles'
 
 const GradientContainer = styled.div`
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  padding: 0;
+  margin: 0;
   background: linear-gradient(to bottom, #1bf696, #000 50%, #000);
 `
 
