@@ -374,7 +374,7 @@ const FeatureBox: React.FC<{
         />
       </ImageBox>
       <Box>
-        <Text fontSize="20px" mb="8px" lineHeight="110%" fontWeight={600} color={theme.colors.text}>
+        <Text fontSize="20px" mb="8px" lineHeight="110%" fontWeight={600} color={theme.colors.secondary}>
           {title}
         </Text>
         <Text fontSize="14px" lineHeight="120%" color={theme.colors.text}>
@@ -408,7 +408,7 @@ const EcoSystemSection: React.FC = () => {
           bold
           color={theme.colors.text}
         >
-          {t('Explore The')}
+          {t('Enter The')}
         </Text>
         <Text
           fontSize={['32px', null, null, '40px']}
@@ -418,7 +418,7 @@ const EcoSystemSection: React.FC = () => {
           lineHeight="110%"
           color={theme.colors.secondary}
         >
-          {t('Ecosystem')}
+          {t('Revolution')}
         </Text>
       </Text>
       <CardWrapper>
@@ -437,7 +437,7 @@ const EcoSystemSection: React.FC = () => {
             unoptimized
           />
           <Flex flexDirection="column">
-            <Title>{t('Learn To Earn')}</Title>
+            <Title>{t('Power Your Profits')}</Title>
             <FeatureBoxesWrapper>
               {decentralBrosData.map((item) => (
                 <FeatureBox

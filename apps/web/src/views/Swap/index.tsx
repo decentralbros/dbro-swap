@@ -1,4 +1,4 @@
-import { Flex } from '@pancakeswap/uikit'
+import { Flex, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { AppBody } from 'components/App'
 import Page from 'components/Layout/Page'
 import { useRouter } from 'next/router'
@@ -11,12 +11,6 @@ import styled from 'styled-components'
 import { SwapFeaturesContext } from './SwapFeaturesContext'
 import { V3SwapForm } from './V3Swap'
 import { StyledInputCurrencyWrapper, StyledSwapContainer } from './styles'
-
-const GradientContainer = styled.div`
-  padding: 0;
-  margin: 0;
-  background: linear-gradient(to bottom, #1bf696, #000 50%, #000);
-`
 
 export default function Swap() {
   const { t } = useTranslation()
@@ -32,6 +26,7 @@ export default function Swap() {
   } = useContext(SwapFeaturesContext)
   const [isSwapHotTokenDisplay, setIsSwapHotTokenDisplay] = useSwapHotTokenDisplay()
   const [firstTime, setFirstTime] = useState(true)
+  const { isMobile } = useMatchBreakpoints()
 
   useEffect(() => {
     if (firstTime && query.showTradingReward) {
@@ -66,7 +61,11 @@ export default function Swap() {
   // )
 
   return (
-    <GradientContainer>
+    <div
+      style={{
+        background: isMobile ? '#000' : 'radial-gradient(ellipse at center, #1bf696, #000 25%)',
+      }}
+    >
       <Page title={t('Swap')}>
         <Flex
           width={['328px', '100%']}
@@ -140,6 +139,6 @@ export default function Swap() {
           </Flex>
         </Flex>
       </Page>
-    </GradientContainer>
+    </div>
   )
 }

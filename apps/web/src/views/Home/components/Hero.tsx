@@ -136,7 +136,7 @@ const Hero = () => {
         <Flex flex="1" flexDirection="column">
           <Text textAlign={isMobile || isMd ? 'center' : 'left'} pr={isMobile ? 0 : '10px'} mb="16px">
             <StyledText display="inline-block" lineHeight="110%" fontWeight={600} color="text" mr="8px">
-              {t('The')}
+              {t('Earn')}
             </StyledText>
             <StyledText
               display="inline-block"
@@ -145,11 +145,11 @@ const Hero = () => {
               color="secondary"
               mr={isMobile ? 0 : '8px'}
             >
-              {t('Swap')}
+              {t('DBRO')}
             </StyledText>
             {isMobile && <br />}
             <StyledText display="inline-block" lineHeight="110%" fontWeight={600} color="text">
-              {t('Spot')}
+              {t('Daily')}
             </StyledText>
           </Text>
           <Text
@@ -161,7 +161,7 @@ const Hero = () => {
             lineHeight="110%"
             fontWeight={600}
           >
-            {t('Swap, stack, and surf the blockchain waves – all from one epic hub')}
+            {t('Unleash lightning-fast trades across the blockchain universe – your all-in-one power station')}
           </Text>
 
           <Flex justifyContent={isMobile || isMd ? 'center' : 'start'}>

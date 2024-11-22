@@ -4,6 +4,7 @@ import { getTrustWalletProvider } from '@pancakeswap/wagmi/connectors/trustWalle
 import type { ExtendEthereum } from 'global'
 import { Config } from 'wagmi'
 import { ConnectMutateAsync } from 'wagmi/query'
+import { isFirefox } from 'react-device-detect'
 import { chains, createWagmiConfig, walletConnectNoQrCodeConnector } from '../utils/wagmi'
 
 export enum ConnectorNames {
@@ -11,7 +12,7 @@ export enum ConnectorNames {
   Injected = 'injected',
   WalletConnect = 'walletConnect',
   WalletConnectV1 = 'walletConnectLegacy',
-  // BSC = 'bsc',
+  BSC = 'bsc',
   BinanceW3W = 'BinanceW3WSDK',
   Blocto = 'blocto',
   WalletLink = 'coinbaseWalletSDK',
@@ -121,23 +122,23 @@ const walletsConfig = <config extends Config = Config, context = unknown>({
       },
       downloadLink: 'https://brave.com/wallet/',
     },
-    // {
-    //   id: 'binance',
-    //   title: 'Binance Wallet',
-    //   icon: `/images/wallets/binance.png`,
-    //   get installed() {
-    //     return typeof window !== 'undefined' && Boolean(window.BinanceChain)
-    //   },
-    //   connectorId: ConnectorNames.BSC,
-    //   guide: {
-    //     desktop: 'https://www.bnbchain.org/en/binance-wallet',
-    //   },
-    //   downloadLink: {
-    //     desktop: isFirefox
-    //       ? 'https://addons.mozilla.org/en-US/firefox/addon/binance-chain/?src=search'
-    //       : 'https://chrome.google.com/webstore/detail/binance-wallet/fhbohimaelbohpjbbldcngcnapndodjp',
-    //   },
-    // },
+    {
+      id: 'binance',
+      title: 'Binance Wallet',
+      icon: `/images/wallets/binance.png`,
+      get installed() {
+        return typeof window !== 'undefined' && Boolean(window.BinanceChain)
+      },
+      connectorId: ConnectorNames.BSC,
+      guide: {
+        desktop: 'https://www.bnbchain.org/en/binance-wallet',
+      },
+      downloadLink: {
+        desktop: isFirefox
+          ? 'https://addons.mozilla.org/en-US/firefox/addon/binance-chain/?src=search'
+          : 'https://chrome.google.com/webstore/detail/binance-wallet/fhbohimaelbohpjbbldcngcnapndodjp',
+      },
+    },
     {
       id: 'trust',
       title: 'Trust Wallet',

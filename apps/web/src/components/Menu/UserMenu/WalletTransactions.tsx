@@ -35,7 +35,7 @@ const WalletTransactions: React.FC<React.PropsWithChildren<WalletTransactionsPro
           {t('Recent Transactions')}
         </Text>
         {hasTransactions && (
-          <Button scale="sm" onClick={handleClearAll} variant="text" px="0">
+          <Button scale="sm" onClick={handleClearAll} variant="text" px="0" style={{ color: '#000' }}>
             {t('Clear all')}
           </Button>
         )}
