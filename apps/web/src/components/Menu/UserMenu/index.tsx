@@ -18,7 +18,8 @@ import { useDomainNameForAddress } from 'hooks/useDomain'
 import { useCallback, useEffect, useState } from 'react'
 import { useProfile } from 'state/profile/hooks'
 import { usePendingTransactions } from 'state/transactions/hooks'
-import { useAccount } from 'wagmi'
+import { useAccount, useSignMessage } from 'wagmi'
+import TermsSignature from 'components/TermsSignature'
 import WalletModal, { WalletView } from './WalletModal'
 import WalletUserMenuItem from './WalletUserMenuItem'
 
@@ -73,6 +74,7 @@ const UserMenuItems = () => {
 }
 
 const UserMenu = () => {
+  const SIGNED = !!localStorage?.getItem('signed-dbro-terms')
   const { t } = useTranslation()
   const { address: account } = useAccount()
   const { domainName, avatar } = useDomainNameForAddress(account)
@@ -82,6 +84,7 @@ const UserMenu = () => {
   const avatarSrc = profile?.nft?.image?.thumbnail ?? avatar
   const [userMenuText, setUserMenuText] = useState<string>('')
   const [userMenuVariable, setUserMenuVariable] = useState<UserMenuVariant>('default')
+  const { signMessageAsync, isPending, isSuccess } = useSignMessage()
 
   useEffect(() => {
     if (hasPendingTransactions) {
@@ -93,19 +96,21 @@ const UserMenu = () => {
     }
   }, [hasPendingTransactions, pendingNumber, t])
 
-  if (account) {
+  if (!account) {
     return (
-      <UIKitUserMenu
-        account={domainName || account}
-        ellipsis={!domainName}
-        avatarSrc={avatarSrc}
-        text={userMenuText}
-        variant={userMenuVariable}
-      >
-        {({ isOpen }) => (isOpen ? <UserMenuItems /> : null)}
-      </UIKitUserMenu>
+      <ConnectWalletButton scale="sm">
+        <Box display={['none', null, null, 'block']}>
+          <Trans>Connect Wallet</Trans>
+        </Box>
+        <Box display={['block', null, null, 'none']}>
+          <Trans>Connect</Trans>
+        </Box>
+      </ConnectWalletButton>
     )
   }
+
+  if (!isSuccess && !SIGNED)
+    return <TermsSignature signMessageAsync={signMessageAsync} isPending={isPending} isSuccess={isSuccess} />
 
   if (isWrongNetwork) {
     return (
@@ -116,14 +121,15 @@ const UserMenu = () => {
   }
 
   return (
-    <ConnectWalletButton scale="sm">
-      <Box display={['none', null, null, 'block']}>
-        <Trans>Connect Wallet</Trans>
-      </Box>
-      <Box display={['block', null, null, 'none']}>
-        <Trans>Connect</Trans>
-      </Box>
-    </ConnectWalletButton>
+    <UIKitUserMenu
+      account={domainName || account}
+      ellipsis={!domainName}
+      avatarSrc={avatarSrc}
+      text={userMenuText}
+      variant={userMenuVariable}
+    >
+      {({ isOpen }) => (isOpen ? <UserMenuItems /> : null)}
+    </UIKitUserMenu>
   )
 }
 

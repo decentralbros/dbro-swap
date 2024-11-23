@@ -51,6 +51,7 @@ const useAuth = () => {
   const logout = useCallback(async () => {
     try {
       await disconnectAsync()
+      localStorage.removeItem('signed-dbro-terms')
     } catch (error) {
       console.error(error)
     } finally {

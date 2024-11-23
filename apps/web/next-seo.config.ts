@@ -56,7 +56,7 @@ export const SEO: DefaultSeoProps = {
     },
     {
       rel: 'apple-touch-icon',
-      href: '/apple-touch-icon.png',
+      href: '/apple-icon.png',
       sizes: '180x180',
     },
   ],
