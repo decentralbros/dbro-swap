@@ -9,8 +9,9 @@ import {
   Flex,
   FlexGap,
   Text,
+  useToast,
 } from '@pancakeswap/uikit'
-import { formatBigInt, getDecimalAmount } from '@pancakeswap/utils/formatBalance'
+import { getDecimalAmount } from '@pancakeswap/utils/formatBalance'
 import BN from 'bignumber.js'
 import { useCakePrice } from 'hooks/useCakePrice'
 import { useAtom, useAtomValue } from 'jotai'
@@ -25,11 +26,12 @@ import { useAccount, useChainId } from 'wagmi'
 import { formatUnits } from '@pancakeswap/utils/viem/formatUnits'
 import { parseUnits } from '@pancakeswap/utils/viem/parseUnits'
 import ConnectWalletButton from 'components/ConnectWalletButton'
+import { ToastDescriptionWithTx } from 'components/Toast'
 import { useWriteApproveAndIncreaseLockAmountCallback } from '../hooks/useContractWrite'
 import { useBSCCakeBalance } from '../hooks/useBSCCakeBalance'
 
 const percentShortcuts = [25, 50, 75]
-const MAX_GAS_LIMIT = 10000000n
+// const MAX_GAS_LIMIT = 10000000n
 
 const CakeInput: React.FC<{
   value: BalanceInputProps['value']
@@ -44,6 +46,7 @@ const CakeInput: React.FC<{
   const [percent, setPercent] = useState<number | null>(null)
 
   const { address: account } = useAccount()
+  const { toastSuccess, toastError } = useToast()
 
   const _cakeBalance = useBSCCakeBalance()
   const cakeBalance = BigInt(_cakeBalance.toString())
@@ -75,7 +78,6 @@ const CakeInput: React.FC<{
         abi: contractDBRO.abi,
         functionName: 'approve',
         args: [contractConfig.address, parseUnits(String(amount), 8)],
-        gasPrice: MAX_GAS_LIMIT,
         chainId,
       })
 
@@ -90,25 +92,20 @@ const CakeInput: React.FC<{
         abi: contractConfig.abi,
         functionName: 'stake',
         args: [parseUnits(String(amount), 8)],
-        gasPrice: MAX_GAS_LIMIT,
         chainId,
       })
 
       await waitForTransactionReceipt(config, {
-        confirmations: 3,
+        confirmations: 2,
         hash,
         chainId,
       })
 
-      console.log(hash)
-      // showSuccessToast('Staking transaction submitted!')
+      toastSuccess('Success!', <ToastDescriptionWithTx txHash={hash}>Staking complete.</ToastDescriptionWithTx>)
     } catch (error) {
       console.error('Staking failed:', error)
-      // if (error instanceof Error) {
-      //   showErrorToast(error.message)
-      // } else {
-      //   showErrorToast('Staking failed. Please try again.')
-      // }
+
+      toastError('Error!', 'Failed to complete staking.')
     } finally {
       setIsLoading(false)
     }
@@ -121,7 +118,9 @@ const CakeInput: React.FC<{
     contractConfig.address,
     contractConfig.abi,
     chainId,
+    toastSuccess,
     dbroBalance,
+    toastError,
   ])
 
   const onInput = useCallback(
@@ -147,7 +146,7 @@ const CakeInput: React.FC<{
   const balance = (
     <Flex>
       <Text textAlign="left" color="textSubtle" ml="4px" fontSize="12px">
-        {t('Balance: %balance%', { balance: formatBigInt(cakeBalance, 2) })}
+        Balance: {dbroBalance.toLocaleString()}
       </Text>
     </Flex>
   )
@@ -240,10 +239,11 @@ export const LockCakeForm: React.FC<{
   const { t } = useTranslation()
   const [value, onChange] = useAtom(cakeLockAmountAtom)
   const { address: account } = useAccount()
+  const chainId = useChainId()
 
   return (
     <AutoRow alignSelf="start" width="100%">
-      {ChainId.BASE_SEPOLIA && (
+      {chainId === ChainId.BASE_SEPOLIA && (
         <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
           <Text color="secondary" fontSize={16} bold>
             {t('Add')}
@@ -254,7 +254,7 @@ export const LockCakeForm: React.FC<{
         </FlexGap>
       )}
 
-      {!ChainId.BASE_SEPOLIA && (
+      {chainId !== ChainId.BASE_SEPOLIA && (
         <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
           <Text color="red" fontSize={16} bold>
             Base network is required to stake

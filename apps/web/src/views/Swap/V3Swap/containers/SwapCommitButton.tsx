@@ -1,7 +1,7 @@
 import { ChainId, TradeType } from '@pancakeswap/sdk'
 import { SmartRouterTrade } from '@pancakeswap/smart-router'
 import { Currency, CurrencyAmount, Token } from '@pancakeswap/swap-sdk-core'
-import { Box, Button, Dots, useModal } from '@pancakeswap/uikit'
+import { Box, Button, Dots, useModal, useToast } from '@pancakeswap/uikit'
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 
 import { useTranslation } from '@pancakeswap/localization'
@@ -216,6 +216,8 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     }
   }, [indirectlyOpenConfirmModalState, openConfirmSwapModal])
 
+  const { toastSuccess, toastError } = useToast()
+
   const swapParams = useSwapValues()
 
   const { data: allowance } = useReadContract({
@@ -225,7 +227,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     args: [account as `0x${string}`, ZEROX_ADDRESS],
     query: {
       enabled: Boolean(account),
-      refetchInterval: 3_000,
+      refetchInterval: 5_000,
     },
   })
 
@@ -278,15 +280,30 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
 
       if (chainId !== ChainId.ETHEREUM) {
         addTransaction({ hash: tx })
+      } else {
+        toastSuccess('Success!', 'Transaction complete.')
       }
 
       reset()
     } catch {
+      toastError('Error!', 'Transaction failed.')
       reset()
     } finally {
       setLoadSwap(false)
     }
-  }, [allowance, swapParams, inputCurrency, outputCurrency, chainId, typedValue, account, reset, addTransaction])
+  }, [
+    swapParams,
+    inputCurrency,
+    outputCurrency,
+    reset,
+    typedValue,
+    allowance,
+    account,
+    chainId,
+    addTransaction,
+    toastSuccess,
+    toastError,
+  ])
 
   return (
     <Box mt="0.25rem">
