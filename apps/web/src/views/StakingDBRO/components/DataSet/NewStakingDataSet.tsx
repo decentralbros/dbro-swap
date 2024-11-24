@@ -218,12 +218,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
                 {t('Wrapping Cost')}
               </Text>
             }
-            value={
-              <ValueText>
-                &bull;{' '}
-                {(requiredDBRO as string) && formatNumberWithCommas(formatUnits(BigInt(String(requiredDBRO)), 8))} DBRO
-              </ValueText>
-            }
+            value={<ValueText>&bull; 1%</ValueText>}
           />
           <DataRow
             label={
