@@ -255,7 +255,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
 
           if (chainId !== ChainId.ETHEREUM) {
             await waitForTransactionReceipt(config, {
-              confirmations: 7,
+              confirmations: 4,
               hash,
               chainId,
             })

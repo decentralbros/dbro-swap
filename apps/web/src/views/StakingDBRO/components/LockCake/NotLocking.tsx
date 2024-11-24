@@ -37,23 +37,8 @@ export const NotLockingCard: React.FC<React.PropsWithChildren<NotLockingCardProp
   customDataRow,
   onDismiss,
 }) => {
-  const { address: account } = useAccount()
   const { t } = useTranslation()
-  const _cakeBalance = useBSCCakeBalance()
   const { cakeLockAmount, cakeLockWeeks } = useLockCakeData()
-  const { isDesktop } = useMatchBreakpoints()
-
-  const disabled = useMemo(
-    () =>
-      Boolean(
-        !Number(cakeLockAmount) ||
-          !Number(cakeLockWeeks) ||
-          getDecimalAmount(new BN(cakeLockAmount)).gt(_cakeBalance.toString()),
-      ),
-    [_cakeBalance, cakeLockAmount, cakeLockWeeks],
-  )
-
-  const handleModalOpen = useWriteApproveAndLockCallback(onDismiss)
 
   return (
     <StyledCard innerCardProps={{ padding: hideCardPadding ? 0 : ['24px 16px', '24px 16px', '24px'] }}>

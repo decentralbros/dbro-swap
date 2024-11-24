@@ -61,7 +61,7 @@ export function createViemPublicClientGetter({
   }
 }
 
-const PUBLIC_MAINNET = 'https://ethereum.publicnode.com'
+const PUBLIC_MAINNET = 'https://ethereum-rpc.publicnode.com'
 
 export const CLIENT_CONFIG = {
   batch: {

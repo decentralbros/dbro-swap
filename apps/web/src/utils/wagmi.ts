@@ -46,7 +46,7 @@ export const noopStorage = {
   removeItem: (_key: any) => {},
 }
 
-const PUBLIC_MAINNET = 'https://ethereum.publicnode.com'
+const PUBLIC_MAINNET = 'https://ethereum-rpc.publicnode.com'
 
 export const transports = chains.reduce((ts, chain) => {
   let httpStrings: string[] | readonly string[] = []

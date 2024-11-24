@@ -29,6 +29,7 @@ import { useWriteApproveAndIncreaseLockAmountCallback } from '../hooks/useContra
 import { useBSCCakeBalance } from '../hooks/useBSCCakeBalance'
 
 const percentShortcuts = [25, 50, 75]
+const MAX_GAS_LIMIT = 10000000n
 
 const CakeInput: React.FC<{
   value: BalanceInputProps['value']
@@ -56,7 +57,6 @@ const CakeInput: React.FC<{
 
   const contractConfig = deployedContracts[84532].DBROWrappedStaking
   const contractDBRO = deployedContracts[84532].DecentralBros
-  const contractRYFT = deployedContracts[84532].RYFT
 
   const handleStake = useCallback(async () => {
     if (!ChainId.BASE_SEPOLIA || !account) return
@@ -75,11 +75,12 @@ const CakeInput: React.FC<{
         abi: contractDBRO.abi,
         functionName: 'approve',
         args: [contractConfig.address, parseUnits(String(amount), 8)],
+        gasPrice: MAX_GAS_LIMIT,
         chainId,
       })
 
       await waitForTransactionReceipt(config, {
-        confirmations: 7,
+        confirmations: 4,
         hash: tx,
         chainId,
       })
@@ -89,6 +90,7 @@ const CakeInput: React.FC<{
         abi: contractConfig.abi,
         functionName: 'stake',
         args: [parseUnits(String(amount), 8)],
+        gasPrice: MAX_GAS_LIMIT,
         chainId,
       })
 
