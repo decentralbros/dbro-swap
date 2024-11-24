@@ -15,7 +15,7 @@ import { StyledCard } from './styled'
 export const NotLocking = () => {
   return (
     <>
-      <Box maxWidth={['100%', '100%', '72%']} mx="auto">
+      <Box maxWidth={['100%', '100%', '75%']} mx="auto">
         <NotLockingCard />
       </Box>
     </>

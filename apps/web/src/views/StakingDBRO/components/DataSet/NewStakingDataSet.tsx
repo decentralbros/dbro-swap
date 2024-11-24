@@ -208,7 +208,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
                 {t('Claim Threshold')}
               </Text>
             }
-            value={<ValueText>&bull; 500k DBRO</ValueText>}
+            value={<ValueText>&bull; {formatNumberWithCommas(formatUnits(requiredDBRO ?? 0, 8))} DBRO</ValueText>}
           />
           <DataRow
             label={
@@ -218,8 +218,8 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
             }
             value={
               <ValueText>
-                &bull; {String(requiredDBRO) && formatNumberWithCommas(formatUnits(BigInt(String(requiredDBRO)), 8))}{' '}
-                DBRO
+                &bull;{' '}
+                {(requiredDBRO as string) && formatNumberWithCommas(formatUnits(BigInt(String(requiredDBRO)), 8))} DBRO
               </ValueText>
             }
           />
@@ -231,7 +231,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
             }
             value={
               <ValueText>
-                &bull; {String(treasuryBalance) && formatBalance(BigInt(String(treasuryBalance)), 8)} DBRO
+                &bull; <>{(treasuryBalance as bigint) && formatBalance(BigInt(String(treasuryBalance)), 8)}</> DBRO
               </ValueText>
             }
           />
