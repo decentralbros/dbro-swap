@@ -24,6 +24,7 @@ import { config } from 'utils/wagmi'
 import { useAccount, useChainId } from 'wagmi'
 import { formatUnits } from '@pancakeswap/utils/viem/formatUnits'
 import { parseUnits } from '@pancakeswap/utils/viem/parseUnits'
+import ConnectWalletButton from 'components/ConnectWalletButton'
 import { useWriteApproveAndIncreaseLockAmountCallback } from '../hooks/useContractWrite'
 import { useBSCCakeBalance } from '../hooks/useBSCCakeBalance'
 
@@ -83,7 +84,7 @@ const CakeInput: React.FC<{
         chainId,
       })
 
-      await writeContract(config, {
+      const hash = await writeContract(config, {
         address: contractConfig.address as `0x${string}`,
         abi: contractConfig.abi,
         functionName: 'stake',
@@ -91,6 +92,13 @@ const CakeInput: React.FC<{
         chainId,
       })
 
+      await waitForTransactionReceipt(config, {
+        confirmations: 3,
+        hash,
+        chainId,
+      })
+
+      console.log(hash)
       // showSuccessToast('Staking transaction submitted!')
     } catch (error) {
       console.error('Staking failed:', error)
@@ -229,6 +237,7 @@ export const LockCakeForm: React.FC<{
 }> = ({ fieldOnly, disabled, customVeCakeCard, hideLockCakeDataSetStyle, onDismiss }) => {
   const { t } = useTranslation()
   const [value, onChange] = useAtom(cakeLockAmountAtom)
+  const { address: account } = useAccount()
 
   return (
     <AutoRow alignSelf="start" width="100%">
@@ -252,6 +261,10 @@ export const LockCakeForm: React.FC<{
       )}
 
       <CakeInput value={value} onUserInput={onChange} disabled={disabled} />
+
+      <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
+        {!account && <ConnectWalletButton width={['100%', '100%', '50%']} />}
+      </FlexGap>
 
       {/* {customVeCakeCard} */}
 
