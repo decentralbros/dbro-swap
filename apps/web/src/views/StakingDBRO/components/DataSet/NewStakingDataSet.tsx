@@ -208,7 +208,9 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
                 {t('Claim Threshold')}
               </Text>
             }
-            value={<ValueText>&bull; {formatNumberWithCommas(formatUnits(requiredDBRO ?? 0, 8))} DBRO</ValueText>}
+            value={
+              <ValueText>&bull; {formatNumberWithCommas(formatUnits((requiredDBRO as bigint) ?? 0, 8))} DBRO</ValueText>
+            }
           />
           <DataRow
             label={
