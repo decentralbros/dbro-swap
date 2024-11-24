@@ -1,15 +1,31 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { AutoRow, Balance, BalanceInput, BalanceInputProps, Button, Flex, FlexGap, Text } from '@pancakeswap/uikit'
-import { formatBigInt, getDecimalAmount, getFullDisplayBalance } from '@pancakeswap/utils/formatBalance'
+import {
+  AutoRow,
+  Balance,
+  BalanceInput,
+  BalanceInputProps,
+  Button,
+  Dots,
+  Flex,
+  FlexGap,
+  Text,
+} from '@pancakeswap/uikit'
+import { formatBigInt, getDecimalAmount } from '@pancakeswap/utils/formatBalance'
 import BN from 'bignumber.js'
 import { useCakePrice } from 'hooks/useCakePrice'
 import { useAtom, useAtomValue } from 'jotai'
 import { useCallback, useMemo, useState } from 'react'
 import { cakeLockAmountAtom } from 'state/vecake/atoms'
 import Image from 'next/image'
-import { useBSCCakeBalance } from '../hooks/useBSCCakeBalance'
+import { ChainId } from '@pancakeswap/chains'
+import deployedContracts from 'config/abi/deployedContracts'
+import { waitForTransactionReceipt, writeContract } from '@wagmi/core'
+import { config } from 'utils/wagmi'
+import { useAccount, useChainId } from 'wagmi'
+import { formatUnits } from '@pancakeswap/utils/viem/formatUnits'
+import { parseUnits } from '@pancakeswap/utils/viem/parseUnits'
 import { useWriteApproveAndIncreaseLockAmountCallback } from '../hooks/useContractWrite'
-import { LockCakeDataSet } from './DataSet'
+import { useBSCCakeBalance } from '../hooks/useBSCCakeBalance'
 
 const percentShortcuts = [25, 50, 75]
 
@@ -24,8 +40,79 @@ const CakeInput: React.FC<{
     return cakeUsdPrice && value ? cakeUsdPrice.times(value).toNumber() : 0
   }, [cakeUsdPrice, value])
   const [percent, setPercent] = useState<number | null>(null)
+
+  const { address: account } = useAccount()
+
   const _cakeBalance = useBSCCakeBalance()
   const cakeBalance = BigInt(_cakeBalance.toString())
+
+  const dbroBalance = parseInt(formatUnits(_cakeBalance, 8)) ?? 0
+  const canStake = BigInt(dbroBalance) >= BigInt(500000)
+
+  const [isLoading, setIsLoading] = useState(false)
+  const [transactionHash, setTransactionHash] = useState<`0x${string}` | undefined>(undefined)
+  const chainId = useChainId()
+
+  const contractConfig = deployedContracts[84532].DBROWrappedStaking
+  const contractDBRO = deployedContracts[84532].DecentralBros
+  const contractRYFT = deployedContracts[84532].RYFT
+
+  const handleStake = useCallback(async () => {
+    if (!ChainId.BASE_SEPOLIA || !account) return
+
+    try {
+      setIsLoading(true)
+
+      let amount: string | number = value
+
+      if (percent) {
+        amount = (Number(dbroBalance) * (percent / 100)).toFixed(0)
+      }
+
+      const tx = await writeContract(config, {
+        address: contractDBRO.address as `0x${string}`,
+        abi: contractDBRO.abi,
+        functionName: 'approve',
+        args: [contractConfig.address, parseUnits(String(amount), 8)],
+        chainId,
+      })
+
+      await waitForTransactionReceipt(config, {
+        confirmations: 7,
+        hash: tx,
+        chainId,
+      })
+
+      await writeContract(config, {
+        address: contractConfig.address as `0x${string}`,
+        abi: contractConfig.abi,
+        functionName: 'stake',
+        args: [parseUnits(String(amount), 8)],
+        chainId,
+      })
+
+      // showSuccessToast('Staking transaction submitted!')
+    } catch (error) {
+      console.error('Staking failed:', error)
+      // if (error instanceof Error) {
+      //   showErrorToast(error.message)
+      // } else {
+      //   showErrorToast('Staking failed. Please try again.')
+      // }
+    } finally {
+      setIsLoading(false)
+    }
+  }, [
+    account,
+    value,
+    percent,
+    contractDBRO.address,
+    contractDBRO.abi,
+    contractConfig.address,
+    contractConfig.abi,
+    chainId,
+    dbroBalance,
+  ])
 
   const onInput = useCallback(
     (input: string) => {
@@ -38,13 +125,13 @@ const CakeInput: React.FC<{
   const handlePercentChange = useCallback(
     (p: number) => {
       if (p > 0) {
-        onUserInput(getFullDisplayBalance(new BN(cakeBalance.toString()).multipliedBy(p).dividedBy(100), 8, 8))
+        onUserInput((Number(dbroBalance) * (p / 100)).toFixed(0))
       } else {
         onUserInput('')
       }
       setPercent(p)
     },
-    [cakeBalance, onUserInput, setPercent],
+    [dbroBalance, onUserInput],
   )
 
   const balance = (
@@ -69,41 +156,65 @@ const CakeInput: React.FC<{
 
   return (
     <>
-      <BalanceInput
-        width="100%"
-        mb="8px"
-        value={value}
-        onUserInput={onInput}
-        inputProps={{ style: { textAlign: 'left', height: '20px' }, disabled }}
-        currencyValue={usdValue}
-        unit={balance}
-        appendComponent={appendComponent}
-      />
-      {!disabled && balance ? (
-        <FlexGap justifyContent="space-between" flexWrap="wrap" gap="4px" width="100%">
-          {percentShortcuts.map((p) => {
-            return (
-              <Button
-                key={p}
-                style={{ flex: 1, color: p === percent ? '#000' : '#1bf696' }}
-                scale="sm"
-                variant={p === percent ? 'primary' : 'tertiary'}
-                onClick={() => handlePercentChange(p)}
-              >
-                {`${p}%`}
-              </Button>
-            )
-          })}
+      <FlexGap justifyContent="space-between" flexWrap="wrap" gap="4px" width={['100%', '100%', '50%']} mb="24px">
+        <BalanceInput
+          width={['100%']}
+          mb="8px"
+          value={value}
+          onUserInput={onInput}
+          inputProps={{ style: { textAlign: 'left', height: '20px' }, disabled }}
+          currencyValue={usdValue}
+          unit={balance}
+          appendComponent={appendComponent}
+        />
+
+        {!disabled && balance ? (
+          <FlexGap justifyContent="space-between" flexWrap="wrap" gap="4px" width={['100%']}>
+            {percentShortcuts.map((p) => {
+              return (
+                <Button
+                  key={p}
+                  style={{ flex: 1, color: p === percent ? '#000' : '#1bf696' }}
+                  scale="sm"
+                  variant={p === percent ? 'primary' : 'tertiary'}
+                  onClick={() => handlePercentChange(p)}
+                >
+                  {`${p}%`}
+                </Button>
+              )
+            })}
+            <Button
+              scale="sm"
+              style={{ flex: 1, color: percent === 100 ? '#000' : '#1bf696' }}
+              variant={percent === 100 ? 'primary' : 'tertiary'}
+              onClick={() => handlePercentChange(100)}
+            >
+              {t('Max')}
+            </Button>
+          </FlexGap>
+        ) : null}
+      </FlexGap>
+
+      {account && (
+        <Flex flexDirection={['column', 'column', 'row']} alignItems="center" width="100%">
           <Button
-            scale="sm"
-            style={{ flex: 1, color: percent === 100 ? '#000' : '#1bf696' }}
-            variant={percent === 100 ? 'primary' : 'tertiary'}
-            onClick={() => handlePercentChange(100)}
+            disabled={!canStake || isLoading}
+            style={{ color: '#000' }}
+            width={['100%', '100%', '30%']}
+            onClick={handleStake}
           >
-            {t('Max')}
+            {!isLoading ? 'Stake DBRO' : <Dots>Staking</Dots>}
           </Button>
-        </FlexGap>
-      ) : null}
+
+          <Button disabled={!isLoading} style={{ color: '#000' }} width={['100%', '100%', '30%']} mx="10%" my="24px">
+            {t('Unstake DBRO')}
+          </Button>
+
+          <Button disabled={!isLoading} style={{ color: '#000' }} width={['100%', '100%', '30%']}>
+            {t('Claim & Wrap NFT')}
+          </Button>
+        </Flex>
+      )}
     </>
   )
 }
@@ -120,26 +231,37 @@ export const LockCakeForm: React.FC<{
   const [value, onChange] = useAtom(cakeLockAmountAtom)
 
   return (
-    <AutoRow alignSelf="start">
-      <FlexGap gap="4px" alignItems="center" mb="4px">
-        <Text color="textSubtle" textTransform="uppercase" fontSize={16} bold>
-          {t('add')}
-        </Text>
-        <Text color="textSubtle" textTransform="uppercase" fontSize={16} bold>
-          {t('DBRO')}
-        </Text>
-      </FlexGap>
+    <AutoRow alignSelf="start" width="100%">
+      {ChainId.BASE_SEPOLIA && (
+        <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
+          <Text color="secondary" fontSize={16} bold>
+            {t('Add')}
+          </Text>
+          <Text color="secondary" fontSize={16} bold>
+            {t('DBRO')}
+          </Text>
+        </FlexGap>
+      )}
+
+      {!ChainId.BASE_SEPOLIA && (
+        <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
+          <Text color="red" fontSize={16} bold>
+            Base network is required to stake
+          </Text>
+        </FlexGap>
+      )}
+
       <CakeInput value={value} onUserInput={onChange} disabled={disabled} />
 
-      {customVeCakeCard}
+      {/* {customVeCakeCard} */}
 
-      {fieldOnly ? null : (
+      {/* {fieldOnly ? null : (
         <>
           {disabled ? null : <LockCakeDataSet hideLockCakeDataSetStyle={hideLockCakeDataSetStyle} />}
 
           <SubmitLockButton onDismiss={onDismiss} />
         </>
-      )}
+      )} */}
     </AutoRow>
   )
 }
