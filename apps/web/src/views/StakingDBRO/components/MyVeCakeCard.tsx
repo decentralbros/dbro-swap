@@ -36,11 +36,11 @@ export const MyVeCakeCard: React.FC<{
       {type === 'row' ? (
         <AutoRow justifyContent="space-between" ml="8px">
           <Text fontSize="20px" bold color="white" lineHeight="120%">
-            {t('Pending DBRO rewards')}
+            {t('Pending Rewards')}
           </Text>
 
           <Text fontSize="20px" bold color="white" lineHeight="110%">
-            {value ?? formatNumber(getBalanceNumber(balance))}
+            {value ?? formatNumber(getBalanceNumber(balance))} DBRO
           </Text>
         </AutoRow>
       ) : null}

@@ -174,7 +174,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
             }
             value={
               <ValueText>
-                &bull; {stakeInfo ? formatNumberWithCommas(formatUnits(stakeInfo[0].amountStaked, 8)) : 0}
+                &bull; {stakeInfo ? formatNumberWithCommas(formatUnits(stakeInfo[0].amountStaked, 8)) : 0} DBRO
               </ValueText>
             }
           />
