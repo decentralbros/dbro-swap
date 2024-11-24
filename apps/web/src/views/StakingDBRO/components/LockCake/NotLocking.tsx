@@ -42,7 +42,7 @@ export const NotLockingCard: React.FC<React.PropsWithChildren<NotLockingCardProp
 
   return (
     <StyledCard innerCardProps={{ padding: hideCardPadding ? 0 : ['24px 16px', '24px 16px', '24px'] }}>
-      {!hideTitle && <Heading scale="md">{t('Stake DBRO to earn DBRO')}</Heading>}
+      {!hideTitle && <Heading scale="md">{t('Stake DBRO To Earn DBRO')}</Heading>}
 
       <NewStakingDataSet
         cakeAmount={Number(cakeLockAmount)}
