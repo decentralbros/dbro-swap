@@ -16,7 +16,7 @@ import { PageHead } from './components/PageHead'
 import { useSnapshotProposalsCount } from './hooks/useSnapshotProposalsCount'
 import { useTotalIFOSold } from './hooks/useTotalIFOSold'
 
-const StakingLearn = () => {
+const StakingMint = () => {
   const { t } = useTranslation()
   const { data: gauges } = useGauges()
   const gaugesVotingCount = gauges?.length
@@ -174,4 +174,4 @@ const StyledPageHeader = styled(PageHeader)`
   }
 `
 
-export default StakingLearn
+export default StakingMint

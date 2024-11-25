@@ -65,7 +65,7 @@ const config: (
       showOnMobile: false,
       items: [
         {
-          label: t('Staking'),
+          label: t('Stake'),
           href: '/staking',
         },
         {
@@ -74,8 +74,8 @@ const config: (
         },
 
         {
-          label: t('Redeem'),
-          href: '/staking/redeem',
+          label: t('Mint'),
+          href: '/staking/mint',
         },
       ],
     },

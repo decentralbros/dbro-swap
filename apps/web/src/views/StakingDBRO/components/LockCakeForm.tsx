@@ -29,7 +29,6 @@ import ConnectWalletButton from 'components/ConnectWalletButton'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import { DBRO_API } from 'config/constants/endpoints'
 import qs from 'qs'
-import { useWriteApproveAndIncreaseLockAmountCallback } from '../hooks/useContractWrite'
 import { useBSCCakeBalance } from '../hooks/useBSCCakeBalance'
 
 const percentShortcuts = [25, 50, 75]
@@ -196,7 +195,7 @@ const CakeInput: React.FC<{
 
   return (
     <>
-      <FlexGap justifyContent="space-between" flexWrap="wrap" gap="4px" width={['100%', '100%', '50%']} mb="24px">
+      <FlexGap justifyContent="space-between" flexWrap="wrap" gap="4px" width={['100%', '100%', '100%']} mb="24px">
         <BalanceInput
           width={['100%']}
           mb="8px"
@@ -236,21 +235,21 @@ const CakeInput: React.FC<{
       </FlexGap>
 
       {account && (
-        <Flex flexDirection={['column', 'column', 'row']} alignItems="center" width="100%">
+        <Flex flexDirection={['column', 'column', 'column']} alignItems="center" width="100%">
           <Button
             disabled={!canStake || isLoading}
             style={{ color: '#000' }}
-            width={['100%', '100%', '30%']}
+            width={['100%', '100%', '100%']}
             onClick={handleStake}
           >
             {!isLoading ? 'Stake DBRO' : <Dots>Staking</Dots>}
           </Button>
 
-          <Button disabled={!isLoading} style={{ color: '#000' }} width={['100%', '100%', '30%']} mx="10%" my="24px">
+          <Button disabled={!canStake} style={{ color: '#000' }} width={['100%', '100%', '100%']} mx="10%" my="24px">
             {t('Unstake DBRO')}
           </Button>
 
-          <Button disabled={!isLoading} style={{ color: '#000' }} width={['100%', '100%', '30%']}>
+          <Button disabled={!canStake} style={{ color: '#000' }} width={['100%', '100%', '100%']}>
             {t('Claim & Wrap NFT')}
           </Button>
         </Flex>
@@ -298,34 +297,6 @@ export const LockCakeForm: React.FC<{
       <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
         {!account && <ConnectWalletButton width={['100%', '100%', '50%']} />}
       </FlexGap>
-
-      {/* {customVeCakeCard} */}
-
-      {/* {fieldOnly ? null : (
-        <>
-          {disabled ? null : <LockCakeDataSet hideLockCakeDataSetStyle={hideLockCakeDataSetStyle} />}
-
-          <SubmitLockButton onDismiss={onDismiss} />
-        </>
-      )} */}
     </AutoRow>
-  )
-}
-
-const SubmitLockButton = ({ onDismiss }: { onDismiss?: () => void }) => {
-  const { t } = useTranslation()
-  const _cakeBalance = useBSCCakeBalance()
-  const cakeLockAmount = useAtomValue(cakeLockAmountAtom)
-  const disabled = useMemo(
-    () =>
-      !cakeLockAmount || cakeLockAmount === '0' || getDecimalAmount(new BN(cakeLockAmount)).gt(_cakeBalance.toString()),
-    [_cakeBalance, cakeLockAmount],
-  )
-  const increaseLockAmount = useWriteApproveAndIncreaseLockAmountCallback(onDismiss)
-
-  return (
-    <Button mt="16px" disabled={disabled} width="100%" onClick={increaseLockAmount}>
-      {t('Add DBRO')}
-    </Button>
   )
 }
