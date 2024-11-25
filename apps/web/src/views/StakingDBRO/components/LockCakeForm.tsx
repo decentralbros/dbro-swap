@@ -15,7 +15,7 @@ import { getDecimalAmount } from '@pancakeswap/utils/formatBalance'
 import BN from 'bignumber.js'
 import { useCakePrice } from 'hooks/useCakePrice'
 import { useAtom, useAtomValue } from 'jotai'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { cakeLockAmountAtom } from 'state/vecake/atoms'
 import Image from 'next/image'
 import { ChainId } from '@pancakeswap/chains'
@@ -27,6 +27,8 @@ import { formatUnits } from '@pancakeswap/utils/viem/formatUnits'
 import { parseUnits } from '@pancakeswap/utils/viem/parseUnits'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import { ToastDescriptionWithTx } from 'components/Toast'
+import { DBRO_API } from 'config/constants/endpoints'
+import qs from 'qs'
 import { useWriteApproveAndIncreaseLockAmountCallback } from '../hooks/useContractWrite'
 import { useBSCCakeBalance } from '../hooks/useBSCCakeBalance'
 
@@ -47,6 +49,7 @@ const CakeInput: React.FC<{
 
   const { address: account } = useAccount()
   const { toastSuccess, toastError } = useToast()
+  const [inputUSD, setInputUSD] = useState<string>('0.00')
 
   const _cakeBalance = useBSCCakeBalance()
   const cakeBalance = BigInt(_cakeBalance.toString())
@@ -143,6 +146,34 @@ const CakeInput: React.FC<{
     [dbroBalance, onUserInput],
   )
 
+  const fetchInputUSD = useCallback(async () => {
+    try {
+      const params = {
+        chainId: ChainId.BASE_SEPOLIA,
+        address: account,
+        native: false,
+        contract: contractDBRO.address,
+        decimals: 8,
+      }
+
+      const response = await fetch(`${DBRO_API}/balance/usd?${qs.stringify(params)}`)
+      const usd = await response.json()
+
+      if (usd && value) {
+        setInputUSD((Number(usd) * Number(value)).toFixed(2))
+      }
+    } catch {
+      setInputUSD('0.00')
+    }
+  }, [account, contractDBRO.address, value])
+
+  useEffect(() => {
+    if (value) {
+      fetchInputUSD()
+    }
+    // eslint-disable-next-line
+  }, [value])
+
   const balance = (
     <Flex>
       <Text textAlign="left" color="textSubtle" ml="4px" fontSize="12px">
@@ -153,7 +184,7 @@ const CakeInput: React.FC<{
 
   const usdValue = (
     <Flex>
-      <Balance mt={1} fontSize="12px" color="textSubtle" decimals={2} value={cakeUsdValue} unit=" USD" prefix="~" />
+      <Balance mt={1} fontSize="12px" color="textSubtle" decimals={2} value={Number(inputUSD)} unit=" USD" prefix="~" />
     </Flex>
   )
 

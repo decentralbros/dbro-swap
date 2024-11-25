@@ -3,11 +3,8 @@ import { AppBody } from 'components/App'
 import Page from 'components/Layout/Page'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
-
 import { useTranslation } from '@pancakeswap/localization'
-
 import { useSwapHotTokenDisplay } from 'hooks/useSwapHotTokenDisplay'
-import styled from 'styled-components'
 import { SwapFeaturesContext } from './SwapFeaturesContext'
 import { V3SwapForm } from './V3Swap'
 import { StyledInputCurrencyWrapper, StyledSwapContainer } from './styles'
