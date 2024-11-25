@@ -99,20 +99,6 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
     args: [RYFT_ADDRESS],
   })
 
-  const { data: nftBalance } = useReadContract({
-    address: contractRYFT.address as `0x${string}`,
-    abi: contractRYFT.abi,
-    functionName: 'balanceOf',
-    args: [account as `0x${string}`, BigInt(0)],
-  })
-
-  const { data: totalNFTSupply } = useReadContract({
-    address: contractRYFT.address as `0x${string}`,
-    abi: contractRYFT.abi,
-    functionName: 'totalSupply',
-    args: [BigInt(0)],
-  })
-
   const { data: stakeInfo, refetch: refetchStakeInfo } = useReadContract({
     address: contractConfig.address as `0x${string}`,
     abi: contractConfig.abi,
@@ -178,14 +164,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
               </ValueText>
             }
           />
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Reward Rate')}
-              </Text>
-            }
-            value={<ValueText>&bull; {String(rewardRate) && `${rewardRate}%`}</ValueText>}
-          />
+
           <DataRow
             label={
               <Text fontSize={14} color="textSubtle" textTransform="capitalize">
@@ -205,6 +184,22 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
           <DataRow
             label={
               <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                {t('Reward Rate')}
+              </Text>
+            }
+            value={<ValueText>&bull; {String(rewardRate) && `${rewardRate}%`}</ValueText>}
+          />
+          <DataRow
+            label={
+              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                {t('Wrapping Fee')}
+              </Text>
+            }
+            value={<ValueText>&bull; 1%</ValueText>}
+          />
+          <DataRow
+            label={
+              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
                 {t('Claim Threshold')}
               </Text>
             }
@@ -215,10 +210,14 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
           <DataRow
             label={
               <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Wrapping Cost')}
+                {t('Total Staked')}
               </Text>
             }
-            value={<ValueText>&bull; 1%</ValueText>}
+            value={
+              <ValueText>
+                &bull; <>{(contractTokens as bigint) && formatBalance(BigInt(String(contractTokens)), 8)}</> DBRO
+              </ValueText>
+            }
           />
           <DataRow
             label={

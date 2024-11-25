@@ -1,34 +1,10 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { AutoRow, MintInputProps, Flex, FlexGap, Text, MintInput, Button } from '@pancakeswap/uikit'
-import { useCallback, useState } from 'react'
-import Image from 'next/image'
+import { FlexGap, Text, MintInput, Button } from '@pancakeswap/uikit'
+import { useState } from 'react'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import { useAccount, useChainId } from 'wagmi'
 import { useWriteApproveAndIncreaseLockAmountCallback } from 'views/StakingMint/hooks/useContractWrite'
 import { ChainId } from '@pancakeswap/chains'
-
-const CakeInput: React.FC<{
-  value: MintInputProps['value']
-  onUserInput: MintInputProps['onUserInput']
-  disabled?: boolean
-}> = ({ value, onUserInput, disabled }) => {
-  const onInput = useCallback(
-    (input: string) => {
-      onUserInput(input)
-    },
-    [onUserInput],
-  )
-
-  return (
-    <MintInput
-      width={['100%']}
-      mb="8px"
-      value={value}
-      onUserInput={onInput}
-      inputProps={{ style: { textAlign: 'left', height: '20px' }, disabled }}
-    />
-  )
-}
 
 export const LockCakeForm: React.FC<{
   // show input field only
@@ -39,7 +15,8 @@ export const LockCakeForm: React.FC<{
   onDismiss?: () => void
 }> = ({ fieldOnly, disabled, customVeCakeCard, hideLockCakeDataSetStyle, onDismiss }) => {
   const { t } = useTranslation()
-  const [value, onChange] = useState('1')
+  const [mintValue, onMintChange] = useState('1')
+  const [unwrapValue, onUnwrapChange] = useState('0')
   const { address: account } = useAccount()
   const chainId = useChainId()
 
@@ -66,15 +43,62 @@ export const LockCakeForm: React.FC<{
         </FlexGap>
       )}
 
-      <CakeInput value={value} onUserInput={onChange} disabled={disabled} />
+      <MintInput
+        width={['100%']}
+        mb="8px"
+        value={mintValue}
+        onUserInput={onMintChange}
+        inputProps={{ style: { textAlign: 'left', height: '20px' }, disabled }}
+      />
 
-      {account ? (
-        <Button disabled={disabled} style={{ color: '#000' }} width="100%" onClick={handleModalOpen}>
-          {t('Mint NFTs')}
-        </Button>
-      ) : (
-        <ConnectWalletButton width="100%" />
+      <FlexGap gap="4px" alignItems="center" mb="24px" width="100%">
+        {account ? (
+          <Button disabled={disabled} style={{ color: '#000' }} width="100%" onClick={handleModalOpen}>
+            {t('Mint NFTs')}
+          </Button>
+        ) : (
+          <ConnectWalletButton width="100%" />
+        )}
+      </FlexGap>
+
+      {chainId === ChainId.BASE_SEPOLIA && (
+        <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
+          <Text color="textSubtle" fontSize={16} bold>
+            {t('Unwrap')}
+          </Text>
+          <Text color="textSubtle" fontSize={16} bold>
+            {t('NFTs')}
+          </Text>
+        </FlexGap>
       )}
+
+      {chainId !== ChainId.BASE_SEPOLIA && (
+        <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
+          <Text color="warning" fontSize={16} bold>
+            Please switch to Base network to unwrap
+          </Text>
+        </FlexGap>
+      )}
+
+      <MintInput
+        width={['100%']}
+        mb="8px"
+        value={unwrapValue}
+        onUserInput={onUnwrapChange}
+        inputProps={{ style: { textAlign: 'left', height: '20px' }, disabled }}
+      />
+
+      <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
+        {account ? (
+          <Button disabled={disabled} style={{ color: '#000' }} width="100%" onClick={handleModalOpen}>
+            {t('Unwrap NFTs')}
+          </Button>
+        ) : (
+          <ConnectWalletButton width="100%" />
+        )}
+      </FlexGap>
+
+      {account && <></>}
     </FlexGap>
   )
 }

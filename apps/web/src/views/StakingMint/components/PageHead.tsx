@@ -41,27 +41,9 @@ const Header = () => {
 
   return (
     <Flex alignItems="baseline" justifyContent={staking ? 'space-between' : undefined} flexDirection="column">
-      {/* <Text lineHeight="110%" bold color="secondary" mb="16px" fontSize={['32px', '32px', '64px', '64px']}>
-        {t('Hybrid Staking')}
-      </Text>
-
-      <Text lineHeight="100%" bold color="secondary" mb="16px" fontSize={['16px', '32px', '64px', '64px']}>
-        {t('Coming soon')}
-      </Text> */}
       <Heading mb="24px" scale="xl" color="secondary">
         {t('Mint With DBRO!')}
       </Heading>
-      {/* {isMobile ? (
-        <Link
-          external
-          href="https://docs.pancakeswap.finance/products/vecake/how-to-get-vecake"
-          style={{ textDecoration: 'none', zIndex: 1 }}
-        >
-          <Button width="48px" height="48px" variant="subtle" ml={staking ? 0 : '16px'}>
-            <HelpIcon ml="0" color="white" width="24px" />
-          </Button>
-        </Link>
-      ) : null} */}
     </Flex>
   )
 }
@@ -97,7 +79,7 @@ const Description = () => {
     <Grid justifyContent="space-between" gridTemplateColumns={staking ? '1fr' : ['4fr 1fr', '4fr 1fr', '1fr']}>
       <DescriptionContent fullSize={staking}>
         <Text color="textSubtle" lineHeight="120%">
-          {t('Enjoy the benefits of DBRO Utility including reduced custom development fees, workshops, and more!')}
+          {t('Enjoy the benefits of DBRO utilities including reduced custom development fees, workshops, and more!')}
         </Text>
       </DescriptionContent>
       {/* {isMobile && !staking ? <MobileHeadBunny /> : null} */}

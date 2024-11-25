@@ -46,7 +46,7 @@ export const NotLockingCard: React.FC<React.PropsWithChildren<NotLockingCardProp
     <StyledCard innerCardProps={{ padding: hideCardPadding ? 0 : ['24px 16px', '24px 16px', '24px'] }}>
       {!hideTitle && (
         <Heading scale="md" color="secondary" mb="8px">
-          {t('Wrap DBRO For Utility NFTs')}
+          {t('DBRO Utility NFTs')}
         </Heading>
       )}
 
