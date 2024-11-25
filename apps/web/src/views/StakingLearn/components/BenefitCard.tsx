@@ -65,7 +65,7 @@ export const BENEFITS: Record<BenefitCardType, BenefitItem> = {
     title: <Trans>Custom Dev Builds</Trans>,
     btnText: <Trans>Book Consultation</Trans>,
     link: 'https://www.decentralbros.xyz',
-    desc: [<Trans>Use your utility NFTs for major discounts on custom development services</Trans>],
+    desc: [<Trans>Use your utility NFTs for reduced fees on custom development services</Trans>],
     key: 'benefit-snapshot-voting',
   },
   ifo: {

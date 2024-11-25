@@ -46,29 +46,27 @@ export const LockCakeForm: React.FC<{
   const handleModalOpen = useWriteApproveAndIncreaseLockAmountCallback(onDismiss)
 
   return (
-    <>
-      <AutoRow alignSelf="start" mb="24px" width="100%">
-        {chainId === ChainId.BASE_SEPOLIA && (
-          <FlexGap gap="4px" alignItems="center" mb="4px">
-            <Text color="textSubtle" fontSize={16} bold>
-              {t('Mint')}
-            </Text>
-            <Text color="textSubtle" fontSize={16} bold>
-              {t('NFT')}
-            </Text>
-          </FlexGap>
-        )}
+    <FlexGap justifyContent="space-between" flexWrap="wrap" gap="4px" width={['100%']} mb="24px">
+      {chainId === ChainId.BASE_SEPOLIA && (
+        <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
+          <Text color="textSubtle" fontSize={16} bold>
+            {t('Mint')}
+          </Text>
+          <Text color="textSubtle" fontSize={16} bold>
+            {t('NFTs')}
+          </Text>
+        </FlexGap>
+      )}
 
-        {chainId !== ChainId.BASE_SEPOLIA && (
-          <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
-            <Text color="warning" fontSize={16} bold>
-              Please switch to Base network to mint
-            </Text>
-          </FlexGap>
-        )}
+      {chainId !== ChainId.BASE_SEPOLIA && (
+        <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
+          <Text color="warning" fontSize={16} bold>
+            Please switch to Base network to mint
+          </Text>
+        </FlexGap>
+      )}
 
-        <CakeInput value={value} onUserInput={onChange} disabled={disabled} />
-      </AutoRow>
+      <CakeInput value={value} onUserInput={onChange} disabled={disabled} />
 
       {account ? (
         <Button disabled={disabled} style={{ color: '#000' }} width="100%" onClick={handleModalOpen}>
@@ -77,6 +75,6 @@ export const LockCakeForm: React.FC<{
       ) : (
         <ConnectWalletButton width="100%" />
       )}
-    </>
+    </FlexGap>
   )
 }

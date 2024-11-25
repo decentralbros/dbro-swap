@@ -97,7 +97,7 @@ const Description = () => {
     <Grid justifyContent="space-between" gridTemplateColumns={staking ? '1fr' : ['4fr 1fr', '4fr 1fr', '1fr']}>
       <DescriptionContent fullSize={staking}>
         <Text color="textSubtle" lineHeight="120%">
-          {t('Enjoy the benefits of DBRO Utility NFTs by wrapping your tokens!')}
+          {t('Enjoy the benefits of DBRO Utility including reduced custom development fees, workshops, and more!')}
         </Text>
       </DescriptionContent>
       {/* {isMobile && !staking ? <MobileHeadBunny /> : null} */}
