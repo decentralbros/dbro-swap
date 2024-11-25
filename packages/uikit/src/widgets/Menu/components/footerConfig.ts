@@ -64,7 +64,7 @@ export const footerLinks: (t: ContextApi["t"]) => FooterLinkType[] = (t) => [
       //   href: "https://docs.pancakeswap.finance/developers/contributing",
       // },
       {
-        label: t("Github"),
+        label: t("GitHub"),
         href: "https://github.com/decentralbros",
       },
       // {
@@ -95,11 +95,15 @@ export const footerLinks: (t: ContextApi["t"]) => FooterLinkType[] = (t) => [
     ],
   },
   {
-    label: t("About"),
+    label: t("Legal"),
     items: [
       {
         label: t("Terms Of Service"),
         href: "https://decentralbros.finance/terms-of-service",
+      },
+      {
+        label: t("Privacy Policy"),
+        href: "https://decentralbros.finance/privacy-policy",
       },
       // {
       //   label: t("Blog"),
