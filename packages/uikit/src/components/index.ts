@@ -3,6 +3,7 @@ export * from "./Alert";
 export * from "./AtomBox";
 export * from "./Balance";
 export * from "./BalanceInput";
+export * from "./MintInput";
 export * from "./BaseMenu";
 export * from "./Box";
 export * from "./Breadcrumbs";

@@ -48,12 +48,8 @@ const Header = () => {
       <Text lineHeight="100%" bold color="secondary" mb="16px" fontSize={['16px', '32px', '64px', '64px']}>
         {t('Coming soon')}
       </Text> */}
-
-      <Heading style={{ zIndex: 1 }} mb="8px" scale="md" color="#ffffff" id="lottery-hero-title">
-        {t('Redeem DBRO Rewards')}
-      </Heading>
       <Heading mb="24px" scale="xl" color="secondary">
-        {t('Coming soon!')}
+        {t('Mint With DBRO!')}
       </Heading>
       {/* {isMobile ? (
         <Link
@@ -101,7 +97,7 @@ const Description = () => {
     <Grid justifyContent="space-between" gridTemplateColumns={staking ? '1fr' : ['4fr 1fr', '4fr 1fr', '1fr']}>
       <DescriptionContent fullSize={staking}>
         <Text color="textSubtle" lineHeight="120%">
-          {t('Enjoy the benefits of staking DBRO with a high APY and token wrapped DBRO utility NFTs!')}
+          {t('Enjoy the benefits of DBRO Utility NFTs by wrapping your tokens!')}
         </Text>
       </DescriptionContent>
       {/* {isMobile && !staking ? <MobileHeadBunny /> : null} */}

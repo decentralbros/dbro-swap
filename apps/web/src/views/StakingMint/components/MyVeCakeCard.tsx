@@ -26,21 +26,21 @@ export const MyVeCakeCard: React.FC<{
       {type === 'column' ? (
         <AutoColumn gap="2px" ml="6px">
           <Text fontSize="12px" bold color="white" lineHeight="120%">
-            {t('Pending DBRO rewards')}
+            {t('My DBRO NFTs')}
           </Text>
           <Text fontSize="24px" bold color="white" lineHeight="110%">
-            {value ?? formatNumber(getBalanceNumber(balance))}
+            {value}
           </Text>
         </AutoColumn>
       ) : null}
       {type === 'row' ? (
         <AutoRow justifyContent="space-between" ml="8px">
           <Text fontSize="20px" bold color="white" lineHeight="120%">
-            {t('Pending DBRO rewards')}
+            {t('My DBRO NFTs')}
           </Text>
 
           <Text fontSize="20px" bold color="white" lineHeight="110%">
-            {value ?? formatNumber(getBalanceNumber(balance))}
+            {value}
           </Text>
         </AutoRow>
       ) : null}

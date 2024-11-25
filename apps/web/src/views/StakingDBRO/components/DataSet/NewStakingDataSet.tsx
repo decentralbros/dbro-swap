@@ -152,7 +152,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
 
   return (
     <>
-      <Text fontSize={12} bold color={isDesktop ? 'textSubtle' : undefined} textTransform="uppercase">
+      <Text fontSize={12} bold color="secondary" textTransform="uppercase">
         {t('staking overview')}
       </Text>
       <Box padding={['16px 0', '16px 0', 12]}>

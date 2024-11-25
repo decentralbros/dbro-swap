@@ -48,12 +48,8 @@ const Header = () => {
       <Text lineHeight="100%" bold color="secondary" mb="16px" fontSize={['16px', '32px', '64px', '64px']}>
         {t('Coming soon')}
       </Text> */}
-
-      <Heading style={{ zIndex: 1 }} mb="8px" scale="md" color="#ffffff" id="lottery-hero-title">
-        {t('Hybrid Staking')}
-      </Heading>
       <Heading mb="24px" scale="xl" color="secondary">
-        {t('Coming soon!')}
+        {t('DBRO Hybrid Staking!')}
       </Heading>
       {/* {isMobile ? (
         <Link

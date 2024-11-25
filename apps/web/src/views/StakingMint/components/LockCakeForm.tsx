@@ -1,110 +1,32 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { AutoRow, Balance, BalanceInput, BalanceInputProps, Button, Flex, FlexGap, Text } from '@pancakeswap/uikit'
-import { formatBigInt, getDecimalAmount, getFullDisplayBalance } from '@pancakeswap/utils/formatBalance'
-import BN from 'bignumber.js'
-import { useCakePrice } from 'hooks/useCakePrice'
-import { useAtom, useAtomValue } from 'jotai'
-import { useCallback, useMemo, useState } from 'react'
-import { cakeLockAmountAtom } from 'state/vecake/atoms'
+import { AutoRow, MintInputProps, Flex, FlexGap, Text, MintInput, Button } from '@pancakeswap/uikit'
+import { useCallback, useState } from 'react'
 import Image from 'next/image'
-import { useBSCCakeBalance } from '../hooks/useBSCCakeBalance'
-import { useWriteApproveAndIncreaseLockAmountCallback } from '../hooks/useContractWrite'
-import { LockCakeDataSet } from './DataSet'
-
-const percentShortcuts = [25, 50, 75]
+import ConnectWalletButton from 'components/ConnectWalletButton'
+import { useAccount, useChainId } from 'wagmi'
+import { useWriteApproveAndIncreaseLockAmountCallback } from 'views/StakingMint/hooks/useContractWrite'
+import { ChainId } from '@pancakeswap/chains'
 
 const CakeInput: React.FC<{
-  value: BalanceInputProps['value']
-  onUserInput: BalanceInputProps['onUserInput']
+  value: MintInputProps['value']
+  onUserInput: MintInputProps['onUserInput']
   disabled?: boolean
 }> = ({ value, onUserInput, disabled }) => {
-  const { t } = useTranslation()
-  const cakeUsdPrice = useCakePrice()
-  const cakeUsdValue = useMemo(() => {
-    return cakeUsdPrice && value ? cakeUsdPrice.times(value).toNumber() : 0
-  }, [cakeUsdPrice, value])
-  const [percent, setPercent] = useState<number | null>(null)
-  const _cakeBalance = useBSCCakeBalance()
-  const cakeBalance = BigInt(_cakeBalance.toString())
-
   const onInput = useCallback(
     (input: string) => {
-      setPercent(null)
       onUserInput(input)
     },
     [onUserInput],
   )
 
-  const handlePercentChange = useCallback(
-    (p: number) => {
-      if (p > 0) {
-        onUserInput(getFullDisplayBalance(new BN(cakeBalance.toString()).multipliedBy(p).dividedBy(100), 8, 8))
-      } else {
-        onUserInput('')
-      }
-      setPercent(p)
-    },
-    [cakeBalance, onUserInput, setPercent],
-  )
-
-  const balance = (
-    <Flex>
-      <Text textAlign="left" color="textSubtle" ml="4px" fontSize="12px">
-        {t('Balance: %balance%', { balance: formatBigInt(cakeBalance, 2) })}
-      </Text>
-    </Flex>
-  )
-
-  const usdValue = (
-    <Flex>
-      <Balance mt={1} fontSize="12px" color="textSubtle" decimals={2} value={cakeUsdValue} unit=" USD" prefix="~" />
-    </Flex>
-  )
-
-  const appendComponent = (
-    <Flex alignSelf="center" width={40} mr={12}>
-      <Image width={40} height={40} src="/logo.webp" alt="logo" />
-    </Flex>
-  )
-
   return (
-    <>
-      <BalanceInput
-        width="100%"
-        mb="8px"
-        value={value}
-        onUserInput={onInput}
-        inputProps={{ style: { textAlign: 'left', height: '20px' }, disabled }}
-        currencyValue={usdValue}
-        unit={balance}
-        appendComponent={appendComponent}
-      />
-      {!disabled && balance ? (
-        <FlexGap justifyContent="space-between" flexWrap="wrap" gap="4px" width="100%">
-          {percentShortcuts.map((p) => {
-            return (
-              <Button
-                key={p}
-                style={{ flex: 1, color: p === percent ? '#000' : '#1bf696' }}
-                scale="sm"
-                variant={p === percent ? 'primary' : 'tertiary'}
-                onClick={() => handlePercentChange(p)}
-              >
-                {`${p}%`}
-              </Button>
-            )
-          })}
-          <Button
-            scale="sm"
-            style={{ flex: 1, color: percent === 100 ? '#000' : '#1bf696' }}
-            variant={percent === 100 ? 'primary' : 'tertiary'}
-            onClick={() => handlePercentChange(100)}
-          >
-            {t('Max')}
-          </Button>
-        </FlexGap>
-      ) : null}
-    </>
+    <MintInput
+      width={['100%']}
+      mb="8px"
+      value={value}
+      onUserInput={onInput}
+      inputProps={{ style: { textAlign: 'left', height: '20px' }, disabled }}
+    />
   )
 }
 
@@ -117,47 +39,44 @@ export const LockCakeForm: React.FC<{
   onDismiss?: () => void
 }> = ({ fieldOnly, disabled, customVeCakeCard, hideLockCakeDataSetStyle, onDismiss }) => {
   const { t } = useTranslation()
-  const [value, onChange] = useAtom(cakeLockAmountAtom)
+  const [value, onChange] = useState('1')
+  const { address: account } = useAccount()
+  const chainId = useChainId()
+
+  const handleModalOpen = useWriteApproveAndIncreaseLockAmountCallback(onDismiss)
 
   return (
-    <AutoRow alignSelf="start">
-      <FlexGap gap="4px" alignItems="center" mb="4px">
-        <Text color="textSubtle" textTransform="uppercase" fontSize={16} bold>
-          {t('add')}
-        </Text>
-        <Text color="textSubtle" textTransform="uppercase" fontSize={16} bold>
-          {t('DBRO')}
-        </Text>
-      </FlexGap>
-      <CakeInput value={value} onUserInput={onChange} disabled={disabled} />
+    <>
+      <AutoRow alignSelf="start" mb="24px" width="100%">
+        {chainId === ChainId.BASE_SEPOLIA && (
+          <FlexGap gap="4px" alignItems="center" mb="4px">
+            <Text color="textSubtle" fontSize={16} bold>
+              {t('Mint')}
+            </Text>
+            <Text color="textSubtle" fontSize={16} bold>
+              {t('NFT')}
+            </Text>
+          </FlexGap>
+        )}
 
-      {customVeCakeCard}
+        {chainId !== ChainId.BASE_SEPOLIA && (
+          <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
+            <Text color="warning" fontSize={16} bold>
+              Please switch to Base network to mint
+            </Text>
+          </FlexGap>
+        )}
 
-      {fieldOnly ? null : (
-        <>
-          {disabled ? null : <LockCakeDataSet hideLockCakeDataSetStyle={hideLockCakeDataSetStyle} />}
+        <CakeInput value={value} onUserInput={onChange} disabled={disabled} />
+      </AutoRow>
 
-          <SubmitLockButton onDismiss={onDismiss} />
-        </>
+      {account ? (
+        <Button disabled={disabled} style={{ color: '#000' }} width="100%" onClick={handleModalOpen}>
+          {t('Mint NFTs')}
+        </Button>
+      ) : (
+        <ConnectWalletButton width="100%" />
       )}
-    </AutoRow>
-  )
-}
-
-const SubmitLockButton = ({ onDismiss }: { onDismiss?: () => void }) => {
-  const { t } = useTranslation()
-  const _cakeBalance = useBSCCakeBalance()
-  const cakeLockAmount = useAtomValue(cakeLockAmountAtom)
-  const disabled = useMemo(
-    () =>
-      !cakeLockAmount || cakeLockAmount === '0' || getDecimalAmount(new BN(cakeLockAmount)).gt(_cakeBalance.toString()),
-    [_cakeBalance, cakeLockAmount],
-  )
-  const increaseLockAmount = useWriteApproveAndIncreaseLockAmountCallback(onDismiss)
-
-  return (
-    <Button mt="16px" disabled={disabled} width="100%" onClick={increaseLockAmount}>
-      {t('Unstake DBRO')}
-    </Button>
+    </>
   )
 }

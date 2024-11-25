@@ -37,35 +37,18 @@ export const NotLockingCard: React.FC<React.PropsWithChildren<NotLockingCardProp
   customDataRow,
   onDismiss,
 }) => {
-  const { address: account } = useAccount()
   const { t } = useTranslation()
   const _cakeBalance = useBSCCakeBalance()
   const { cakeLockAmount, cakeLockWeeks } = useLockCakeData()
   const { isDesktop } = useMatchBreakpoints()
 
-  const disabled = useMemo(
-    () =>
-      Boolean(
-        !Number(cakeLockAmount) ||
-          !Number(cakeLockWeeks) ||
-          getDecimalAmount(new BN(cakeLockAmount)).gt(_cakeBalance.toString()),
-      ),
-    [_cakeBalance, cakeLockAmount, cakeLockWeeks],
-  )
-
-  const handleModalOpen = useWriteApproveAndLockCallback(onDismiss)
-
   return (
     <StyledCard innerCardProps={{ padding: hideCardPadding ? 0 : ['24px 16px', '24px 16px', '24px'] }}>
-      {!hideTitle && <Heading scale="md">{t('Redeem DBRO Utility NFTs')}</Heading>}
-
-      <NewStakingDataSet
-        cakeAmount={Number(cakeLockAmount)}
-        customVeCakeCard={customVeCakeCard}
-        customDataRow={customDataRow}
-      />
-
-      <br />
+      {!hideTitle && (
+        <Heading scale="md" color="secondary" mb="8px">
+          {t('Wrap DBRO For Utility NFTs')}
+        </Heading>
+      )}
 
       <Grid
         gridTemplateColumns={isDesktop ? '1fr 1fr' : '1fr'}
@@ -79,47 +62,18 @@ export const NotLockingCard: React.FC<React.PropsWithChildren<NotLockingCardProp
       >
         <ColumnCenter>
           <LockCakeForm fieldOnly />
-
-          <br />
-          <br />
-
-          {account ? (
-            <Button disabled={disabled} style={{ color: '#000' }} width="100%" onClick={handleModalOpen}>
-              {t('Claim NFTs')}
-            </Button>
-          ) : (
-            <ConnectWalletButton width="100%" />
-          )}
-
-          <br />
-
-          {account ? (
-            <>
-              <Button disabled style={{ color: '#000' }} width="100%" onClick={handleModalOpen}>
-                {t('Unstake Tokens')}
-              </Button>{' '}
-              <br />
-            </>
-          ) : (
-            <Skeleton />
-          )}
-
-          {account ? (
-            <>
-              <Button disabled style={{ color: '#000' }} width="100%" onClick={handleModalOpen}>
-                {t('Unwrap NFTs')}
-              </Button>{' '}
-              <br />
-            </>
-          ) : (
-            <Skeleton />
-          )}
         </ColumnCenter>
 
         <ColumnCenter>
           <img src="/images/swap/nft.png" alt="dbro nft" height="auto" width="300px" />
         </ColumnCenter>
       </Grid>
+
+      <NewStakingDataSet
+        cakeAmount={Number(cakeLockAmount)}
+        customVeCakeCard={customVeCakeCard}
+        customDataRow={customDataRow}
+      />
     </StyledCard>
   )
 }

@@ -36,13 +36,11 @@ export const NotLockingCard: React.FC<React.PropsWithChildren<NotLockingCardProp
 
   return (
     <StyledCard innerCardProps={{ padding: hideCardPadding ? 0 : ['24px 16px', '24px 16px', '24px'] }}>
-      {!hideTitle && <Heading scale="md">{t('Stake DBRO To Earn DBRO')}</Heading>}
-
-      <NewStakingDataSet
-        cakeAmount={Number(cakeLockAmount)}
-        customVeCakeCard={customVeCakeCard}
-        customDataRow={customDataRow}
-      />
+      {!hideTitle && (
+        <Heading scale="md" color="secondary" mb="8px">
+          {t('Stake DBRO To Earn DBRO')}
+        </Heading>
+      )}
 
       <Grid
         gridTemplateColumns={isDesktop ? '1fr 1fr' : '1fr'}
@@ -62,6 +60,12 @@ export const NotLockingCard: React.FC<React.PropsWithChildren<NotLockingCardProp
           <img src="/images/swap/nft.png" alt="dbro nft" height="auto" width="300px" />
         </ColumnCenter>
       </Grid>
+
+      <NewStakingDataSet
+        cakeAmount={Number(cakeLockAmount)}
+        customVeCakeCard={customVeCakeCard}
+        customDataRow={customDataRow}
+      />
     </StyledCard>
   )
 }

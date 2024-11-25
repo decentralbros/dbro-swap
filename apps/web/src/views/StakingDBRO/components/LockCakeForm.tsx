@@ -40,10 +40,6 @@ const CakeInput: React.FC<{
   disabled?: boolean
 }> = ({ value, onUserInput, disabled }) => {
   const { t } = useTranslation()
-  const cakeUsdPrice = useCakePrice()
-  const cakeUsdValue = useMemo(() => {
-    return cakeUsdPrice && value ? cakeUsdPrice.times(value).toNumber() : 0
-  }, [cakeUsdPrice, value])
   const [percent, setPercent] = useState<number | null>(null)
 
   const { address: account } = useAccount()
@@ -51,13 +47,11 @@ const CakeInput: React.FC<{
   const [inputUSD, setInputUSD] = useState<string>('0.00')
 
   const _cakeBalance = useBSCCakeBalance()
-  const cakeBalance = BigInt(_cakeBalance.toString())
 
   const dbroBalance = parseInt(formatUnits(_cakeBalance, 8)) ?? 0
   const canStake = BigInt(dbroBalance) >= BigInt(500000)
 
   const [isLoading, setIsLoading] = useState(false)
-  const [transactionHash, setTransactionHash] = useState<`0x${string}` | undefined>(undefined)
   const chainId = useChainId()
 
   const contractConfig = deployedContracts[84532].DBROWrappedStaking
@@ -195,7 +189,7 @@ const CakeInput: React.FC<{
 
   return (
     <>
-      <FlexGap justifyContent="space-between" flexWrap="wrap" gap="4px" width={['100%', '100%', '100%']} mb="24px">
+      <FlexGap justifyContent="space-between" flexWrap="wrap" gap="4px" width={['100%']} mb="24px">
         <BalanceInput
           width={['100%']}
           mb="8px"
@@ -235,22 +229,17 @@ const CakeInput: React.FC<{
       </FlexGap>
 
       {account && (
-        <Flex flexDirection={['column', 'column', 'column']} alignItems="center" width="100%">
-          <Button
-            disabled={!canStake || isLoading}
-            style={{ color: '#000' }}
-            width={['100%', '100%', '100%']}
-            onClick={handleStake}
-          >
+        <Flex flexDirection={['column']} alignItems="center" width="100%">
+          <Button disabled={!canStake || isLoading} style={{ color: '#000' }} width={['100%']} onClick={handleStake}>
             {!isLoading ? 'Stake DBRO' : <Dots>Staking</Dots>}
           </Button>
 
-          <Button disabled={!canStake} style={{ color: '#000' }} width={['100%', '100%', '100%']} mx="10%" my="24px">
-            {t('Unstake DBRO')}
+          <Button disabled={!canStake} style={{ color: '#000' }} width={['100%']} mx="10%" my="24px">
+            {!isLoading ? 'Unstake DBRO' : <Dots>Unstaking</Dots>}
           </Button>
 
-          <Button disabled={!canStake} style={{ color: '#000' }} width={['100%', '100%', '100%']}>
-            {t('Claim & Wrap NFT')}
+          <Button disabled={!canStake} style={{ color: '#000' }} width={['100%']}>
+            {!isLoading ? 'Claim & Wrap NFTs' : <Dots>Wrapping</Dots>}
           </Button>
         </Flex>
       )}
@@ -275,10 +264,10 @@ export const LockCakeForm: React.FC<{
     <AutoRow alignSelf="start" width="100%">
       {chainId === ChainId.BASE_SEPOLIA && (
         <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
-          <Text color="secondary" fontSize={16} bold>
+          <Text color="textSubtle" fontSize={16} bold>
             {t('Add')}
           </Text>
-          <Text color="secondary" fontSize={16} bold>
+          <Text color="textSubtle" fontSize={16} bold>
             {t('DBRO')}
           </Text>
         </FlexGap>
@@ -286,8 +275,8 @@ export const LockCakeForm: React.FC<{
 
       {chainId !== ChainId.BASE_SEPOLIA && (
         <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
-          <Text color="red" fontSize={16} bold>
-            Base network is required to stake
+          <Text color="warning" fontSize={16} bold>
+            Please switch to Base network to stake
           </Text>
         </FlexGap>
       )}
@@ -295,7 +284,7 @@ export const LockCakeForm: React.FC<{
       <CakeInput value={value} onUserInput={onChange} disabled={disabled} />
 
       <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
-        {!account && <ConnectWalletButton width={['100%', '100%', '50%']} />}
+        {!account && <ConnectWalletButton width={['100%']} />}
       </FlexGap>
     </AutoRow>
   )

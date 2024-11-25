@@ -53,53 +53,45 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
 
   return (
     <>
-      <Text fontSize={12} bold color={isDesktop ? 'textSubtle' : undefined} textTransform="uppercase">
-        {t('staking overview')}
+      <Text fontSize={12} bold color="secondary" textTransform="uppercase">
+        {t('minting overview')}
       </Text>
       <Box padding={['16px 0', '16px 0', 12]}>
-        {customVeCakeCard ?? <MyVeCakeCard type="row" value={veCake} />}
+        {customVeCakeCard ?? <MyVeCakeCard type="row" value="0" />}
 
         <AutoRow px={['0px', '0px', '16px']} py={['16px', '16px', '12px']} gap="8px">
           {customDataRow}
           <DataRow
             label={
               <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Staked DBRO')}
+                {t('Token Id')}
               </Text>
             }
-            value={<ValueText>&bull; 3,000,000</ValueText>}
+            value={<ValueText>&bull; 0</ValueText>}
           />
           <DataRow
             label={
               <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Reward Rate')}
+                {t('Total Minted')}
               </Text>
             }
-            value={<ValueText>&bull; 20%</ValueText>}
+            value={<ValueText>&bull; 5</ValueText>}
           />
           <DataRow
             label={
               <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Claim Threshold')}
+                {t('Wrapped DBRO')}
               </Text>
             }
-            value={<ValueText>&bull; 500k</ValueText>}
+            value={<ValueText>&bull; 500,000</ValueText>}
           />
           <DataRow
             label={
               <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('unwrapping Fee')}
+                {t('Wrapped Value')}
               </Text>
             }
-            value={<ValueText>&bull; 1%</ValueText>}
-          />
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Reward Wallet')}
-              </Text>
-            }
-            value={<ValueText>&bull; 5,000,000</ValueText>}
+            value={<ValueText>&bull; $50</ValueText>}
           />
         </AutoRow>
       </Box>
