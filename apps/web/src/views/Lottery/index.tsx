@@ -41,7 +41,6 @@ const Lottery = () => {
     address: contractConfig.address as `0x${string}`,
     abi: contractConfig.abi,
     functionName: 'currentLotteryId',
-    chainId: ChainId.BASE_SEPOLIA,
   })
 
   // Read contract states
@@ -49,7 +48,6 @@ const Lottery = () => {
     address: contractConfig.address as `0x${string}`,
     abi: contractConfig.abi,
     functionName: 'status',
-    chainId: ChainId.BASE_SEPOLIA,
   })
 
   return (

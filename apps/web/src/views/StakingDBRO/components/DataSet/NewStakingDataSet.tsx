@@ -64,11 +64,15 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
     args: [TREASURY_ADDRESS],
   })
 
-  const { data: stakeInfo, refetch: refetchStakeInfo } = useReadContract({
+  const { data: stakeInfo } = useReadContract({
     address: contractConfig.address as `0x${string}`,
     abi: contractConfig.abi,
     functionName: 'getStakeInfoAndPendingRewards',
     args: [account as `0x${string}`],
+    query: {
+      enabled: Boolean(account),
+      refetchInterval: 10_000,
+    },
   })
 
   const { data: requiredDBRO } = useReadContract({
