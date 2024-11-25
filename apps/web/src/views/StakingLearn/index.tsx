@@ -46,7 +46,7 @@ const StakingLearn = () => {
         </Grid>
 
         <Heading scale="xl" color="secondary" mb={['24px', '24px', '48px']}>
-          {t('Earn With Hybrid Staking')}
+          {t('Earn With Your DBRO')}
         </Heading>
         <Grid
           maxWidth="820px"

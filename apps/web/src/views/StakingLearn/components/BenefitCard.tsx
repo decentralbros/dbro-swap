@@ -28,7 +28,7 @@ export const BENEFITS: Record<BenefitCardType, BenefitItem> = {
   },
   earnCake: {
     headImg: '/images/cake-staking/benefit-earn-cake.png',
-    title: <Trans>Earn DBRO</Trans>,
+    title: <Trans>Staked DBRO</Trans>,
     subTitle: <Trans>Reward Wallet</Trans>,
     btnText: <Trans>Start Earning</Trans>,
     link: '/staking',
