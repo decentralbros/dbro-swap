@@ -1,18 +1,10 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { AutoRow, Box, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
-import { getDecimalAmount } from '@pancakeswap/utils/formatBalance'
-import BN from 'bignumber.js'
-import { WEEK } from 'config/constants/veCake'
 import React, { useMemo } from 'react'
-import { useLockCakeData } from 'state/vecake/hooks'
 import styled from 'styled-components'
-import { useProxyVeCakeBalance } from 'views/StakingDBRO/hooks/useProxyVeCakeBalance'
-import { useTargetUnlockTime } from 'views/StakingDBRO/hooks/useTargetUnlockTime'
-import { useVeCakeAmount } from 'views/StakingDBRO/hooks/useVeCakeAmount'
 import { useAccount, useReadContract } from 'wagmi'
 import deployedContracts from 'config/abi/deployedContracts'
 import { formatUnits } from '@pancakeswap/utils/viem/formatUnits'
-import { useBSCCakeBalance } from '../../hooks/useBSCCakeBalance'
 import { DataRow } from './DataBox'
 import { MyVeCakeCard } from '../MyVeCakeCard'
 
@@ -28,9 +20,9 @@ interface NewStakingDataSetProps {
   customDataRow?: JSX.Element
 }
 
-// Reading balance of the reward wallet
+const RYFT_ADDRESS = '0x0C9F57B01BE2690d469B01E44ff404F45b81Af2e'
 const TREASURY_ADDRESS = '0x2a2cf9C06514494538E90Bb6b090DdB3792fA2FF'
-const CONTRACT = '0x5B7a6C42ee3ddf82582BA759Bb59A990D0e97398'
+const DBRO_CONTRACT = '0x5B7a6C42ee3ddf82582BA759Bb59A990D0e97398'
 const erc20ABI = [
   {
     inputs: [{ name: 'account', type: 'address' }],
@@ -40,10 +32,6 @@ const erc20ABI = [
     type: 'function',
   },
 ] as const
-
-// Reading balance of the DBRO tokens wrapped in RYFT contract
-const RYFT_ADDRESS = '0x0C9F57B01BE2690d469B01E44ff404F45b81Af2e'
-const DBRO_CONTRACT = '0x5B7a6C42ee3ddf82582BA759Bb59A990D0e97398'
 
 const formatNumberWithCommas = (value: string): string => {
   const parts = value.split('.')
@@ -64,39 +52,16 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
   customDataRow,
 }) => {
   const { t } = useTranslation()
-  const { cakeLockWeeks } = useLockCakeData()
-  const { isDesktop } = useMatchBreakpoints()
-
-  const unlockTimestamp = useTargetUnlockTime(Number(cakeLockWeeks) * WEEK)
-  const cakeAmountBN = useMemo(() => getDecimalAmount(new BN(cakeAmount)).toString(), [cakeAmount])
-  const veCakeAmountFromNative = useVeCakeAmount(cakeAmountBN, unlockTimestamp)
-  const { balance: proxyVeCakeBalance } = useProxyVeCakeBalance()
-  const veCakeAmount = useMemo(
-    () => proxyVeCakeBalance.plus(veCakeAmountFromNative),
-    [proxyVeCakeBalance, veCakeAmountFromNative],
-  )
 
   const contractConfig = deployedContracts[84532].DBROWrappedStaking
-  const contractDBRO = deployedContracts[84532].DecentralBros
-  const contractRYFT = deployedContracts[84532].RYFT
 
   const { address: account } = useAccount()
 
-  const _cakeBalance = useBSCCakeBalance()
-  const currentBalance = parseInt(formatUnits(_cakeBalance, 8)) ?? 0
-
   const { data: treasuryBalance } = useReadContract({
-    abi: erc20ABI,
-    address: CONTRACT,
-    functionName: 'balanceOf',
-    args: [TREASURY_ADDRESS],
-  })
-
-  const { data: dbroBalance } = useReadContract({
     abi: erc20ABI,
     address: DBRO_CONTRACT,
     functionName: 'balanceOf',
-    args: [RYFT_ADDRESS],
+    args: [TREASURY_ADDRESS],
   })
 
   const { data: stakeInfo, refetch: refetchStakeInfo } = useReadContract({
@@ -112,12 +77,6 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
     functionName: 'REQUIRED_DBRO',
   })
 
-  const { data: unwrapFEE } = useReadContract({
-    address: contractConfig.address as `0x${string}`,
-    abi: contractConfig.abi,
-    functionName: 'UNWRAP_FEE_PERCENT',
-  })
-
   const { data: rewardRate } = useReadContract({
     address: contractConfig.address as `0x${string}`,
     abi: contractConfig.abi,
@@ -128,12 +87,6 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
     address: contractConfig.address as `0x${string}`,
     abi: contractConfig.abi,
     functionName: 'totalRewardTokens',
-  })
-
-  const { data: tokenId } = useReadContract({
-    address: contractConfig.address as `0x${string}`,
-    abi: contractConfig.abi,
-    functionName: 'RYFT_TOKEN_ID',
   })
 
   return (
@@ -187,7 +140,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
                 {t('Reward Rate')}
               </Text>
             }
-            value={<ValueText>&bull; {String(rewardRate) && `${rewardRate}%`}</ValueText>}
+            value={<ValueText>&bull; {`${rewardRate ?? 0}%`}</ValueText>}
           />
           <DataRow
             label={
