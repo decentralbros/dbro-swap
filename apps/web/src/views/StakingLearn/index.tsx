@@ -1,27 +1,27 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { Button, Grid, Heading, ModalV2, PageHeader, QuestionHelper, useMatchBreakpoints } from '@pancakeswap/uikit'
-import { formatBigInt, formatNumber } from '@pancakeswap/utils/formatBalance'
+import { Card, Grid, Heading, PageHeader, QuestionHelper, useMatchBreakpoints, FlexGap } from '@pancakeswap/uikit'
 import { formatAmount } from '@pancakeswap/utils/formatInfoNumbers'
 import Page from 'components/Layout/Page'
-import { useCakeDistributed } from 'hooks/useCakeDistributed'
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 import { useGauges } from 'views/GaugesVoting/hooks/useGauges'
 import { BenefitCard } from './components/BenefitCard'
 import { useSnapshotProposalsCount } from './hooks/useSnapshotProposalsCount'
 import { useTotalIFOSold } from './hooks/useTotalIFOSold'
 
+const StyledCard = styled(Card)`
+  height: 100%;
+  width: 100%;
+`
+
 const StakingLearn = () => {
   const { t } = useTranslation()
   const { data: gauges } = useGauges()
   const gaugesVotingCount = gauges?.length
   const snapshotProposalsCount = useSnapshotProposalsCount()
-  const totalCakeDistributed = useCakeDistributed()
   const [cakeRewardModalVisible, setCakeRewardModalVisible] = useState(false)
   const totalIFOSold = useTotalIFOSold()
   const { isDesktop } = useMatchBreakpoints()
-  const handleDismiss = useCallback(() => setCakeRewardModalVisible(false), [])
-  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <>
@@ -31,6 +31,20 @@ const StakingLearn = () => {
       <StyledPageHeader background="#000">
         {/* <PageHead />
         <LockCake /> */}
+        <Heading scale="xl" color="secondary" mb={['24px', '24px', '48px']}>
+          {t('Welcome To Hybrid Staking!')}
+        </Heading>
+        <Grid alignItems="center" mx="auto" mb={['24px', '24px', '48px']} maxWidth="720px">
+          <StyledCard innerCardProps={{ p: ['16px', '16px', '24px'] }}>
+            <FlexGap flexDirection="column">
+              <video controls loop muted playsInline>
+                <source src="/videos/dbroVideo.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </FlexGap>
+          </StyledCard>
+        </Grid>
+
         <Heading scale="xl" color="secondary" mb={['24px', '24px', '48px']}>
           {t('Earn With Hybrid Staking')}
         </Heading>
