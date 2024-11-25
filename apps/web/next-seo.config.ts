@@ -22,8 +22,6 @@ export const SEO: DefaultSeoProps = {
     images: [
       {
         url: 'https://decentralbros.finance/dbro-swap.jpg',
-        width: 1200,
-        height: 630,
         alt: 'DBRO Swap Interface',
         type: 'image/jpeg',
       },
