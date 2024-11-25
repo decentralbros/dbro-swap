@@ -29,8 +29,8 @@ export const BENEFITS: Record<BenefitCardType, BenefitItem> = {
   earnCake: {
     headImg: '/images/cake-staking/benefit-earn-cake.png',
     title: <Trans>Earn DBRO</Trans>,
-    subTitle: <Trans>Contract Pool</Trans>,
-    btnText: <Trans>Check Rewards</Trans>,
+    subTitle: <Trans>Reward Wallet</Trans>,
+    btnText: <Trans>Start Earning</Trans>,
     link: '/staking',
     desc: [
       <Trans>Daily reward rate of 20%</Trans>,
@@ -41,12 +41,12 @@ export const BENEFITS: Record<BenefitCardType, BenefitItem> = {
   },
   gaugesVoting: {
     headImg: '/images/cake-staking/benefit-gauges-voting.png',
-    title: <Trans>Wrapped NFTs</Trans>,
+    title: <Trans>Utility NFTs</Trans>,
     subTitle: <Trans>NFTs minted</Trans>,
-    btnText: <Trans>Redeem Rewards</Trans>,
-    link: '/staking/redeem',
+    btnText: <Trans>Mint Now</Trans>,
+    link: '/staking/mint',
     desc: [
-      <Trans>Unstake for DBRO wrapped utility NFTs</Trans>,
+      <Trans>Earn or mint DBRO wrapped utility NFTs</Trans>,
       <Trans>Unwrap NFTs for DBRO tokens</Trans>,
       <Trans>Fee of only 1% to Unwrap</Trans>,
     ],

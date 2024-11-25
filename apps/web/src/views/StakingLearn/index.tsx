@@ -100,7 +100,7 @@ const StakingLearn = () => {
             }
           />
         </Grid> */}
-        <Heading scale="xl" mb={['24px', '24px', '48px']} mt={['16px', '16px', '32px']}>
+        <Heading scale="xl" mb={['24px', '24px', '48px']} mt={['16px', '16px', '32px']} color="secondary">
           {t('Utility NFT Benefits')}
         </Heading>
         <Grid
