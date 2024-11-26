@@ -309,7 +309,7 @@ const useDecentralBrosData = () => {
       },
       {
         title: t('Staking'),
-        description: t('Coming soon...'),
+        description: t('Enjoy the benefits of hybrid staking your DBRO'),
         ctaTitle: t('Stake Now'),
         image: `/old-logo.jpg`,
         defaultImage: `/old-logo.jpg`,

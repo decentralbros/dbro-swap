@@ -317,7 +317,7 @@ const CurrencyInputPanel = memo(function CurrencyInputPanel({
                         scale="xs"
                         mr="5px"
                         variant={isAtCurrentPercent ? 'primary' : 'secondary'}
-                        style={{ textTransform: 'uppercase' }}
+                        style={{ textTransform: 'uppercase', color: isAtCurrentPercent ? '#000' : '#1bf696' }}
                       >
                         {percent}%
                       </Button>
@@ -333,7 +333,7 @@ const CurrencyInputPanel = memo(function CurrencyInputPanel({
                     }}
                     scale="xs"
                     variant={isAtPercentMax ? 'primary' : 'secondary'}
-                    style={{ textTransform: 'uppercase' }}
+                    style={{ textTransform: 'uppercase', color: isAtPercentMax ? '#000' : '#1bf696' }}
                   >
                     {t('Max')}
                   </Button>

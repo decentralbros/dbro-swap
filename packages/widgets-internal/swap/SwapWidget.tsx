@@ -14,22 +14,22 @@ const SwitchIconButton = styled(IconButton)`
     display: none;
   }
   &:hover {
-    background-color: ${({ theme }) => theme.colors.primary};
+    background-color: #000;
     .icon-down {
       display: none;
-      fill: white;
+      fill: ${({ theme }) => theme.colors.primary};
     }
     .icon-up-down {
       display: block;
-      fill: white;
+      fill: ${({ theme }) => theme.colors.primary};
     }
   }
 `;
 
 const SwitchButton = (props: ButtonProps) => (
-  <SwitchIconButton variant="light" scale="sm" {...props}>
-    <ArrowDownIcon className="icon-down" color="primary" />
-    <ArrowUpDownIcon className="icon-up-down" color="primary" />
+  <SwitchIconButton variant="light" scale="md" {...props}>
+    <ArrowDownIcon className="icon-down" color="secondary" />
+    <ArrowUpDownIcon className="icon-up-down" color="secondary" />
   </SwitchIconButton>
 );
 
