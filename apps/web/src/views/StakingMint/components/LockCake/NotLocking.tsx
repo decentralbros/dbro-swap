@@ -32,7 +32,6 @@ export const NotLockingCard: React.FC<React.PropsWithChildren<NotLockingCardProp
   onDismiss,
 }) => {
   const { t } = useTranslation()
-  const _cakeBalance = useBSCCakeBalance()
   const { cakeLockAmount, cakeLockWeeks } = useLockCakeData()
   const { isDesktop } = useMatchBreakpoints()
 

@@ -1,18 +1,11 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { AutoRow, Box, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
-import { getDecimalAmount, getFullDisplayBalance } from '@pancakeswap/utils/formatBalance'
-import BN from 'bignumber.js'
-import { WEEK } from 'config/constants/veCake'
-import dayjs from 'dayjs'
-import React, { useMemo } from 'react'
-import { useLockCakeData } from 'state/vecake/hooks'
+import { AutoRow, Box, Text } from '@pancakeswap/uikit'
+import React from 'react'
 import styled from 'styled-components'
-import { useProxyVeCakeBalance } from 'views/StakingDBRO/hooks/useProxyVeCakeBalance'
-import { useTargetUnlockTime } from 'views/StakingDBRO/hooks/useTargetUnlockTime'
-import { useVeCakeAmount } from 'views/StakingDBRO/hooks/useVeCakeAmount'
+import { useAccount, useChainId, useReadContract } from 'wagmi'
+import deployedContracts from 'config/abi/deployedContracts'
 import { MyVeCakeCard } from '../MyVeCakeCard'
 import { DataRow } from './DataBox'
-import { formatDate } from './format'
 
 const ValueText = styled(Text)`
   font-size: 16px;
@@ -32,24 +25,31 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
   customDataRow,
 }) => {
   const { t } = useTranslation()
-  const { cakeLockWeeks } = useLockCakeData()
-  const { isDesktop } = useMatchBreakpoints()
 
-  const unlockTimestamp = useTargetUnlockTime(Number(cakeLockWeeks) * WEEK)
-  const cakeAmountBN = useMemo(() => getDecimalAmount(new BN(cakeAmount)).toString(), [cakeAmount])
-  const veCakeAmountFromNative = useVeCakeAmount(cakeAmountBN, unlockTimestamp)
-  const { balance: proxyVeCakeBalance } = useProxyVeCakeBalance()
-  const veCakeAmount = useMemo(
-    () => proxyVeCakeBalance.plus(veCakeAmountFromNative),
-    [proxyVeCakeBalance, veCakeAmountFromNative],
-  )
+  const chainId = useChainId()
+  const { address: account } = useAccount()
 
-  const veCake = veCakeAmount ? getFullDisplayBalance(new BN(veCakeAmount), 18, 3) : '0'
-  const factor =
-    veCakeAmountFromNative && veCakeAmountFromNative
-      ? `${new BN(veCakeAmountFromNative).div(cakeAmountBN).toPrecision(2)}x`
-      : '0x'
-  const unlockOn = useMemo(() => formatDate(dayjs.unix(Number(unlockTimestamp))), [unlockTimestamp])
+  const contractConfig = deployedContracts[84532].DBROWrappedStaking
+  const contractDBRO = deployedContracts[84532].DecentralBros
+  const contractRYFT = deployedContracts[84532].RYFT
+
+  const { data: nftBalance } = useReadContract({
+    address: contractRYFT.address as `0x${string}`,
+    abi: contractRYFT.abi,
+    functionName: 'balanceOf',
+    args: [account as `0x${string}`, BigInt(0)],
+    chainId,
+    query: {
+      enabled: Boolean(account),
+      refetchInterval: 5_000,
+    },
+  })
+
+  const { data: tokenId } = useReadContract({
+    address: contractConfig.address as `0x${string}`,
+    abi: contractConfig.abi,
+    functionName: 'RYFT_TOKEN_ID',
+  })
 
   return (
     <>
@@ -57,7 +57,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
         {t('minting overview')}
       </Text>
       <Box padding={['16px 0', '16px 0', 12]}>
-        {customVeCakeCard ?? <MyVeCakeCard type="row" value="0" />}
+        {customVeCakeCard ?? <MyVeCakeCard type="row" value={String(nftBalance)} />}
 
         <AutoRow px={['0px', '0px', '16px']} py={['16px', '16px', '12px']} gap="8px">
           {customDataRow}
@@ -67,7 +67,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
                 {t('Token Id')}
               </Text>
             }
-            value={<ValueText>&bull; 0</ValueText>}
+            value={<ValueText>&bull; {String(tokenId) ?? 0}</ValueText>}
           />
           <DataRow
             label={

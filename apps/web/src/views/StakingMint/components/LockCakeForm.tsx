@@ -1,10 +1,15 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { FlexGap, Text, MintInput, Button } from '@pancakeswap/uikit'
-import { useState } from 'react'
+import { FlexGap, Text, MintInput, Button, useToast, Dots } from '@pancakeswap/uikit'
+import { useCallback, useState } from 'react'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import { useAccount, useChainId } from 'wagmi'
-import { useWriteApproveAndIncreaseLockAmountCallback } from 'views/StakingMint/hooks/useContractWrite'
+import { waitForTransactionReceipt, writeContract } from '@wagmi/core'
 import { ChainId } from '@pancakeswap/chains'
+import deployedContracts from 'config/abi/deployedContracts'
+import { parseUnits } from '@pancakeswap/utils/viem/parseUnits'
+import { config } from 'utils/wagmi'
+import { ToastDescriptionWithTx } from 'components/Toast'
+import { chainIdToTransakNetworkId } from 'views/BuyCrypto/constants'
 
 export const LockCakeForm: React.FC<{
   // show input field only
@@ -17,10 +22,117 @@ export const LockCakeForm: React.FC<{
   const { t } = useTranslation()
   const [mintValue, onMintChange] = useState('1')
   const [unwrapValue, onUnwrapChange] = useState('0')
+  const [isMinting, setIsMinting] = useState(false)
+  const [isUnwrapping, setIsUnwrapping] = useState(false)
   const { address: account } = useAccount()
   const chainId = useChainId()
+  const { toastSuccess, toastError } = useToast()
 
-  const handleModalOpen = useWriteApproveAndIncreaseLockAmountCallback(onDismiss)
+  const contractConfig = deployedContracts[84532].DBROWrappedStaking
+  const contractDBRO = deployedContracts[84532].DecentralBros
+  const contractRYFT = deployedContracts[84532].RYFT
+
+  const handleWrapDBRO = useCallback(async () => {
+    try {
+      setIsMinting(true)
+
+      const tokens = Number(mintValue) * 10
+
+      const tx = await writeContract(config, {
+        address: contractDBRO.address as `0x${string}`,
+        abi: contractDBRO.abi,
+        functionName: 'approve',
+        args: [contractConfig.address, parseUnits(String(tokens), 8)],
+        chainId,
+      })
+
+      await waitForTransactionReceipt(config, {
+        confirmations: 4,
+        hash: tx,
+        chainId,
+      })
+
+      const hash = await writeContract(config, {
+        address: contractConfig.address as `0x${string}`,
+        abi: contractConfig.abi,
+        functionName: 'wrapTokens',
+        args: [parseUnits(String(tokens), 8)],
+      })
+
+      await waitForTransactionReceipt(config, {
+        confirmations: 2,
+        hash,
+        chainId,
+      })
+
+      toastSuccess('Success!', <ToastDescriptionWithTx txHash={hash}>Minting complete.</ToastDescriptionWithTx>)
+    } catch (error) {
+      console.error('Wrapping DBRO failed:', error)
+
+      toastError('Error!', 'Failed to complete minting.')
+    } finally {
+      setIsMinting(false)
+    }
+  }, [
+    contractDBRO.address,
+    contractDBRO.abi,
+    contractConfig.address,
+    contractConfig.abi,
+    mintValue,
+    chainId,
+    toastSuccess,
+    toastError,
+  ])
+
+  const handleUnwrapDBRO = useCallback(async () => {
+    try {
+      setIsUnwrapping(true)
+
+      const tx = await writeContract(config, {
+        address: contractRYFT.address as `0x${string}`,
+        abi: contractRYFT.abi,
+        functionName: 'setApprovalForAll',
+        args: [contractConfig.address, true],
+        chainId,
+      })
+
+      await waitForTransactionReceipt(config, {
+        confirmations: 4,
+        hash: tx,
+        chainId,
+      })
+
+      const hash = await writeContract(config, {
+        address: contractConfig.address as `0x${string}`,
+        abi: contractConfig.abi,
+        functionName: 'unwrapNFT',
+        args: [BigInt(unwrapValue)],
+      })
+
+      await waitForTransactionReceipt(config, {
+        confirmations: 2,
+        hash,
+        chainId,
+      })
+
+      toastSuccess('Success!', <ToastDescriptionWithTx txHash={hash}>Unwrapping complete.</ToastDescriptionWithTx>)
+    } catch (error) {
+      console.error('Unwrapping DBRO failed:', error)
+
+      toastError('Error!', 'Failed to unwrap.')
+    } finally {
+      setIsUnwrapping(false)
+    }
+  }, [
+    contractRYFT.address,
+    contractRYFT.abi,
+    contractConfig.address,
+    contractConfig.abi,
+    chainId,
+    unwrapValue,
+    toastSuccess,
+    toastError,
+  ])
 
   return (
     <FlexGap justifyContent="space-between" flexWrap="wrap" gap="4px" width={['100%']} mb="24px">
@@ -53,8 +165,8 @@ export const LockCakeForm: React.FC<{
 
       <FlexGap gap="4px" alignItems="center" mb="24px" width="100%">
         {account ? (
-          <Button disabled={disabled} style={{ color: '#000' }} width="100%" onClick={handleModalOpen}>
-            {t('Mint NFTs')}
+          <Button disabled={disabled || isMinting} style={{ color: '#000' }} width="100%" onClick={handleWrapDBRO}>
+            {!isMinting ? 'Mint NFTs' : <Dots>Wrapping</Dots>}
           </Button>
         ) : (
           <ConnectWalletButton width="100%" />
@@ -90,8 +202,8 @@ export const LockCakeForm: React.FC<{
 
       <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
         {account ? (
-          <Button disabled={disabled} style={{ color: '#000' }} width="100%" onClick={handleModalOpen}>
-            {t('Unwrap NFTs')}
+          <Button disabled={disabled || isUnwrapping} style={{ color: '#000' }} width="100%" onClick={handleUnwrapDBRO}>
+            {!isUnwrapping ? 'Unwrap NFTs' : <Dots>Unwrapping</Dots>}
           </Button>
         ) : (
           <ConnectWalletButton width="100%" />
