@@ -93,11 +93,11 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
     functionName: 'totalRewardTokens',
   })
 
-  const { data: maxStake } = useReadContract({
-    address: contractConfig.address as `0x${string}`,
-    abi: contractConfig.abi,
-    functionName: 'MAX_STAKE',
-  })
+  // const { data: maxStake } = useReadContract({
+  //   address: contractConfig.address as `0x${string}`,
+  //   abi: contractConfig.abi,
+  //   functionName: 'MAX_STAKE',
+  // })
 
   const { data: dbroBalance } = useReadContract({
     abi: erc20ABI,
@@ -140,11 +140,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
                 {t('Max Stake')}
               </Text>
             }
-            value={
-              <ValueText>
-                &bull; {maxStake ? formatNumberWithCommas(formatUnits(BigInt(maxStake), 8)) : 0} DBRO
-              </ValueText>
-            }
+            value={<ValueText>&bull; 5,000,000 DBRO</ValueText>}
           />
           <DataRow
             label={

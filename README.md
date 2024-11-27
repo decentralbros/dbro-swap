@@ -1,8 +1,8 @@
 # DBRO Swap ⚡
 
-<p >
+<p>
   <a href="https://decentralbros.finance">
-      <img src="https://decentralbros.finance/readme.jpg" height="200">
+    <img src="https://decentralbros.finance/readme.jpg" height="200">
   </a>
 </p>
 
