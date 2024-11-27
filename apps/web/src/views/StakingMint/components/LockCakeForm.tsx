@@ -2,14 +2,20 @@ import { useTranslation } from '@pancakeswap/localization'
 import { FlexGap, Text, MintInput, Button, useToast, Dots } from '@pancakeswap/uikit'
 import { useCallback, useState } from 'react'
 import ConnectWalletButton from 'components/ConnectWalletButton'
-import { useAccount, useChainId } from 'wagmi'
+import { useAccount, useChainId, useReadContract } from 'wagmi'
 import { waitForTransactionReceipt, writeContract } from '@wagmi/core'
 import { ChainId } from '@pancakeswap/chains'
 import deployedContracts from 'config/abi/deployedContracts'
 import { parseUnits } from '@pancakeswap/utils/viem/parseUnits'
 import { config } from 'utils/wagmi'
 import { ToastDescriptionWithTx } from 'components/Toast'
-import { chainIdToTransakNetworkId } from 'views/BuyCrypto/constants'
+import { formatUnits } from '@pancakeswap/utils/viem/formatUnits'
+
+const formatNumberWithCommas = (value: string): string => {
+  const parts = value.split('.')
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  return parts.join('.')
+}
 
 export const LockCakeForm: React.FC<{
   // show input field only
@@ -71,6 +77,7 @@ export const LockCakeForm: React.FC<{
 
       toastError('Error!', 'Failed to complete minting.')
     } finally {
+      onMintChange('1')
       setIsMinting(false)
     }
   }, [
@@ -121,6 +128,7 @@ export const LockCakeForm: React.FC<{
 
       toastError('Error!', 'Failed to unwrap.')
     } finally {
+      onUnwrapChange('0')
       setIsUnwrapping(false)
     }
   }, [
@@ -134,17 +142,37 @@ export const LockCakeForm: React.FC<{
     toastError,
   ])
 
+  const { data: requiredDBRO } = useReadContract({
+    address: contractConfig.address as `0x${string}`,
+    abi: contractConfig.abi,
+    functionName: 'REQUIRED_DBRO',
+  })
+
   return (
     <FlexGap justifyContent="space-between" flexWrap="wrap" gap="4px" width={['100%']} mb="24px">
       {chainId === ChainId.BASE_SEPOLIA && (
-        <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
-          <Text color="textSubtle" fontSize={16} bold>
-            {t('Mint')}
-          </Text>
-          <Text color="textSubtle" fontSize={16} bold>
-            {t('NFTs')}
-          </Text>
-        </FlexGap>
+        <>
+          <FlexGap gap="4px" alignItems="center" width="100%">
+            <Text color="textSubtle" fontSize={16} bold>
+              {t('Mint & Wrap')}
+            </Text>
+            <Text color="textSubtle" fontSize={16} bold>
+              {t('NFTs')}
+            </Text>
+          </FlexGap>
+
+          <FlexGap>
+            <Text color="textSubtle" fontSize={16} bold mr={1}>
+              {t('Required:')}
+            </Text>
+            <Text color="secondary" fontSize={16} bold mr={1}>
+              {requiredDBRO ? `${formatNumberWithCommas(formatUnits(BigInt(requiredDBRO.toString()), 8))} ` : 0}
+            </Text>
+            <Text color="secondary" fontSize={16} bold>
+              DBRO
+            </Text>
+          </FlexGap>
+        </>
       )}
 
       {chainId !== ChainId.BASE_SEPOLIA && (
@@ -165,8 +193,13 @@ export const LockCakeForm: React.FC<{
 
       <FlexGap gap="4px" alignItems="center" mb="24px" width="100%">
         {account ? (
-          <Button disabled={disabled || isMinting} style={{ color: '#000' }} width="100%" onClick={handleWrapDBRO}>
-            {!isMinting ? 'Mint NFTs' : <Dots>Wrapping</Dots>}
+          <Button
+            disabled={chainId !== ChainId.BASE_SEPOLIA || isMinting}
+            style={{ color: '#000' }}
+            width="100%"
+            onClick={handleWrapDBRO}
+          >
+            {!isMinting ? 'Mint & Wrap' : <Dots>Wrapping</Dots>}
           </Button>
         ) : (
           <ConnectWalletButton width="100%" />
@@ -174,14 +207,23 @@ export const LockCakeForm: React.FC<{
       </FlexGap>
 
       {chainId === ChainId.BASE_SEPOLIA && (
-        <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
-          <Text color="textSubtle" fontSize={16} bold>
-            {t('Unwrap')}
-          </Text>
-          <Text color="textSubtle" fontSize={16} bold>
-            {t('NFTs')}
-          </Text>
-        </FlexGap>
+        <>
+          <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
+            <Text color="textSubtle" fontSize={16} bold>
+              {t('Unwrap')}
+            </Text>
+            <Text color="textSubtle" fontSize={16} bold>
+              {t('NFTs')}
+            </Text>
+          </FlexGap>
+
+          <FlexGap gap="4px" alignItems="center" width="100%">
+            <Text color="warning" fontSize={16} bold>
+              If you unwrap your NFT you will forfeit all utilities and must have at least{' '}
+              <span style={{ color: '#1bf696' }}>1 wrapped NFT</span> to redeem utilities
+            </Text>
+          </FlexGap>
+        </>
       )}
 
       {chainId !== ChainId.BASE_SEPOLIA && (
@@ -202,15 +244,18 @@ export const LockCakeForm: React.FC<{
 
       <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
         {account ? (
-          <Button disabled={disabled || isUnwrapping} style={{ color: '#000' }} width="100%" onClick={handleUnwrapDBRO}>
-            {!isUnwrapping ? 'Unwrap NFTs' : <Dots>Unwrapping</Dots>}
+          <Button
+            disabled={chainId !== ChainId.BASE_SEPOLIA || isMinting || isUnwrapping}
+            style={{ color: '#000' }}
+            width="100%"
+            onClick={handleUnwrapDBRO}
+          >
+            {!isUnwrapping ? 'Unwrap' : <Dots>Unwrapping</Dots>}
           </Button>
         ) : (
           <ConnectWalletButton width="100%" />
         )}
       </FlexGap>
-
-      {account && <></>}
     </FlexGap>
   )
 }

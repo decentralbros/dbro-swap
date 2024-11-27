@@ -42,8 +42,8 @@ export const BENEFITS: Record<BenefitCardType, BenefitItem> = {
   gaugesVoting: {
     headImg: '/images/cake-staking/benefit-gauges-voting.png',
     title: <Trans>Utility NFTs</Trans>,
-    subTitle: <Trans>NFTs minted</Trans>,
-    btnText: <Trans>Mint Now</Trans>,
+    subTitle: <Trans>Claimed NFTs</Trans>,
+    btnText: <Trans>Mint & Wrap Now</Trans>,
     link: '/staking/mint',
     desc: [
       <Trans>Earn or mint DBRO wrapped utility NFTs</Trans>,
@@ -145,28 +145,16 @@ export const BenefitCard: React.FC<{
               </Heading>
               {headSlot}
             </Flex>
-            {info.subTitle ? (
-              <Flex flexDirection="column">
-                <Text fontSize="12px" color="textSubtle" lineHeight="120%">
-                  {info.subTitle}
-                </Text>
-                <Text fontSize="16px" bold lineHeight="120%">
-                  {dataText ?? '-'}
-                </Text>
-              </Flex>
-            ) : null}
           </FlexGap>
         </FlexGap>
-        <div>
-          <Text lineHeight="130%">
-            <StyleUl>
-              {info.desc.map((item) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <li key={info.key}>{item}</li>
-              ))}
-            </StyleUl>
-          </Text>
-        </div>
+        <Text lineHeight="130%">
+          <StyleUl>
+            {info.desc.map((item) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <li key={info.key}>{item}</li>
+            ))}
+          </StyleUl>
+        </Text>
         <Flex style={{ gap: 10 }}>
           {button && info.link ? (
             <Link href={info.link} style={{ width: '100%' }}>

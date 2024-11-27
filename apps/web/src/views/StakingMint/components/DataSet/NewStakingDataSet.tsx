@@ -30,7 +30,6 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
   const { address: account } = useAccount()
 
   const contractConfig = deployedContracts[84532].DBROWrappedStaking
-  const contractDBRO = deployedContracts[84532].DecentralBros
   const contractRYFT = deployedContracts[84532].RYFT
 
   const { data: nftBalance } = useReadContract({
@@ -49,6 +48,13 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
     address: contractConfig.address as `0x${string}`,
     abi: contractConfig.abi,
     functionName: 'RYFT_TOKEN_ID',
+  })
+
+  const { data: totalNFTSupply } = useReadContract({
+    address: contractRYFT.address as `0x${string}`,
+    abi: contractRYFT.abi,
+    functionName: 'totalSupply',
+    args: [BigInt(0)],
   })
 
   return (
@@ -72,10 +78,10 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
           <DataRow
             label={
               <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Total Minted')}
+                {t('Unwrapping Fee')}
               </Text>
             }
-            value={<ValueText>&bull; 5</ValueText>}
+            value={<ValueText>&bull; 1%</ValueText>}
           />
           <DataRow
             label={
@@ -83,7 +89,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
                 {t('Wrapped DBRO')}
               </Text>
             }
-            value={<ValueText>&bull; 500,000</ValueText>}
+            value={<ValueText>&bull; {nftBalance ? (Number(nftBalance) * 10).toLocaleString() : 0}</ValueText>}
           />
           <DataRow
             label={
@@ -92,6 +98,14 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
               </Text>
             }
             value={<ValueText>&bull; $50</ValueText>}
+          />
+          <DataRow
+            label={
+              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                {t('Claimed NFTs')}
+              </Text>
+            }
+            value={<ValueText>&bull; {String(totalNFTSupply) ?? 0}</ValueText>}
           />
         </AutoRow>
       </Box>

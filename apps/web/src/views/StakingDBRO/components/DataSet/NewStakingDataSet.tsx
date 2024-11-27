@@ -93,6 +93,19 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
     functionName: 'totalRewardTokens',
   })
 
+  const { data: maxStake } = useReadContract({
+    address: contractConfig.address as `0x${string}`,
+    abi: contractConfig.abi,
+    functionName: 'MAX_STAKE',
+  })
+
+  const { data: dbroBalance } = useReadContract({
+    abi: erc20ABI,
+    address: DBRO_CONTRACT,
+    functionName: 'balanceOf',
+    args: [RYFT_ADDRESS],
+  })
+
   return (
     <>
       <Text fontSize={12} bold color="secondary" textTransform="uppercase">
@@ -121,22 +134,17 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
               </ValueText>
             }
           />
-
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Min. Stake')}
-              </Text>
-            }
-            value={<ValueText>&bull; 25k DBRO</ValueText>}
-          />
           <DataRow
             label={
               <Text fontSize={14} color="textSubtle" textTransform="capitalize">
                 {t('Max Stake')}
               </Text>
             }
-            value={<ValueText>&bull; 5M DBRO</ValueText>}
+            value={
+              <ValueText>
+                &bull; {maxStake ? formatNumberWithCommas(formatUnits(BigInt(maxStake), 8)) : 0} DBRO
+              </ValueText>
+            }
           />
           <DataRow
             label={
@@ -145,14 +153,6 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
               </Text>
             }
             value={<ValueText>&bull; {`${rewardRate ?? 0}%`}</ValueText>}
-          />
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Wrapping Fee')}
-              </Text>
-            }
-            value={<ValueText>&bull; 1%</ValueText>}
           />
           <DataRow
             label={
@@ -167,12 +167,24 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
           <DataRow
             label={
               <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Total Staked')}
+                {t('Stake Pool')}
               </Text>
             }
             value={
               <ValueText>
                 &bull; <>{(contractTokens as bigint) && formatBalance(BigInt(String(contractTokens)), 8)}</> DBRO
+              </ValueText>
+            }
+          />
+          <DataRow
+            label={
+              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                {t('Pool Value')}
+              </Text>
+            }
+            value={
+              <ValueText>
+                &bull; <>$0</>
               </ValueText>
             }
           />
@@ -185,6 +197,42 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
             value={
               <ValueText>
                 &bull; <>{(treasuryBalance as bigint) && formatBalance(BigInt(String(treasuryBalance)), 8)}</> DBRO
+              </ValueText>
+            }
+          />
+          <DataRow
+            label={
+              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                {t('Wallet Value')}{' '}
+              </Text>
+            }
+            value={
+              <ValueText>
+                &bull; <>$0</>
+              </ValueText>
+            }
+          />
+          <DataRow
+            label={
+              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                {t('Total Wrapped')}
+              </Text>
+            }
+            value={
+              <ValueText>
+                &bull; <>{(dbroBalance as bigint) && formatBalance(BigInt(String(dbroBalance)), 8)}</> DBRO
+              </ValueText>
+            }
+          />
+          <DataRow
+            label={
+              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                {t('Wrapped Value')}
+              </Text>
+            }
+            value={
+              <ValueText>
+                &bull; <>$0</>
               </ValueText>
             }
           />

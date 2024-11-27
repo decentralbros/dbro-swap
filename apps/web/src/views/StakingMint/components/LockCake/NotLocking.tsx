@@ -1,7 +1,6 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { Box, ColumnCenter, Grid, Heading, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { useLockCakeData } from 'state/vecake/hooks'
-import { useBSCCakeBalance } from '../../hooks/useBSCCakeBalance'
 import { NewStakingDataSet } from '../DataSet'
 import { LockCakeForm } from '../LockCakeForm'
 import { StyledCard } from './styled'

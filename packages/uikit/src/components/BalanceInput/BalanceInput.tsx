@@ -7,7 +7,7 @@ import { BalanceInputProps } from "./types";
 
 const BalanceInput: React.FC<React.PropsWithChildren<BalanceInputProps>> = ({
   value,
-  placeholder = "0.0",
+  placeholder = "0",
   onUserInput,
   currencyValue,
   inputProps,

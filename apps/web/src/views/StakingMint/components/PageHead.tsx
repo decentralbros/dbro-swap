@@ -42,7 +42,7 @@ const Header = () => {
   return (
     <Flex alignItems="baseline" justifyContent={staking ? 'space-between' : undefined} flexDirection="column">
       <Heading mb="24px" scale="xl" color="secondary">
-        {t('Mint With DBRO!')}
+        {t('Mint & Wrap DBRO!')}
       </Heading>
     </Flex>
   )

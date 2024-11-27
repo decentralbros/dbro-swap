@@ -91,6 +91,7 @@ export const CakeInput: React.FC<{
         chainId,
       })
 
+      onUserInput('')
       toastSuccess('Success!', <ToastDescriptionWithTx txHash={hash}>Staking complete.</ToastDescriptionWithTx>)
     } catch (error) {
       console.error('Staking failed:', error)
@@ -109,6 +110,7 @@ export const CakeInput: React.FC<{
     contractConfig.abi,
     chainId,
     toastSuccess,
+    onUserInput,
     dbroBalance,
     toastError,
   ])
@@ -137,11 +139,12 @@ export const CakeInput: React.FC<{
     } catch (error) {
       console.error('Unstaking failed:', error)
 
+      onUserInput('')
       toastError('Error!', 'Failed to complete unstaking.')
     } finally {
       setIsUnstaking(false)
     }
-  }, [account, contractConfig.address, contractConfig.abi, chainId, toastSuccess, toastError])
+  }, [account, contractConfig.address, contractConfig.abi, chainId, toastSuccess, onUserInput, toastError])
 
   const handleClaim = useCallback(async () => {
     if (!ChainId.BASE_SEPOLIA || !account) return
