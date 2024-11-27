@@ -26,8 +26,8 @@ export const LockCakeForm: React.FC<{
   onDismiss?: () => void
 }> = ({ fieldOnly, disabled, customVeCakeCard, hideLockCakeDataSetStyle, onDismiss }) => {
   const { t } = useTranslation()
-  const [mintValue, onMintChange] = useState('1')
-  const [unwrapValue, onUnwrapChange] = useState('0')
+  const [mintValue, onMintChange] = useState('')
+  const [unwrapValue, onUnwrapChange] = useState('')
   const [isMinting, setIsMinting] = useState(false)
   const [isUnwrapping, setIsUnwrapping] = useState(false)
   const { address: account } = useAccount()
@@ -77,7 +77,7 @@ export const LockCakeForm: React.FC<{
 
       toastError('Error!', 'Failed to complete minting.')
     } finally {
-      onMintChange('1')
+      onMintChange('')
       setIsMinting(false)
     }
   }, [
@@ -128,7 +128,7 @@ export const LockCakeForm: React.FC<{
 
       toastError('Error!', 'Failed to unwrap.')
     } finally {
-      onUnwrapChange('0')
+      onUnwrapChange('')
       setIsUnwrapping(false)
     }
   }, [
