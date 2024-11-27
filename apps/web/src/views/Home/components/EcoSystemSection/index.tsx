@@ -430,7 +430,7 @@ const EcoSystemSection: React.FC = () => {
         >
           <Image
             style={{ marginLeft: isMobile ? -32 : -72, transform: 'scaleX(-1)' }}
-            src="/images/wallets/bunny.webp"
+            src="/images/wallets/bolt-bro.webp"
             alt="trader girl"
             width={344}
             height={360}
