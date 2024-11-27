@@ -1,6 +1,6 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { FlexGap, Text, MintInput, Button, useToast, Dots } from '@pancakeswap/uikit'
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import { useAccount, useChainId, useReadContract } from 'wagmi'
 import { waitForTransactionReceipt, writeContract } from '@wagmi/core'
@@ -10,6 +10,7 @@ import { parseUnits } from '@pancakeswap/utils/viem/parseUnits'
 import { config } from 'utils/wagmi'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import { formatUnits } from '@pancakeswap/utils/viem/formatUnits'
+import { useBSCCakeBalance } from '../hooks/useBSCCakeBalance'
 
 const formatNumberWithCommas = (value: string): string => {
   const parts = value.split('.')
@@ -148,6 +149,49 @@ export const LockCakeForm: React.FC<{
     functionName: 'REQUIRED_DBRO',
   })
 
+  const _cakeBalance = useBSCCakeBalance()
+
+  const dbroBalance = parseInt(formatUnits(_cakeBalance, 8)) ?? 0
+
+  const useCanMint = useMemo((): boolean => {
+    try {
+      if (!dbroBalance || !requiredDBRO) {
+        return false
+      }
+
+      const balanceAmount = BigInt(String(dbroBalance))
+      const requiredAmount = BigInt(String(requiredDBRO))
+      const formattedAmount = BigInt(formatUnits(requiredAmount, 8))
+
+      return balanceAmount >= formattedAmount
+    } catch {
+      return false
+    }
+  }, [dbroBalance, requiredDBRO])
+
+  const { data: nftBalance } = useReadContract({
+    address: contractRYFT.address as `0x${string}`,
+    abi: contractRYFT.abi,
+    functionName: 'balanceOf',
+    args: [account as `0x${string}`, BigInt(0)],
+    chainId,
+    query: {
+      enabled: Boolean(account),
+      refetchInterval: 5_000,
+    },
+  })
+
+  const useNFTBalance = useMemo((): boolean => {
+    try {
+      if (!nftBalance) {
+        return false
+      }
+      return BigInt(String(nftBalance)) > 0
+    } catch {
+      return false
+    }
+  }, [nftBalance])
+
   return (
     <FlexGap justifyContent="space-between" flexWrap="wrap" gap="4px" width={['100%']} mb="24px">
       {chainId === ChainId.BASE_SEPOLIA && (
@@ -194,7 +238,7 @@ export const LockCakeForm: React.FC<{
       <FlexGap gap="4px" alignItems="center" mb="24px" width="100%">
         {account ? (
           <Button
-            disabled={chainId !== ChainId.BASE_SEPOLIA || isMinting}
+            disabled={chainId !== ChainId.BASE_SEPOLIA || isMinting || !useCanMint}
             style={{ color: '#000' }}
             width="100%"
             onClick={handleWrapDBRO}
@@ -238,7 +282,7 @@ export const LockCakeForm: React.FC<{
 
           <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
             <Button
-              disabled={chainId !== ChainId.BASE_SEPOLIA || isUnwrapping}
+              disabled={chainId !== ChainId.BASE_SEPOLIA || isUnwrapping || !useNFTBalance}
               style={{ color: '#000' }}
               width="100%"
               onClick={handleUnwrapDBRO}

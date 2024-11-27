@@ -1,6 +1,6 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { AutoRow, Box, Text } from '@pancakeswap/uikit'
-import React from 'react'
+import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import { useAccount, useChainId, useReadContract } from 'wagmi'
 import deployedContracts from 'config/abi/deployedContracts'
@@ -57,6 +57,24 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
     args: [BigInt(0)],
   })
 
+  const { data: unwrapFEE } = useReadContract({
+    address: contractConfig.address as `0x${string}`,
+    abi: contractConfig.abi,
+    functionName: 'UNWRAP_FEE_PERCENT',
+  })
+
+  const useUnwrapFee = useMemo((): bigint => {
+    try {
+      if (!unwrapFEE) {
+        return BigInt(0)
+      }
+
+      return BigInt(String(unwrapFEE))
+    } catch {
+      return BigInt(0)
+    }
+  }, [unwrapFEE])
+
   return (
     <>
       <Text fontSize={12} bold color="secondary" textTransform="uppercase">
@@ -81,7 +99,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
                 {t('Unwrapping Fee')}
               </Text>
             }
-            value={<ValueText>&bull; 1%</ValueText>}
+            value={<ValueText>&bull; {`${useUnwrapFee}%`}</ValueText>}
           />
           <DataRow
             label={

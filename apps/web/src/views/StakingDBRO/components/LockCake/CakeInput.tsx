@@ -10,13 +10,13 @@ import {
   Text,
   useToast,
 } from '@pancakeswap/uikit'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import { ChainId } from '@pancakeswap/chains'
 import deployedContracts from 'config/abi/deployedContracts'
 import { waitForTransactionReceipt, writeContract } from '@wagmi/core'
 import { config } from 'utils/wagmi'
-import { useAccount, useChainId } from 'wagmi'
+import { useAccount, useChainId, useReadContract } from 'wagmi'
 import { formatUnits } from '@pancakeswap/utils/viem/formatUnits'
 import { parseUnits } from '@pancakeswap/utils/viem/parseUnits'
 import { ToastDescriptionWithTx } from 'components/Toast'
@@ -44,12 +44,65 @@ export const CakeInput: React.FC<{
   const _cakeBalance = useBSCCakeBalance()
 
   const dbroBalance = parseInt(formatUnits(_cakeBalance, 8)) ?? 0
-  const canStake = BigInt(dbroBalance) >= BigInt(500000)
+  const canStake = BigInt(dbroBalance) >= BigInt(100000)
 
   const chainId = useChainId()
 
   const contractConfig = deployedContracts[84532].DBROWrappedStaking
   const contractDBRO = deployedContracts[84532].DecentralBros
+
+  const { data: requiredDBRO } = useReadContract({
+    address: contractConfig.address as `0x${string}`,
+    abi: contractConfig.abi,
+    functionName: 'REQUIRED_DBRO',
+  })
+
+  const { data: stakeInfo } = useReadContract({
+    address: contractConfig.address as `0x${string}`,
+    abi: contractConfig.abi,
+    functionName: 'getStakeInfoAndPendingRewards',
+    args: [account as `0x${string}`],
+    query: {
+      enabled: Boolean(account),
+    },
+  })
+
+  const canUnstake = useMemo((): boolean => {
+    if (!stakeInfo || !Array.isArray(stakeInfo) || stakeInfo.length === 0) {
+      return false
+    }
+
+    if (!stakeInfo[0]?.amountStaked) {
+      return false
+    }
+
+    try {
+      const stakedAmount = BigInt(stakeInfo[0].amountStaked)
+
+      return stakedAmount > BigInt(0)
+    } catch (error) {
+      return false
+    }
+  }, [stakeInfo])
+
+  const canClaim = useMemo((): boolean => {
+    if (!stakeInfo || !Array.isArray(stakeInfo) || stakeInfo.length === 0) {
+      return false
+    }
+
+    if (!stakeInfo[1] || !requiredDBRO) {
+      return false
+    }
+
+    try {
+      const stakedAmount = BigInt(stakeInfo[1])
+      const requiredAmount = requiredDBRO as bigint
+
+      return stakedAmount >= requiredAmount
+    } catch (error) {
+      return false
+    }
+  }, [stakeInfo, requiredDBRO])
 
   const handleStake = useCallback(async () => {
     if (!ChainId.BASE_SEPOLIA || !account) return
@@ -292,7 +345,7 @@ export const CakeInput: React.FC<{
           </Button>
 
           <Button
-            disabled={!canStake || isUnstaking}
+            disabled={!canUnstake || isUnstaking}
             style={{ color: '#000' }}
             width={['100%']}
             mx="10%"
@@ -302,7 +355,7 @@ export const CakeInput: React.FC<{
             {!isUnstaking ? 'Unstake DBRO' : <Dots>Unstaking</Dots>}
           </Button>
 
-          <Button disabled={!canStake || isClaiming} style={{ color: '#000' }} width={['100%']} onClick={handleClaim}>
+          <Button disabled={!canClaim || isClaiming} style={{ color: '#000' }} width={['100%']} onClick={handleClaim}>
             {!isClaiming ? 'Claim & Wrap NFTs' : <Dots>Wrapping</Dots>}
           </Button>
         </Flex>

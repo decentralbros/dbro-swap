@@ -14,5 +14,7 @@ export const useBSCCakeBalance = () => {
 
   const { balance } = useTokenBalance(cakeAddress, false, ChainId.BASE_SEPOLIA)
 
-  return balance
+  const bigInt = BigInt(balance.integerValue().toString())
+
+  return bigInt
 }
