@@ -10,7 +10,7 @@ import type { Swiper as SwiperClass } from 'swiper/types'
 const IntroSteps = [
   {
     title: <Trans>Your first step in the DeFi world</Trans>,
-    icon: '/images/wallets/bolt-bro.webp',
+    icon: '/images/wallets/bolty.webp',
     description: (
       <Trans>A Web3 Wallet allows you to send and receive crypto assets like ETH, NFTs, and much more.</Trans>
     ),
