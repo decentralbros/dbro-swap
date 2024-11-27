@@ -341,7 +341,7 @@ export const CakeInput: React.FC<{
       {account && (
         <Flex flexDirection={['column']} alignItems="center" width="100%">
           <Button disabled={!canStake || isStaking} style={{ color: '#000' }} width={['100%']} onClick={handleStake}>
-            {!isStaking ? 'Stake DBRO' : <Dots>Staking</Dots>}
+            {!isStaking ? 'Stake' : <Dots>Staking</Dots>}
           </Button>
 
           <Button
@@ -352,11 +352,11 @@ export const CakeInput: React.FC<{
             my="24px"
             onClick={handleUnstake}
           >
-            {!isUnstaking ? 'Unstake DBRO' : <Dots>Unstaking</Dots>}
+            {!isUnstaking ? 'Unstake' : <Dots>Unstaking</Dots>}
           </Button>
 
           <Button disabled={!canClaim || isClaiming} style={{ color: '#000' }} width={['100%']} onClick={handleClaim}>
-            {!isClaiming ? 'Claim & Wrap NFTs' : <Dots>Wrapping</Dots>}
+            {!isClaiming ? 'Mint & Wrap' : <Dots>Wrapping</Dots>}
           </Button>
         </Flex>
       )}
