@@ -43,7 +43,7 @@ export const BENEFITS: Record<BenefitCardType, BenefitItem> = {
     headImg: '/images/cake-staking/benefit-gauges-voting.png',
     title: <Trans>Utility NFTs</Trans>,
     subTitle: <Trans>Claimed NFTs</Trans>,
-    btnText: <Trans>Mint & Wrap Now</Trans>,
+    btnText: <Trans>Mint & Wrap</Trans>,
     link: '/staking/mint',
     desc: [
       <Trans>Earn or mint DBRO wrapped utility NFTs</Trans>,

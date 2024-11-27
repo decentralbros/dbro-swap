@@ -178,7 +178,7 @@ export const LockCakeForm: React.FC<{
       {chainId !== ChainId.BASE_SEPOLIA && (
         <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
           <Text color="warning" fontSize={16} bold>
-            Please switch to Base network to mint
+            Please switch to Base network to mint or unwrap
           </Text>
         </FlexGap>
       )}
@@ -219,43 +219,35 @@ export const LockCakeForm: React.FC<{
 
           <FlexGap gap="4px" alignItems="center" width="100%">
             <Text color="warning" fontSize={16} bold>
-              If you unwrap your NFT you will forfeit all utilities and must have at least{' '}
+              Unwrapping your NFT will forfeit all utilities, and you must have at least{' '}
               <span style={{ color: '#1bf696' }}>1 wrapped NFT</span> to redeem utilities
             </Text>
           </FlexGap>
         </>
       )}
 
-      {chainId !== ChainId.BASE_SEPOLIA && (
-        <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
-          <Text color="warning" fontSize={16} bold>
-            Please switch to Base network to unwrap
-          </Text>
-        </FlexGap>
+      {account && (
+        <>
+          <MintInput
+            width={['100%']}
+            mb="8px"
+            value={unwrapValue}
+            onUserInput={onUnwrapChange}
+            inputProps={{ style: { textAlign: 'left', height: '20px' }, disabled }}
+          />
+
+          <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
+            <Button
+              disabled={chainId !== ChainId.BASE_SEPOLIA || isMinting || isUnwrapping}
+              style={{ color: '#000' }}
+              width="100%"
+              onClick={handleUnwrapDBRO}
+            >
+              {!isUnwrapping ? 'Unwrap' : <Dots>Unwrapping</Dots>}
+            </Button>
+          </FlexGap>
+        </>
       )}
-
-      <MintInput
-        width={['100%']}
-        mb="8px"
-        value={unwrapValue}
-        onUserInput={onUnwrapChange}
-        inputProps={{ style: { textAlign: 'left', height: '20px' }, disabled }}
-      />
-
-      <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
-        {account ? (
-          <Button
-            disabled={chainId !== ChainId.BASE_SEPOLIA || isMinting || isUnwrapping}
-            style={{ color: '#000' }}
-            width="100%"
-            onClick={handleUnwrapDBRO}
-          >
-            {!isUnwrapping ? 'Unwrap' : <Dots>Unwrapping</Dots>}
-          </Button>
-        ) : (
-          <ConnectWalletButton width="100%" />
-        )}
-      </FlexGap>
     </FlexGap>
   )
 }
