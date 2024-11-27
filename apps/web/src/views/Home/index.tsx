@@ -5,6 +5,7 @@ import Hero from './components/Hero'
 import { InnerWedgeWrapper, OuterWedgeWrapper, WedgeTopLeft } from './components/WedgeSvgs'
 import EcoSystemSection from './components/EcoSystemSection'
 import Footer from './components/Footer'
+import CommunitySection from './components/CommunitySection'
 
 const StyledHeroSection = styled(PageSection)`
   padding-top: 16px;
@@ -40,7 +41,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
             background: linear-gradient(180deg, #ffffff 22%, #d7caec 100%);
           }
           [data-theme='dark'] #home-2 .page-bg {
-            background: #0c0e25;
+            background: #000;
           }
           #home-3 .page-bg {
             background: linear-gradient(180deg, #6fb6f1 0%, #eaf2f6 100%);
@@ -135,17 +136,16 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         </OuterWedgeWrapper> */}
       {/* </PageSection> */}
 
-      {/* <PageSection
+      <PageSection
         innerProps={{ style: HomeSectionContainerStyles }}
         containerProps={{
           id: 'home-2',
         }}
         index={2}
         hasCurvedDivider={false}
-      > */}
-      {/* <RightTopBox /> */}
-      {/* <CommunitySection />
-      </PageSection> */}
+      >
+        <CommunitySection />
+      </PageSection>
 
       {/* <PageSection
         innerProps={{

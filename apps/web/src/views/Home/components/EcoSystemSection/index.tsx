@@ -317,7 +317,7 @@ const useDecentralBrosData = () => {
       },
       {
         title: t('Lottery'),
-        description: t('Coming soon...'),
+        description: t('Play to win your favorite tokens, coming soon...'),
         ctaTitle: t('Buy Tickets'),
         image: `/images/lottery/ticket-r.png`,
         defaultImage: `/images/lottery/ticket-r.png`,

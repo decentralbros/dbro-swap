@@ -72,7 +72,7 @@ const CommunitySection = () => {
         <RightBottomBox />
         <LeftBottomBox />
       </BgWrapper> */}
-      <TransparentFrame isDark={theme.isDark}>
+      <TransparentFrame isDark={false}>
         <Flex flexDirection="column" alignItems="center" justifyContent="center">
           <Flex
             style={{ gap: isMobile ? 0 : 8 }}
@@ -87,10 +87,10 @@ const CommunitySection = () => {
             </Heading>
           </Flex>
           <Text mb="40px" color="textSubtle" fontWeight={600} textAlign="center">
-            {t('Together we can make the PancakeSwap community even stronger')}
+            {t('Together we can make the DBRO Swap community even stronger')}
           </Text>
           <Flex flexDirection="row" flexWrap="wrap" alignItems="center" style={{ gap: 24 }} justifyContent="center">
-            <CommunitySummary />
+            {/* <CommunitySummary /> */}
             {/* <StyledSwiper
               modules={[Autoplay, Pagination, EffectFade]}
               spaceBetween={50}

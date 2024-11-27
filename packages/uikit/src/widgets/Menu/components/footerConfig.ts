@@ -39,23 +39,19 @@ export const footerLinks: (t: ContextApi["t"]) => FooterLinkType[] = (t) => [
       // },
     ],
   },
-  // {
-  //   label: "Business",
-  //   items: [
-  //     {
-  //       label: t("Farms and Syrup Pools"),
-  //       href: "https://docs.pancakeswap.finance/ecosystem-and-partnerships/business-partnerships/syrup-pools-and-farms",
-  //     },
-  //     {
-  //       label: t("IFO"),
-  //       href: "https://docs.pancakeswap.finance/ecosystem-and-partnerships/business-partnerships/initial-farm-offerings-ifos",
-  //     },
-  //     {
-  //       label: t("NFT Marketplace"),
-  //       href: "https://docs.pancakeswap.finance/ecosystem-and-partnerships/business-partnerships/nft-market-applications",
-  //     },
-  //   ],
-  // },
+  {
+    label: "Community",
+    items: [
+      {
+        label: t("X.com"),
+        href: "https://x.com/DecentralBros_",
+      },
+      {
+        label: t("Telegram"),
+        href: "https://t.me/DecentralBros",
+      },
+    ],
+  },
   {
     label: t("Developers"),
     items: [
