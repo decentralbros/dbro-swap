@@ -206,7 +206,7 @@ export const LockCakeForm: React.FC<{
         )}
       </FlexGap>
 
-      {chainId === ChainId.BASE_SEPOLIA && (
+      {account && (
         <>
           <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
             <Text color="textSubtle" fontSize={16} bold>
