@@ -71,7 +71,6 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
     args: [account as `0x${string}`],
     query: {
       enabled: Boolean(account),
-      refetchInterval: 10_000,
     },
   })
 

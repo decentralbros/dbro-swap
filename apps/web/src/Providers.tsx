@@ -10,7 +10,14 @@ import { createWagmiConfig } from 'utils/wagmi'
 import { WagmiProvider } from 'wagmi'
 
 // Create a client
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5000,
+      refetchInterval: 10000,
+    },
+  },
+})
 
 const StyledUIKitProvider: React.FC<React.PropsWithChildren> = ({ children, ...props }) => {
   return (

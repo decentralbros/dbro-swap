@@ -238,7 +238,7 @@ export const LockCakeForm: React.FC<{
 
           <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
             <Button
-              disabled={chainId !== ChainId.BASE_SEPOLIA || isMinting || isUnwrapping}
+              disabled={chainId !== ChainId.BASE_SEPOLIA || isUnwrapping}
               style={{ color: '#000' }}
               width="100%"
               onClick={handleUnwrapDBRO}
