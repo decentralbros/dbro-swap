@@ -39,59 +39,6 @@ export const LockCakeForm: React.FC<{
   const contractDBRO = deployedContracts[8453].DecentralBros
   const contractRYFT = deployedContracts[8453].RYFT
 
-  const handleWrapDBRO = useCallback(async () => {
-    try {
-      setIsMinting(true)
-
-      const tokens = Number(mintValue) * 10
-
-      const tx = await writeContract(config, {
-        address: contractDBRO.address as `0x${string}`,
-        abi: contractDBRO.abi,
-        functionName: 'approve',
-        args: [contractConfig.address, parseUnits(String(tokens), 8)],
-        chainId,
-      })
-
-      await waitForTransactionReceipt(config, {
-        confirmations: 4,
-        hash: tx,
-        chainId,
-      })
-
-      const hash = await writeContract(config, {
-        address: contractConfig.address as `0x${string}`,
-        abi: contractConfig.abi,
-        functionName: 'wrapTokens',
-        args: [parseUnits(String(tokens), 8)],
-      })
-
-      await waitForTransactionReceipt(config, {
-        confirmations: 2,
-        hash,
-        chainId,
-      })
-
-      toastSuccess('Success!', <ToastDescriptionWithTx txHash={hash}>Minting complete.</ToastDescriptionWithTx>)
-    } catch (error) {
-      console.error('Wrapping DBRO failed:', error)
-
-      toastError('Error!', 'Failed to complete minting.')
-    } finally {
-      onMintChange('')
-      setIsMinting(false)
-    }
-  }, [
-    contractDBRO.address,
-    contractDBRO.abi,
-    contractConfig.address,
-    contractConfig.abi,
-    mintValue,
-    chainId,
-    toastSuccess,
-    toastError,
-  ])
-
   const handleUnwrapDBRO = useCallback(async () => {
     try {
       setIsUnwrapping(true)
@@ -191,6 +138,63 @@ export const LockCakeForm: React.FC<{
       return false
     }
   }, [nftBalance])
+
+  const handleWrapDBRO = useCallback(async () => {
+    if (!requiredDBRO) return
+
+    try {
+      setIsMinting(true)
+
+      const tokens = Number(mintValue) * Number(requiredDBRO)
+
+      alert(tokens)
+
+      const tx = await writeContract(config, {
+        address: contractDBRO.address as `0x${string}`,
+        abi: contractDBRO.abi,
+        functionName: 'approve',
+        args: [contractConfig.address, parseUnits(String(tokens), 8)],
+        chainId,
+      })
+
+      await waitForTransactionReceipt(config, {
+        confirmations: 4,
+        hash: tx,
+        chainId,
+      })
+
+      const hash = await writeContract(config, {
+        address: contractConfig.address as `0x${string}`,
+        abi: contractConfig.abi,
+        functionName: 'wrapTokens',
+        args: [parseUnits(String(tokens), 8)],
+      })
+
+      await waitForTransactionReceipt(config, {
+        confirmations: 2,
+        hash,
+        chainId,
+      })
+
+      toastSuccess('Success!', <ToastDescriptionWithTx txHash={hash}>Minting complete.</ToastDescriptionWithTx>)
+    } catch (error) {
+      console.error('Wrapping DBRO failed:', error)
+
+      toastError('Error!', 'Failed to complete minting.')
+    } finally {
+      onMintChange('')
+      setIsMinting(false)
+    }
+  }, [
+    contractDBRO.address,
+    contractDBRO.abi,
+    contractConfig.address,
+    contractConfig.abi,
+    mintValue,
+    chainId,
+    toastSuccess,
+    toastError,
+  ])
 
   return (
     <FlexGap justifyContent="space-between" flexWrap="wrap" gap="4px" width={['100%']} mb="24px">
