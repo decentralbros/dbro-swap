@@ -163,7 +163,12 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
             }
             value={
               <ValueText>
-                &bull; {nftBalance && requiredDBRO ? (Number(nftBalance) * Number(requiredDBRO)).toLocaleString() : 0}
+                &bull;{' '}
+                {nftBalance && requiredDBRO
+                  ? Number(
+                      formatUnits(BigInt(Number(nftBalance) * Number(requiredDBRO) * 0.99) ?? 0, 8),
+                    ).toLocaleString()
+                  : 0}
               </ValueText>
             }
           />
