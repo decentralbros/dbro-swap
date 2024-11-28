@@ -33,9 +33,10 @@ export const BENEFITS: Record<BenefitCardType, BenefitItem> = {
     btnText: <Trans>Start Earning</Trans>,
     link: '/staking',
     desc: [
-      <Trans>Daily reward rate of 20%</Trans>,
+      <Trans>Stake earn, mint, and wrap</Trans>,
       <Trans>Low fees on Base network</Trans>,
-      <Trans>Claim threshold of only 500k</Trans>,
+      <Trans>Yearly reward rate of 30%</Trans>,
+      <Trans>Claim threshold of only 100k</Trans>,
     ],
     key: 'benefit-earn-cake',
   },
@@ -49,6 +50,7 @@ export const BENEFITS: Record<BenefitCardType, BenefitItem> = {
       <Trans>Earn or mint DBRO wrapped utility NFTs</Trans>,
       <Trans>Unwrap NFTs for DBRO tokens</Trans>,
       <Trans>Fee of only 1% to Unwrap</Trans>,
+      <Trans>Enjoyed tiered valued utilities</Trans>,
     ],
     key: 'benefit-gauges-voting.',
   },
@@ -57,7 +59,10 @@ export const BENEFITS: Record<BenefitCardType, BenefitItem> = {
     title: <Trans>Workshops</Trans>,
     btnText: <Trans>Check Workshops</Trans>,
     link: 'https://workshop.decentralbros.xyz',
-    desc: [<Trans>Access our live coding workshops and benefit from team mentorship</Trans>],
+    desc: [
+      <Trans>Access our live coding workshops and benefit from team mentorship</Trans>,
+      <Trans>Wrapped Or Held Token Value: $200</Trans>,
+    ],
     key: 'benefit-farm-boost',
   },
   snapshotVoting: {
@@ -65,7 +70,10 @@ export const BENEFITS: Record<BenefitCardType, BenefitItem> = {
     title: <Trans>Custom Dev Builds</Trans>,
     btnText: <Trans>Book Consultation</Trans>,
     link: 'https://www.decentralbros.xyz',
-    desc: [<Trans>Use your utility NFTs for reduced fees on custom development services</Trans>],
+    desc: [
+      <Trans>Use your utility NFTs for discounted rates on custom development services</Trans>,
+      <Trans>Wrapped Or Held Token Value: $500</Trans>,
+    ],
     key: 'benefit-snapshot-voting',
   },
   ifo: {
@@ -73,14 +81,20 @@ export const BENEFITS: Record<BenefitCardType, BenefitItem> = {
     title: <Trans>Merchandise</Trans>,
     btnText: <Trans>Browse Store</Trans>,
     link: 'https://www.decentralbros.xyz',
-    desc: [<Trans>Discounted DBRO merchandise including shirts, hats, and more</Trans>],
+    desc: [
+      <Trans>Discounted DBRO merchandise including shirts, hats, and more</Trans>,
+      <Trans>Wrapped Or Held Token Value: $100</Trans>,
+    ],
     key: 'benefit-ifo',
   },
   more: {
     headImg: '/images/cake-staking/benefit-more.png',
     title: <Trans>Web3 Build Shells</Trans>,
     btnText: <Trans>Learn More</Trans>,
-    desc: [<Trans>Gain exclusive to pre-built templates for your own unique dApps</Trans>],
+    desc: [
+      <Trans>Gain exclusive to pre-built templates for your own unique dApps</Trans>,
+      <Trans>Wrapped Or Held Token Value: $150</Trans>,
+    ],
     link: 'https://www.decentralbros.xyz',
     key: 'benefit-more',
   },

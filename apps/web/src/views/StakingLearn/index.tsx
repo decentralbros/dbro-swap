@@ -1,5 +1,5 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { Card, Grid, Heading, PageHeader, QuestionHelper, useMatchBreakpoints, FlexGap } from '@pancakeswap/uikit'
+import { Card, Grid, Heading, PageHeader, QuestionHelper, useMatchBreakpoints, FlexGap, Text } from '@pancakeswap/uikit'
 import { formatAmount } from '@pancakeswap/utils/formatInfoNumbers'
 import Page from 'components/Layout/Page'
 import { useState } from 'react'
@@ -136,9 +136,13 @@ const StakingLearn = () => {
             }
           />
         </Grid> */}
-        <Heading scale="xl" mb={['24px', '24px', '48px']} mt={['16px', '16px', '32px']} color="secondary">
+        <Heading scale="xl" my={['16px', '16px', '32px']} color="secondary">
           {t('Enjoy Utility NFT Benefits')}
         </Heading>
+        <Text fontSize="18px" color="subtleText" mb={['24px', '24px', '48px']}>
+          Additional Benefits Coming Soon!
+        </Text>
+
         <Grid
           maxWidth="820px"
           gridGap="24px"
@@ -146,14 +150,14 @@ const StakingLearn = () => {
           alignItems="center"
           mx="auto"
         >
-          <BenefitCard type="farmBoost" headSlot={<></>} dataText="2.5x" />
-          <BenefitCard type="snapshotVoting" headSlot={<></>} dataText={`${snapshotProposalsCount}`} />
           <BenefitCard
             type="ifo"
             headSlot={<></>}
             dataText={`$${formatAmount(totalIFOSold, { notation: 'standard' })}`}
           />
           <BenefitCard type="more" />
+          <BenefitCard type="farmBoost" headSlot={<></>} dataText="2.5x" />
+          <BenefitCard type="snapshotVoting" headSlot={<></>} dataText={`${snapshotProposalsCount}`} />
         </Grid>
       </Page>
       {/* <CrossChainVeCakeModal isOpen={isOpen} setIsOpen={setIsOpen} onDismiss={() => setIsOpen(false)} /> */}
