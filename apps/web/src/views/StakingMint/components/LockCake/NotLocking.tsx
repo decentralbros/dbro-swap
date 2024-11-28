@@ -57,7 +57,7 @@ export const NotLockingCard: React.FC<React.PropsWithChildren<NotLockingCardProp
         </ColumnCenter>
 
         <ColumnCenter>
-          <img src="/images/swap/nft.png" alt="dbro nft" height="auto" width="300px" />
+          <img src="/images/swap/nft.webp" alt="dbro nft" height="auto" width="300px" />
         </ColumnCenter>
       </Grid>
 
