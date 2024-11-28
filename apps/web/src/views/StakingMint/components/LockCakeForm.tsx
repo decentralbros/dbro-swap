@@ -184,11 +184,12 @@ export const LockCakeForm: React.FC<{
       setIsMinting(false)
     }
   }, [
+    requiredDBRO,
+    mintValue,
     contractDBRO.address,
     contractDBRO.abi,
     contractConfig.address,
     contractConfig.abi,
-    mintValue,
     chainId,
     toastSuccess,
     toastError,
