@@ -1,9 +1,13 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { AutoRow, Box, Text } from '@pancakeswap/uikit'
-import React, { useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { useAccount, useChainId, useReadContract } from 'wagmi'
 import deployedContracts from 'config/abi/deployedContracts'
+import { ChainId } from '@pancakeswap/chains'
+import { formatUnits } from '@pancakeswap/utils/viem/formatUnits'
+import { DBRO_API } from 'config/constants/endpoints'
+import qs from 'qs'
 import { MyVeCakeCard } from '../MyVeCakeCard'
 import { DataRow } from './DataBox'
 
@@ -19,6 +23,18 @@ interface NewStakingDataSetProps {
   customDataRow?: JSX.Element
 }
 
+const RYFT_ADDRESS = '0x7aBe92aA0b6da4AeEf832F5Ce540dc49EAAd2dCA'
+const DBRO_CONTRACT = '0x6a4e0F83D7882BcACFF89aaF6f60D24E13191E9F'
+const erc20ABI = [
+  {
+    inputs: [{ name: 'account', type: 'address' }],
+    name: 'balanceOf',
+    outputs: [{ name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+] as const
+
 export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataSetProps>> = ({
   cakeAmount = 0,
   customVeCakeCard,
@@ -29,8 +45,8 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
   const chainId = useChainId()
   const { address: account } = useAccount()
 
-  const contractConfig = deployedContracts[84532].DBROWrappedStaking
-  const contractRYFT = deployedContracts[84532].RYFT
+  const contractConfig = deployedContracts[8453].DBROWrappedStaking
+  const contractRYFT = deployedContracts[8453].RYFT
 
   const { data: nftBalance } = useReadContract({
     address: contractRYFT.address as `0x${string}`,
@@ -75,13 +91,51 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
     }
   }, [unwrapFEE])
 
+  const { data: requiredDBRO } = useReadContract({
+    address: contractConfig.address as `0x${string}`,
+    abi: contractConfig.abi,
+    functionName: 'REQUIRED_DBRO',
+  })
+
+  const [wrappedValue, setWrappedValue] = useState('0.00')
+
+  const fetchUSDValues = useCallback(async () => {
+    try {
+      const params = {
+        chainId: ChainId.BASE,
+        address: account,
+        native: false,
+        contract: DBRO_CONTRACT,
+        decimals: 8,
+      }
+
+      const response = await fetch(`${DBRO_API}/balance/usd?${qs.stringify(params)}`)
+      const usd = await response.json()
+
+      if (usd && requiredDBRO) {
+        const dbro = formatUnits(BigInt(requiredDBRO as bigint), 8)
+
+        setWrappedValue((Number(usd) * Number(dbro) * Number(nftBalance)).toFixed(2))
+      } else {
+        setWrappedValue('0.00')
+      }
+    } catch {
+      setWrappedValue('0.00')
+    }
+  }, [account, requiredDBRO, nftBalance])
+
+  useEffect(() => {
+    fetchUSDValues()
+    // eslint-disable-next-line
+  }, [requiredDBRO, nftBalance])
+
   return (
     <>
       <Text fontSize={12} bold color="secondary" textTransform="uppercase">
         {t('minting overview')}
       </Text>
       <Box padding={['16px 0', '16px 0', 12]}>
-        {customVeCakeCard ?? <MyVeCakeCard type="row" value={String(nftBalance)} />}
+        {customVeCakeCard ?? <MyVeCakeCard type="row" value={String(nftBalance ?? 0)} />}
 
         <AutoRow px={['0px', '0px', '16px']} py={['16px', '16px', '12px']} gap="8px">
           {customDataRow}
@@ -91,7 +145,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
                 {t('Token Id')}
               </Text>
             }
-            value={<ValueText>&bull; {String(tokenId) ?? 0}</ValueText>}
+            value={<ValueText>&bull; {String(tokenId ?? 0)}</ValueText>}
           />
           <DataRow
             label={
@@ -107,7 +161,11 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
                 {t('Wrapped DBRO')}
               </Text>
             }
-            value={<ValueText>&bull; {nftBalance ? (Number(nftBalance) * 10).toLocaleString() : 0}</ValueText>}
+            value={
+              <ValueText>
+                &bull; {nftBalance && requiredDBRO ? (Number(nftBalance) * Number(requiredDBRO)).toLocaleString() : 0}
+              </ValueText>
+            }
           />
           <DataRow
             label={
@@ -115,7 +173,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
                 {t('Wrapped Value')}
               </Text>
             }
-            value={<ValueText>&bull; $50</ValueText>}
+            value={<ValueText>&bull; ${wrappedValue}</ValueText>}
           />
           <DataRow
             label={
@@ -123,7 +181,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
                 {t('Claimed NFTs')}
               </Text>
             }
-            value={<ValueText>&bull; {String(totalNFTSupply) ?? 0}</ValueText>}
+            value={<ValueText>&bull; {String(totalNFTSupply ?? 0)}</ValueText>}
           />
         </AutoRow>
       </Box>

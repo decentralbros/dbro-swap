@@ -14,6 +14,36 @@ const StyledCard = styled(Card)`
   width: 100%;
 `
 
+const VideoContainer = styled.div`
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  overflow: hidden;
+`
+
+const ResponsiveIframe = styled.iframe`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+`
+
+const VideoPlayer = () => {
+  return (
+    <VideoContainer>
+      <ResponsiveIframe
+        src="https://www.youtube.com/embed/djJQkT6rVF0?si=I3AQrNe7m_kTrMTQ&vq=hd1080"
+        title="YouTube video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="strict-origin-when-cross-origin"
+        allowFullScreen
+      />
+    </VideoContainer>
+  )
+}
+
 const StakingLearn = () => {
   const { t } = useTranslation()
   const { data: gauges } = useGauges()
@@ -37,10 +67,7 @@ const StakingLearn = () => {
         <Grid alignItems="center" mx="auto" mb={['24px', '24px', '48px']} maxWidth="720px">
           <StyledCard innerCardProps={{ p: ['16px', '16px', '24px'] }}>
             <FlexGap flexDirection="column">
-              <video controls loop muted playsInline>
-                <source src="/videos/dbroVideo.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+              <VideoPlayer />
             </FlexGap>
           </StyledCard>
         </Grid>

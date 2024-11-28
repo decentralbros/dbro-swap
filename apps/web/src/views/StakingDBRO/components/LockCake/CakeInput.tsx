@@ -48,8 +48,8 @@ export const CakeInput: React.FC<{
 
   const chainId = useChainId()
 
-  const contractConfig = deployedContracts[84532].DBROWrappedStaking
-  const contractDBRO = deployedContracts[84532].DecentralBros
+  const contractConfig = deployedContracts[8453].DBROWrappedStaking
+  const contractDBRO = deployedContracts[8453].DecentralBros
 
   const { data: requiredDBRO } = useReadContract({
     address: contractConfig.address as `0x${string}`,
@@ -105,7 +105,7 @@ export const CakeInput: React.FC<{
   }, [stakeInfo, requiredDBRO])
 
   const handleStake = useCallback(async () => {
-    if (!ChainId.BASE_SEPOLIA || !account) return
+    if (!ChainId.BASE || !account) return
 
     try {
       setIsStaking(true)
@@ -169,7 +169,7 @@ export const CakeInput: React.FC<{
   ])
 
   const handleUnstake = useCallback(async () => {
-    if (!ChainId.BASE_SEPOLIA || !account) return
+    if (!ChainId.BASE || !account) return
 
     try {
       setIsUnstaking(true)
@@ -200,7 +200,7 @@ export const CakeInput: React.FC<{
   }, [account, contractConfig.address, contractConfig.abi, chainId, toastSuccess, onUserInput, toastError])
 
   const handleClaim = useCallback(async () => {
-    if (!ChainId.BASE_SEPOLIA || !account) return
+    if (!ChainId.BASE || !account) return
 
     try {
       setIsClaiming(true)
@@ -252,7 +252,7 @@ export const CakeInput: React.FC<{
   const fetchInputUSD = useCallback(async () => {
     try {
       const params = {
-        chainId: ChainId.BASE_SEPOLIA,
+        chainId: ChainId.BASE,
         address: account,
         native: false,
         contract: contractDBRO.address,

@@ -22,7 +22,7 @@ export const LockCakeForm: React.FC<{
 
   return (
     <AutoRow alignSelf="start" width="100%">
-      {chainId === ChainId.BASE_SEPOLIA && (
+      {chainId === ChainId.BASE && (
         <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
           <Text color="textSubtle" fontSize={16} bold>
             {t('Add')}
@@ -33,7 +33,7 @@ export const LockCakeForm: React.FC<{
         </FlexGap>
       )}
 
-      {chainId !== ChainId.BASE_SEPOLIA && (
+      {chainId !== ChainId.BASE && (
         <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
           <Text color="warning" fontSize={16} bold>
             Please switch to Base network to stake

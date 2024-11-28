@@ -1,6 +1,6 @@
 import { ChainId, chainNames } from '@pancakeswap/chains'
 import memoize from 'lodash/memoize'
-import { Chain, arbitrum, base, baseSepolia, mainnet, bsc as bsc_ } from 'wagmi/chains'
+import { Chain, arbitrum, base, mainnet } from 'wagmi/chains'
 
 export const CHAIN_QUERY_NAME = chainNames
 
@@ -16,20 +16,20 @@ export const getChainId = memoize((chainName: string) => {
   return CHAIN_QUERY_NAME_TO_ID[chainName.toLowerCase()] ? +CHAIN_QUERY_NAME_TO_ID[chainName.toLowerCase()] : undefined
 })
 
-const bsc = {
-  ...bsc_,
-  rpcUrls: {
-    ...bsc_.rpcUrls,
-    public: {
-      ...bsc_.rpcUrls,
-      http: ['https://bsc-dataseed.binance.org/'],
-    },
-    default: {
-      ...bsc_.rpcUrls.default,
-      http: ['https://bsc-dataseed.binance.org/'],
-    },
-  },
-} satisfies Chain
+// const bsc = {
+//   ...bsc_,
+//   rpcUrls: {
+//     ...bsc_.rpcUrls,
+//     public: {
+//       ...bsc_.rpcUrls,
+//       http: ['https://bsc-dataseed.binance.org/'],
+//     },
+//     default: {
+//       ...bsc_.rpcUrls.default,
+//       http: ['https://bsc-dataseed.binance.org/'],
+//     },
+//   },
+// } satisfies Chain
 
 /**
  * Controls some L2 specific behavior, e.g. slippage tolerance, special UI behavior.
@@ -45,7 +45,7 @@ export const L2_CHAIN_IDS: ChainId[] = [
   // ChainId.LINEA_TESTNET,
   // ChainId.LINEA,
   ChainId.BASE,
-  ChainId.BASE_SEPOLIA,
+  // ChainId.BASE_SEPOLIA,
   // ChainId.BASE_TESTNET,
   // ChainId.OPBNB,
   // ChainId.OPBNB_TESTNET,
@@ -59,7 +59,7 @@ export const CHAINS: [Chain, ...Chain[]] = [
   // sepolia,
   arbitrum,
   base,
-  baseSepolia,
+  // baseSepolia,
   // bscTestnet,
   // polygonZkEvm,
   // polygonZkEvmTestnet,
@@ -68,7 +68,7 @@ export const CHAINS: [Chain, ...Chain[]] = [
   // arbitrumSepolia,
   // linea,
   // lineaTestnet,
-  bsc,
+  // bsc,
   // baseGoerli,
   // baseSepolia,
   // opBNB,

@@ -35,9 +35,9 @@ export const LockCakeForm: React.FC<{
   const chainId = useChainId()
   const { toastSuccess, toastError } = useToast()
 
-  const contractConfig = deployedContracts[84532].DBROWrappedStaking
-  const contractDBRO = deployedContracts[84532].DecentralBros
-  const contractRYFT = deployedContracts[84532].RYFT
+  const contractConfig = deployedContracts[8453].DBROWrappedStaking
+  const contractDBRO = deployedContracts[8453].DecentralBros
+  const contractRYFT = deployedContracts[8453].RYFT
 
   const handleWrapDBRO = useCallback(async () => {
     try {
@@ -194,7 +194,7 @@ export const LockCakeForm: React.FC<{
 
   return (
     <FlexGap justifyContent="space-between" flexWrap="wrap" gap="4px" width={['100%']} mb="24px">
-      {chainId === ChainId.BASE_SEPOLIA && (
+      {chainId === ChainId.BASE && (
         <>
           <FlexGap gap="4px" alignItems="center" width="100%">
             <Text color="textSubtle" fontSize={16} bold>
@@ -219,7 +219,7 @@ export const LockCakeForm: React.FC<{
         </>
       )}
 
-      {chainId !== ChainId.BASE_SEPOLIA && (
+      {chainId !== ChainId.BASE && (
         <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
           <Text color="warning" fontSize={16} bold>
             Please switch to Base network to mint or unwrap
@@ -238,7 +238,7 @@ export const LockCakeForm: React.FC<{
       <FlexGap gap="4px" alignItems="center" mb="24px" width="100%">
         {account ? (
           <Button
-            disabled={chainId !== ChainId.BASE_SEPOLIA || isMinting || !useCanMint}
+            disabled={chainId !== ChainId.BASE || isMinting || !useCanMint}
             style={{ color: '#000' }}
             width="100%"
             onClick={handleWrapDBRO}
@@ -282,7 +282,7 @@ export const LockCakeForm: React.FC<{
 
           <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
             <Button
-              disabled={chainId !== ChainId.BASE_SEPOLIA || isUnwrapping || !useNFTBalance}
+              disabled={chainId !== ChainId.BASE || isUnwrapping || !useNFTBalance}
               style={{ color: '#000' }}
               width="100%"
               onClick={handleUnwrapDBRO}

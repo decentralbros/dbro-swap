@@ -1,12 +1,15 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { AutoRow, Box, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
-import React, { useMemo } from 'react'
+import { AutoRow, Box, Text } from '@pancakeswap/uikit'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { useAccount, useReadContract } from 'wagmi'
 import deployedContracts from 'config/abi/deployedContracts'
 import { formatUnits } from '@pancakeswap/utils/viem/formatUnits'
-import { DataRow } from './DataBox'
+import { ChainId } from '@pancakeswap/chains'
+import { DBRO_API } from 'config/constants/endpoints'
+import qs from 'qs'
 import { MyVeCakeCard } from '../MyVeCakeCard'
+import { DataRow } from './DataBox'
 
 const ValueText = styled(Text)`
   font-size: 16px;
@@ -20,9 +23,9 @@ interface NewStakingDataSetProps {
   customDataRow?: JSX.Element
 }
 
-const RYFT_ADDRESS = '0x0C9F57B01BE2690d469B01E44ff404F45b81Af2e'
-const TREASURY_ADDRESS = '0x2a2cf9C06514494538E90Bb6b090DdB3792fA2FF'
-const DBRO_CONTRACT = '0x5B7a6C42ee3ddf82582BA759Bb59A990D0e97398'
+const RYFT_ADDRESS = '0x7aBe92aA0b6da4AeEf832F5Ce540dc49EAAd2dCA'
+const DBRO_CONTRACT = '0x6a4e0F83D7882BcACFF89aaF6f60D24E13191E9F'
+const REWARD_WALLET = '0xE31b8Ebc6b9Ae3622cF1e3bFf4c129A15b8d548c'
 const erc20ABI = [
   {
     inputs: [{ name: 'account', type: 'address' }],
@@ -53,15 +56,15 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
 }) => {
   const { t } = useTranslation()
 
-  const contractConfig = deployedContracts[84532].DBROWrappedStaking
+  const contractConfig = deployedContracts[8453].DBROWrappedStaking
 
   const { address: account } = useAccount()
 
   const { data: treasuryBalance } = useReadContract({
-    abi: erc20ABI,
     address: DBRO_CONTRACT,
+    abi: erc20ABI,
     functionName: 'balanceOf',
-    args: [TREASURY_ADDRESS],
+    args: [REWARD_WALLET as `0x${string}`],
   })
 
   const { data: stakeInfo } = useReadContract({
@@ -116,6 +119,58 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
       return BigInt(0)
     }
   }, [maxStake])
+
+  const [poolValue, setPoolValue] = useState('0.00')
+  const [walletValue, setWalletValue] = useState('0.00')
+  const [wrappedValue, setWrappedValue] = useState('0.00')
+
+  const fetchUSDValues = useCallback(async () => {
+    try {
+      const params = {
+        chainId: ChainId.BASE,
+        address: account,
+        native: false,
+        contract: DBRO_CONTRACT,
+        decimals: 8,
+      }
+
+      const response = await fetch(`${DBRO_API}/balance/usd?${qs.stringify(params)}`)
+      const usd = await response.json()
+
+      if (usd && contractTokens) {
+        const pool = formatUnits(BigInt(String(contractTokens)), 8)
+
+        setPoolValue((Number(usd) * Number(pool)).toFixed(2))
+      } else {
+        setPoolValue('0.00')
+      }
+
+      if (usd && treasuryBalance) {
+        const treasury = formatUnits(BigInt(treasuryBalance), 8)
+
+        setWalletValue((Number(usd) * Number(treasury)).toFixed(2))
+      } else {
+        setWalletValue('0.00')
+      }
+
+      if (usd && dbroBalance) {
+        const dbro = formatUnits(BigInt(dbroBalance), 8)
+
+        setWrappedValue((Number(usd) * Number(dbro)).toFixed(2))
+      } else {
+        setWrappedValue('0.00')
+      }
+    } catch {
+      setPoolValue('0.00')
+      setWalletValue('0.00')
+      setWrappedValue('0.00')
+    }
+  }, [account, contractTokens, dbroBalance, treasuryBalance])
+
+  useEffect(() => {
+    fetchUSDValues()
+    // eslint-disable-next-line
+  }, [contractTokens, dbroBalance, treasuryBalance])
 
   return (
     <>
@@ -191,7 +246,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
             }
             value={
               <ValueText>
-                &bull; <>$0</>
+                &bull; <>${poolValue}</>
               </ValueText>
             }
           />
@@ -203,7 +258,8 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
             }
             value={
               <ValueText>
-                &bull; <>{(treasuryBalance as bigint) && formatBalance(BigInt(String(treasuryBalance)), 8)}</> DBRO
+                &bull; <>{((treasuryBalance as bigint) && formatBalance(BigInt(String(treasuryBalance)), 8)) ?? 0}</>{' '}
+                DBRO
               </ValueText>
             }
           />
@@ -215,7 +271,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
             }
             value={
               <ValueText>
-                &bull; <>$0</>
+                &bull; <>${walletValue}</>
               </ValueText>
             }
           />
@@ -227,19 +283,19 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
             }
             value={
               <ValueText>
-                &bull; <>{(dbroBalance as bigint) && formatBalance(BigInt(String(dbroBalance)), 8)}</> DBRO
+                &bull; <>{(dbroBalance as bigint) ? formatBalance(BigInt(String(dbroBalance)), 8) : 0}</> DBRO
               </ValueText>
             }
           />
           <DataRow
             label={
               <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Wrapped Value')}
+                {t('Total Value')}
               </Text>
             }
             value={
               <ValueText>
-                &bull; <>$0</>
+                &bull; <>${wrappedValue}</>
               </ValueText>
             }
           />
