@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import { useTranslation } from '@pancakeswap/localization'
 import { AutoRow, Box, Text } from '@pancakeswap/uikit'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
@@ -53,7 +54,6 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
     abi: contractRYFT.abi,
     functionName: 'balanceOf',
     args: [account as `0x${string}`, BigInt(0)],
-    chainId,
     query: {
       enabled: Boolean(account),
       refetchInterval: 5_000,
@@ -97,14 +97,14 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
     functionName: 'REQUIRED_DBRO',
   })
 
-  const [wrappedValue, setWrappedValue] = useState('0.00')
+  const [wrappedValue, setWrappedValue] = useState<any>('0.00')
 
   const fetchUSDValues = useCallback(async () => {
     try {
       const params = {
         chainId: ChainId.BASE,
-        address: account,
         native: false,
+        address: account,
         contract: DBRO_CONTRACT,
         decimals: 8,
       }
@@ -112,8 +112,8 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
       const response = await fetch(`${DBRO_API}/balance/usd?${qs.stringify(params)}`)
       const usd = await response.json()
 
-      if (usd && requiredDBRO) {
-        const dbro = formatUnits(BigInt(requiredDBRO as bigint), 8)
+      if (usd && requiredDBRO && nftBalance) {
+        const dbro = formatUnits(requiredDBRO as bigint, 8)
 
         setWrappedValue((Number(usd) * Number(dbro) * Number(nftBalance)).toFixed(2))
       } else {
@@ -131,65 +131,69 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
 
   return (
     <>
-      <Text fontSize={12} bold color="secondary" textTransform="uppercase">
-        {t('minting overview')}
-      </Text>
-      <Box padding={['16px 0', '16px 0', 12]}>
-        {customVeCakeCard ?? <MyVeCakeCard type="row" value={String(nftBalance ?? 0)} />}
+      {chainId === ChainId.BASE && account && (
+        <>
+          <Text fontSize={12} bold color="secondary" textTransform="uppercase">
+            {t('minting overview')}
+          </Text>
+          <Box padding={['16px 0', '16px 0', 12]}>
+            {customVeCakeCard ?? <MyVeCakeCard type="row" value={String(nftBalance ?? 0)} />}
 
-        <AutoRow px={['0px', '0px', '16px']} py={['16px', '16px', '12px']} gap="8px">
-          {customDataRow}
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Token Id')}
-              </Text>
-            }
-            value={<ValueText>&bull; {String(tokenId ?? 0)}</ValueText>}
-          />
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Unwrapping Fee')}
-              </Text>
-            }
-            value={<ValueText>&bull; {`${useUnwrapFee}%`}</ValueText>}
-          />
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Wrapped DBRO')}
-              </Text>
-            }
-            value={
-              <ValueText>
-                &bull;{' '}
-                {nftBalance && requiredDBRO
-                  ? Number(
-                      formatUnits(BigInt(Number(nftBalance) * Number(requiredDBRO) * 0.99) ?? 0, 8),
-                    ).toLocaleString()
-                  : 0}
-              </ValueText>
-            }
-          />
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Wrapped Value')}
-              </Text>
-            }
-            value={<ValueText>&bull; ${wrappedValue}</ValueText>}
-          />
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Claimed NFTs')}
-              </Text>
-            }
-            value={<ValueText>&bull; {String(totalNFTSupply ?? 0)}</ValueText>}
-          />
-        </AutoRow>
-      </Box>
+            <AutoRow px={['0px', '0px', '16px']} py={['16px', '16px', '12px']} gap="8px">
+              {customDataRow}
+              <DataRow
+                label={
+                  <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                    {t('Token Id')}
+                  </Text>
+                }
+                value={<ValueText>&bull; {String(tokenId ?? 0)}</ValueText>}
+              />
+              <DataRow
+                label={
+                  <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                    {t('Unwrapping Fee')}
+                  </Text>
+                }
+                value={<ValueText>&bull; {`${useUnwrapFee}%`}</ValueText>}
+              />
+              <DataRow
+                label={
+                  <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                    {t('Wrapped DBRO')}
+                  </Text>
+                }
+                value={
+                  <ValueText>
+                    &bull;{' '}
+                    {nftBalance && requiredDBRO
+                      ? Number(
+                          formatUnits(BigInt(Number(nftBalance) * Number(requiredDBRO) * 0.99) ?? 0, 8),
+                        ).toLocaleString()
+                      : 0}
+                  </ValueText>
+                }
+              />
+              <DataRow
+                label={
+                  <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                    {t('Wrapped Value')}
+                  </Text>
+                }
+                value={<ValueText>&bull; ${!wrappedValue || isNaN(wrappedValue) ? '0.00' : wrappedValue}</ValueText>}
+              />
+              <DataRow
+                label={
+                  <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                    {t('Claimed NFTs')}
+                  </Text>
+                }
+                value={<ValueText>&bull; {String(totalNFTSupply ?? 0)}</ValueText>}
+              />
+            </AutoRow>
+          </Box>
+        </>
+      )}
     </>
   )
 }

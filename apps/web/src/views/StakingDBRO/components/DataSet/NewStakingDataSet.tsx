@@ -2,7 +2,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import { AutoRow, Box, Text } from '@pancakeswap/uikit'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
-import { useAccount, useReadContract } from 'wagmi'
+import { useAccount, useChainId, useReadContract } from 'wagmi'
 import deployedContracts from 'config/abi/deployedContracts'
 import { formatUnits } from '@pancakeswap/utils/viem/formatUnits'
 import { ChainId } from '@pancakeswap/chains'
@@ -59,6 +59,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
   const contractConfig = deployedContracts[8453].DBROWrappedStaking
 
   const { address: account } = useAccount()
+  const chainId = useChainId()
 
   const { data: treasuryBalance } = useReadContract({
     address: DBRO_CONTRACT,
@@ -174,133 +175,139 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
 
   return (
     <>
-      <Text fontSize={12} bold color="secondary" textTransform="uppercase">
-        {t('staking overview')}
-      </Text>
-      <Box padding={['16px 0', '16px 0', 12]}>
-        {customVeCakeCard ?? (
-          <MyVeCakeCard
-            type="row"
-            value={stakeInfo ? formatNumberWithCommas(String(formatUnits(BigInt(stakeInfo[1]), 8))) : '0'}
-          />
-        )}
+      {chainId === ChainId.BASE && account && (
+        <>
+          <Text fontSize={12} bold color="secondary" textTransform="uppercase">
+            {t('staking overview')}
+          </Text>
+          <Box padding={['16px 0', '16px 0', 12]}>
+            {customVeCakeCard ?? (
+              <MyVeCakeCard
+                type="row"
+                value={stakeInfo ? formatNumberWithCommas(String(formatUnits(BigInt(stakeInfo[1]), 8))) : '0'}
+              />
+            )}
 
-        <AutoRow px={['0px', '0px', '16px']} py={['16px', '16px', '12px']} gap="8px">
-          {customDataRow}
+            <AutoRow px={['0px', '0px', '16px']} py={['16px', '16px', '12px']} gap="8px">
+              {customDataRow}
 
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Your Stake')}
-              </Text>
-            }
-            value={
-              <ValueText>
-                &bull; {stakeInfo ? formatNumberWithCommas(formatUnits(stakeInfo[0].amountStaked, 8)) : 0} DBRO
-              </ValueText>
-            }
-          />
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Max Stake')}
-              </Text>
-            }
-            value={<ValueText>&bull; {Number(formatUnits(useMaxStake, 8)).toLocaleString()} DBRO</ValueText>}
-          />
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Reward Rate')}
-              </Text>
-            }
-            value={<ValueText>&bull; {`${rewardRate ?? 0}%`}</ValueText>}
-          />
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Claim Threshold')}
-              </Text>
-            }
-            value={
-              <ValueText>&bull; {formatNumberWithCommas(formatUnits((requiredDBRO as bigint) ?? 0, 8))} DBRO</ValueText>
-            }
-          />
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Stake Pool')}
-              </Text>
-            }
-            value={
-              <ValueText>
-                &bull; <>{(contractTokens as bigint) && formatBalance(BigInt(String(contractTokens)), 8)}</> DBRO
-              </ValueText>
-            }
-          />
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Pool Value')}
-              </Text>
-            }
-            value={
-              <ValueText>
-                &bull; <>${poolValue}</>
-              </ValueText>
-            }
-          />
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Reward Wallet')}
-              </Text>
-            }
-            value={
-              <ValueText>
-                &bull; <>{((treasuryBalance as bigint) && formatBalance(BigInt(String(treasuryBalance)), 8)) ?? 0}</>{' '}
-                DBRO
-              </ValueText>
-            }
-          />
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Wallet Value')}{' '}
-              </Text>
-            }
-            value={
-              <ValueText>
-                &bull; <>${walletValue}</>
-              </ValueText>
-            }
-          />
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Total Wrapped')}
-              </Text>
-            }
-            value={
-              <ValueText>
-                &bull; <>{(dbroBalance as bigint) ? formatBalance(BigInt(String(dbroBalance)), 8) : 0}</> DBRO
-              </ValueText>
-            }
-          />
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Total Value')}
-              </Text>
-            }
-            value={
-              <ValueText>
-                &bull; <>${wrappedValue}</>
-              </ValueText>
-            }
-          />
-        </AutoRow>
-      </Box>
+              <DataRow
+                label={
+                  <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                    {t('Your Stake')}
+                  </Text>
+                }
+                value={
+                  <ValueText>
+                    &bull; {stakeInfo ? formatNumberWithCommas(formatUnits(stakeInfo[0].amountStaked, 8)) : 0} DBRO
+                  </ValueText>
+                }
+              />
+              <DataRow
+                label={
+                  <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                    {t('Max Stake')}
+                  </Text>
+                }
+                value={<ValueText>&bull; {Number(formatUnits(useMaxStake, 8)).toLocaleString()} DBRO</ValueText>}
+              />
+              <DataRow
+                label={
+                  <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                    {t('Reward Rate')}
+                  </Text>
+                }
+                value={<ValueText>&bull; {`${rewardRate ?? 0}%`}</ValueText>}
+              />
+              <DataRow
+                label={
+                  <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                    {t('Claim Threshold')}
+                  </Text>
+                }
+                value={
+                  <ValueText>
+                    &bull; {formatNumberWithCommas(formatUnits((requiredDBRO as bigint) ?? 0, 8))} DBRO
+                  </ValueText>
+                }
+              />
+              <DataRow
+                label={
+                  <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                    {t('Stake Pool')}
+                  </Text>
+                }
+                value={
+                  <ValueText>
+                    &bull; <>{(contractTokens as bigint) && formatBalance(BigInt(String(contractTokens)), 8)}</> DBRO
+                  </ValueText>
+                }
+              />
+              <DataRow
+                label={
+                  <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                    {t('Pool Value')}
+                  </Text>
+                }
+                value={
+                  <ValueText>
+                    &bull; <>${poolValue}</>
+                  </ValueText>
+                }
+              />
+              <DataRow
+                label={
+                  <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                    {t('Reward Wallet')}
+                  </Text>
+                }
+                value={
+                  <ValueText>
+                    &bull;{' '}
+                    <>{((treasuryBalance as bigint) && formatBalance(BigInt(String(treasuryBalance)), 8)) ?? 0}</> DBRO
+                  </ValueText>
+                }
+              />
+              <DataRow
+                label={
+                  <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                    {t('Wallet Value')}{' '}
+                  </Text>
+                }
+                value={
+                  <ValueText>
+                    &bull; <>${walletValue}</>
+                  </ValueText>
+                }
+              />
+              <DataRow
+                label={
+                  <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                    {t('Total Wrapped')}
+                  </Text>
+                }
+                value={
+                  <ValueText>
+                    &bull; <>{(dbroBalance as bigint) ? formatBalance(BigInt(String(dbroBalance)), 8) : 0}</> DBRO
+                  </ValueText>
+                }
+              />
+              <DataRow
+                label={
+                  <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                    {t('Total Value')}
+                  </Text>
+                }
+                value={
+                  <ValueText>
+                    &bull; <>${wrappedValue}</>
+                  </ValueText>
+                }
+              />
+            </AutoRow>
+          </Box>
+        </>
+      )}
     </>
   )
 }
