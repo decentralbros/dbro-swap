@@ -145,7 +145,7 @@ export const LockCakeForm: React.FC<{
     try {
       setIsMinting(true)
 
-      const tokens = Number(mintValue) * Number(requiredDBRO)
+      const tokens = Number(mintValue) * 100000
 
       const tx = await writeContract(config, {
         address: contractDBRO.address as `0x${string}`,
