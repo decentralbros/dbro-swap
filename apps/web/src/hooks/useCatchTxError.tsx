@@ -7,7 +7,7 @@ import { isUserRejected, logError } from 'utils/sentry'
 import { Address, Hash } from 'viem'
 import { usePublicNodeWaitForTransaction } from './usePublicNodeWaitForTransaction'
 
-const notPreview = process.env.NEXT_PUBLIC_VERCEL_ENV !== 'preview'
+const notPreview = true
 
 type Params = {
   throwUserRejectError?: boolean

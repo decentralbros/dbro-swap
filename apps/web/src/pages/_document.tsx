@@ -1,20 +1,20 @@
-/* eslint-disable jsx-a11y/iframe-has-title */
+/* eslint-disable no-param-reassign */
 import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const sheet = new ServerStyleSheet()
-    const originalRenderPage = ctx.renderPage
 
     try {
-      // eslint-disable-next-line no-param-reassign
+      const originalRenderPage = ctx.renderPage
       ctx.renderPage = () =>
         originalRenderPage({
           enhanceApp: (App) => (props) => sheet.collectStyles(<App {...props} />),
         })
 
-      const initialProps = await Document.getInitialProps(ctx)
+      const initialProps = await super.getInitialProps(ctx)
+
       return {
         ...initialProps,
         styles: (
@@ -24,6 +24,9 @@ class MyDocument extends Document {
           </>
         ),
       }
+    } catch (error) {
+      console.error('Document getInitialProps error:', error)
+      throw error
     } finally {
       sheet.seal()
     }
@@ -33,9 +36,6 @@ class MyDocument extends Document {
     return (
       <Html translate="no">
         <Head>
-          {/* {process.env.NEXT_PUBLIC_NODE_PRODUCTION && (
-            <link rel="preconnect" href={process.env.NEXT_PUBLIC_NODE_PRODUCTION} />
-          )} */}
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
           <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;800&display=swap" rel="stylesheet" />

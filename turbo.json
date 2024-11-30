@@ -4,7 +4,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "env": ["RISK_APP_SECRET", "SERVER_NODE_REAL_API_ETH", "SERVER_NODE_REAL_API_GOERLI"],
+      "env": [],
       "outputs": ["dist/**", ".next/**/*", "!.next/cache/**", "!.vercel/**/*"]
     },
     "test": {

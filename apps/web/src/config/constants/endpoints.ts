@@ -23,9 +23,7 @@ export const NOTIFICATION_HUB_BASE_URL = 'https://notification-hub.pancakeswap.c
  */
 export const GRAPH_API_PREDICTION_V1 = `${THE_GRAPH_PROXY_API}/prediction-v1-bsc`
 
-export const V3_BSC_INFO_CLIENT = `https://open-platform.nodereal.io/${
-  process.env.NEXT_PUBLIC_NODE_REAL_API_INFO || process.env.NEXT_PUBLIC_NODE_REAL_API_ETH
-}/pancakeswap-v3/graphql`
+export const V3_BSC_INFO_CLIENT = `https://open-platform.nodereal.io/${''}/pancakeswap-v3/graphql`
 
 const BLOCKS_SUBGRAPH_URLS = {
   ...BLOCKS_SUBGRAPHS,
@@ -83,7 +81,7 @@ export const STABLESWAP_SUBGRAPHS_URLS = {
 
 export const TRADING_REWARD_API = '/'
 
-export const X_API_ENDPOINT = process.env.NEXT_PUBLIC_QUOTING_API
+export const X_API_ENDPOINT = ''
 
 export const QUOTING_API_PREFIX = `${X_API_ENDPOINT}/order-price`
 
@@ -91,11 +89,11 @@ export const QUOTING_API = `${QUOTING_API_PREFIX}/get-price`
 
 export const FARMS_API = 'https://farms-api.pancakeswap.com'
 
-export const MERCURYO_WIDGET_ID = process.env.NEXT_PUBLIC_MERCURYO_WIDGET_ID || '64d1f9f9-85ee-4558-8168-1dc0e7057ce6'
+export const MERCURYO_WIDGET_ID = '64d1f9f9-85ee-4558-8168-1dc0e7057ce6'
 
-export const MOONPAY_API_KEY = process.env.NEXT_PUBLIC_MOONPAY_LIVE_KEY || 'pk_test_1Ibe44lMglFVL8COOYO7SEKnIBrzrp54'
+export const MOONPAY_API_KEY = 'pk_test_1Ibe44lMglFVL8COOYO7SEKnIBrzrp54'
 
-export const TRANSAK_API_KEY = process.env.NEXT_PUBLIC_TRANSAK_LIVE_KEY || 'bf960e79-6d98-4fd0-823d-8409d290c346'
+export const TRANSAK_API_KEY = 'bf960e79-6d98-4fd0-823d-8409d290c346'
 // no need for extra public env
 export const MERCURYO_WIDGET_URL =
   process.env.NODE_ENV === 'development'
