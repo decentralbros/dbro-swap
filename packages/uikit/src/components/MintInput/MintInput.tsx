@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Flex } from "../Box";
-import { StyledBalanceInput, StyledInput, UnitContainer } from "./styles";
+import { StyledBalanceInput, StyledInput } from "./styles";
 import { MintInputProps } from "./types";
 
 const MintInput: React.FC<React.PropsWithChildren<MintInputProps>> = ({
@@ -29,8 +29,10 @@ const MintInput: React.FC<React.PropsWithChildren<MintInputProps>> = ({
           <Box width="100%">
             <Flex alignItems="center">
               <StyledInput
+                type="number"
                 inputMode="numeric"
                 min="0"
+                max="10"
                 value={value}
                 onChange={handleOnChange}
                 placeholder={placeholder}

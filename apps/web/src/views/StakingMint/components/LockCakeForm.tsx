@@ -1,15 +1,15 @@
-import { useTranslation } from '@pancakeswap/localization'
-import { FlexGap, Text, MintInput, Button, useToast, Dots } from '@pancakeswap/uikit'
-import { useCallback, useMemo, useState } from 'react'
-import ConnectWalletButton from 'components/ConnectWalletButton'
-import { useAccount, useChainId, useReadContract } from 'wagmi'
-import { waitForTransactionReceipt, writeContract } from '@wagmi/core'
 import { ChainId } from '@pancakeswap/chains'
-import deployedContracts from 'config/abi/deployedContracts'
-import { parseUnits } from '@pancakeswap/utils/viem/parseUnits'
-import { config } from 'utils/wagmi'
-import { ToastDescriptionWithTx } from 'components/Toast'
+import { useTranslation } from '@pancakeswap/localization'
+import { Button, Dots, FlexGap, MintInput, Text, useToast } from '@pancakeswap/uikit'
 import { formatUnits } from '@pancakeswap/utils/viem/formatUnits'
+import { parseUnits } from '@pancakeswap/utils/viem/parseUnits'
+import { waitForTransactionReceipt, writeContract } from '@wagmi/core'
+import ConnectWalletButton from 'components/ConnectWalletButton'
+import { ToastDescriptionWithTx } from 'components/Toast'
+import deployedContracts from 'config/abi/deployedContracts'
+import { useCallback, useMemo, useState } from 'react'
+import { config } from 'utils/wagmi'
+import { useAccount, useChainId, useReadContract } from 'wagmi'
 import { useBSCCakeBalance } from '../hooks/useBSCCakeBalance'
 
 const formatNumberWithCommas = (value: string): string => {
@@ -267,7 +267,7 @@ export const LockCakeForm: React.FC<{
           <FlexGap gap="4px" alignItems="center" width="100%">
             <Text color="warning" fontSize={16} bold>
               Unwrapping your NFT will forfeit all utilities, and you must have at least{' '}
-              <span style={{ color: '#1bf696' }}>1 wrapped NFT</span> to redeem utilities
+              <span style={{ color: '#1bf696' }}>2 wrapped NFTs</span> to redeem utilities
             </Text>
           </FlexGap>
         </>
