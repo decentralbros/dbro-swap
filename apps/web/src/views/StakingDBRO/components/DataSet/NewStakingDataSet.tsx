@@ -1,13 +1,13 @@
+import { ChainId } from '@pancakeswap/chains'
 import { useTranslation } from '@pancakeswap/localization'
 import { AutoRow, Box, Text } from '@pancakeswap/uikit'
+import { formatUnits } from '@pancakeswap/utils/viem/formatUnits'
+import deployedContracts from 'config/abi/deployedContracts'
+import { DBRO_API } from 'config/constants/endpoints'
+import qs from 'qs'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { useAccount, useChainId, useReadContract } from 'wagmi'
-import deployedContracts from 'config/abi/deployedContracts'
-import { formatUnits } from '@pancakeswap/utils/viem/formatUnits'
-import { ChainId } from '@pancakeswap/chains'
-import { DBRO_API } from 'config/constants/endpoints'
-import qs from 'qs'
 import { MyVeCakeCard } from '../MyVeCakeCard'
 import { DataRow } from './DataBox'
 
@@ -121,9 +121,22 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
     }
   }, [maxStake])
 
+  const useRequiredDBRO = useMemo((): bigint => {
+    try {
+      if (!requiredDBRO) {
+        return BigInt(0)
+      }
+
+      return BigInt(Number(requiredDBRO))
+    } catch {
+      return BigInt(0)
+    }
+  }, [requiredDBRO])
+
   const [poolValue, setPoolValue] = useState('0.00')
   const [walletValue, setWalletValue] = useState('0.00')
   const [wrappedValue, setWrappedValue] = useState('0.00')
+  const [claimValue, setClaimValue] = useState('0.00')
 
   const fetchUSDValues = useCallback(async () => {
     try {
@@ -161,12 +174,21 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
       } else {
         setWrappedValue('0.00')
       }
+
+      if (usd && useRequiredDBRO) {
+        const claim = formatUnits(BigInt(useRequiredDBRO), 8)
+
+        setClaimValue((Number(usd) * Number(claim)).toFixed(2))
+      } else {
+        setClaimValue('0.00')
+      }
     } catch {
       setPoolValue('0.00')
       setWalletValue('0.00')
       setWrappedValue('0.00')
+      setClaimValue('0.00')
     }
-  }, [account, contractTokens, dbroBalance, treasuryBalance])
+  }, [account, contractTokens, dbroBalance, useRequiredDBRO, treasuryBalance])
 
   useEffect(() => {
     fetchUSDValues()
@@ -214,7 +236,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
               <DataRow
                 label={
                   <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                    {t('Reward Rate')}
+                    {t('YAPY')}
                   </Text>
                 }
                 value={<ValueText>&bull; {`${rewardRate ?? 0}%`}</ValueText>}
@@ -225,9 +247,17 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
                     {t('Claim Threshold')}
                   </Text>
                 }
+                value={<ValueText>&bull; {formatNumberWithCommas(formatUnits(useRequiredDBRO, 8))} DBRO</ValueText>}
+              />
+              <DataRow
+                label={
+                  <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                    {t('Claim Value')}
+                  </Text>
+                }
                 value={
                   <ValueText>
-                    &bull; {formatNumberWithCommas(formatUnits((requiredDBRO as bigint) ?? 0, 8))} DBRO
+                    &bull; <>${claimValue}</>
                   </ValueText>
                 }
               />
@@ -258,7 +288,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
               <DataRow
                 label={
                   <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                    {t('Reward Wallet')}
+                    {t('DBRO Treasury')}
                   </Text>
                 }
                 value={
@@ -271,7 +301,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
               <DataRow
                 label={
                   <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                    {t('Wallet Value')}{' '}
+                    {t('Treasury Value')}
                   </Text>
                 }
                 value={
@@ -283,7 +313,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
               <DataRow
                 label={
                   <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                    {t('Total Wrapped')}
+                    {t('NFT Wrapped Pool')}
                   </Text>
                 }
                 value={
@@ -295,7 +325,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
               <DataRow
                 label={
                   <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                    {t('Total Value')}
+                    {t('NFT Pool Value')}
                   </Text>
                 }
                 value={
