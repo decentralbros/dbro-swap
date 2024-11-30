@@ -43,7 +43,7 @@ export const LockCakeForm: React.FC<{
     try {
       setIsUnwrapping(true)
 
-      const tx = await writeContract(config, {
+      const tx = await writeContract(config as any, {
         address: contractRYFT.address as `0x${string}`,
         abi: contractRYFT.abi,
         functionName: 'setApprovalForAll',
@@ -51,20 +51,20 @@ export const LockCakeForm: React.FC<{
         chainId,
       })
 
-      await waitForTransactionReceipt(config, {
+      await waitForTransactionReceipt(config as any, {
         confirmations: 4,
         hash: tx,
         chainId,
       })
 
-      const hash = await writeContract(config, {
+      const hash = await writeContract(config as any, {
         address: contractConfig.address as `0x${string}`,
         abi: contractConfig.abi,
         functionName: 'unwrapNFT',
         args: [BigInt(unwrapValue)],
       })
 
-      await waitForTransactionReceipt(config, {
+      await waitForTransactionReceipt(config as any, {
         confirmations: 2,
         hash,
         chainId,
@@ -147,7 +147,7 @@ export const LockCakeForm: React.FC<{
 
       const tokens = Number(mintValue) * 100000
 
-      const tx = await writeContract(config, {
+      const tx = await writeContract(config as any, {
         address: contractDBRO.address as `0x${string}`,
         abi: contractDBRO.abi,
         functionName: 'approve',
@@ -155,20 +155,20 @@ export const LockCakeForm: React.FC<{
         chainId,
       })
 
-      await waitForTransactionReceipt(config, {
+      await waitForTransactionReceipt(config as any, {
         confirmations: 4,
         hash: tx,
         chainId,
       })
 
-      const hash = await writeContract(config, {
+      const hash = await writeContract(config as any, {
         address: contractConfig.address as `0x${string}`,
         abi: contractConfig.abi,
         functionName: 'wrapTokens',
         args: [parseUnits(String(tokens), 8)],
       })
 
-      await waitForTransactionReceipt(config, {
+      await waitForTransactionReceipt(config as any, {
         confirmations: 2,
         hash,
         chainId,

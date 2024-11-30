@@ -7,6 +7,9 @@ const Page: React.FC<
     hideFooterOnDesktop?: boolean
     noMinHeight?: boolean
     helpUrl?: string
+    showExternalLink?: boolean
+    showHelpLink?: boolean
+    style?: React.CSSProperties
   }>
 > = ({
   children,
@@ -14,16 +17,21 @@ const Page: React.FC<
   hideFooterOnDesktop = false,
   noMinHeight = false,
   helpUrl = EXCHANGE_HELP_URLS,
+  showExternalLink = true,
+  showHelpLink = true,
   ...props
 }) => {
+  const externalText = ''
+  const externalLinkUrl = ''
+
   return (
     <Swap.Page
       removePadding={removePadding}
       noMinHeight={noMinHeight}
       hideFooterOnDesktop={hideFooterOnDesktop}
-      helpUrl={helpUrl}
-      externalText=""
-      externalLinkUrl=""
+      helpUrl={showHelpLink ? helpUrl : undefined}
+      externalText={externalText}
+      externalLinkUrl={showExternalLink ? externalLinkUrl : undefined}
       {...props}
     >
       {children}
@@ -32,3 +40,6 @@ const Page: React.FC<
 }
 
 export default Page
+
+export const PageWithoutFAQ = Page
+PageWithoutFAQ.defaultProps = { showHelpLink: false, showExternalLink: false }

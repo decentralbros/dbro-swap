@@ -30,19 +30,17 @@ export const fetchAllGauges = async (
     ...options,
   })) as ContractFunctionReturnType<typeof gaugesVotingABI, AbiStateMutability, 'gauges'>[]
 
-  return response.reduce((prev, curr) => {
-    const [pid, masterChef, chainId, pairAddress, boostMultiplier, maxVoteCap] = curr
-    return [
-      ...prev,
-      {
-        pid: Number(pid),
-        hash: getGaugeHash(pairAddress, Number(chainId)),
-        pairAddress,
-        masterChef,
-        chainId: Number(chainId),
-        boostMultiplier: Number(boostMultiplier),
-        maxVoteCap: Number(maxVoteCap),
-      },
-    ]
-  }, [] as GaugeInfo[])
+  return response.map((x, i) => {
+    const [pid, masterChef, chainId, pairAddress, boostMultiplier, maxVoteCap] = x
+    return {
+      gid: i,
+      pid: Number(pid),
+      hash: getGaugeHash(pairAddress, Number(chainId)),
+      pairAddress,
+      masterChef,
+      chainId: Number(chainId),
+      boostMultiplier: Number(boostMultiplier),
+      maxVoteCap: Number(maxVoteCap),
+    } as GaugeInfo
+  })
 }

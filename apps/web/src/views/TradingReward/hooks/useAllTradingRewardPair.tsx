@@ -1,6 +1,7 @@
 import { ChainId } from '@pancakeswap/chains'
 import { useQuery } from '@tanstack/react-query'
 import BigNumber from 'bignumber.js'
+import { TRADING_REWARD_API } from 'config/constants/endpoints'
 import { useTradingRewardContract, useTradingRewardTopTraderContract } from 'hooks/useContract'
 import { getTradingRewardContract } from 'utils/contractHelpers'
 
@@ -65,7 +66,9 @@ const fetchCampaignPairs = async (campaignIds: Array<string>, type: RewardType) 
   const newData: { [campaignId in string]: { [chainId in string]: Array<string> } } = {}
   await Promise.all(
     campaignIds.map(async (campaignId: string) => {
-      newData[campaignId] = {}
+      const pair = await fetch(`${TRADING_REWARD_API}/campaign/pair/campaignId/${campaignId}/type/${type}`)
+      const pairResult = await pair.json()
+      newData[campaignId] = pairResult.data
     }),
   )
   return newData
@@ -110,12 +113,12 @@ const fetchCampaignIdsIncentive = async (
   return campaignIdsIncentive
 }
 
-const fetUserQualification = async (tradingRewardContract: ReturnType<typeof getTradingRewardContract>) => {
-  // const result = await tradingRewardContract.read.getUserQualification()
+const fetchUserQualification = async (tradingRewardContract: ReturnType<typeof getTradingRewardContract>) => {
+  const result = await tradingRewardContract.read.getUserQualification()
   return {
-    thresholdLockTime: new BigNumber('1').toNumber(),
-    thresholdLockAmount: new BigNumber('1').toNumber(),
-    minAmountUSD: new BigNumber('1').toJSON(),
+    thresholdLockTime: new BigNumber(result[0].toString()).toNumber(),
+    thresholdLockAmount: new BigNumber(result[1].toString()).toNumber(),
+    minAmountUSD: new BigNumber(result[3].toString()).toJSON(),
   } as Qualification
 }
 
@@ -123,13 +126,9 @@ const fetchRewardInfo = async (campaignIds: Array<string>, type: RewardType) => 
   const newData: { [key in string]: RewardInfo } = {}
   await Promise.all(
     campaignIds.map(async (campaignId: string) => {
-      newData[campaignId] = {
-        rewardToken: 'string',
-        rewardTokenDecimal: 0,
-        rewardPrice: 'string',
-        rewardToLockRatio: 'string',
-        rewardFeeRatio: 'string',
-      }
+      const reward = await fetch(`${TRADING_REWARD_API}/reward/campaignId/${campaignId}/type/${type}`)
+      const rewardResult = await reward.json()
+      newData[campaignId] = rewardResult.data as RewardInfo
     }),
   )
   return newData
@@ -157,12 +156,14 @@ const useAllTradingRewardPair = ({ status, type }: UseAllTradingRewardPairProps)
 
     queryFn: async () => {
       try {
-        const campaignIds: Array<string> = ['string']
+        const campaignsResponse = await fetch(`${TRADING_REWARD_API}/campaign/status/${status}/type/${type}`)
+        const campaignsResult = await campaignsResponse.json()
+        const campaignIds: Array<string> = campaignsResult.data
 
         const [campaignPairs, campaignIdsIncentive, qualification, rewardInfo] = await Promise.all([
           fetchCampaignPairs(campaignIds, type),
           fetchCampaignIdsIncentive(contract, campaignIds),
-          fetUserQualification(contract),
+          fetchUserQualification(contract),
           fetchRewardInfo(campaignIds, type),
         ])
 

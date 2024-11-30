@@ -19,6 +19,15 @@ export const safeGetAddress = memoize((value: any): Address | undefined => {
   }
 })
 
+export const isAddressEqual = (a?: any, b?: any) => {
+  if (!a || !b) return false
+  const a_ = safeGetAddress(a)
+  if (!a_) return false
+  const b_ = safeGetAddress(b)
+  if (!b_) return false
+  return a_ === b_
+}
+
 export function getBlockExploreLink(
   data: string | number | undefined | null,
   type: 'transaction' | 'token' | 'address' | 'block' | 'countdown',

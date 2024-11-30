@@ -1,6 +1,6 @@
 {
   "name": "@pancakeswap/wagmi",
-  "version": "3.0.2",
+  "version": "3.0.4",
   "license": "MIT",
   "description": "wagmi adaptor for pancakeswap",
   "main": "./dist/index.js",
@@ -22,7 +22,7 @@
     "react-dom": "^18.0.0",
     "viem": "catalog:",
     "wagmi": "catalog:",
-    "@tanstack/react-query": "^5.28.4"
+    "@tanstack/react-query": "^5.52.1"
   },
   "devDependencies": {
     "@blocto/sdk": "^0.5.4",
@@ -63,6 +63,6 @@
     }
   },
   "dependencies": {
-    "@walletconnect/ethereum-provider": "^2.11.3"
+    "@walletconnect/ethereum-provider": "^2.14.0"
   }
 }

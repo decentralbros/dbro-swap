@@ -23,7 +23,6 @@ import {
 import { useUserSingleHopOnly } from '@pancakeswap/utils/user'
 import { ReactNode, useCallback, useState } from 'react'
 import {
-  useMMLinkedPoolByDefault,
   useOnlyOneAMMSourceEnabled,
   useRoutingSettingChanged,
   useUserSplitRouteEnable,
@@ -332,7 +331,6 @@ function RoutingSettings() {
   const [v2Enable, setV2Enable] = useUserV2SwapEnable()
   const [v3Enable, setV3Enable] = useUserV3SwapEnable()
   const [split, setSplit] = useUserSplitRouteEnable()
-  const [isMMLinkedPoolByDefault, setIsMMLinkedPoolByDefault] = useMMLinkedPoolByDefault()
   const [singleHopOnly, setSingleHopOnly] = useUserSingleHopOnly()
   const onlyOneAMMSourceEnabled = useOnlyOneAMMSourceEnabled()
   const [isRoutingSettingChange, reset] = useRoutingSettingChanged()
@@ -451,12 +449,12 @@ function RoutingSettings() {
                 ml="4px"
               />
             </Flex>
-            <Toggle
+            {/* <Toggle
               id="toggle-disable-mm-button"
               checked={isMMLinkedPoolByDefault}
               onChange={(e) => setIsMMLinkedPoolByDefault(e.target.checked)}
               scale="md"
-            />
+            /> */}
           </Flex>
           {onlyOneAMMSourceEnabled && (
             <Message variant="warning">

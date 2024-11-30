@@ -1,74 +1,72 @@
 import { ChainId } from '@pancakeswap/chains'
-
-import { livePools as ethLivePools, pools as ethPools } from './1'
-import { livePools as polygonZkEvmLivePools, pools as polygonZkEvmPools } from './1101'
-import { livePools as polygonZkEvmTestnetLivePools, pools as polygonZkEvmTestnetPools } from './1442'
-import { livePools as opBNBLivePools, pools as opBNBPools } from './204'
-import { livePools as zkSyncTestnetLivePools, pools as zkSyncTestnetPools } from './280'
-import { livePools as zkSyncLivePools, pools as zkSyncPools } from './324'
-import { livePools as arbLivePools, pools as arbPools } from './42161'
-import { livePools as arbTestnetLivePools, pools as arbTestnetPools } from './421613'
-import { livePools as bscLivePools, pools as bscPools } from './56'
-import { livePools as lineaTestnetLivePools, pools as lineaTestnetPools } from './59140'
-import { livePools as lineaLivePools, pools as lineaPools } from './59144'
-import { livePools as baseLivePools, pools as basePools } from './8453'
-import { livePools as baseTestnetLivePools, pools as baseTestnetPools } from './84531'
-import { livePools as bscTestnetLivePools, pools as bscTestnetPools } from './97'
-
 import { SerializedPool } from '../../types'
 import { isPoolsSupported } from '../../utils/isPoolsSupported'
-import { SupportedChainId } from '../supportedChains'
+import { POOLS_API } from '../config/endpoint'
 
-export type PoolsConfigByChain<TChainId extends ChainId> = {
-  [chainId in TChainId]: SerializedPool[]
-}
+const poolCache: Record<string, SerializedPool[] | undefined> = {}
+const fetchRequests: Record<string, Promise<SerializedPool[]> | undefined> = {}
 
-export const POOLS_CONFIG_BY_CHAIN = {
-  [ChainId.ETHEREUM]: ethPools,
-  [ChainId.BSC]: bscPools,
-  [ChainId.BSC_TESTNET]: bscTestnetPools,
-  [ChainId.ARBITRUM_ONE]: arbPools,
-  [ChainId.ARBITRUM_GOERLI]: arbTestnetPools,
-  [ChainId.ZKSYNC]: zkSyncPools,
-  [ChainId.ZKSYNC_TESTNET]: zkSyncTestnetPools,
-  [ChainId.BASE]: basePools,
-  [ChainId.BASE_TESTNET]: baseTestnetPools,
-  [ChainId.LINEA]: lineaPools,
-  [ChainId.LINEA_TESTNET]: lineaTestnetPools,
-  [ChainId.POLYGON_ZKEVM]: polygonZkEvmPools,
-  [ChainId.POLYGON_ZKEVM_TESTNET]: polygonZkEvmTestnetPools,
-  [ChainId.OPBNB]: opBNBPools,
-} as PoolsConfigByChain<SupportedChainId>
-
-export const LIVE_POOLS_CONFIG_BY_CHAIN = {
-  [ChainId.ETHEREUM]: ethLivePools,
-  [ChainId.BSC]: bscLivePools,
-  [ChainId.BSC_TESTNET]: bscTestnetLivePools,
-  [ChainId.ARBITRUM_ONE]: arbLivePools,
-  [ChainId.ARBITRUM_GOERLI]: arbTestnetLivePools,
-  [ChainId.ZKSYNC]: zkSyncLivePools,
-  [ChainId.ZKSYNC_TESTNET]: zkSyncTestnetLivePools,
-  [ChainId.BASE]: baseLivePools,
-  [ChainId.BASE_TESTNET]: baseTestnetLivePools,
-  [ChainId.LINEA]: lineaLivePools,
-  [ChainId.LINEA_TESTNET]: lineaTestnetLivePools,
-  [ChainId.POLYGON_ZKEVM]: polygonZkEvmLivePools,
-  [ChainId.POLYGON_ZKEVM_TESTNET]: polygonZkEvmTestnetLivePools,
-  [ChainId.OPBNB]: opBNBLivePools,
-} as PoolsConfigByChain<SupportedChainId>
-
-export const getPoolsConfig = (chainId: ChainId) => {
+export const getPoolsConfig = async (chainId: ChainId) => {
   if (!isPoolsSupported(chainId)) {
     return undefined
   }
-  return POOLS_CONFIG_BY_CHAIN[chainId]
+
+  // Check if the pools are already cached
+  if (poolCache[chainId]) {
+    return poolCache[chainId]
+  }
+
+  // Check if a fetch request is already in progress for this chainId
+  if (fetchRequests[chainId]) {
+    return fetchRequests[chainId]
+  }
+
+  const fetchPoolConfig = async () => {
+    try {
+      const response = await fetch(`${POOLS_API}?chainId=${chainId}`, {
+        signal: AbortSignal.timeout(3000),
+      })
+      if (response.ok) {
+        const pools = await response.json()
+        if (!pools) {
+          throw new Error(`Unexpected empty pool fetched from remote ${pools}`)
+        }
+
+        // Cache the result before returning
+        poolCache[chainId] = pools
+        return pools
+      }
+      throw new Error(`Fetch failed with status: ${response.status}`)
+    } catch (e) {
+      if (e instanceof Error) {
+        throw new Error(`Fetch failed: ${e.message}`)
+      } else {
+        throw new Error(`Fetch failed: ${e}`)
+      }
+    } finally {
+      // Clear the ongoing fetch request after completion or failure
+      fetchRequests[chainId] = undefined
+    }
+  }
+
+  // Store the ongoing fetch request in the cache
+  fetchRequests[chainId] = fetchPoolConfig()
+  return fetchRequests[chainId]
 }
 
-export const getLivePoolsConfig = (chainId: ChainId) => {
+export const getLivePoolsConfig = async (chainId: ChainId) => {
   if (!isPoolsSupported(chainId)) {
     return undefined
   }
-  return LIVE_POOLS_CONFIG_BY_CHAIN[chainId]
+
+  try {
+    const response = await fetch(`${POOLS_API}?chainId=${chainId}&isFinished=false`)
+    const result: SerializedPool[] = await response.json()
+    return result
+  } catch (error) {
+    console.error('Get live pools by chain config error: ', error)
+    return []
+  }
 }
 
 export const MAX_LOCK_DURATION = 31536000

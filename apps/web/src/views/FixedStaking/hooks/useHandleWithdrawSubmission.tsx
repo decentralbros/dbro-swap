@@ -7,7 +7,7 @@ import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import useCatchTxError from 'hooks/useCatchTxError'
 import { useFixedStakingContract } from 'hooks/useContract'
 import { createElement, useCallback, useMemo } from 'react'
-import { useReadContract } from 'wagmi'
+import { useReadContract } from '@pancakeswap/wagmi'
 
 import { getBep20Contract } from 'utils/contractHelpers'
 
@@ -32,8 +32,8 @@ export function useHandleWithdrawSubmission({
       <>
         {t('Please come back to check later at a certain amount of time')}
         <Link
+          external
           href="https://docs.pancakeswap.finance/products/simple-staking/faq#what-happens-in-the-withdrawal-process-when-withdrawal-approval-is-pending"
-          target="_blank"
         >
           {t('Learn more')}
         </Link>

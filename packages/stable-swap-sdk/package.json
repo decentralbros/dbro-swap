@@ -1,6 +1,6 @@
 {
   "name": "@pancakeswap/stable-swap-sdk",
-  "version": "1.0.13",
+  "version": "1.1.4",
   "description": "SDK for pancakeswap stable swap",
   "repository": {
     "type": "git",
@@ -32,7 +32,9 @@
     "@pancakeswap/token-lists": "workspace:*",
     "@pancakeswap/tsconfig": "workspace:*",
     "@pancakeswap/utils": "workspace:*",
-    "tsup": "^6.7.0"
+    "@pancakeswap/sdk": "workspace:*",
+    "tsup": "^6.7.0",
+    "viem": "catalog:"
   },
   "exports": {
     "./package.json": "./package.json",

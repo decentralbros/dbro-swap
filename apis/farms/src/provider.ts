@@ -40,10 +40,10 @@ const base = {
   },
   rpcUrls: {
     default: {
-      http: ['https://base-rpc.publicnode.com'],
+      http: ['https://mainnet.base.org'],
     },
     public: {
-      http: ['https://base-rpc.publicnode.com'],
+      http: ['https://mainnet.base.org'],
     },
   },
   blockExplorers: {

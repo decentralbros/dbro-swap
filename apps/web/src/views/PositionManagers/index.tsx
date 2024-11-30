@@ -1,5 +1,4 @@
 import Page from 'components/Layout/Page'
-
 import { Header } from './components'
 import { Controls, VaultContent } from './containers'
 

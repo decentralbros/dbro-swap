@@ -24,8 +24,6 @@ import { memo, useMemo, useState } from 'react'
 import { Field } from 'state/swap/actions'
 import { styled } from 'styled-components'
 import { warningSeverity } from 'utils/exchange'
-import { formatExecutionPrice as mmFormatExecutionPrice } from 'views/Swap/MMLinkPools/utils/exchange'
-
 import { paymasterInfo } from 'config/paymaster'
 import { usePaymaster } from 'hooks/usePaymaster'
 import FormattedPriceImpact from '../../components/FormattedPriceImpact'
@@ -130,13 +128,9 @@ export const SwapModalFooter = memo(function SwapModalFooter({
   const buyBackFeePercent = `${(BUYBACK_FEE * 100).toFixed(4)}%`
 
   const executionPriceDisplay = useMemo(() => {
-    if (isMM) {
-      return mmFormatExecutionPrice(trade, showInverted)
-    }
-
     const price = SmartRouter.getExecutionPrice(trade) ?? undefined
     return formatExecutionPrice(price, inputAmount, outputAmount, showInverted)
-  }, [inputAmount, isMM, outputAmount, trade, showInverted])
+  }, [inputAmount, outputAmount, trade, showInverted])
 
   return (
     <>

@@ -78,7 +78,7 @@ export const FilterdNetworkWrapper = styled(Flex)<{ showPopOver: boolean }>`
   position: absolute;
   width: 100%;
   background: ${({ theme }) => theme.colors.backgroundAlt};
-
+  max-height: 100%;
   display: flex;
   flex-direction: column;
   height: max-content;
@@ -188,14 +188,14 @@ const getBoxShadow = ({ isSuccess = false, isWarning = false, theme }: StyledInp
 }
 
 export const StyledVerticalLine = styled.div`
-  position: absolute;
-  height: calc(65%);
+  position: fixed;
+  height: calc(23%);
   width: 2px;
   border-left: 2px dashed ${({ theme }) => (theme.isDark ? `${theme.colors.input}` : `${theme.colors.inputSecondary}`)};
 
   margin-top: 10px;
   z-index: 0;
-  left: calc(50% - 5px);
+  left: calc(50% - 3px);
 `
 export const StyledArrowHead = styled.div`
   position: absolute;
@@ -224,10 +224,10 @@ export const OnRampIconContainer = styled(Box)`
 export const OnRampIconCircleWrapper = styled(Box)<{ border: boolean }>`
   position: absolute;
   border-radius: 50%;
-  overflow: hidden;
   ${({ border }) =>
     border &&
     css`
+      overflow: hidden;
       border: solid 3px white;
     `}
 `

@@ -9,7 +9,6 @@ import { Provider } from 'react-redux'
 import { createWagmiConfig } from 'utils/wagmi'
 import { WagmiProvider } from 'wagmi'
 
-// Create a client
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

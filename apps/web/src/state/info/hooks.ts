@@ -3,7 +3,8 @@ import duration from 'dayjs/plugin/duration'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
-import { useQuery } from '@tanstack/react-query'
+import { STABLE_SUPPORTED_CHAIN_IDS } from '@pancakeswap/stable-swap-sdk'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import BigNumber from 'bignumber.js'
 import { fetchAllTokenData, fetchAllTokenDataByAddresses } from 'state/info/queries/tokens/tokenData'
 import { Block, Transaction, TransactionType, TvlChartEntry, VolumeChartEntry } from 'state/info/types'
@@ -14,7 +15,8 @@ import { getPercentChange } from 'utils/infoDataHelpers'
 import { useBlocksFromTimestamps } from 'views/Info/hooks/useBlocksFromTimestamps'
 import { explorerApiClient } from './api/client'
 import { useExplorerChainNameByQuery } from './api/hooks'
-import { MultiChainName, MultiChainNameExtend, checkIsStableSwap, multiChainId } from './constant'
+import { operations } from './api/schema'
+import { checkIsStableSwap, multiChainId, MultiChainName, MultiChainNameExtend } from './constant'
 import { PoolData, PriceChartEntry, ProtocolData, TokenData } from './types'
 
 dayjs.extend(duration)
@@ -28,12 +30,11 @@ const QUERY_SETTINGS_IMMUTABLE = {
   refetchOnWindowFocus: false,
 }
 const QUERY_SETTINGS_WITHOUT_INTERVAL_REFETCH = {
-  retry: 3,
   retryDelay: 3000,
 }
 const QUERY_SETTINGS_INTERVAL_REFETCH = {
   refetchInterval: refreshIntervalForInfo,
-  keepPreviousData: true,
+  placeholderData: keepPreviousData,
   ...QUERY_SETTINGS_WITHOUT_INTERVAL_REFETCH,
 }
 
@@ -170,6 +171,7 @@ export const useProtocolChartDataVolumeQuery = (): VolumeChartEntry[] | undefine
 
 export const useProtocolTransactionsQuery = (): Transaction[] | undefined => {
   const chainName = useExplorerChainNameByQuery()
+  const chainId = useChainIdByQuery()
   const type = checkIsStableSwap() ? 'stableSwap' : 'swap'
   const { data: transactions } = useQuery({
     queryKey: [`info/protocol/updateProtocolTransactionsData2/${type}`, chainName],
@@ -177,13 +179,14 @@ export const useProtocolTransactionsQuery = (): Transaction[] | undefined => {
       if (!chainName) {
         throw new Error('No chain name')
       }
-      if ((type === 'stableSwap' && chainName === 'bsc') || chainName === 'arbitrum') {
+      if (type === 'stableSwap' && STABLE_SUPPORTED_CHAIN_IDS.includes(chainId as number)) {
         return explorerApiClient
           .GET('/cached/tx/stable/{chainName}/recent', {
             signal,
             params: {
               path: {
-                chainName,
+                chainName:
+                  chainName as operations['getCachedTxStableByChainNameRecent']['parameters']['path']['chainName'],
               },
             },
           })
@@ -231,6 +234,7 @@ export const useProtocolTransactionsQuery = (): Transaction[] | undefined => {
 
 export const useAllPoolDataQuery = () => {
   const chainName = useExplorerChainNameByQuery()
+  const chainId = useChainIdByQuery()
   const type = checkIsStableSwap() ? 'stableSwap' : 'swap'
   const { data } = useQuery({
     queryKey: [`info/pools2/data/${type}`, chainName],
@@ -238,12 +242,13 @@ export const useAllPoolDataQuery = () => {
       if (!chainName) {
         throw new Error('No chain name')
       }
-      if (type === 'stableSwap' && (chainName === 'bsc' || chainName === 'arbitrum')) {
+      if (type === 'stableSwap' && STABLE_SUPPORTED_CHAIN_IDS.includes(chainId as number)) {
         return explorerApiClient
           .GET('/cached/pools/stable/{chainName}/list/top', {
             params: {
               path: {
-                chainName,
+                chainName:
+                  chainName as operations['getCachedPoolsStableByChainNameListTop']['parameters']['path']['chainName'],
               },
             },
           })
@@ -282,17 +287,21 @@ export const useAllPoolDataQuery = () => {
         final[d.id] = {
           data: {
             address: d.id,
+            lpAddress: d.lpAddress,
             timestamp: dayjs(d.createdAtTimestamp as string).unix(),
             token0: {
               address: d.token0.id,
               symbol: d.token0.symbol,
               name: d.token0.name,
+              decimals: d.token0.decimals,
             },
             token1: {
               address: d.token1.id,
               symbol: d.token1.symbol,
               name: d.token1.name,
+              decimals: d.token1.decimals,
             },
+            feeTier: d.feeTier,
             volumeUSD: +d.volumeUSD24h,
             volumeUSDChange: 0,
             volumeUSDWeek: +d.volumeUSD7d,
@@ -322,6 +331,7 @@ export const useAllPoolDataQuery = () => {
 
 export function usePoolDataQuery(poolAddress: string): PoolData | undefined {
   const chainName = useExplorerChainNameByQuery()
+  const chainId = useChainIdByQuery()
   const type = checkIsStableSwap() ? 'stableSwap' : 'swap'
   const { data } = useQuery({
     queryKey: [`info/pool/data/${poolAddress}/${type}`, chainName],
@@ -329,13 +339,14 @@ export function usePoolDataQuery(poolAddress: string): PoolData | undefined {
       if (!chainName) {
         throw new Error('No chain name')
       }
-      if (type === 'stableSwap' && (chainName === 'bsc' || chainName === 'arbitrum')) {
+      if (type === 'stableSwap' && STABLE_SUPPORTED_CHAIN_IDS.includes(chainId as number)) {
         return explorerApiClient
           .GET('/cached/pools/stable/{chainName}/{address}', {
             signal,
             params: {
               path: {
-                chainName,
+                chainName:
+                  chainName as operations['getCachedPoolsStableByChainNameByAddress']['parameters']['path']['chainName'],
                 address: poolAddress,
               },
             },
@@ -373,11 +384,13 @@ export function usePoolDataQuery(poolAddress: string): PoolData | undefined {
           address: data_.token0.id,
           symbol: data_.token0.symbol,
           name: data_.token0.name,
+          decimals: data_.token0.decimals,
         },
         token1: {
           address: data_.token1.id,
           symbol: data_.token1.symbol,
           name: data_.token1.name,
+          decimals: data_.token1.decimals,
         },
         volumeUSD: +data_.volumeUSD24h,
         volumeUSDChange: 0,
@@ -394,6 +407,7 @@ export function usePoolDataQuery(poolAddress: string): PoolData | undefined {
         token0Price: +data_.token0Price,
         token1Price: +data_.token1Price,
         volumeUSDChangeWeek: 0,
+        feeTier: data_.feeTier,
       }
     }, []),
     enabled: Boolean(chainName && poolAddress),
@@ -478,6 +492,7 @@ export const usePoolChartVolumeDataQuery = (address: string): VolumeChartEntry[]
 
 export const usePoolTransactionsQuery = (address: string): Transaction[] | undefined => {
   const chainName = useExplorerChainNameByQuery()
+  const chainId = useChainIdByQuery()
   const type = checkIsStableSwap() ? 'stableSwap' : 'swap'
   const { data } = useQuery({
     queryKey: [`info/pool/transactionsData2/${address}/${type}`, chainName],
@@ -485,13 +500,14 @@ export const usePoolTransactionsQuery = (address: string): Transaction[] | undef
       if (!chainName) {
         throw new Error('No chain name')
       }
-      if (type === 'stableSwap' && (chainName === 'bsc' || chainName === 'arbitrum')) {
+      if (type === 'stableSwap' && STABLE_SUPPORTED_CHAIN_IDS.includes(chainId as number)) {
         return explorerApiClient
           .GET('/cached/tx/stable/{chainName}/recent', {
             signal,
             params: {
               path: {
-                chainName,
+                chainName:
+                  chainName as operations['getCachedTxStableByChainNameRecent']['parameters']['path']['chainName'],
               },
               query: {
                 pool: address,
@@ -583,6 +599,7 @@ export const useAllTokenDataQuery = (): {
   [address: string]: { data?: TokenData }
 } => {
   const chainName = useExplorerChainNameByQuery()
+  const chainId = useChainIdByQuery()
   const type = checkIsStableSwap() ? 'stableSwap' : 'swap'
   const { data } = useQuery({
     queryKey: [`info/token/data2/${type}`, chainName],
@@ -593,13 +610,14 @@ export const useAllTokenDataQuery = (): {
       const final: { [address: string]: { data?: TokenData } } = {}
       let data_
 
-      if (type === 'stableSwap' && (chainName === 'bsc' || chainName === 'arbitrum')) {
+      if (type === 'stableSwap' && STABLE_SUPPORTED_CHAIN_IDS.includes(chainId as number)) {
         data_ = await explorerApiClient
           .GET('/cached/tokens/stable/{chainName}/list/top', {
             signal,
             params: {
               path: {
-                chainName,
+                chainName:
+                  chainName as operations['getCachedTokensStableByChainNameListTop']['parameters']['path']['chainName'],
               },
             },
           })
@@ -698,6 +716,7 @@ export const useTokenDatasQuery = (addresses?: string[], withSettings = true): T
 
 export const useTokenDataQuery = (address: string | undefined): TokenData | undefined => {
   const chainName = useExplorerChainNameByQuery()
+  const chainId = useChainIdByQuery()
   const type = checkIsStableSwap() ? 'stableSwap' : 'swap'
 
   const { data } = useQuery({
@@ -706,13 +725,14 @@ export const useTokenDataQuery = (address: string | undefined): TokenData | unde
       if (!chainName || !address) {
         throw new Error('No chain name')
       }
-      if (type === 'stableSwap' && (chainName === 'bsc' || chainName === 'arbitrum')) {
+      if (type === 'stableSwap' && STABLE_SUPPORTED_CHAIN_IDS.includes(chainId as number)) {
         return explorerApiClient
           .GET('/cached/tokens/stable/{chainName}/{address}', {
             signal,
             params: {
               path: {
-                chainName,
+                chainName:
+                  chainName as operations['getCachedTokensStableByChainNameByAddress']['parameters']['path']['chainName'],
                 address,
               },
             },
@@ -764,6 +784,7 @@ export const useTokenDataQuery = (address: string | undefined): TokenData | unde
 
 export function usePoolsForTokenDataQuery(address: string): (PoolData | undefined)[] {
   const chainName = useExplorerChainNameByQuery()
+  const chainId = useChainIdByQuery()
   const type = checkIsStableSwap() ? 'stableSwap' : 'swap'
   const { data } = useQuery({
     queryKey: [`info/token/chartData2/${address}/${type}`, chainName],
@@ -771,7 +792,7 @@ export function usePoolsForTokenDataQuery(address: string): (PoolData | undefine
       if (!chainName || !address) {
         throw new Error('No chain name')
       }
-      if (type === 'stableSwap' && (chainName === 'bsc' || chainName === 'arbitrum')) {
+      if (type === 'stableSwap' && STABLE_SUPPORTED_CHAIN_IDS.includes(chainId as number)) {
         return explorerApiClient
           .GET('/cached/pools/stable/{chainName}/list/top', {
             signal,
@@ -780,7 +801,8 @@ export function usePoolsForTokenDataQuery(address: string): (PoolData | undefine
                 token: address,
               },
               path: {
-                chainName,
+                chainName:
+                  chainName as operations['getCachedPoolsStableByChainNameListTop']['parameters']['path']['chainName'],
               },
             },
           })
@@ -936,7 +958,7 @@ export const useTokenPriceDataQuery = (
       if (!chainName) {
         throw new Error('No chain name')
       }
-      return explorerApiClient
+      const result = await explorerApiClient
         .GET('/cached/tokens/chart/{chainName}/{address}/{protocol}/price', {
           signal,
           params: {
@@ -961,6 +983,7 @@ export const useTokenPriceDataQuery = (
             }
           }),
         )
+      return result
     },
     ...QUERY_SETTINGS_IMMUTABLE,
     ...QUERY_SETTINGS_INTERVAL_REFETCH,
@@ -970,6 +993,7 @@ export const useTokenPriceDataQuery = (
 
 export const useTokenTransactionsQuery = (address: string): Transaction[] | undefined => {
   const chainName = useExplorerChainNameByQuery()
+  const chainId = useChainIdByQuery()
   const type = checkIsStableSwap() ? 'stableSwap' : 'swap'
   const { data } = useQuery({
     queryKey: [`info/token/transactionsData/${address}/${type}`, chainName],
@@ -977,13 +1001,14 @@ export const useTokenTransactionsQuery = (address: string): Transaction[] | unde
       if (!chainName) {
         throw new Error('No chain name')
       }
-      if (type === 'stableSwap' && (chainName === 'bsc' || chainName === 'arbitrum')) {
+      if (type === 'stableSwap' && STABLE_SUPPORTED_CHAIN_IDS.includes(chainId as number)) {
         return explorerApiClient
           .GET('/cached/tx/stable/{chainName}/recent', {
             signal,
             params: {
               path: {
-                chainName,
+                chainName:
+                  chainName as operations['getCachedTxStableByChainNameRecent']['parameters']['path']['chainName'],
               },
               query: {
                 token: address,
@@ -1083,8 +1108,8 @@ export const useChainIdByQuery = () => {
   return chainId
 }
 
-const stableSwapAPRWithAddressesFetcher = async (addresses: string[]) => {
-  return Promise.all(addresses.map((d) => getAprsForStableFarm(d)))
+const stableSwapAPRWithAddressesFetcher = async (addresses: string[], chainId?: number) => {
+  return Promise.all(addresses.map((d) => getAprsForStableFarm(d, chainId)))
 }
 
 export const useStableSwapTopPoolsAPR = (addresses: string[]): Record<string, number> => {
@@ -1092,8 +1117,8 @@ export const useStableSwapTopPoolsAPR = (addresses: string[]): Record<string, nu
   const chainName = useChainNameByQuery()
   const { data } = useQuery<BigNumber[]>({
     queryKey: [`info/pool/stableAPRs/Addresses/`, chainName],
-    queryFn: () => stableSwapAPRWithAddressesFetcher(addresses),
-    enabled: Boolean(isStableSwap && addresses?.length > 0),
+    queryFn: () => stableSwapAPRWithAddressesFetcher(addresses, multiChainId[chainName]),
+    enabled: Boolean(isStableSwap && addresses?.length > 0) && Boolean(chainName),
     ...QUERY_SETTINGS_IMMUTABLE,
     ...QUERY_SETTINGS_WITHOUT_INTERVAL_REFETCH,
   })

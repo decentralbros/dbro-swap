@@ -36,27 +36,6 @@ export default function Swap() {
     }
   }, [firstTime, isChartDisplayed, isSwapHotTokenDisplay, query, setIsSwapHotTokenDisplay, setIsChartDisplayed])
 
-  // swap state & price data
-  // const {
-  //   [Field.INPUT]: { currencyId: inputCurrencyId },
-  //   [Field.OUTPUT]: { currencyId: outputCurrencyId },
-  // } = useSwapState()
-  // const inputCurrency = useCurrency(inputCurrencyId)
-  // const outputCurrency = useCurrency(outputCurrencyId)
-
-  // const currencies: { [field in Field]?: Currency } = {
-  //   [Field.INPUT]: inputCurrency ?? undefined,
-  //   [Field.OUTPUT]: outputCurrency ?? undefined,
-  // }
-
-  // const singleTokenPrice = useSingleTokenSwapInfo(
-  //   inputCurrencyId,
-  //   inputCurrency,
-  //   outputCurrencyId,
-  //   outputCurrency,
-  //   isChartSupported,
-  // )
-
   return (
     <div
       style={{
@@ -71,63 +50,9 @@ export default function Swap() {
           position="relative"
           alignItems="flex-start"
         >
-          {/* {isDesktop && isChartSupported && (
-            <PriceChartContainer
-              inputCurrencyId={inputCurrencyId}
-              inputCurrency={currencies[Field.INPUT]}
-              outputCurrencyId={outputCurrencyId}
-              outputCurrency={currencies[Field.OUTPUT]}
-              isChartExpanded={isChartExpanded}
-              setIsChartExpanded={setIsChartExpanded}
-              isChartDisplayed={isChartDisplayed}
-              currentSwapPrice={singleTokenPrice}
-            />
-          )}
-          {!isDesktop && isChartSupported && (
-            <BottomDrawer
-              content={
-                <PriceChartContainer
-                  inputCurrencyId={inputCurrencyId}
-                  inputCurrency={currencies[Field.INPUT]}
-                  outputCurrencyId={outputCurrencyId}
-                  outputCurrency={currencies[Field.OUTPUT]}
-                  isChartExpanded={isChartExpanded}
-                  setIsChartExpanded={setIsChartExpanded}
-                  isChartDisplayed={isChartDisplayed}
-                  currentSwapPrice={singleTokenPrice}
-                  isFullWidthContainer
-                  isMobile
-                />
-              }
-              isOpen={isChartDisplayed}
-              setIsOpen={(isOpen) => setIsChartDisplayed?.(isOpen)}
-            />
-          )} */}
-          {/* {isDesktop && isSwapHotTokenDisplay && isHotTokenSupported && (
-          <HotTokenList handleOutputSelect={handleOutputSelect} />
-        )} */}
-          {/* <ModalV2
-          isOpen={!isDesktop && isSwapHotTokenDisplay && isHotTokenSupported}
-          onDismiss={() => setIsSwapHotTokenDisplay(false)}
-        >
-          <Modal
-            style={{ padding: 0 }}
-            title={t('Top Token')}
-            onDismiss={() => setIsSwapHotTokenDisplay(false)}
-            bodyPadding="0px"
-          >
-            <HotTokenList
-              handleOutputSelect={(newCurrencyOutput: Currency) => {
-                handleOutputSelect(newCurrencyOutput)
-                setIsSwapHotTokenDisplay(false)
-              }}
-            />
-          </Modal>
-        </ModalV2> */}
           <Flex flexDirection="column">
             <StyledSwapContainer $isChartExpanded={isChartExpanded}>
               <StyledInputCurrencyWrapper mt={isChartExpanded ? '24px' : '0'}>
-                {/* <SwapSelection swapType={SwapType.MARKET} /> */}
                 <AppBody>
                   <V3SwapForm />
                 </AppBody>

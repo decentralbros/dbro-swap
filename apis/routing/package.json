@@ -1,6 +1,6 @@
 {
   "name": "routing-api",
-  "version": "0.3.69",
+  "version": "0.3.82",
   "dependencies": {
     "@pancakeswap/chains": "workspace:*",
     "@pancakeswap/farms": "workspace:*",
@@ -8,6 +8,7 @@
     "@pancakeswap/smart-router": "workspace:*",
     "@pancakeswap/v3-sdk": "workspace:*",
     "@pancakeswap/worker-utils": "workspace:*",
+    "@pancakeswap/stable-swap-sdk": "workspace:*",
     "dayjs": "^1.11.10",
     "graphql-request": "5.0.0",
     "itty-router": "^2.6.1",
@@ -18,7 +19,7 @@
     "@cloudflare/workers-types": "^3.10.0",
     "@pancakeswap/tsconfig": "workspace:*",
     "@types/itty-router-extras": "^0.4.0",
-    "wrangler": "2.20.2"
+    "wrangler": "catalog:"
   },
   "private": true,
   "scripts": {

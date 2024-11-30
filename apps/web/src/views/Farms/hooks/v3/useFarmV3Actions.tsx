@@ -1,14 +1,19 @@
 import { useTranslation } from '@pancakeswap/localization'
+import { ChainId } from '@pancakeswap/sdk'
 import { useToast } from '@pancakeswap/uikit'
 import { MasterChefV3, NonfungiblePositionManager } from '@pancakeswap/v3-sdk'
 import { useQueryClient } from '@tanstack/react-query'
 import { ToastDescriptionWithTx } from 'components/Toast'
+import { BOOSTED_FARM_V3_GAS_LIMIT } from 'config'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import useCatchTxError from 'hooks/useCatchTxError'
 import { useMasterchefV3, useV3NFTPositionManagerContract } from 'hooks/useContract'
+import { useIsSmartContract } from 'hooks/useIsSmartContract'
 import { useCallback } from 'react'
 import { calculateGasMargin } from 'utils'
+import { logGTMClickStakeFarmConfirmEvent, logGTMStakeFarmTxSentEvent } from 'utils/customGTMEventTracking'
 import { getViemClients, viemClients } from 'utils/viem'
+import type { TransactionReceipt } from 'viem'
 import { Address, hexToBigInt } from 'viem'
 import { useAccount, useSendTransaction, useWalletClient } from 'wagmi'
 
@@ -24,13 +29,14 @@ const useFarmV3Actions = ({
   onDone,
 }: {
   tokenId: string
-  onDone?: () => void
+  onDone?: (resp: TransactionReceipt | null) => void
 }): FarmV3ActionContainerChildrenProps => {
   const { t } = useTranslation()
   const { toastSuccess } = useToast()
   const { address: account } = useAccount()
   const { data: signer } = useWalletClient()
   const { chainId } = useActiveChainId()
+  const isSC = useIsSmartContract(account)
   const { sendTransactionAsync } = useSendTransaction()
   const queryClient = useQueryClient()
   const publicClient = viemClients[chainId as keyof typeof viemClients]
@@ -54,17 +60,30 @@ const useFarmV3Actions = ({
     }
 
     const resp = await fetchWithCatchTxError(() =>
-      publicClient.estimateGas(txn).then((estimate) => {
-        const newTxn = {
-          ...txn,
-          gas: calculateGasMargin(estimate),
-        }
+      publicClient
+        .estimateGas(txn)
+        .then((estimate) => {
+          const newTxn = {
+            ...txn,
+            gas: calculateGasMargin(estimate),
+          }
 
-        return sendTransactionAsync(newTxn)
-      }),
+          return sendTransactionAsync(newTxn)
+        })
+        .catch((e) => {
+          // Workaround for zksync smart wallets
+          if (isSC && chainId === ChainId.ZKSYNC && e.shortMessage.includes('argent/forbidden-fallback')) {
+            const newTxn = {
+              ...txn,
+              gas: BOOSTED_FARM_V3_GAS_LIMIT,
+            }
+            return sendTransactionAsync(newTxn)
+          }
+          throw e
+        }),
     )
     if (resp?.status) {
-      onDone?.()
+      onDone?.(resp)
       toastSuccess(
         `${t('Unstaked')}!`,
         <ToastDescriptionWithTx txHash={resp.transactionHash}>
@@ -76,6 +95,8 @@ const useFarmV3Actions = ({
     account,
     fetchWithCatchTxError,
     masterChefV3Address,
+    isSC,
+    chainId,
     publicClient,
     sendTransactionAsync,
     signer,
@@ -86,6 +107,7 @@ const useFarmV3Actions = ({
   ])
 
   const onStake = useCallback(async () => {
+    logGTMClickStakeFarmConfirmEvent()
     if (!account || !nftPositionManagerAddress) return
 
     const { calldata, value } = NonfungiblePositionManager.safeTransferFromParameters({
@@ -114,7 +136,8 @@ const useFarmV3Actions = ({
     )
 
     if (resp?.status) {
-      onDone?.()
+      logGTMStakeFarmTxSentEvent()
+      onDone?.(resp)
       toastSuccess(
         `${t('Staked')}!`,
         <ToastDescriptionWithTx txHash={resp.transactionHash}>
@@ -166,6 +189,7 @@ const useFarmV3Actions = ({
     )
 
     if (resp?.status) {
+      onDone?.(resp)
       toastSuccess(
         `${t('Harvested')}!`,
         <ToastDescriptionWithTx txHash={resp.transactionHash}>
@@ -175,6 +199,7 @@ const useFarmV3Actions = ({
       queryClient.invalidateQueries({ queryKey: ['mcv3-harvest'] })
     }
   }, [
+    onDone,
     account,
     fetchWithCatchTxError,
     masterChefV3Address,

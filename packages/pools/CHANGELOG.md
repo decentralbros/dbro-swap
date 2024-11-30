@@ -1,5 +1,67 @@
 # @pancakeswap/pools
 
+## 5.1.35
+
+### Patch Changes
+
+- @pancakeswap/token-lists@0.0.14
+- @pancakeswap/tokens@0.6.28
+
+## 5.1.34
+
+### Patch Changes
+
+- Updated dependencies [8218dbf]
+  - @pancakeswap/tokens@0.6.27
+
+## 5.1.33
+
+### Patch Changes
+
+- Updated dependencies [f3e8a77]
+- Updated dependencies [72fb1db]
+  - @pancakeswap/token-lists@0.0.13
+  - @pancakeswap/tokens@0.6.26
+
+## 5.1.32
+
+### Patch Changes
+
+- b0d3ac4: Add pepe pool
+- 6d4ecf0: List farm, pool, gauges
+- Updated dependencies [6d4ecf0]
+  - @pancakeswap/tokens@0.6.25
+
+## 5.1.31
+
+### Patch Changes
+
+- 1c1d186: Move finished pools
+- Updated dependencies [103dd63]
+- Updated dependencies [c6e9e02]
+  - @pancakeswap/tokens@0.6.24
+
+## 5.1.30
+
+### Patch Changes
+
+- @pancakeswap/token-lists@0.0.12
+- @pancakeswap/tokens@0.6.23
+
+## 5.1.29
+
+### Patch Changes
+
+- bf07bfa: List aitech syrup pool
+
+## 5.1.28
+
+### Patch Changes
+
+- Updated dependencies [4628ab7]
+- Updated dependencies [8f573cf]
+  - @pancakeswap/tokens@0.6.22
+
 ## 5.1.27
 
 ### Patch Changes

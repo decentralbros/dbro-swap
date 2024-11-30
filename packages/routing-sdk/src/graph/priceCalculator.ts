@@ -1,4 +1,4 @@
-import { type Currency, CurrencyAmount, Price } from '@pancakeswap/swap-sdk-core'
+import { type Token, CurrencyAmount, Price } from '@pancakeswap/swap-sdk-core'
 import { Native } from '@pancakeswap/swap-sdk-evm'
 import invariant from 'tiny-invariant'
 
@@ -16,7 +16,7 @@ export type PriceCalculator = ReturnType<typeof createPriceCalculator>
 // Get the price reference of all tokens in the graph against the specified vertice
 export function createPriceCalculator({ graph, quote, gasPriceWei }: Params) {
   const { chainId } = quote.currency
-  const priceMap = new Map<Vertice, Price<Currency, Currency>>()
+  const priceMap = new Map<Vertice, Price<Token, Token>>()
   const priceSources = new Map<Vertice, Edge[]>()
   const processedVert = new Set<Vertice>()
   const edgeWeight = new Map<Edge, bigint>()
@@ -43,7 +43,7 @@ export function createPriceCalculator({ graph, quote, gasPriceWei }: Params) {
     const p = bestEdge.pool.getCurrentPrice(vTo.currency, vFrom.currency)
     const vFromQuotePrice = getQuotePrice(vFrom)
     invariant(vFromQuotePrice !== undefined, 'Invalid quote price')
-    priceMap.set(vTo, p.multiply(vFromQuotePrice))
+    priceMap.set(vTo, p.wrapped.multiply(vFromQuotePrice))
     priceSources.set(vTo, [...(priceSources.get(vFrom) || []), bestEdge])
     nextEdges = getNextEdges(vTo)
     processedVert.add(vTo)
@@ -53,13 +53,13 @@ export function createPriceCalculator({ graph, quote, gasPriceWei }: Params) {
     // )
   }
 
-  const native = Native.onChain(chainId).wrapped
-  const nativeVertice = graph.getVertice(native)
+  const wnative = Native.onChain(chainId).wrapped
+  const nativeVertice = graph.getVertice(wnative)
   if (!nativeVertice) {
     throw new Error('No valid native currency price found')
   }
   const nativePriceInQuote = getQuotePrice(nativeVertice)
-  const gasPriceInQuote = nativePriceInQuote?.quote(CurrencyAmount.fromRawAmount(native, gasPriceWei))
+  const gasPriceInQuote = nativePriceInQuote?.quote(CurrencyAmount.fromRawAmount(wnative, gasPriceWei))
   if (!gasPriceInQuote) {
     throw new Error('Failed to get gas price in quote')
   }
@@ -75,7 +75,7 @@ export function createPriceCalculator({ graph, quote, gasPriceWei }: Params) {
       }
       const tokenReserve = e.pool.getReserve(v.currency)
       invariant(tokenReserve !== undefined, 'Unexpected empty token reserve')
-      const liquidity = price.quote(tokenReserve).quotient
+      const liquidity = price.quote(tokenReserve.wrapped).quotient
       edgeWeight.set(e, liquidity)
       return true
     })
@@ -91,17 +91,17 @@ export function createPriceCalculator({ graph, quote, gasPriceWei }: Params) {
     return [...res, ...nextEdges, ...newEdges]
   }
 
-  function getPrice(base: Vertice, targetQuote: Vertice): Price<Currency, Currency> | undefined {
+  function getPrice(base: Vertice, targetQuote: Vertice): Price<Token, Token> | undefined {
     const basePrice = getQuotePrice(base)
     const quotePrice = getQuotePrice(targetQuote)
     return basePrice && quotePrice ? basePrice.multiply(quotePrice.invert()) : undefined
   }
 
-  function getQuotePrice(base: Vertice): Price<Currency, Currency> | undefined {
-    return priceMap.get(base)
+  function getQuotePrice(base: Vertice): Price<Token, Token> | undefined {
+    return priceMap.get(base)?.wrapped
   }
 
-  function getGasPriceInBase(base: Vertice): CurrencyAmount<Currency> | undefined {
+  function getGasPriceInBase(base: Vertice): CurrencyAmount<Token> | undefined {
     const basePrice = getQuotePrice(base)
     return gasPriceInQuote ? basePrice?.invert().quote(gasPriceInQuote) : undefined
   }

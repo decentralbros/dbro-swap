@@ -52,7 +52,7 @@ export const v3PoolsOnChainProviderFactory = <P extends GetV3PoolsParams = GetV3
 ) => {
   return async function getV3PoolsWithTvlFromOnChain(params: P): Promise<V3PoolWithTvl[]> {
     const { currencyA, currencyB, pairs: providedPairs, onChainProvider, blockNumber } = params
-    const pairs = providedPairs || getPairCombinations(currencyA, currencyB)
+    const pairs = providedPairs || (await getPairCombinations(currencyA, currencyB))
 
     const [fromOnChain, tvlReference] = await Promise.allSettled([
       getV3PoolsWithoutTicksOnChain(pairs, onChainProvider, blockNumber),
@@ -77,9 +77,9 @@ export const v3PoolsOnChainProviderFactory = <P extends GetV3PoolsParams = GetV3
   }
 }
 
-export const getV3PoolsWithTvlFromOnChain = v3PoolsOnChainProviderFactory((params: GetV3PoolsParams) => {
+export const getV3PoolsWithTvlFromOnChain = v3PoolsOnChainProviderFactory(async (params: GetV3PoolsParams) => {
   const { currencyA, currencyB, pairs: providedPairs, subgraphProvider } = params
-  const pairs = providedPairs || getPairCombinations(currencyA, currencyB)
+  const pairs = providedPairs || (await getPairCombinations(currencyA, currencyB))
   return getV3PoolSubgraph({ provider: subgraphProvider, pairs })
 })
 
@@ -94,16 +94,8 @@ const createFallbackTvlRefGetter = () => {
     if (cached) {
       return cached
     }
-    const refs: V3PoolTvlReference[] = [
-      {
-        address: '0x1234567890123456789012345678901234567890',
-        tvlUSD: 1000000000000000000000n,
-      },
-      {
-        address: '0x0987654321098765432109876543210987654321',
-        tvlUSD: '500000000000000000000',
-      },
-    ]
+    const res = await fetch(`https://routing-api.pancakeswap.com/v0/v3-pools-tvl/${currencyA.chainId}`)
+    const refs: V3PoolTvlReference[] = await res.json()
     cache.set(currencyA.chainId, refs)
     return refs
   }
@@ -145,7 +137,7 @@ export async function getV3CandidatePools(params: DefaultParams) {
     // Fallback to get all pools info from subgraph
     fallbacks.push(async (p) => {
       const { currencyA, currencyB, pairs: providedPairs, subgraphProvider } = p
-      const pairs = providedPairs || getPairCombinations(currencyA, currencyB)
+      const pairs = providedPairs || (await getPairCombinations(currencyA, currencyB))
       return getV3PoolSubgraph({ provider: subgraphProvider, pairs })
     })
   }

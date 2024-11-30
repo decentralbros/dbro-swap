@@ -1,11 +1,12 @@
-import { ChainId } from '@pancakeswap/chains'
-import { farmsV3ConfigChainMap } from '@pancakeswap/farms/constants/v3'
 import { useActiveChainId } from 'hooks/useActiveChainId'
+import { useV3FarmAPI } from 'hooks/useV3FarmAPI'
 import { useMemo } from 'react'
 import useAllTradingRewardPair, { RewardStatus, RewardType } from 'views/TradingReward/hooks/useAllTradingRewardPair'
 
 const useTradingRewardTokenList = () => {
   const { chainId } = useActiveChainId()
+  const { farms } = useV3FarmAPI(chainId)
+
   const { data } = useAllTradingRewardPair({
     status: RewardStatus.ALL,
     type: RewardType.CAKE_STAKERS,
@@ -42,13 +43,12 @@ const useTradingRewardTokenList = () => {
       uniqueAddressList
         // eslint-disable-next-line array-callback-return, consistent-return
         .map((list) => {
-          const farms = farmsV3ConfigChainMap[chainId as ChainId]
-          const pair = farms.find((farm) => farm.lpAddress.toLowerCase() === (list as string).toLowerCase())
+          const pair = farms?.find((farm) => farm.lpAddress.toLowerCase() === (list as string).toLowerCase())
           if (pair) return pair
         })
         .filter((i) => Boolean(i))
     )
-  }, [uniqueAddressList, chainId])
+  }, [uniqueAddressList, farms])
 
   return {
     tokenPairs,

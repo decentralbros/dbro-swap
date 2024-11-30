@@ -38,7 +38,7 @@ export const getUsername = async (address: string): Promise<string> => {
     const { username = '' } = await response.json()
 
     return username
-  } catch {
+  } catch (error) {
     return ''
   }
 }
@@ -113,7 +113,8 @@ export const getProfile = async (address: string): Promise<GetProfileResponse | 
     } as Profile
 
     return { hasRegistered, profile }
-  } catch {
+  } catch (e) {
+    console.error(e)
     return null
   }
 }

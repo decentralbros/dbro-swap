@@ -1,6 +1,6 @@
 {
   "name": "@pancakeswap/farms",
-  "version": "1.0.68",
+  "version": "1.0.81",
   "sideEffects": false,
   "private": true,
   "scripts": {
@@ -11,12 +11,13 @@
   "devDependencies": {
     "@types/lodash": "^4.14.168",
     "tsx": "^4.6.1",
-    "wrangler": "2.20.2"
+    "wrangler": "catalog:"
   },
   "dependencies": {
     "@pancakeswap/price-api-sdk": "workspace:*",
     "@pancakeswap/chains": "workspace:*",
     "@pancakeswap/sdk": "workspace:*",
+    "@pancakeswap/stable-swap-sdk": "workspace:*",
     "@pancakeswap/swap-sdk-core": "workspace:*",
     "@pancakeswap/token-lists": "workspace:*",
     "@pancakeswap/tokens": "workspace:*",

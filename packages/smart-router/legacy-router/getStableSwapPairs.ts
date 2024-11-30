@@ -1,14 +1,13 @@
-import { CurrencyAmount } from '@pancakeswap/sdk'
 import { ChainId } from '@pancakeswap/chains'
+import { CurrencyAmount } from '@pancakeswap/sdk'
+import { getStableSwapPools } from '@pancakeswap/stable-swap-sdk'
 import { deserializeToken } from '@pancakeswap/token-lists'
-import { getStableSwapPools, STABLE_SUPPORTED_CHAIN_IDS } from '@pancakeswap/stable-swap-sdk'
-import fromPairs_ from 'lodash/fromPairs.js'
 
-import { StableSwapPair } from './types'
 import { createStableSwapPair } from './stableSwap'
+import { StableSwapPair } from './types'
 
-export function getStableSwapPairs(chainId: ChainId): StableSwapPair[] {
-  const pools = getStableSwapPools(chainId)
+export async function getStableSwapPairs(chainId: ChainId): Promise<StableSwapPair[]> {
+  const pools = await getStableSwapPools(chainId)
   return pools.map(
     ({
       token: serializedToken,
@@ -17,6 +16,7 @@ export function getStableSwapPairs(chainId: ChainId): StableSwapPair[] {
       lpAddress,
       infoStableSwapAddress,
       stableLpFee,
+      stableTotalFee,
       stableLpFeeRateOfTotalFee,
     }) => {
       const token = deserializeToken(serializedToken)
@@ -33,12 +33,9 @@ export function getStableSwapPairs(chainId: ChainId): StableSwapPair[] {
         lpAddress,
         infoStableSwapAddress,
         stableLpFee,
+        stableTotalFee,
         stableLpFeeRateOfTotalFee,
       )
     },
   )
 }
-
-export const stableSwapPairsByChainId = fromPairs_(
-  STABLE_SUPPORTED_CHAIN_IDS.map((chainId) => [chainId, getStableSwapPairs(chainId)]),
-)

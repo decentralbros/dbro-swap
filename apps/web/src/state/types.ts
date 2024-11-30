@@ -14,9 +14,9 @@ import { Address, parseEther } from 'viem'
 import { NftToken } from './nftMarket/types'
 
 export enum GAS_PRICE {
-  default = '1',
-  fast = '4',
-  instant = '5',
+  default = '5',
+  fast = '6',
+  instant = '7',
   testnet = '10',
 }
 
@@ -391,6 +391,11 @@ export enum ProposalState {
   CLOSED = 'closed',
 }
 
+export enum ProposalTypeName {
+  SINGLE_CHOICE = 'single-choice',
+  WEIGHTED = 'weighted',
+}
+
 export interface Proposal {
   author: string
   body: string
@@ -402,6 +407,10 @@ export interface Proposal {
   start: number
   state: ProposalState
   title: string
+  ipfs: string
+  type: ProposalTypeName
+  scores: number[]
+  scores_total: number
 }
 
 export interface Vote {
@@ -416,6 +425,7 @@ export interface Vote {
     votingPower: string
   }
   vp: number
+  ipfs: string
 }
 
 export interface LotteryRoundUserTickets {

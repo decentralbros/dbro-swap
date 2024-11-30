@@ -2,10 +2,11 @@ import { useQuery } from '@tanstack/react-query'
 import useAccountActiveChain from 'hooks/useAccountActiveChain'
 import { useGaugesVotingContract } from 'hooks/useContract'
 import { useMemo } from 'react'
+import { isAddressEqual } from 'utils'
 import { publicClient as getPublicClient } from 'utils/viem'
-import { Hex, isAddressEqual, zeroAddress } from 'viem'
-import { useVeCakeUserInfo } from 'views/StakingDBRO/hooks/useVeCakeUserInfo'
-import { CakePoolType } from 'views/StakingDBRO/types'
+import { Hex, zeroAddress } from 'viem'
+import { useVeCakeUserInfo } from 'views/CakeStaking/hooks/useVeCakeUserInfo'
+import { CakePoolType } from 'views/CakeStaking/types'
 import { useGauges } from './useGauges'
 
 export type VoteSlope = {
@@ -34,7 +35,7 @@ export const useUserVoteSlopes = () => {
       userInfo?.cakePoolProxy,
       publicClient,
     ],
-
+    initialData: [],
     queryFn: async (): Promise<VoteSlope[]> => {
       if (!gauges || gauges.length === 0 || !account || !publicClient) return []
 
@@ -60,34 +61,38 @@ export const useUserVoteSlopes = () => {
           } as const)
         })
       }
+      try {
+        const response = await publicClient.multicall({
+          contracts,
+          allowFailure: false,
+        })
 
-      const response = await publicClient.multicall({
-        contracts,
-        allowFailure: false,
-      })
+        const len = gauges.length
+        return gauges.map((gauge, index) => {
+          const [nativeSlope, nativePower, nativeEnd] = response[index] ?? [0n, 0n, 0n]
+          const [proxySlope, proxyPower, proxyEnd] = response[index + len] ?? [0n, 0n, 0n]
 
-      const len = gauges.length
-      return gauges.map((gauge, index) => {
-        const [nativeSlope, nativePower, nativeEnd] = response[index] ?? [0n, 0n, 0n]
-        const [proxySlope, proxyPower, proxyEnd] = response[index + len] ?? [0n, 0n, 0n]
-
-        return {
-          hash: gauge.hash,
-          nativePower: Number(nativePower),
-          nativeSlope: Number(nativeSlope),
-          nativeEnd: Number(nativeEnd),
-          proxyPower: Number(proxyPower),
-          proxySlope: Number(proxySlope),
-          proxyEnd: Number(proxyEnd),
-        }
-      })
+          return {
+            hash: gauge.hash,
+            nativePower: Number(nativePower),
+            nativeSlope: Number(nativeSlope),
+            nativeEnd: Number(nativeEnd),
+            proxyPower: Number(proxyPower),
+            proxySlope: Number(proxySlope),
+            proxyEnd: Number(proxyEnd),
+          }
+        })
+      } catch (error) {
+        console.error('useUserVoteSlopes', error)
+        return []
+      }
     },
 
-    enabled: Boolean(gauges && gauges.length) && account && account !== '0x',
+    enabled: Boolean(gauges?.length) && account && account !== '0x',
   })
 
   return {
-    data: data ?? [],
+    data,
     refetch,
     isLoading,
   }

@@ -18,3 +18,16 @@ export const PREDICTION_TOOLTIP_DISMISS_KEY = 'prediction-switcher-dismiss-toolt
 export const GELATO_NATIVE = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
 
 export const EXCHANGE_HELP_URLS = 'https://docs.decentralbros.finance/help'
+
+export const QUERY_SETTINGS_IMMUTABLE = {
+  refetchOnReconnect: false,
+  refetchOnMount: false,
+  refetchOnWindowFocus: false,
+}
+
+export const QUERY_SETTINGS_WITHOUT_INTERVAL_REFETCH = {
+  retry: 3,
+  retryDelay: 3000,
+}
+
+export const PERSIST_CHAIN_KEY = 'persistChain'

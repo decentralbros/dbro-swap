@@ -14,6 +14,7 @@ import {
   Text,
   useMatchBreakpoints,
 } from '@pancakeswap/uikit'
+import { useCallback } from 'react'
 import styled from 'styled-components'
 import { useGauges } from 'views/GaugesVoting/hooks/useGauges'
 import { useGaugesFilter } from 'views/GaugesVoting/hooks/useGaugesFilter'
@@ -42,6 +43,10 @@ export const AddGaugeModal = ({ isOpen, onDismiss, selectRows, onGaugeAdd }) => 
   const totalGaugesWeight = useGaugesTotalWeight()
   const { data: gauges } = useGauges()
   const { filterGauges, setSearchText, filter, setFilter, setSort } = useGaugesFilter(gauges)
+  const dismissHandler = useCallback(() => {
+    setSearchText('')
+    onDismiss?.()
+  }, [onDismiss, setSearchText])
 
   const gaugesTable = isDesktop ? (
     <AddGaugesTable
@@ -65,7 +70,7 @@ export const AddGaugeModal = ({ isOpen, onDismiss, selectRows, onGaugeAdd }) => 
 
   return (
     <>
-      <ModalV2 isOpen={isOpen} onDismiss={onDismiss}>
+      <ModalV2 isOpen={isOpen} onDismiss={dismissHandler}>
         <ModalWrapper
           maxHeight="90vh"
           minWidth={['80vw', null, null, null, null, null, '55vw']}
@@ -87,7 +92,7 @@ export const AddGaugeModal = ({ isOpen, onDismiss, selectRows, onGaugeAdd }) => 
                     {t('Search and add the gauge you want to vote')}
                   </Text>
                 </AutoColumn>
-                <Button variant="text" onClick={onDismiss} px={0} height="fit-content">
+                <Button variant="text" onClick={dismissHandler} px={0} height="fit-content">
                   <CloseIcon color="textSubtle" />
                 </Button>
               </FlexGap>
@@ -110,7 +115,7 @@ export const AddGaugeModal = ({ isOpen, onDismiss, selectRows, onGaugeAdd }) => 
               ) : null}
               <Box style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden' }}>{gaugesTable}</Box>
             </FlexGap>
-            <BottomAction pb="32px" style={{ marginTop: 'auto' }} onClick={onDismiss}>
+            <BottomAction pb="32px" style={{ marginTop: 'auto' }} onClick={dismissHandler}>
               <Button width={isMobile ? '100%' : '50%'}>{t(isMobile ? 'Continue' : 'Finish')}</Button>
             </BottomAction>
           </Flex>

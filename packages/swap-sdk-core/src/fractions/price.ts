@@ -4,6 +4,7 @@ import { BigintIsh, Rounding } from '../constants'
 import { Currency } from '../currency'
 import { Fraction } from './fraction'
 import { CurrencyAmount } from './currencyAmount'
+import { Token } from '../token'
 
 export class Price<TBase extends Currency, TQuote extends Currency> extends Fraction {
   public readonly baseCurrency: TBase // input i.e. denominator
@@ -86,5 +87,9 @@ export class Price<TBase extends Currency, TQuote extends Currency> extends Frac
 
   public toFixed(decimalPlaces = 4, format?: object, rounding?: Rounding): string {
     return this.adjustedForDecimals.toFixed(decimalPlaces, format, rounding)
+  }
+
+  public get wrapped(): Price<Token, Token> {
+    return new Price(this.baseCurrency.wrapped, this.quoteCurrency.wrapped, this.denominator, this.numerator)
   }
 }

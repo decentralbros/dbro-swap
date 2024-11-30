@@ -4,14 +4,12 @@ import { useAccountLocalEventListener } from 'hooks/useAccountLocalEventListener
 import { useEffect, useRef } from 'react'
 import { useChartView, useIsChartPaneOpen } from 'state/predictions/hooks'
 import { useUserPredictionChainlinkChartDisclaimerShow, useUserPredictionChartDisclaimerShow } from 'state/user/hooks'
-
 import Desktop from './Desktop'
 import Mobile from './Mobile'
 import ChainlinkChartDisclaimer from './components/ChainlinkChartDisclaimer'
 import ChartDisclaimer from './components/ChartDisclaimer'
 import CollectWinningsPopup from './components/CollectWinningsPopup'
 import Container from './components/Container'
-import { InPageBanner } from './components/InPageBanner'
 import RiskDisclaimer from './components/RiskDisclaimer'
 import { useConfig } from './context/ConfigProvider'
 import SwiperProvider from './context/SwiperProvider'
@@ -67,17 +65,14 @@ const Predictions = () => {
   usePollPredictions()
 
   return (
-    <>
-      <Warnings />
-      <RiskDisclaimer />
-      <InPageBanner />
-      <SwiperProvider>
-        <Container>
-          {isDesktop ? <Desktop /> : <Mobile />}
-          <CollectWinningsPopup />
-        </Container>
-      </SwiperProvider>
-    </>
+    <SwiperProvider>
+      <Container>
+        <Warnings />
+        <RiskDisclaimer />
+        {isDesktop ? <Desktop /> : <Mobile />}
+        <CollectWinningsPopup />
+      </Container>
+    </SwiperProvider>
   )
 }
 

@@ -3,9 +3,15 @@ import { Currency, Token } from '@pancakeswap/sdk'
 import { ArrowDropDownIcon, Box, BoxProps, Flex, SkeletonText, Text, useModal } from '@pancakeswap/uikit'
 import { NumberDisplay, NumericalInput } from '@pancakeswap/widgets-internal'
 import OnRampCurrencySearchModal, { CurrencySearchModalProps } from 'components/SearchModal/OnRampCurrencyModal'
-import { fiatCurrencyMap, getNetworkDisplay, onRampCurrencies } from 'views/BuyCrypto/constants'
+import { ClipboardEvent, KeyboardEvent, useCallback, useMemo } from 'react'
+import {
+  fiatCurrencyMap,
+  getNetworkDisplay,
+  NON_DECIMAL_FIAT_CURRENCIES,
+  onRampCurrenciesMap,
+} from 'views/BuyCrypto/constants'
 import { DropDownContainer, OptionSelectButton } from 'views/BuyCrypto/styles'
-import { OnRampUnit } from 'views/BuyCrypto/types'
+import { FiatCurrency, OnRampUnit } from 'views/BuyCrypto/types'
 import { OnRampCurrencyLogo } from '../OnRampProviderLogo/OnRampProviderLogo'
 
 interface BuyCryptoSelectorProps extends Omit<CurrencySearchModalProps, 'mode'>, BoxProps {
@@ -20,6 +26,7 @@ interface BuyCryptoSelectorProps extends Omit<CurrencySearchModalProps, 'mode'>,
   onInputBlur?: () => void
   disableInput?: boolean
   unit: OnRampUnit
+  fiatCurrency: FiatCurrency
 }
 
 const ButtonAsset = ({
@@ -71,9 +78,13 @@ export const BuyCryptoSelector = ({
   value,
   disableInput = false,
   unit,
+  fiatCurrency,
   ...props
 }: BuyCryptoSelectorProps) => {
-  const tokensToShow = id === 'onramp-fiat' ? Object.values(fiatCurrencyMap) : onRampCurrencies
+  const tokensToShow = useMemo(() => {
+    return id === 'onramp-fiat' ? Object.values(fiatCurrencyMap) : Object.values(onRampCurrenciesMap)
+  }, [id])
+
   const [onPresentCurrencyModal] = useModal(
     <OnRampCurrencySearchModal
       onCurrencySelect={onCurrencySelect}
@@ -83,6 +94,25 @@ export const BuyCryptoSelector = ({
       mode={id}
       unit={unit}
     />,
+  )
+  const blockDecimal = useCallback(
+    (e: KeyboardEvent<HTMLInputElement>) => {
+      const blockDecimalInput = NON_DECIMAL_FIAT_CURRENCIES.includes(fiatCurrency?.symbol)
+      if ((e.key === '.' || e.key === ',') && blockDecimalInput) e.preventDefault()
+    },
+    [fiatCurrency],
+  )
+  const handlePaste = useCallback(
+    (e: ClipboardEvent<HTMLInputElement>) => {
+      const pastedValue = e.clipboardData.getData('text')
+      const blockDecimalInput = NON_DECIMAL_FIAT_CURRENCIES.includes(fiatCurrency?.symbol)
+
+      if (blockDecimalInput && (pastedValue.includes('.') || pastedValue.includes(','))) {
+        e.preventDefault()
+        onUserInput?.(Number(pastedValue).toFixed(0))
+      }
+    },
+    [fiatCurrency, onUserInput],
   )
 
   return (
@@ -96,6 +126,8 @@ export const BuyCryptoSelector = ({
             className="token-amount-input"
             value={inputLoading ? '' : value}
             onBlur={onInputBlur}
+            onKeyDown={blockDecimal}
+            onPaste={handlePaste}
             onUserInput={(val) => {
               onUserInput?.(val)
             }}

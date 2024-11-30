@@ -3,9 +3,9 @@ import { getBestTradeFromStablePools } from './getBestTradeFromStablePools'
 
 import { getBestTradeFromV2ExactIn, getBestTradeFromV2ExactOut } from './getBestTradeFromV2'
 import { getBestTradeWithStableSwap } from './getBestTradeWithStableSwap'
-import { stableSwapPairsByChainId } from './getStableSwapPairs'
+import { getStableSwapPairs } from './getStableSwapPairs'
 import { createTradeWithStableSwapFromV2Trade } from './stableSwap'
-import { BestTradeOptions, TradeWithStableSwap } from './types'
+import { BestTradeOptions, StableSwapPair, TradeWithStableSwap } from './types'
 
 export const getBestTradeExactIn = createGetBestTrade(TradeType.EXACT_INPUT)
 
@@ -41,7 +41,7 @@ function createGetBestTrade<TTradeType extends TradeType>(tradeType: TTradeType)
       return null
     }
 
-    const stableSwapPairs = stableSwapPairsByChainId[chainId] || []
+    const stableSwapPairs: StableSwapPair[] = (await getStableSwapPairs(chainId)) || []
     const bestTradeWithStableSwap = await getBestTradeWithStableSwap(bestTradeV2, stableSwapPairs, { provider })
     const { outputAmount: outputAmountWithStableSwap } = bestTradeWithStableSwap
 

@@ -24,7 +24,7 @@ import { CommonBasesType } from 'components/SearchModal/types'
 import { Bound } from 'config/constants/types'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { Field } from 'state/mint/actions'
+import { CurrencyField as Field } from 'utils/types'
 import { getBlockExploreLink } from 'utils'
 import { logGTMClickAddLiquidityEvent } from 'utils/customGTMEventTracking'
 import { LP2ChildrenProps } from 'views/AddLiquidity'
@@ -147,7 +147,7 @@ export default function V2FormView({
 
         <Box mb="8px">
           <CurrencyInputPanel
-            usdValue=""
+            usdValue="0"
             maxAmount={maxAmounts[Field.CURRENCY_A]}
             showUSDPrice
             onMax={() => {
@@ -171,7 +171,7 @@ export default function V2FormView({
         </Box>
 
         <CurrencyInputPanel
-          usdValue=""
+          usdValue="0"
           showUSDPrice
           onPercentInput={(percent) => {
             if (maxAmounts[Field.CURRENCY_B]) {

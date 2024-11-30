@@ -1,10 +1,12 @@
 import { FarmWithStakedValue } from '@pancakeswap/farms'
 import { useTranslation } from '@pancakeswap/localization'
-import { VAULTS_CONFIG_BY_CHAIN, VaultConfig } from '@pancakeswap/position-managers'
+import { VaultConfig } from '@pancakeswap/position-managers'
 import { Flex, Spinner } from '@pancakeswap/uikit'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import noop from 'lodash/noop'
 import React, { useMemo } from 'react'
 import { styled } from 'styled-components'
+import { usePositionManager } from 'views/PositionManagers/hooks/usePositionManager'
 import EmptyText from '../MigrationTable/EmptyText'
 import TableStyle from '../MigrationTable/StyledTable'
 import TableHeader from '../MigrationTable/TableHeader'
@@ -40,16 +42,17 @@ export const PosManagerMigrationFarmTable: React.FC<React.PropsWithChildren<ITab
 }) => {
   const { t } = useTranslation()
   const { chainId } = useActiveWeb3React()
+  const VAULTS_CONFIG_BY_CHAIN = usePositionManager(chainId)
 
-  const needToMigrateList: VaultConfig[] = useMemo(() => {
-    if (!chainId) return []
-    return VAULTS_CONFIG_BY_CHAIN[chainId].filter(
-      (vault) => vault.address && vault?.bCakeWrapperAddress && vault?.bCakeWrapperAddress !== vault.address,
-    )
-  }, [chainId])
+  const rows = useMemo(() => {
+    if (!chainId || columnSchema !== V3Step1DesktopColumnSchema) return []
 
-  const rows = needToMigrateList.map((d) => {
-    return {
+    const needToMigrateList: VaultConfig[] =
+      VAULTS_CONFIG_BY_CHAIN?.filter(
+        (vault) => vault.address && vault?.bCakeWrapperAddress && vault?.bCakeWrapperAddress !== vault.address,
+      ) ?? []
+
+    return needToMigrateList.map((d) => ({
       id: d.id,
       data: {
         token: d.currencyA.wrapped,
@@ -61,10 +64,10 @@ export const PosManagerMigrationFarmTable: React.FC<React.PropsWithChildren<ITab
         bCakeWrapperAddress: d.bCakeWrapperAddress ?? '0x',
         earningToken: d.earningToken.wrapped,
       },
-      onStake: () => {},
-      onUnStake: () => {},
-    }
-  })
+      onStake: noop,
+      onUnStake: noop,
+    }))
+  }, [VAULTS_CONFIG_BY_CHAIN, chainId, columnSchema])
 
   return (
     <Container>
@@ -79,12 +82,7 @@ export const PosManagerMigrationFarmTable: React.FC<React.PropsWithChildren<ITab
         {account && userDataReady && rows.length === 0 && <EmptyText text={noStakedFarmText} />}
         {account &&
           userDataReady &&
-          rows.map((d) => {
-            if (columnSchema === V3Step1DesktopColumnSchema) {
-              return <PositionManagerFarmRow step={step} {...d} key={`table-row-${d.id}`} />
-            }
-            return null
-          })}
+          rows.map((d) => <PositionManagerFarmRow step={step} {...d} key={`table-row-${d.id}`} />)}
       </TableStyle>
     </Container>
   )

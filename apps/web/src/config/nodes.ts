@@ -17,7 +17,6 @@ import {
   scrollSepolia,
   sepolia,
   zkSync,
-  zkSyncTestnet,
 } from 'wagmi/chains'
 
 const ARBITRUM_NODES = [
@@ -62,7 +61,6 @@ export const SERVER_NODES = {
     ...zkSync.rpcUrls.default.http,
     getNodeRealUrl(ChainId.ZKSYNC, process.env.SERVER_NODE_REAL_API_ETH) || '',
   ],
-  [ChainId.ZKSYNC_TESTNET]: zkSyncTestnet.rpcUrls.default.http,
   [ChainId.LINEA]: linea.rpcUrls.default.http,
   [ChainId.LINEA_TESTNET]: [
     'https://rpc.goerli.linea.build',
@@ -84,9 +82,9 @@ export const SERVER_NODES = {
   [ChainId.SEPOLIA]: sepolia.rpcUrls.default.http,
   [ChainId.ARBITRUM_SEPOLIA]: arbitrumSepolia.rpcUrls.default.http,
   [ChainId.BASE_SEPOLIA]: baseSepolia.rpcUrls.default.http,
-} satisfies Record<ChainId, readonly string[]>
+}
 
-export const PUBLIC_NODES: Record<ChainId, string[] | readonly string[]> = {
+export const PUBLIC_NODES = {
   [ChainId.BSC]: [
     process.env.NEXT_PUBLIC_NODE_PRODUCTION || '',
     getNodeRealUrl(ChainId.BSC, process.env.NEXT_PUBLIC_NODE_REAL_API_ETH) || '',
@@ -131,7 +129,6 @@ export const PUBLIC_NODES: Record<ChainId, string[] | readonly string[]> = {
     ...zkSync.rpcUrls.default.http,
     getNodeRealUrl(ChainId.ZKSYNC, process.env.NEXT_PUBLIC_NODE_REAL_API_ETH) || '',
   ],
-  [ChainId.ZKSYNC_TESTNET]: zkSyncTestnet.rpcUrls.default.http,
   [ChainId.LINEA]: linea.rpcUrls.default.http,
   [ChainId.LINEA_TESTNET]: [
     'https://rpc.goerli.linea.build',
@@ -156,4 +153,4 @@ export const PUBLIC_NODES: Record<ChainId, string[] | readonly string[]> = {
   [ChainId.SEPOLIA]: sepolia.rpcUrls.default.http,
   [ChainId.ARBITRUM_SEPOLIA]: arbitrumSepolia.rpcUrls.default.http,
   [ChainId.BASE_SEPOLIA]: baseSepolia.rpcUrls.default.http,
-} satisfies Record<ChainId, readonly string[]>
+}

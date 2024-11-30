@@ -10,10 +10,9 @@ import { useCallback, useMemo, useState } from 'react'
 import { type V3Farm } from 'state/farms/types'
 import { multiChainPaths } from 'state/info/constant'
 import { styled } from 'styled-components'
-import { getBlockExploreLink } from 'utils'
+import { getBlockExploreLink, isAddressEqual } from 'utils'
 import { getMerklLink, useMerklUserLink } from 'utils/getMerklLink'
 import { unwrappedToken } from 'utils/wrappedCurrency'
-import { isAddressEqual } from 'viem'
 import { AddLiquidityV3Modal } from 'views/AddLiquidityV3/Modal'
 import { useFarmV3Multiplier } from 'views/Farms/hooks/v3/useFarmV3Multiplier'
 import { StatusView } from '../../YieldBooster/components/bCakeV3/StatusView'
@@ -71,7 +70,7 @@ export const FarmV3Card: React.FC<React.PropsWithChildren<FarmCardProps>> = ({ f
   const { status: boostStatus } = useBoostStatus(farm.pid)
   const merklUserLink = useMerklUserLink()
   const merklLink = getMerklLink({ chainId, lpAddress })
-  const { merklApr } = useMerklInfo(merklLink ? lpAddress : null)
+  const { merklApr } = useMerklInfo(merklLink ? (lpAddress as string) : null)
   const infoUrl = useMemo(() => {
     return chainId ? `/info/v3${multiChainPaths[chainId]}/pairs/${lpAddress}?chain=${CHAIN_QUERY_NAME[chainId]}` : ''
   }, [chainId, lpAddress])

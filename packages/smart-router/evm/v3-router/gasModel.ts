@@ -1,4 +1,4 @@
-import { BigintIsh, Currency, CurrencyAmount, Price } from '@pancakeswap/sdk'
+import { BigintIsh, Currency, CurrencyAmount, Native, Price } from '@pancakeswap/sdk'
 import { ChainId } from '@pancakeswap/chains'
 import tryParseAmount from '@pancakeswap/utils/tryParseAmount'
 import sum from 'lodash/sum.js'
@@ -153,7 +153,9 @@ export async function createGasModel({
     }
     return {
       gasEstimate: baseGasUse,
-      gasCostInToken,
+      gasCostInToken: isQuoteNative
+        ? CurrencyAmount.fromRawAmount(Native.onChain(chainId), gasCostInToken.quotient)
+        : gasCostInToken,
       gasCostInUSD,
     }
   }

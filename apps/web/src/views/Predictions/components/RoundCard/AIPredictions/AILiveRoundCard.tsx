@@ -111,7 +111,11 @@ export const AILiveRoundCard: React.FC<React.PropsWithChildren<AILiveRoundCardPr
     const secondsToClose = closeTimestamp ? closeTimestamp - getNowInSeconds() : 0
     if (secondsToClose > 0) {
       const refreshPriceTimeout = setTimeout(() => {
-        refetch()
+        // Fetch live price before round ends
+        if (config?.ai?.useAlternateSource) {
+          config.ai.useAlternateSource.current = true
+          refetch()
+        }
       }, (secondsToClose - REFRESH_PRICE_BEFORE_SECONDS_TO_CLOSE) * 1000)
 
       const calculatingPhaseTimeout = setTimeout(() => {
@@ -121,10 +125,13 @@ export const AILiveRoundCard: React.FC<React.PropsWithChildren<AILiveRoundCardPr
       return () => {
         clearTimeout(refreshPriceTimeout)
         clearTimeout(calculatingPhaseTimeout)
+        if (config?.ai?.useAlternateSource) {
+          config.ai.useAlternateSource.current = false
+        }
       }
     }
     return undefined
-  }, [refetch, closeTimestamp])
+  }, [closeTimestamp, config, refetch])
 
   if (hasRoundFailed) {
     return <CanceledRoundCard round={round} />

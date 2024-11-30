@@ -1,5 +1,106 @@
 # @pancakeswap/price-api-sdk
 
+## 5.0.1
+
+### Patch Changes
+
+- @pancakeswap/smart-router@6.2.1
+
+## 5.0.0
+
+### Minor Changes
+
+- 176eb10: Add v4 pool types
+- 176eb10: Introduce v4 liquidity pools
+
+### Patch Changes
+
+- Updated dependencies [176eb10]
+- Updated dependencies [176eb10]
+- Updated dependencies [176eb10]
+- Updated dependencies [176eb10]
+  - @pancakeswap/swap-sdk-core@1.3.0
+  - @pancakeswap/smart-router@6.2.0
+  - @pancakeswap/pcsx-sdk@1.0.1
+  - @pancakeswap/permit2-sdk@1.0.11
+
+## 4.0.3
+
+### Patch Changes
+
+- @pancakeswap/smart-router@6.1.6
+
+## 4.0.2
+
+### Patch Changes
+
+- Updated dependencies [3e83a9c]
+  - @pancakeswap/smart-router@6.1.5
+
+## 4.0.1
+
+### Patch Changes
+
+- @pancakeswap/smart-router@6.1.4
+
+## 4.0.0
+
+### Patch Changes
+
+- Updated dependencies [c227943]
+  - @pancakeswap/pcsx-sdk@1.0.0
+  - @pancakeswap/smart-router@6.1.3
+
+## 3.0.2
+
+### Patch Changes
+
+- @pancakeswap/smart-router@6.1.2
+
+## 3.0.1
+
+### Patch Changes
+
+- Updated dependencies [618ad06]
+  - @pancakeswap/smart-router@6.1.1
+
+## 3.0.0
+
+### Patch Changes
+
+- Updated dependencies [6418fde]
+- Updated dependencies [b1d1eaf]
+  - @pancakeswap/pcsx-sdk@0.0.13
+  - @pancakeswap/smart-router@6.1.0
+
+## 2.0.0
+
+### Patch Changes
+
+- Updated dependencies [f551e5e]
+  - @pancakeswap/swap-sdk-core@1.2.0
+  - @pancakeswap/pcsx-sdk@0.0.12
+  - @pancakeswap/smart-router@6.0.17
+  - @pancakeswap/permit2-sdk@1.0.10
+
+## 1.2.18
+
+### Patch Changes
+
+- @pancakeswap/smart-router@6.0.16
+
+## 1.2.17
+
+### Patch Changes
+
+- @pancakeswap/smart-router@6.0.15
+
+## 1.2.16
+
+### Patch Changes
+
+- @pancakeswap/smart-router@6.0.14
+
 ## 1.2.15
 
 ### Patch Changes

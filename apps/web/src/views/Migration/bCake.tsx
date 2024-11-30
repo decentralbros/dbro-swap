@@ -11,6 +11,9 @@ import {
   RowBetween,
   Text,
 } from '@pancakeswap/uikit'
+import { AdPanel } from 'components/AdPanel'
+import { commonLayoutWhitelistedPages } from 'components/AdPanel/config'
+import { shouldRenderOnPages } from 'components/AdPanel/renderConditions'
 import Page from 'components/Layout/Page'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -175,6 +178,7 @@ const MigrationPage: React.FC<React.PropsWithChildren> = () => {
         {step === 0 && <MigrationFarmStep step={1} />}
         {step === 1 && <MigrationFarmStep step={2} />}
       </Page>
+      <AdPanel.MobileCard shouldRender={shouldRenderOnPages(commonLayoutWhitelistedPages)} mb="48px" />
       <MigrationSticky version="bCake" step={step} handleClick={handleMigrationStickyClick} />
     </div>
   )

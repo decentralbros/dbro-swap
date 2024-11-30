@@ -1,4 +1,4 @@
-import type { Currency, CurrencyAmount } from '@pancakeswap/swap-sdk-core'
+import type { Currency, Token, CurrencyAmount } from '@pancakeswap/swap-sdk-core'
 
 import type { Pool } from './pool'
 import type { Route } from './route'
@@ -10,7 +10,7 @@ export type Edge = {
 }
 
 export type Vertice = {
-  currency: Currency
+  currency: Token
   edges: Edge[]
 }
 

@@ -22,6 +22,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useAllLists } from 'state/lists/hooks'
 import { useUserTokenRisk } from 'state/user/hooks/useUserTokenRisk'
 import { styled } from 'styled-components'
+import { isAddressEqual } from 'utils'
 
 const AnimatedButton = styled(Button)`
   animation: ${promotedGradient} 1.5s ease infinite;
@@ -137,7 +138,7 @@ const AccessRiskComponent: React.FC<AccessRiskProps> = ({ token }) => {
       .filter(Boolean)
     if (!tokenLists.length) return null
     return tokenLists.some((tokenInfoList) => {
-      return tokenInfoList?.some((tokenInfo) => tokenInfo.address === token.address)
+      return tokenInfoList?.some((tokenInfo) => isAddressEqual(tokenInfo.address, token.address))
     })
   }, [lists, token?.address])
 

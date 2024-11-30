@@ -5,12 +5,7 @@ import orderBy from 'lodash/orderBy'
 import partition from 'lodash/partition'
 import { useEffect, useState } from 'react'
 import { useAppDispatch } from 'state'
-import {
-  fetchCakeVaultFees,
-  fetchCakeVaultPublicData,
-  fetchPoolsPublicDataAsync,
-  setInitialPoolConfig,
-} from 'state/pools'
+import { fetchCakeVaultFees, fetchCakeVaultPublicData, fetchPoolsPublicDataAsync } from 'state/pools'
 import { usePoolsWithVault } from 'state/pools/hooks'
 import { VaultKey } from 'state/types'
 
@@ -23,7 +18,6 @@ const useGetTopPoolsByApr = (isIntersecting: boolean, chainId?: number) => {
     queryKey: [chainId, 'fetchTopPoolsByApr'],
 
     queryFn: async () => {
-      await dispatch(setInitialPoolConfig({ chainId }))
       return Promise.all([
         dispatch(fetchCakeVaultFees(chainId!)),
         dispatch(fetchCakeVaultPublicData(chainId!)),

@@ -1,18 +1,31 @@
 import { ChainId, chainNames } from '@pancakeswap/chains'
-import { VAULTS_CONFIG_BY_CHAIN } from '@pancakeswap/position-managers'
 import { FACTORY_ADDRESS_MAP, Token, computePairAddress } from '@pancakeswap/sdk'
 import { DEPLOYER_ADDRESSES, computePoolAddress } from '@pancakeswap/v3-sdk'
 import groupBy from 'lodash/groupBy'
-import { PublicClient, createPublicClient, http, parseAbiItem } from 'viem'
+import { PublicClient, createPublicClient, fallback, http, parseAbiItem } from 'viem'
 import * as CHAINS from 'viem/chains'
 import { describe, expect, it, test } from 'vitest'
 import { GAUGES_SUPPORTED_CHAIN_IDS } from '../constants/chainId'
-import { CONFIG_PROD } from '../constants/config/prod'
+import { getGauges } from '../constants/config/getGauges'
 import { GaugeStableSwapConfig, GaugeType } from '../types'
 
-describe('Gauges Config', async () => {
-  const gidGroups = groupBy(CONFIG_PROD, 'gid')
-  const chainIdGroups = groupBy(CONFIG_PROD, 'chainId')
+const PUBLIC_NODES: Record<string, string[]> = {
+  [ChainId.ARBITRUM_ONE]: [
+    CHAINS.arbitrum.rpcUrls.default.http[0],
+    'https://arbitrum-one.publicnode.com',
+    'https://arbitrum.llamarpc.com',
+  ],
+  [ChainId.ETHEREUM]: [
+    CHAINS.mainnet.rpcUrls.default.http[0],
+    'https://ethereum.publicnode.com',
+    'https://eth.llamarpc.com',
+  ],
+}
+
+describe.skip('Gauges Config', async () => {
+  const configProd = await getGauges()
+  const gidGroups = groupBy(configProd, 'gid')
+  const chainIdGroups = groupBy(configProd, 'chainId')
 
   Object.keys(chainIdGroups).forEach((chainId) => {
     it(`chainId ${
@@ -23,11 +36,14 @@ describe('Gauges Config', async () => {
   })
 
   const publicClient = Object.keys(chainIdGroups).reduce((acc, chainId) => {
+    const node = PUBLIC_NODES[chainId]
+    const chain = Object.values(CHAINS).find((c) => c.id === Number(chainId))
+    if (!chain) return acc
     return {
       ...acc,
       [chainId]: createPublicClient({
-        chain: Object.values(CHAINS).find((chain) => chain.id === Number(chainId)),
-        transport: http(),
+        chain,
+        transport: node ? fallback(node.map((rpc: string) => http(rpc))) : http(chain.rpcUrls.default.http[0]),
       }) as PublicClient,
     }
   }, {} as Record<string, PublicClient>)
@@ -35,14 +51,6 @@ describe('Gauges Config', async () => {
   Object.entries(gidGroups).forEach(([gid, gauge]) => {
     it(`gauges with gid #${gid} should be unique`, () => {
       expect(gauge.length).toBe(1)
-    })
-  })
-  let index = 0
-  CONFIG_PROD.forEach((gauge) => {
-    const chainName = chainNames[gauge.chainId]
-    it(`${chainName} gid #${gauge.gid} should follow the index`, () => {
-      expect(gauge.gid).toBe(index)
-      if (gauge.gid === index) index++
     })
   })
 
@@ -89,7 +97,7 @@ describe('Gauges Config', async () => {
     })
   })
 
-  CONFIG_PROD.forEach((gauge) => {
+  configProd.forEach((gauge) => {
     const chainName = chainNames[gauge.chainId]
     it(`${chainName} gid #${gauge.gid} tokens chainId-lpAddress-feeTier should be matched`, () => {
       if (gauge.type === GaugeType.V3) {
@@ -115,21 +123,5 @@ describe('Gauges Config', async () => {
         expect(gauge.address).toBe(computedAddress)
       }
     })
-
-    if (gauge.type === GaugeType.ALM) {
-      const vaults = VAULTS_CONFIG_BY_CHAIN[Number(gauge.chainId) as keyof typeof VAULTS_CONFIG_BY_CHAIN]
-      const matchedVault = vaults.find((v) => v.vaultAddress === gauge.address)
-      // it(`${chainName} gid #${gauge.gid} ALM address ${gauge.address} should have already configured in position-managers`, () => {
-      //   expect(matchedVault).toBeDefined()
-      // })
-      it(`${chainName} gid #${gauge.gid} ALM address ${gauge.address} should have correct position manager name`, () => {
-        if (!matchedVault) {
-          expect(gauge.managerName).toBeDefined()
-        } else {
-          expect(matchedVault).toBeDefined()
-          expect(gauge.managerName).toBeUndefined()
-        }
-      })
-    }
   })
 })

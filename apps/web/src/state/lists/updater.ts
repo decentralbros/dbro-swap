@@ -1,24 +1,27 @@
 import { getVersionUpgrade, VersionUpgrade } from '@pancakeswap/token-lists'
 import { acceptListUpdate, updateListVersion, useFetchListCallback } from '@pancakeswap/token-lists/react'
 import { useQuery } from '@tanstack/react-query'
-import { EXCHANGE_PAGE_PATHS } from 'config/constants/exchange'
+import { EXCHANGE_PAGE_PATHS, UNIVERSAL_PAGE_PATHS } from 'config/constants/exchange'
 import { UNSUPPORTED_LIST_URLS } from 'config/constants/lists'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useRouter } from 'next/router'
 import { useEffect, useMemo } from 'react'
-import { useAllLists } from 'state/lists/hooks'
+import { useActiveListUrlsByChainId, useAllListsByChainId } from 'state/lists/hooks'
 import { usePublicClient } from 'wagmi'
-import { useActiveListUrls } from './hooks'
 import { initialState, useListState, useListStateReady } from './lists'
 
 export default function Updater(): null {
   const { chainId } = useActiveChainId()
+  return UpdaterByChainId({ chainId })
+}
+
+export function UpdaterByChainId({ chainId }: { chainId: number }): null {
   const provider = usePublicClient({ chainId })
 
   const [listState, dispatch] = useListState()
   const router = useRouter()
   const includeListUpdater = useMemo(() => {
-    return EXCHANGE_PAGE_PATHS.some((item) => {
+    return [...EXCHANGE_PAGE_PATHS, ...UNIVERSAL_PAGE_PATHS].some((item) => {
       return router.pathname.startsWith(item)
     })
   }, [router.pathname])
@@ -26,8 +29,8 @@ export default function Updater(): null {
   const isReady = useListStateReady()
 
   // get all loaded lists, and the active urls
-  const lists = useAllLists()
-  const activeListUrls = useActiveListUrls()
+  const lists = useAllListsByChainId(chainId)
+  const activeListUrls = useActiveListUrlsByChainId(chainId)
 
   useEffect(() => {
     if (isReady) {
@@ -58,7 +61,7 @@ export default function Updater(): null {
   })
 
   useQuery({
-    queryKey: ['token-list'],
+    queryKey: ['token-list', chainId],
 
     queryFn: async () => {
       return Promise.all(

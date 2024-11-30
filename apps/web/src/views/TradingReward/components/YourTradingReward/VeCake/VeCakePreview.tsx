@@ -6,8 +6,8 @@ import { GreyCard } from 'components/Card'
 import { useCakePrice } from 'hooks/useCakePrice'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
-import { useCakeLockStatus } from 'views/StakingDBRO/hooks/useVeCakeUserInfo'
-import { CakeLockStatus } from 'views/StakingDBRO/types'
+import { useCakeLockStatus } from 'views/CakeStaking/hooks/useVeCakeUserInfo'
+import { CakeLockStatus } from 'views/CakeStaking/types'
 import { Header } from 'views/TradingReward/components/YourTradingReward/VeCake/Header'
 import { NoLockingCakeModal } from 'views/TradingReward/components/YourTradingReward/VeCake/NoLockingCakeModal'
 import {
@@ -38,7 +38,7 @@ export const VeCakePreview: React.FC<React.PropsWithChildren<VeCakePreviewProps>
 }) => {
   const { t } = useTranslation()
   const router = useRouter()
-  const cakePriceBusd = useCakePrice()
+  const cakePrice = useCakePrice()
   const { status, cakeLockExpired, cakeLocked } = useCakeLockStatus()
   const timeUntil = getTimePeriods(timeRemaining)
 
@@ -72,7 +72,7 @@ export const VeCakePreview: React.FC<React.PropsWithChildren<VeCakePreviewProps>
     timeRemaining,
     totalEstimateRewardUSD: currentUserCampaignInfo?.totalEstimateRewardUSD ?? 0,
     totalReward: currentUserCampaignInfo?.canClaim ?? '0',
-    cakePriceBusd,
+    cakePrice,
     rewardPrice: currentRewardInfo?.rewardPrice ?? '0',
     rewardTokenDecimal: currentRewardInfo?.rewardTokenDecimal ?? 0,
   })

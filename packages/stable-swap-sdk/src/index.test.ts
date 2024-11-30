@@ -13,6 +13,7 @@ test('exports', () => {
       "getLPOutputWithoutFee",
       "getLPOutput",
       "getD",
+      "fetchStableSwapData",
       "getStableSwapPools",
       "isStableSwapSupported",
       "STABLE_SUPPORTED_CHAIN_IDS",

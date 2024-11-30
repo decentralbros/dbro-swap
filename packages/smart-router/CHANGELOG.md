@@ -1,5 +1,141 @@
 # @pancakeswap/smart-router
 
+## 6.2.1
+
+### Patch Changes
+
+- Updated dependencies [6a9fd57]
+  - @pancakeswap/v4-sdk@0.1.5
+
+## 6.2.0
+
+### Minor Changes
+
+- 176eb10: Add v4 pool types
+- 176eb10: Introduce v4 liquidity pools
+
+### Patch Changes
+
+- Updated dependencies [176eb10]
+- Updated dependencies [176eb10]
+  - @pancakeswap/swap-sdk-core@1.3.0
+  - @pancakeswap/stable-swap-sdk@1.1.4
+  - @pancakeswap/sdk@5.8.9
+  - @pancakeswap/token-lists@0.0.14
+  - @pancakeswap/v3-sdk@3.8.12
+  - @pancakeswap/v4-sdk@0.1.4
+  - @pancakeswap/gauges@2.0.2
+  - @pancakeswap/multicall@3.5.9
+  - @pancakeswap/tokens@0.6.28
+
+## 6.1.6
+
+### Patch Changes
+
+- Updated dependencies [bab8589]
+- Updated dependencies [447ceb3]
+  - @pancakeswap/gauges@2.0.1
+
+## 6.1.5
+
+### Patch Changes
+
+- 3e83a9c: Read gauge list from remote endpoint
+- Updated dependencies [3e83a9c]
+  - @pancakeswap/gauges@2.0.0
+
+## 6.1.4
+
+### Patch Changes
+
+- Updated dependencies [8218dbf]
+  - @pancakeswap/tokens@0.6.27
+  - @pancakeswap/gauges@1.2.17
+  - @pancakeswap/stable-swap-sdk@1.1.3
+
+## 6.1.3
+
+### Patch Changes
+
+- Updated dependencies [f3e8a77]
+- Updated dependencies [72fb1db]
+  - @pancakeswap/token-lists@0.0.13
+  - @pancakeswap/gauges@1.2.16
+  - @pancakeswap/tokens@0.6.26
+  - @pancakeswap/stable-swap-sdk@1.1.2
+
+## 6.1.2
+
+### Patch Changes
+
+- Updated dependencies [75c16bc]
+  - @pancakeswap/stable-swap-sdk@1.1.1
+
+## 6.1.1
+
+### Patch Changes
+
+- 618ad06: Introduce routing sdk quoter addon
+- Updated dependencies [206fc8d]
+- Updated dependencies [6d4ecf0]
+  - @pancakeswap/stable-swap-sdk@1.1.0
+  - @pancakeswap/gauges@1.2.15
+  - @pancakeswap/tokens@0.6.25
+
+## 6.1.0
+
+### Minor Changes
+
+- b1d1eaf: Introduce routing sdk addons
+
+### Patch Changes
+
+- Updated dependencies [103dd63]
+- Updated dependencies [c6e9e02]
+  - @pancakeswap/stable-swap-sdk@1.0.16
+  - @pancakeswap/tokens@0.6.24
+  - @pancakeswap/gauges@1.2.14
+
+## 6.0.17
+
+### Patch Changes
+
+- Updated dependencies [f551e5e]
+  - @pancakeswap/swap-sdk-core@1.2.0
+  - @pancakeswap/stable-swap-sdk@1.0.15
+  - @pancakeswap/sdk@5.8.8
+  - @pancakeswap/token-lists@0.0.12
+  - @pancakeswap/v3-sdk@3.8.11
+  - @pancakeswap/gauges@1.2.13
+  - @pancakeswap/multicall@3.5.8
+  - @pancakeswap/tokens@0.6.23
+
+## 6.0.16
+
+### Patch Changes
+
+- Updated dependencies [911d107]
+  - @pancakeswap/v3-sdk@3.8.10
+  - @pancakeswap/gauges@1.2.12
+
+## 6.0.15
+
+### Patch Changes
+
+- Updated dependencies [fe96bb1]
+  - @pancakeswap/v3-sdk@3.8.9
+  - @pancakeswap/gauges@1.2.11
+
+## 6.0.14
+
+### Patch Changes
+
+- Updated dependencies [4628ab7]
+- Updated dependencies [8f573cf]
+  - @pancakeswap/tokens@0.6.22
+  - @pancakeswap/gauges@1.2.10
+  - @pancakeswap/stable-swap-sdk@1.0.14
+
 ## 6.0.13
 
 ### Patch Changes

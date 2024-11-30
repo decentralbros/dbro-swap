@@ -1,6 +1,15 @@
 import { useTranslation } from '@pancakeswap/localization'
 import type { Currency } from '@pancakeswap/swap-sdk-core'
-import { ArrowDropDownIcon, ArrowDropUpIcon, Box, Flex, RowBetween, SkeletonText, Text } from '@pancakeswap/uikit'
+import {
+  ArrowDropDownIcon,
+  ArrowDropUpIcon,
+  Box,
+  Flex,
+  InfoFilledIcon,
+  RowBetween,
+  SkeletonText,
+  Text,
+} from '@pancakeswap/uikit'
 import { ChainLogo } from 'components/Logo/ChainLogo'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Field } from 'state/buyCrypto/actions'
@@ -18,14 +27,14 @@ import { FeeTypes, getNetworkFullName, providerFeeTypes } from '../../constants'
 import { BtcLogo } from '../OnRampProviderLogo/OnRampProviderLogo'
 import BuyCryptoTooltip from '../Tooltip/Tooltip'
 
-type FeeComponents = { providerFee: number; networkFee: number; price: number }
+type FeeComponents = { providerFee: number; networkFee: number; pancakeFee: number }
 interface TransactionFeeDetailsProps {
-  selectedQuote: OnRampProviderQuote | undefined
+  selectedQuote?: OnRampProviderQuote
   currency: Currency
   independentField: Field
-  inputError: string | undefined
-  quotesError: string | undefined
-  loading: boolean | undefined
+  inputError?: string
+  loading?: boolean
+  quotesError?: boolean
 }
 
 export const TransactionFeeDetails = ({
@@ -33,8 +42,8 @@ export const TransactionFeeDetails = ({
   currency,
   independentField,
   inputError,
-  quotesError,
   loading,
+  quotesError,
 }: TransactionFeeDetailsProps) => {
   const [elementHeight, setElementHeight] = useState<number>(51)
   const [show, setShow] = useState<boolean>(false)
@@ -48,7 +57,6 @@ export const TransactionFeeDetails = ({
 
   const handleExpandClick = useCallback(() => setShow(!show), [show])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const elRef = contentRef.current
     if (elRef) setElementHeight(elRef.scrollHeight)
@@ -72,15 +80,11 @@ export const TransactionFeeDetails = ({
         </StyledFeesContainer3>
       </Flex>
 
-      <StyledFeesContainer
-        width="100%"
-        onClick={handleExpandClick}
-        disabled={Boolean(loading || quotesError || inputError)}
-      >
+      <StyledFeesContainer width="100%" onClick={handleExpandClick} disabled={Boolean(loading || inputError)}>
         <StyledArrowHead />
         <Flex justifyContent="space-between" alignItems="center">
           <Flex alignItems="center">
-            {selectedQuote && !quotesError ? (
+            {!quotesError && (
               <>
                 <Text fontWeight="600" fontSize="14px" px="2px">
                   {t('Est total fees:')}
@@ -88,27 +92,34 @@ export const TransactionFeeDetails = ({
                 <SkeletonText loading={Boolean(loading || inputError)} initialWidth={40} fontSize="14px">
                   {t('%fees%', {
                     fees: formatLocaleNumber({
-                      number: Number((selectedQuote?.providerFee + selectedQuote?.networkFee).toFixed(2)),
+                      number: selectedQuote
+                        ? selectedQuote?.providerFee + selectedQuote?.networkFee + selectedQuote?.pancakeFee
+                        : 0,
                       locale,
-                      options: { currency: selectedQuote.fiatCurrency, style: 'currency' },
+                      options: { currency: selectedQuote?.fiatCurrency ?? 'USD', style: 'currency' },
                     }),
                   })}
                 </SkeletonText>
               </>
-            ) : (
-              <Text fontWeight="600" fontSize="14px" px="2px">
-                {quotesError}
+            )}
+            {quotesError && (
+              <Text fontWeight="600" fontSize="14px" px="2px" color="textSubtle">
+                {t('No quotes available for %cryptoCurrency% right now.', {
+                  cryptoCurrency: currency?.symbol,
+                })}
               </Text>
             )}
+
             <BuyCryptoTooltip
-              opacity={0.7}
-              iconSize="17px"
-              tooltipText={
-                quotesError
-                  ? t(
-                      'Quotes may be unavailable for some assets based on market conditions and provider availability in your region.',
-                    )
-                  : t('Note that Fees are just an estimation and may vary slightly when completing a purchase')
+              tooltipBody={<InfoFilledIcon pl="4px" pt="2px" width={17} opacity={0.7} />}
+              tooltipContent={
+                <Text as="p">
+                  {quotesError
+                    ? t(
+                        'Quotes may be unavailable for some assets based on market conditions and provider availability in your region.',
+                      )
+                    : t('Note that Fees are just an estimation and may vary slightly when completing a purchase')}
+                </Text>
               }
             />
           </Flex>
@@ -148,16 +159,15 @@ const FeeItem = ({ feeTitle, quote }: { feeTitle: FeeTypes; quote: OnRampProvide
   } = {
     [FeeTypes.NetworkingFees]: (q) => q.networkFee,
     [FeeTypes.ProviderFees]: (q) => q.providerFee,
-    [FeeTypes.ProviderRate]: (q) => q.price,
+    [FeeTypes.PancakeFees]: (q) => q.pancakeFee,
   }
 
-  const title = feeTitle === FeeTypes.ProviderRate ? `${quote.cryptoCurrency} ${feeTitle}` : feeTitle
   return (
     <RowBetween py="4px">
       <Flex justifyContent="space-evenly" width="100%">
         <Box width="max-content">
           <Text width="max-content" fontSize="14px" color="textSubtle">
-            {title}
+            {feeTitle}
           </Text>
         </Box>
 

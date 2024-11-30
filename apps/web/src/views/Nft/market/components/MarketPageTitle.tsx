@@ -31,7 +31,7 @@ const MarketPageTitle: React.FC<React.PropsWithChildren<MarketPageTitleProps>> =
         </Heading>
         {address && DELIST_COLLECTIONS[address] ? (
           <Message variant="danger">
-            <MessageText>{t('This collection has been inactived for a while. Trade at your own risk.')}</MessageText>
+            <MessageText>{t('This collection has been inactive for a while. Trade at your own risk.')}</MessageText>
           </Message>
         ) : (
           description

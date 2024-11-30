@@ -25,8 +25,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useGetRoundsByCloseOracleId, useGetSortedRounds } from 'state/predictions/hooks'
 import { NodeRound } from 'state/types'
 import { styled } from 'styled-components'
-import { useReadContracts } from 'wagmi'
-import { useReadContract } from '@pancakeswap/wagmi'
+import { useReadContract, useReadContracts } from '@pancakeswap/wagmi'
 import { useConfig } from '../context/ConfigProvider'
 import { CHART_DOT_CLICK_EVENT } from '../helpers'
 import usePollOraclePrice from '../hooks/usePollOraclePrice'
@@ -158,7 +157,7 @@ const HoverData = ({ rounds }: { rounds: { [key: string]: NodeRound } }) => {
       zIndex={2}
     >
       {hoverData && (
-        <FlexGap minWidth="51%" alignItems="flex-end" gap="12px" height="22px">
+        <FlexGap minWidth="51%" alignItems="center" gap="12px" height="22px">
           <Text color="textSubtle" lineHeight={1.1}>
             {new Date(hoverData.startedAt * 1000).toLocaleString(locale, {
               year: 'numeric',
@@ -333,12 +332,16 @@ const Chart = ({
     chart.subscribeCrosshairMove(crossHairHandler)
 
     const clickHandler = (param) => {
-      if (param.hoveredSeries) {
-        const marker = param.hoveredSeries.markers().find((hoveredMarker) => hoveredMarker.time === param.time)
+      if (swiper && param?.seriesData) {
+        const seriesMarkers = param?.seriesData?.keys?.()?.next?.()?.value?.markers?.()
+        const clickedMarker = seriesMarkers?.find((marker) => marker.time === param.time)
         const roundIndex =
-          sortedRounds?.findIndex((round) => ('roundId' in marker ? round.closeOracleId === marker.roundId : false)) ??
-          0
-        if (roundIndex >= 0 && swiper) {
+          (clickedMarker &&
+            sortedRounds?.findIndex((round) =>
+              'roundId' in clickedMarker ? round.closeOracleId === clickedMarker.roundId : false,
+            )) ??
+          -1
+        if (roundIndex >= 0) {
           swiper.slideTo(roundIndex)
           swiper.el.dispatchEvent(new Event(CHART_DOT_CLICK_EVENT))
         }

@@ -1,19 +1,18 @@
 import shuffle from 'lodash/shuffle'
-import { useMemo, type ReactElement } from 'react'
+import { type ReactElement, useMemo } from 'react'
 import CompetitionBanner from '../CompetitionBanner'
-import { FeeRefundBanner } from '../FeeRefundBanner'
-import GameBanner from '../GameBanner'
-import { NemesisDownfallBanner } from '../NemesisDownfallBanner'
+import { EigenpieIFOBanner } from '../EigenpieIFOBanner'
+import { FourMemeBanner } from '../FourMemeBanner'
 import { OptionsBanner } from '../OptionsBanner'
-import { PaymasterBanner } from '../PaymasterBanner'
-import { PerpetualSeasonalBanner } from '../PerpetualSeasonalBanner'
-import { PredictionBanner } from '../PredictionBanner'
+import { PCSXBanner } from '../PCSXBanner'
+import { QuestBanner } from '../QuestBanner'
+import { TgPredictionBotBanner } from '../TgPredictionBotBanner'
 import UserBanner from '../UserBanner'
 import { V4InfoBanner } from '../V4InfoBanner'
 import { VeCakeBanner } from '../VeCakeBanner'
 import WebNotificationBanner from '../WebNotificationBanner'
-import { ZksyncAirDropBanner } from '../ZksyncAirdropBanner'
 import useIsRenderCompetitionBanner from './useIsRenderCompetitionBanner'
+import { useIsRenderIfoBannerFromConfig } from './useIsRenderIFOBanner'
 import useIsRenderUserBanner from './useIsRenderUserBanner'
 
 interface IBannerConfig {
@@ -37,6 +36,7 @@ interface IBannerConfig {
 export const useMultipleBannerConfig = () => {
   const isRenderCompetitionBanner = useIsRenderCompetitionBanner()
   const isRenderUserBanner = useIsRenderUserBanner()
+  const isRenderIFOBannerFromConfig = useIsRenderIfoBannerFromConfig()
 
   return useMemo(() => {
     const NO_SHUFFLE_BANNERS: IBannerConfig[] = [
@@ -45,24 +45,28 @@ export const useMultipleBannerConfig = () => {
         banner: <UserBanner />,
       },
       {
-        shouldRender: true,
-        banner: <ZksyncAirDropBanner />,
+        shouldRender: isRenderIFOBannerFromConfig,
+        banner: <EigenpieIFOBanner />,
       },
       {
         shouldRender: true,
-        banner: <PredictionBanner />,
+        banner: <PCSXBanner />,
       },
       {
         shouldRender: true,
-        banner: <PerpetualSeasonalBanner />,
+        banner: <TgPredictionBotBanner />,
       },
       {
         shouldRender: true,
-        banner: <PaymasterBanner />,
+        banner: <WebNotificationBanner />,
       },
       {
         shouldRender: true,
-        banner: <FeeRefundBanner />,
+        banner: <QuestBanner />,
+      },
+      {
+        shouldRender: true,
+        banner: <FourMemeBanner />,
       },
       {
         shouldRender: true,
@@ -73,15 +77,9 @@ export const useMultipleBannerConfig = () => {
         shouldRender: true,
         banner: <V4InfoBanner />,
       },
-      {
-        shouldRender: true,
-        banner: <NemesisDownfallBanner />,
-      },
     ]
 
     const SHUFFLE_BANNERS: IBannerConfig[] = [
-      { shouldRender: true, banner: <WebNotificationBanner /> },
-      { shouldRender: true, banner: <GameBanner /> },
       {
         shouldRender: isRenderCompetitionBanner,
         banner: <CompetitionBanner />,
@@ -98,5 +96,10 @@ export const useMultipleBannerConfig = () => {
     ]
       .filter((bannerConfig: IBannerConfig) => bannerConfig.shouldRender)
       .map((bannerConfig: IBannerConfig) => bannerConfig.banner)
-  }, [isRenderCompetitionBanner, isRenderUserBanner.isEarningsBusdZero, isRenderUserBanner.shouldRender])
+  }, [
+    isRenderCompetitionBanner,
+    isRenderUserBanner.isEarningsBusdZero,
+    isRenderUserBanner.shouldRender,
+    isRenderIFOBannerFromConfig,
+  ])
 }

@@ -92,7 +92,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
   const { pair, parsedAmounts, error } = useDerivedBurnInfo(currencyA ?? undefined, currencyB ?? undefined)
   const poolData = useLPApr('v2', pair)
   const { targetRef, tooltip, tooltipVisible } = useTooltip(
-    t(`Based on last 7 days' performance. Does not account for impermanent loss`),
+    t(`Based on last 24 hours' performance. Does not account for impermanent loss`),
     {
       placement: 'bottom',
     },
@@ -587,7 +587,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
       {showDetailed && (
         <Box my="16px">
           <CurrencyInputPanel
-            usdValue=""
+            usdValue="0"
             value={formattedAmounts[Field.LIQUIDITY]}
             onUserInput={onLiquidityInput}
             onPercentInput={(percent) => {
@@ -611,7 +611,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
             <ArrowDownIcon width="24px" my="16px" />
           </ColumnCenter>
           <CurrencyInputPanel
-            usdValue=""
+            usdValue="0"
             hideBalance
             value={formattedAmounts[Field.CURRENCY_A]}
             onUserInput={onCurrencyAInput}
@@ -629,7 +629,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
             <AddIcon width="24px" my="16px" />
           </ColumnCenter>
           <CurrencyInputPanel
-            usdValue=""
+            usdValue="0"
             hideBalance
             value={formattedAmounts[Field.CURRENCY_B]}
             onUserInput={onCurrencyBInput}
@@ -686,7 +686,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
           </TooltipText>
           {tooltipVisible && tooltip}
           <Text bold color="primary">
-            {formatAmount(poolData.lpApr7d)}%
+            {formatAmount(poolData.lpApr)}%
           </Text>
         </RowBetween>
       )}

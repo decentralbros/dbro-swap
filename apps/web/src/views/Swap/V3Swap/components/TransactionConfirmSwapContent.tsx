@@ -4,11 +4,6 @@ import { ConfirmationModalContent } from '@pancakeswap/widgets-internal'
 import { memo, useCallback, useMemo } from 'react'
 import { Field } from 'state/swap/actions'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
-import { MMSlippageTolerance } from 'views/Swap/MMLinkPools/components/MMSlippageTolerance'
-import {
-  computeSlippageAdjustedAmounts as mmComputeSlippageAdjustedAmountsWithSmartRouter,
-  computeTradePriceBreakdown as mmComputeTradePriceBreakdownWithSmartRouter,
-} from 'views/Swap/MMLinkPools/utils/exchange'
 import SwapModalHeader from '../../components/SwapModalHeader'
 import {
   TradeEssentialForPriceBreakdown,
@@ -67,16 +62,12 @@ export const TransactionConfirmSwapContent = memo<TransactionConfirmSwapContentP
     )
 
     const slippageAdjustedAmounts = useMemo(
-      () =>
-        isMM
-          ? mmComputeSlippageAdjustedAmountsWithSmartRouter(trade)
-          : computeSlippageAdjustedAmountsWithSmartRouter(trade, allowedSlippage),
-      [isMM, trade, allowedSlippage],
+      () => computeSlippageAdjustedAmountsWithSmartRouter(trade, allowedSlippage),
+      [trade, allowedSlippage],
     )
     const { priceImpactWithoutFee, lpFeeAmount } = useMemo(
-      () =>
-        isMM ? mmComputeTradePriceBreakdownWithSmartRouter(trade) : computeTradePriceBreakdownWithSmartRouter(trade),
-      [isMM, trade],
+      () => computeTradePriceBreakdownWithSmartRouter(trade),
+      [trade],
     )
 
     const isEnoughInputBalance = useMemo(() => {
@@ -103,7 +94,7 @@ export const TransactionConfirmSwapContent = memo<TransactionConfirmSwapContentP
           currencyBalances={currencyBalances}
           tradeType={trade.tradeType}
           priceImpactWithoutFee={priceImpactWithoutFee ?? undefined}
-          allowedSlippage={isMM ? <MMSlippageTolerance /> : allowedSlippage}
+          allowedSlippage={allowedSlippage}
           slippageAdjustedAmounts={slippageAdjustedAmounts ?? undefined}
           isEnoughInputBalance={isEnoughInputBalance ?? undefined}
           recipient={recipient ?? undefined}
@@ -112,7 +103,6 @@ export const TransactionConfirmSwapContent = memo<TransactionConfirmSwapContentP
         />
       ) : null
     }, [
-      isMM,
       priceImpactWithoutFee,
       currencyBalances,
       allowedSlippage,

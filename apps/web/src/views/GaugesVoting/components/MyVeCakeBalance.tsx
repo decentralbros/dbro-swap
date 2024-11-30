@@ -4,7 +4,7 @@ import { getBalanceNumber } from '@pancakeswap/utils/formatBalance'
 import { useVeCakeBalance } from 'hooks/useTokenBalance'
 import { useMemo } from 'react'
 import styled from 'styled-components'
-import { Tooltips } from 'views/StakingDBRO/components/Tooltips'
+import { Tooltips } from 'views/CakeStaking/components/Tooltips'
 import { useEpochVotePower } from '../hooks/useEpochVotePower'
 
 const StyledBox = styled(Box)`

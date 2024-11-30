@@ -1,9 +1,10 @@
-import { LegacyRouter } from '@pancakeswap/smart-router/legacy-router'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useMemo } from 'react'
+import { useStableSwapPairsByChainId } from 'state/farmsV4/state/accountPositions/hooks'
 
 export function useStableSwapPairs() {
   const { chainId } = useActiveChainId()
+  const pairs = useStableSwapPairsByChainId(chainId)
 
-  return useMemo(() => (chainId && LegacyRouter.stableSwapPairsByChainId[chainId]) || [], [chainId])
+  return useMemo(() => pairs || [], [pairs])
 }

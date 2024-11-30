@@ -1,17 +1,17 @@
-import { useTranslation } from '@pancakeswap/localization'
-import { Balance, Box, Flex, SkeletonV2, Text } from '@pancakeswap/uikit'
-import { getBalanceNumber } from '@pancakeswap/utils/formatBalance'
-import { useCakePrice } from 'hooks/useCakePrice'
-import { useVaultApy } from 'hooks/useVaultApy'
-import { useMemo } from 'react'
-import { usePotteryData } from 'state/pottery/hook'
-import { PotteryDepositStatus } from 'state/types'
 import { styled } from 'styled-components'
-import { weeksToSeconds } from 'views/Pools/components/utils/formatSecondsToWeeks'
+import { useMemo } from 'react'
+import { Flex, Box, Text, Balance, SkeletonV2 } from '@pancakeswap/uikit'
+import { useTranslation } from '@pancakeswap/localization'
+import { useCakePrice } from 'hooks/useCakePrice'
 import StakeToWinButton from 'views/Pottery/components/Banner/StakeToWinButton'
-import TicketsDecorations from 'views/Pottery/components/Banner/TicketsDecorations'
-import { DarkTextStyle, OutlineText } from 'views/Pottery/components/TextStyle'
 import { LockTimer } from 'views/Pottery/components/Timer'
+import { PotteryDepositStatus } from 'state/types'
+import { OutlineText, DarkTextStyle } from 'views/Pottery/components/TextStyle'
+import TicketsDecorations from 'views/Pottery/components/Banner/TicketsDecorations'
+import { getBalanceNumber } from '@pancakeswap/utils/formatBalance'
+import { useVaultApy } from 'hooks/useVaultApy'
+import { weeksToSeconds } from 'views/Pools/components/utils/formatSecondsToWeeks'
+import { usePotteryData } from 'state/pottery/hook'
 
 const PotteryBanner = styled(Flex)`
   position: relative;
@@ -70,11 +70,11 @@ interface BannerProps {
 
 const Banner: React.FC<React.PropsWithChildren<BannerProps>> = ({ handleScroll }) => {
   const { t } = useTranslation()
-  const cakePriceBusd = useCakePrice()
+  const cakePrice = useCakePrice()
   const { publicData } = usePotteryData()
   const { getLockedApy } = useVaultApy()
 
-  const prizeInBusd = publicData.totalPrize.times(cakePriceBusd)
+  const prizeInBusd = publicData.totalPrize.times(cakePrice)
   const prizeTotal = getBalanceNumber(prizeInBusd)
 
   const apy = useMemo(() => Number(getLockedApy(weeksToSeconds(10))), [getLockedApy])
@@ -103,7 +103,7 @@ const Banner: React.FC<React.PropsWithChildren<BannerProps>> = ({ handleScroll }
               bold
               defaultType
             >
-              {t('The DBRO Swap')}
+              {t('The PancakeSwap')}
             </OutlineText>
             <OutlineText fontSize={['24px', '24px', '24px', '24px', '32px']} bold ml="4px">
               {t('Pottery')}
@@ -125,7 +125,7 @@ const Banner: React.FC<React.PropsWithChildren<BannerProps>> = ({ handleScroll }
           ) : null}
           <Box style={{ marginTop: '30px' }}>
             <Text color="white" bold as="span">
-              {t('Deposit DBRO for')}
+              {t('Deposit CAKE for')}
             </Text>
             <DarkTextStyle ml="3px" bold as="span">
               {t('10 Weeks')}

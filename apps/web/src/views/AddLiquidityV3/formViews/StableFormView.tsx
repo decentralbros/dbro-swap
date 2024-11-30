@@ -6,7 +6,7 @@ import { CommitButton } from 'components/CommitButton'
 import CurrencyInputPanel from 'components/CurrencyInputPanel'
 
 import { ApprovalState } from 'hooks/useApproveCallback'
-import { Field } from 'state/mint/actions'
+import { CurrencyField as Field } from 'utils/types'
 import { logGTMClickAddLiquidityEvent } from 'utils/customGTMEventTracking'
 
 import { useTranslation } from '@pancakeswap/localization'
@@ -49,7 +49,7 @@ export default function StableFormView({
   poolTokenPercentage,
   pair,
   reserves,
-  stableLpFee,
+  stableTotalFee,
   stableAPR,
   executionSlippage,
   loading,
@@ -57,7 +57,7 @@ export default function StableFormView({
   price,
   maxAmounts,
 }: AddStableChildrenProps & {
-  stableLpFee?: number
+  stableTotalFee?: number
 }) {
   const addIsUnsupported = useIsTransactionUnsupported(currencies?.CURRENCY_A, currencies?.CURRENCY_B)
   const addIsWarning = useIsTransactionWarning(currencies?.CURRENCY_A, currencies?.CURRENCY_B)
@@ -142,7 +142,7 @@ export default function StableFormView({
         </Text>
 
         <CurrencyInputPanel
-          usdValue=""
+          usdValue="0"
           showUSDPrice
           maxAmount={maxAmounts[Field.CURRENCY_A]}
           onMax={() => onFieldAInput(maxAmounts[Field.CURRENCY_A]?.toExact() ?? '')}
@@ -163,7 +163,7 @@ export default function StableFormView({
         />
 
         <CurrencyInputPanel
-          usdValue=""
+          usdValue="0"
           showUSDPrice
           disableCurrencySelect
           maxAmount={maxAmounts[Field.CURRENCY_B]}
@@ -250,7 +250,7 @@ export default function StableFormView({
             <AutoRow justifyContent="space-between" mb="4px">
               <Text color="textSubtle">{t('Fee rate')}: </Text>
 
-              <Text>{stableLpFee ? BIG_ONE_HUNDRED.times(stableLpFee).toNumber() : '-'}%</Text>
+              <Text>{stableTotalFee ? BIG_ONE_HUNDRED.times(stableTotalFee).toNumber() : '-'}%</Text>
             </AutoRow>
 
             <AutoRow justifyContent="space-between" mb="4px">

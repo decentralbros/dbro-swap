@@ -1,5 +1,17 @@
 # @pancakeswap/wagmi
 
+## 3.0.4
+
+### Patch Changes
+
+- 5b05168: fix: Is trustwallet check in ethereum object providers crash
+
+## 3.0.3
+
+### Patch Changes
+
+- a93e89a: fix: Injected provider check when window is null
+
 ## 3.0.2
 
 ### Patch Changes

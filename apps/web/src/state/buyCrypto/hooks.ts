@@ -1,22 +1,22 @@
 import { useActiveChainId } from 'hooks/useActiveChainId'
-import { useAtom, useAtomValue } from 'jotai'
+import { useAtom } from 'jotai'
 import { atomWithStorage } from 'jotai/utils'
 import { useRouter } from 'next/router'
 import type { ParsedUrlQuery } from 'querystring'
 import { useCallback, useEffect } from 'react'
-import { buyCryptoReducerAtom, type BuyCryptoState } from 'state/buyCrypto/reducer'
-import { OnRampChainId as ChainId, type OnRampCurrency as Currency } from 'views/BuyCrypto/constants'
-import { useAccount } from 'wagmi'
+import { useBuyCryptoFormDispatch, type BuyCryptoState } from 'state/buyCrypto/reducer'
+
+import {
+  OnRampChainId as ChainId,
+  onRampCurrenciesMap,
+  type OnRampCurrency as Currency,
+} from 'views/BuyCrypto/constants'
 import { Field, replaceBuyCryptoState, selectCurrency, switchCurrencies, typeInput } from './actions'
 
 const useEnableBtcPurchases = atomWithStorage<boolean>('pcs:enable-buy-btc-native', false)
 
 export function useAllowBtcPurchases() {
   return useAtom(useEnableBtcPurchases)
-}
-
-export function useBuyCryptoState() {
-  return useAtomValue(buyCryptoReducerAtom)
 }
 
 function parseTokenAmountURLParameter(urlParam: unknown): string {
@@ -28,7 +28,7 @@ export function useBuyCryptoActionHandlers(): {
   onSwitchTokens: () => void
   onUserInput: (field: Field, typedValue: string | number) => void
 } {
-  const [, dispatch] = useAtom(buyCryptoReducerAtom)
+  const dispatch = useBuyCryptoFormDispatch()
 
   const onCurrencySelection = useCallback(
     (field: Field, currency: Currency) => {
@@ -64,26 +64,46 @@ export async function queryParametersToBuyCryptoState(
   parsedQs: ParsedUrlQuery,
   chainId: ChainId,
 ): Promise<BuyCryptoState> {
-  const DEFAULT_FIAT_CURRENCY = [ChainId.BASE, ChainId.LINEA].includes(chainId) ? 'EUR' : 'USD'
+  const parsedChainId = parsedQs.outputCurrency ? (parsedQs.outputCurrency as string).split('_')[1] : undefined
+
+  const DEFAULT_FIAT_CURRENCY = [ChainId.BASE, ChainId.LINEA].find((c) => {
+    if (parsedChainId) {
+      return c.toString() === parsedChainId
+    }
+    return c === chainId
+  })
+    ? 'EUR'
+    : 'USD'
+
+  let outputCurrencyId: string | undefined
+  const parsedKey = parsedQs.outputCurrency
+    ? parsedChainId
+      ? (parsedQs.outputCurrency as string)
+      : `${parsedQs.outputCurrency}_${chainId}`
+    : undefined
+  if (parsedKey && onRampCurrenciesMap[parsedKey]) {
+    outputCurrencyId = parsedKey
+  } else {
+    outputCurrencyId = 'CAKE_56'
+  }
+
   return {
     [Field.INPUT]: {
       currencyId: DEFAULT_FIAT_CURRENCY,
     },
     [Field.OUTPUT]: {
-      currencyId: 'BNB_56',
+      currencyId: outputCurrencyId ?? 'CAKE_56',
     },
     typedValue: parseTokenAmountURLParameter(parsedQs.exactAmount),
     independentField: Field.INPUT,
   }
 }
 
-export function useDefaultsFromURLSearch(account: string | undefined) {
-  const [, dispatch] = useAtom(buyCryptoReducerAtom)
+export function useDefaultsFromURLSearch() {
+  const dispatch = useBuyCryptoFormDispatch()
   const { chainId } = useActiveChainId()
-  const { address } = useAccount()
   const { query, isReady } = useRouter()
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const fetchData = async () => {
       if (!isReady || !chainId) return
@@ -99,5 +119,5 @@ export function useDefaultsFromURLSearch(account: string | undefined) {
       )
     }
     fetchData()
-  }, [dispatch, query, isReady, account, chainId, address])
+  }, [dispatch, query, isReady, chainId])
 }

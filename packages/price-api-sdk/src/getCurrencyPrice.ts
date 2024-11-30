@@ -52,14 +52,16 @@ export function getCurrencyListKey(currencyListParams?: CurrencyParams[]): strin
 }
 
 function getRequestUrl(params?: CurrencyParams | CurrencyParams[]): string | undefined {
-  return undefined
-  // const infoList = Array.isArray(params) ? params : [params]
-  // const key = getCurrencyListKey(infoList.filter((c) => !isTestnetChainId(c.chainId)))
-  // if (!key) {
-  //   return undefined
-  // }
-  // const encodedKey = encodeURIComponent(key)
-  // return `${WALLET_API}${encodedKey}`
+  if (!params) {
+    return undefined
+  }
+  const infoList = Array.isArray(params) ? params : [params]
+  const key = getCurrencyListKey(infoList.filter((c) => !isTestnetChainId(c.chainId)))
+  if (!key) {
+    return undefined
+  }
+  const encodedKey = encodeURIComponent(key)
+  return `${WALLET_API}${encodedKey}`
 }
 
 export async function getCurrencyUsdPrice(currencyParams?: CurrencyParams, options?: RequestInit) {

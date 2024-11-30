@@ -1,10 +1,11 @@
+import keyBy from 'lodash/keyBy'
 import { PublicClient } from 'viem'
-import { CONFIG_PROD } from './constants/config/prod'
+import { getGauges } from './constants/config/getGauges'
 import { CONFIG_TESTNET } from './constants/config/testnet'
 import { fetchAllGauges } from './fetchAllGauges'
 import { fetchAllKilledGauges } from './fetchAllKilledGauges'
 import { fetchAllGaugesVoting } from './fetchGaugeVoting'
-import { Gauge, GaugeConfig, GaugeInfoConfig } from './types'
+import { Gauge, GaugeInfoConfig } from './types'
 
 export type getAllGaugesOptions = {
   testnet?: boolean
@@ -25,36 +26,16 @@ export const getAllGauges = async (
   },
 ): Promise<Gauge[]> => {
   const { testnet, inCap, bothCap, killed, blockNumber } = options
-  const presets = testnet ? CONFIG_TESTNET : CONFIG_PROD
+  const gaugesCMS = testnet ? CONFIG_TESTNET : await getGauges()
+  gaugesCMS.sort((a, b) => (a.gid < b.gid ? -1 : 1))
+  const gaugesSC = await fetchGaugesSC(client, killed, blockNumber)
+  const gaugesSCMap = keyBy(gaugesSC, 'gid')
 
-  const allGaugeInfos = await fetchAllGauges(client, {
-    blockNumber,
+  const allGaugeInfoConfigs = (killed ? gaugesCMS : gaugesCMS.filter((g) => !g.killed)).map((config) => {
+    const correspondingSC = gaugesSCMap[config.gid]
+    const mergedConfig: GaugeInfoConfig = { ...config, ...correspondingSC }
+    return mergedConfig
   })
-  let allActiveGaugeInfos = allGaugeInfos
-
-  allActiveGaugeInfos = await fetchAllKilledGauges(client, allGaugeInfos, { blockNumber })
-
-  if (!killed) allActiveGaugeInfos = allActiveGaugeInfos.filter((gauge) => !gauge.killed)
-
-  const allGaugeInfoConfigs = allActiveGaugeInfos.reduce((prev, gauge) => {
-    const filters = presets.filter((p) => p.address === gauge.pairAddress && Number(p.chainId) === gauge.chainId)
-    let preset: GaugeConfig
-
-    if (!filters.length) return prev
-    if (filters.length > 1) {
-      preset = filters[filters.length - 1]
-    } else {
-      preset = filters[0]
-    }
-
-    return [
-      ...prev,
-      {
-        ...preset,
-        ...gauge,
-      },
-    ]
-  }, [] as GaugeInfoConfig[])
 
   if (!bothCap) {
     const allGaugesVoting = await fetchAllGaugesVoting(client, allGaugeInfoConfigs, inCap, options)
@@ -77,4 +58,13 @@ export const getAllGauges = async (
       },
     ]
   }, [] as Gauge[])
+}
+
+async function fetchGaugesSC(client: PublicClient, killed?: boolean, blockNumber?: bigint) {
+  let gaugesSC = await fetchAllGauges(client, {
+    blockNumber,
+  })
+  gaugesSC = await fetchAllKilledGauges(client, gaugesSC, { blockNumber })
+  if (!killed) gaugesSC = gaugesSC.filter((gauge) => !gauge.killed)
+  return gaugesSC
 }

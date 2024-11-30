@@ -1,8 +1,8 @@
 import { ChainId, TradeType } from '@pancakeswap/sdk'
 import { SmartRouterTrade } from '@pancakeswap/smart-router'
 import { Currency, CurrencyAmount, Token } from '@pancakeswap/swap-sdk-core'
-import { Box, Button, Dots, useModal, useToast } from '@pancakeswap/uikit'
-import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
+import { Box, Button, Dots, useToast } from '@pancakeswap/uikit'
+import React, { memo, useCallback, useMemo, useState } from 'react'
 
 import { useTranslation } from '@pancakeswap/localization'
 import { getUniversalRouterAddress } from '@pancakeswap/universal-router-sdk'
@@ -10,8 +10,6 @@ import { parseUnits } from '@pancakeswap/utils/viem/parseUnits'
 import { sendTransaction, waitForTransactionReceipt, writeContract } from '@wagmi/core'
 import { CommitButton } from 'components/CommitButton'
 import ConnectWalletButton from 'components/ConnectWalletButton'
-import SettingsModal, { withCustomOnDismiss } from 'components/Menu/GlobalSettings/SettingsModal'
-import { SettingsMode } from 'components/Menu/GlobalSettings/types'
 import { useCurrency } from 'hooks/Tokens'
 import { useIsTransactionUnsupported } from 'hooks/Trades'
 import useWrapCallback, { WrapType } from 'hooks/useWrapCallback'
@@ -20,7 +18,6 @@ import { Field } from 'state/swap/actions'
 import { useSwapState } from 'state/swap/hooks'
 import { useSwapActionHandlers } from 'state/swap/useSwapActionHandlers'
 import { useTransactionAdder } from 'state/transactions/hooks'
-import { useCurrencyBalances } from 'state/wallet/hooks'
 import { config } from 'utils/wagmi'
 import { useAccount, useChainId, useReadContract } from 'wagmi'
 import { abi } from '../abi'
@@ -29,24 +26,15 @@ import { useConfirmModalState } from '../hooks/useConfirmModalState'
 import { useSwapCurrency } from '../hooks/useSwapCurrency'
 import { useSwapValues } from '../hooks/useSwapValues'
 import { CommitButtonProps } from '../types'
-import { ConfirmSwapModal } from './ConfirmSwapModal'
 
-const SettingsModalWithCustomDismiss = withCustomOnDismiss(SettingsModal)
 const ZEROX_ADDRESS = '0x0000000000001fF3684f28c67538d4D072C22734' as `0x${string}`
 const ETHEREUM = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE' as `0x${string}`
 
 interface SwapCommitButtonPropsType {
   trade?: SmartRouterTrade<TradeType>
-  tradeError?: Error
+  tradeError?: Error | null | undefined
   tradeLoading?: boolean
   // setLock: (lock: boolean) => void
-}
-
-const useSettingModal = (onDismiss) => {
-  const [openSettingsModal] = useModal(
-    <SettingsModalWithCustomDismiss customOnDismiss={onDismiss} mode={SettingsMode.SWAP_LIQUIDITY} />,
-  )
-  return openSettingsModal
 }
 
 const useSwapCurrencies = () => {
@@ -119,11 +107,8 @@ const SwapCommitButtonComp: React.FC<SwapCommitButtonPropsType & CommitButtonPro
 export const SwapCommitButton = memo(SwapCommitButtonComp)
 
 const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
-  trade,
-  tradeError,
-  tradeLoading,
-  beforeCommit,
-  afterCommit,
+  trade = undefined,
+  afterCommit = undefined,
 }: SwapCommitButtonPropsType & CommitButtonProps) {
   const { address: account } = useAccount()
   const { t } = useTranslation()
@@ -140,21 +125,10 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     [inputCurrency?.isNative, slippageAdjustedAmounts],
   )
 
-  const relevantTokenBalances = useCurrencyBalances(account ?? undefined, [
-    inputCurrency ?? undefined,
-    outputCurrency ?? undefined,
-  ])
-
-  const currencyBalances = {
-    [Field.INPUT]: relevantTokenBalances[0],
-    [Field.OUTPUT]: relevantTokenBalances[1],
-  }
-
   // const swapInputError = useSwapInputError(trade, currencyBalances)
   const [tradeToConfirm, setTradeToConfirm] = useState<SmartRouterTrade<TradeType> | undefined>(undefined)
-  const [indirectlyOpenConfirmModalState, setIndirectlyOpenConfirmModalState] = useState(false)
 
-  const { callToAction, confirmState, txHash, confirmActions, errorMessage, resetState } = useConfirmModalState(
+  const { resetState } = useConfirmModalState(
     tradeToConfirm,
     amountToApprove?.currency.isToken ? (amountToApprove as CurrencyAmount<Token>) : undefined,
     getUniversalRouterAddress(chainId),
@@ -170,51 +144,10 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     resetState()
   }, [afterCommit, onUserInput, resetState])
 
-  const handleAcceptChanges = useCallback(() => {
-    setTradeToConfirm(trade)
-  }, [trade])
-
   // const isValid = useMemo(() => !swapInputError && !tradeLoading, [swapInputError, tradeLoading])
   // const disabled = useMemo(() => !isValid, [isValid])
 
   const addTransaction = useTransactionAdder()
-
-  const onConfirm = useCallback(() => {
-    beforeCommit?.()
-    callToAction()
-  }, [beforeCommit, callToAction])
-
-  // modals
-  const onSettingModalDismiss = useCallback(() => {
-    setIndirectlyOpenConfirmModalState(true)
-  }, [])
-
-  const openSettingModal = useSettingModal(onSettingModalDismiss)
-  const [openConfirmSwapModal] = useModal(
-    <ConfirmSwapModal
-      trade={trade}
-      originalTrade={tradeToConfirm}
-      txHash={txHash}
-      confirmModalState={confirmState}
-      pendingModalSteps={confirmActions ?? []}
-      swapErrorMessage={errorMessage}
-      currencyBalances={currencyBalances}
-      onAcceptChanges={handleAcceptChanges}
-      onConfirm={onConfirm}
-      openSettingModal={openSettingModal}
-      customOnDismiss={reset}
-    />,
-    true,
-    true,
-    'confirmSwapModal',
-  )
-
-  useEffect(() => {
-    if (indirectlyOpenConfirmModalState) {
-      setIndirectlyOpenConfirmModalState(false)
-      openConfirmSwapModal()
-    }
-  }, [indirectlyOpenConfirmModalState, openConfirmSwapModal])
 
   const { toastSuccess, toastError } = useToast()
 
@@ -247,7 +180,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         const requestedAllowance = BigInt(amount) * BigInt(10 ** inputCurrency.decimals)
 
         if (currentAllowance < requestedAllowance) {
-          const hash: `0x${string}` = await writeContract(config, {
+          const hash: `0x${string}` = await writeContract(config as any, {
             abi,
             address: inputCurrency.address as `0x${string}`,
             functionName: 'approve',
@@ -256,7 +189,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
           })
 
           if (chainId !== ChainId.ETHEREUM) {
-            await waitForTransactionReceipt(config, {
+            await waitForTransactionReceipt(config as any, {
               confirmations: 4,
               hash,
               chainId,
@@ -269,7 +202,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
       const quote = await response.json()
       const { transaction } = quote
 
-      const tx: `0x${string}` = await sendTransaction(config, {
+      const tx: `0x${string}` = await sendTransaction(config as any, {
         account,
         to: transaction.to,
         data: transaction.data,

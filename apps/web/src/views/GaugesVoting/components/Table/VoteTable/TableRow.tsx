@@ -2,15 +2,15 @@ import { GAUGE_TYPE_NAMES, GaugeType } from '@pancakeswap/gauges'
 import { useTranslation } from '@pancakeswap/localization'
 import { Button, ChevronDownIcon, ChevronUpIcon, ErrorIcon, Flex, FlexGap, Tag, Text } from '@pancakeswap/uikit'
 import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
 import { useCallback, useMemo, useState } from 'react'
 import { stringify } from 'viem'
-import { DebugTooltips, Tooltips } from 'views/StakingDBRO/components/Tooltips'
-import { useCurrentBlockTimestamp } from 'views/StakingDBRO/hooks/useCurrentBlockTimestamp'
-import { useCakeLockStatus } from 'views/StakingDBRO/hooks/useVeCakeUserInfo'
+import { DebugTooltips, Tooltips } from 'views/CakeStaking/components/Tooltips'
+import { useCurrentBlockTimestamp } from 'views/CakeStaking/hooks/useCurrentBlockTimestamp'
+import { useCakeLockStatus } from 'views/CakeStaking/hooks/useVeCakeUserInfo'
+import { usePositionManagerName } from 'views/GaugesVoting/hooks/usePositionManagerName'
 import { useUserVote } from 'views/GaugesVoting/hooks/useUserVote'
-import { getPositionManagerName } from 'views/GaugesVoting/utils'
 import { feeTierPercent } from 'views/V3Info/utils'
-import relativeTime from 'dayjs/plugin/relativeTime'
 import { GaugeTokenImage } from '../../GaugeTokenImage'
 import { NetworkBadge } from '../../NetworkBadge'
 import { PositionManagerLogo } from '../../PositionManagerLogo'
@@ -30,6 +30,7 @@ export const TableRow: React.FC<RowProps> = ({ data, submitted, vote = { ...DEFA
   const { t } = useTranslation()
   const currentTimestamp = useCurrentBlockTimestamp()
   const { cakeLockedAmount } = useCakeLockStatus()
+  const { managerName } = usePositionManagerName(data)
   const cakeLocked = useMemo(() => cakeLockedAmount > 0n, [cakeLockedAmount])
   const userVote = useUserVote(data, submitted)
   const {
@@ -85,9 +86,9 @@ export const TableRow: React.FC<RowProps> = ({ data, submitted, vote = { ...DEFA
           </Text>
           {data.type === GaugeType.ALM ? (
             <Flex alignItems="center">
-              <PositionManagerLogo manager={getPositionManagerName(data)} />
+              <PositionManagerLogo manager={managerName} />
               <Text fontSize={14} color="textSubtle">
-                {getPositionManagerName(data)}
+                {managerName}
               </Text>
             </Flex>
           ) : null}

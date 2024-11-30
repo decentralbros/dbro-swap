@@ -90,7 +90,7 @@ export default function RemoveStableLiquidity({ currencyA, currencyB, currencyId
 
   const poolData = useLPApr('stable', pair)
   const { targetRef, tooltip, tooltipVisible } = useTooltip(
-    t(`Based on last 7 days' performance. Does not account for impermanent loss`),
+    t(`Based on last 24 hours' performance. Does not account for impermanent loss`),
     {
       placement: 'bottom',
     },
@@ -457,7 +457,7 @@ export default function RemoveStableLiquidity({ currencyA, currencyB, currencyId
         {showDetailed && (
           <Box my="16px">
             <CurrencyInputPanel
-              usdValue=""
+              usdValue="0"
               value={formattedAmounts[Field.LIQUIDITY]}
               onUserInput={onLiquidityInput}
               onPercentInput={(percent) => {
@@ -481,7 +481,7 @@ export default function RemoveStableLiquidity({ currencyA, currencyB, currencyId
               <ArrowDownIcon width="24px" my="16px" />
             </ColumnCenter>
             <CurrencyInputPanel
-              usdValue=""
+              usdValue="0"
               hideBalance
               value={formattedAmounts[Field.CURRENCY_A]}
               onUserInput={onCurrencyAInput}
@@ -499,7 +499,7 @@ export default function RemoveStableLiquidity({ currencyA, currencyB, currencyId
               <AddIcon width="24px" my="16px" />
             </ColumnCenter>
             <CurrencyInputPanel
-              usdValue=""
+              usdValue="0"
               hideBalance
               value={formattedAmounts[Field.CURRENCY_B]}
               onUserInput={onCurrencyBInput}
@@ -558,7 +558,7 @@ export default function RemoveStableLiquidity({ currencyA, currencyB, currencyId
             </TooltipText>
             {tooltipVisible && tooltip}
             <Text bold color="primary">
-              {formatAmount(poolData.lpApr7d)}%
+              {formatAmount(poolData.lpApr)}%
             </Text>
           </RowBetween>
         )}

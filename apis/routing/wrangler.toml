@@ -3,13 +3,11 @@ kv_namespaces = [
   {binding = "POOLS", id = "29d3e7e6c3c44fa7bf7174ee2b7b1295", preview_id = "c808d98df0444ae1a680bc84a029baaa"},
 ]
 r2_buckets = [
-  { binding = "SUBGRAPH_POOLS", bucket_name = "subgraph-pools-dev" }
+  { binding = "SUBGRAPH_POOLS", bucket_name = "subgraph-pools-dev", preview_bucket_name = "subgraph-pools-dev" }
 ]
 main = "src/index.ts"
 name = "routing-dev"
 node_compat = true
-[triggers]
-crons = ["0 0 * * *"]
 
 [env.production]
 kv_namespaces = [
@@ -19,8 +17,6 @@ r2_buckets = [
   { binding = "SUBGRAPH_POOLS", bucket_name = "subgraph-pools", preview_bucket_name = "subgraph-pools-dev" }
 ]
 name = "routing"
-[env.production.triggers]
-crons = ["*/30 * * * *"]
 
 # The necessary secrets are:
 # - ETH_NODE

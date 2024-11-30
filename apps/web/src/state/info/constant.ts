@@ -1,7 +1,8 @@
 import { GraphQLClient } from 'graphql-request'
 import { infoStableSwapClients, v2Clients } from 'utils/graphql'
 
-import { ChainId } from '@pancakeswap/chains'
+import { ChainId, isTestnetChainId } from '@pancakeswap/chains'
+import { STABLE_SUPPORTED_CHAIN_IDS } from '@pancakeswap/stable-swap-sdk'
 import { BSC_TOKEN_WHITELIST, ETH_TOKEN_BLACKLIST, ETH_TOKEN_WHITELIST, TOKEN_BLACKLIST } from 'config/constants/info'
 import mapValues from 'lodash/mapValues'
 import { arbitrum, base, bsc, linea, mainnet, opBNB, polygonZkEvm, zkSync } from 'wagmi/chains'
@@ -59,10 +60,10 @@ export const multiChainPaths = {
   [ChainId.OPBNB]: '/opbnb',
 }
 
-export const multiChainQueryStableClient = {
-  BSC: infoStableSwapClients[ChainId.BSC],
-  ARB: infoStableSwapClients[ChainId.ARBITRUM_ONE],
-}
+export const multiChainQueryStableClient = STABLE_SUPPORTED_CHAIN_IDS.reduce((acc, chainId) => {
+  if (isTestnetChainId(chainId)) return acc
+  return { ...acc, [multiChainName[chainId]]: infoStableSwapClients[chainId] }
+}, {} as Record<MultiChainName, GraphQLClient>)
 
 export const infoChainNameToExplorerChainName = {
   BSC: 'bsc',
@@ -88,6 +89,14 @@ export const multiChainScan: Record<MultiChainName, string> = {
   LINEA: linea.blockExplorers.default.name,
   BASE: base.blockExplorers.default.name,
   OPBNB: opBNB.blockExplorers.default.name,
+}
+
+/** Override Explorer Names if default for chain is "Etherscan" */
+export const multiChainScanName: Partial<Record<ChainId, string>> = {
+  [ChainId.ZKSYNC]: 'ZKSync Explorer',
+  [ChainId.ZKSYNC_TESTNET]: 'ZKSync Explorer',
+  [ChainId.LINEA]: 'LineaScan',
+  [ChainId.LINEA_TESTNET]: 'LineaScan',
 }
 
 export const multiChainTokenBlackList: Record<MultiChainName, string[]> = mapValues(

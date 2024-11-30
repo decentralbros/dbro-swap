@@ -24,34 +24,7 @@ export const useApprovePool = (lpContract: ReturnType<typeof useERC20>, sousId: 
   const { address: account } = useAccount()
   const sousChefContract = useSousChef(sousId)
 
-  const handleApprove = useCallback(async () => {
-    const receipt = await fetchWithCatchTxError(() => {
-      return callWithGasPrice(lpContract, 'approve', [sousChefContract.address, MaxUint256])
-    })
-    if (receipt?.status) {
-      toastSuccess(
-        t('Contract Enabled'),
-        <ToastDescriptionWithTx txHash={receipt.transactionHash}>
-          {t('You can now stake in the %symbol% pool!', { symbol: earningTokenSymbol })}
-        </ToastDescriptionWithTx>,
-      )
-      if (account && chainId) {
-        dispatch(updateUserAllowance({ sousId, account, chainId }))
-      }
-    }
-  }, [
-    chainId,
-    account,
-    dispatch,
-    lpContract,
-    sousChefContract,
-    sousId,
-    earningTokenSymbol,
-    t,
-    toastSuccess,
-    callWithGasPrice,
-    fetchWithCatchTxError,
-  ])
+  const handleApprove = useCallback(async () => {}, [])
 
   return { handleApprove, pendingTx }
 }

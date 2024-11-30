@@ -1,5 +1,128 @@
 # @pancakeswap/farms
 
+## 1.0.81
+
+### Patch Changes
+
+- @pancakeswap/price-api-sdk@5.0.1
+
+## 1.0.80
+
+### Patch Changes
+
+- Updated dependencies [176eb10]
+- Updated dependencies [176eb10]
+- Updated dependencies [176eb10]
+- Updated dependencies [176eb10]
+  - @pancakeswap/swap-sdk-core@1.3.0
+  - @pancakeswap/price-api-sdk@5.0.0
+  - @pancakeswap/stable-swap-sdk@1.1.4
+  - @pancakeswap/sdk@5.8.9
+  - @pancakeswap/token-lists@0.0.14
+  - @pancakeswap/utils@6.0.9
+  - @pancakeswap/v3-sdk@3.8.12
+  - @pancakeswap/tokens@0.6.28
+
+## 1.0.79
+
+### Patch Changes
+
+- @pancakeswap/price-api-sdk@4.0.3
+
+## 1.0.78
+
+### Patch Changes
+
+- @pancakeswap/price-api-sdk@4.0.2
+
+## 1.0.77
+
+### Patch Changes
+
+- Updated dependencies [8218dbf]
+  - @pancakeswap/tokens@0.6.27
+  - @pancakeswap/stable-swap-sdk@1.1.3
+  - @pancakeswap/price-api-sdk@4.0.1
+
+## 1.0.76
+
+### Patch Changes
+
+- 72fb1db: Listed new tokens & farms & gauges config
+- Updated dependencies [f3e8a77]
+- Updated dependencies [72fb1db]
+  - @pancakeswap/token-lists@0.0.13
+  - @pancakeswap/tokens@0.6.26
+  - @pancakeswap/stable-swap-sdk@1.1.2
+  - @pancakeswap/price-api-sdk@4.0.0
+
+## 1.0.75
+
+### Patch Changes
+
+- Updated dependencies [75c16bc]
+  - @pancakeswap/stable-swap-sdk@1.1.1
+  - @pancakeswap/price-api-sdk@3.0.2
+
+## 1.0.74
+
+### Patch Changes
+
+- 6d4ecf0: List farm, pool, gauges
+- Updated dependencies [206fc8d]
+- Updated dependencies [6d4ecf0]
+  - @pancakeswap/stable-swap-sdk@1.1.0
+  - @pancakeswap/tokens@0.6.25
+  - @pancakeswap/price-api-sdk@3.0.1
+
+## 1.0.73
+
+### Patch Changes
+
+- Updated dependencies [103dd63]
+- Updated dependencies [c6e9e02]
+  - @pancakeswap/tokens@0.6.24
+  - @pancakeswap/price-api-sdk@3.0.0
+
+## 1.0.72
+
+### Patch Changes
+
+- Updated dependencies [f551e5e]
+  - @pancakeswap/swap-sdk-core@1.2.0
+  - @pancakeswap/price-api-sdk@2.0.0
+  - @pancakeswap/sdk@5.8.8
+  - @pancakeswap/token-lists@0.0.12
+  - @pancakeswap/utils@6.0.9
+  - @pancakeswap/v3-sdk@3.8.11
+  - @pancakeswap/tokens@0.6.23
+
+## 1.0.71
+
+### Patch Changes
+
+- Updated dependencies [911d107]
+  - @pancakeswap/v3-sdk@3.8.10
+  - @pancakeswap/price-api-sdk@1.2.18
+
+## 1.0.70
+
+### Patch Changes
+
+- Updated dependencies [fe96bb1]
+  - @pancakeswap/v3-sdk@3.8.9
+  - @pancakeswap/price-api-sdk@1.2.17
+
+## 1.0.69
+
+### Patch Changes
+
+- 4628ab7: Add Subsquid (SQD) token and SQD-ETH farm on Arbitrum
+- Updated dependencies [4628ab7]
+- Updated dependencies [8f573cf]
+  - @pancakeswap/tokens@0.6.22
+  - @pancakeswap/price-api-sdk@1.2.16
+
 ## 1.0.68
 
 ### Patch Changes

@@ -107,7 +107,7 @@ export function ImportList({ listURL, listLogoURI, listName, listTokenLength, on
             </Flex>
           </Message>
 
-          <Button disabled={!confirmed} onClick={onAddList} style={{ color: "#000" }}>
+          <Button disabled={!confirmed} onClick={onAddList}>
             {t("Import")}
           </Button>
           {addError ? (

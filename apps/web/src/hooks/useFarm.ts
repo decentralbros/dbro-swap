@@ -1,12 +1,11 @@
-import { createFarmFetcherV3, ComputedFarmConfigV3, fetchTokenUSDValues } from '@pancakeswap/farms'
-import { farmsV3ConfigChainMap } from '@pancakeswap/farms/constants/v3'
+import { createFarmFetcherV3, fetchTokenUSDValues } from '@pancakeswap/farms'
 import { priceHelperTokens } from '@pancakeswap/farms/constants/common'
-import { Currency, ERC20Token } from '@pancakeswap/sdk'
+import { ChainId, Currency, ERC20Token } from '@pancakeswap/sdk'
 import { FeeAmount, Pool } from '@pancakeswap/v3-sdk'
-import { useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
-
 import { FAST_INTERVAL } from 'config/constants'
+import { useV3FarmAPI } from 'hooks/useV3FarmAPI'
+import { useMemo } from 'react'
 import { getViemClients } from 'utils/viem'
 
 const farmFetcherV3 = createFarmFetcherV3(getViemClients)
@@ -19,18 +18,20 @@ interface FarmParams {
 
 export function useFarm({ currencyA, currencyB, feeAmount }: FarmParams) {
   const chainId = currencyA?.chainId
+  const { farms } = useV3FarmAPI(chainId as ChainId)
+
   const farmConfig = useMemo(() => {
     if (!chainId || !currencyA || !currencyB || !feeAmount) {
       return null
     }
-    const farms: ComputedFarmConfigV3[] = farmsV3ConfigChainMap[chainId]
+
     if (!farms) {
       return null
     }
     const lpAddress = Pool.getAddress(currencyA.wrapped, currencyB.wrapped, feeAmount)
     const farm = farms.find((f) => f.lpAddress === lpAddress)
     return farm ?? null
-  }, [chainId, currencyA, currencyB, feeAmount])
+  }, [chainId, currencyA, currencyB, farms, feeAmount])
 
   return useQuery({
     queryKey: [chainId, farmConfig?.token0.symbol, farmConfig?.token1.symbol, farmConfig?.feeAmount],

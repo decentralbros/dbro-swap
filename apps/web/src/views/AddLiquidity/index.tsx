@@ -7,6 +7,7 @@ import { ReactElement, useCallback, useMemo, useState } from 'react'
 import { V2_ROUTER_ADDRESS } from 'config/constants/exchange'
 import { useIsTransactionUnsupported, useIsTransactionWarning } from 'hooks/Trades'
 import { useLPApr } from 'state/swap/useLPApr'
+import { logGTMAddLiquidityTxSentEvent, logGTMClickAddLiquidityConfirmEvent } from 'utils/customGTMEventTracking'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { isUserRejected, logError } from 'utils/sentry'
 import { transactionErrorToUserReadableMessage } from 'utils/transactionErrorToUserReadableMessage'
@@ -16,7 +17,7 @@ import { useWalletClient } from 'wagmi'
 import useAccountActiveChain from 'hooks/useAccountActiveChain'
 import { ApprovalState, useApproveCallback } from 'hooks/useApproveCallback'
 import { PairState } from 'hooks/usePairs'
-import { Field } from 'state/mint/actions'
+import { CurrencyField as Field } from 'utils/types'
 import { useDerivedMintInfo, useMintActionHandlers } from 'state/mint/hooks'
 
 import { SettingsMode } from 'components/Menu/GlobalSettings/types'
@@ -55,7 +56,7 @@ export interface LP2ChildrenProps {
   allowedSlippage: number
   pair?: Pair | null
   poolData?: {
-    lpApr7d: number
+    lpApr: number
   } | null
   shouldShowApprovalGroup: boolean
   showFieldAApproval: boolean
@@ -177,6 +178,7 @@ export default function AddLiquidity({
   const routerContract = useRouterContract()
 
   async function onAdd() {
+    logGTMClickAddLiquidityConfirmEvent()
     if (!chainId || !account || !routerContract || !walletClient) return
 
     const { [Field.CURRENCY_A]: parsedAmountA, [Field.CURRENCY_B]: parsedAmountB } = mintParsedAmounts
@@ -239,7 +241,7 @@ export default function AddLiquidity({
           gasPrice,
         }).then((response: Hash) => {
           setLiquidityState({ attemptingTxn: false, liquidityErrorMessage: undefined, txHash: response })
-
+          logGTMAddLiquidityTxSentEvent()
           const symbolA = currencies[Field.CURRENCY_A]?.symbol
           const amountA = parsedAmounts[Field.CURRENCY_A]?.toSignificant(3)
           const symbolB = currencies[Field.CURRENCY_B]?.symbol

@@ -1,4 +1,6 @@
-import { Currency } from '@pancakeswap/swap-sdk-core'
+import { Currency, TradeType } from '@pancakeswap/swap-sdk-core'
+
+import { logger } from './datadog'
 
 export const logTx = ({ account, hash, chainId }: { account: string; hash: string; chainId: number }) => {
   fetch(`/api/_log/${account}/${chainId}/${hash}`)
@@ -13,7 +15,9 @@ export const logSwap = ({
   account,
   hash,
   type,
+  tradeType,
 }: {
+  tradeType?: TradeType
   input: Currency
   output: Currency
   inputAmount?: string
@@ -21,10 +25,11 @@ export const logSwap = ({
   chainId: number
   account: `0x${string}`
   hash: `0x${string}`
-  type: 'V2Swap' | 'SmartSwap' | 'StableSwap' | 'MarketMakerSwap' | 'V3SmartSwap' | 'UniversalRouter'
+  type: 'V2Swap' | 'SmartSwap' | 'StableSwap' | 'MarketMakerSwap' | 'V3SmartSwap' | 'UniversalRouter' | 'X' | 'X-Filled'
 }) => {
   try {
-    console.info(type, {
+    logger.info(type, {
+      tradeType,
       inputAddress: input.isToken ? input.address.toLowerCase() : input.symbol,
       outputAddress: output.isToken ? output.address.toLowerCase() : output.symbol,
       inputAmount,

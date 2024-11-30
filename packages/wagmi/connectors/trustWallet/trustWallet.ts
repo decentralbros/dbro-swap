@@ -20,7 +20,11 @@ export function getTrustWalletProvider(): any | undefined {
     return trustWallet
   }
 
-  const injectedProviderExist = typeof window !== 'undefined' && typeof window.ethereum !== 'undefined'
+  const injectedProviderExist =
+    typeof window !== 'undefined' &&
+    window !== null &&
+    typeof window.ethereum !== 'undefined' &&
+    window.ethereum !== null
 
   // No injected providers exist.
   if (!injectedProviderExist) {
@@ -32,17 +36,23 @@ export function getTrustWalletProvider(): any | undefined {
     return window.ethereum
   }
 
-  // Trust Wallet provider might be replaced by another
-  // injected provider, check the providers array.
-  if (window.ethereum?.providers) {
-    return window.ethereum.providers.find(isTrustWallet)
+  let trustWalletProvider
+
+  if (window.ethereum?.providers?.length) {
+    // Trust Wallet provider might be replaced by another
+    // injected provider, check the providers array.
+    trustWalletProvider = window.ethereum.providers.find((provider: any) => provider && isTrustWallet(provider))
   }
 
-  // In some cases injected providers can replace window.ethereum
-  // without updating the providers array. In those instances the Trust Wallet
-  // can be installed and its provider instance can be retrieved by
-  // looking at the global `trustwallet` object.
-  return window.trustwallet
+  if (!trustWalletProvider) {
+    // In some cases injected providers can replace window.ethereum
+    // without updating the providers array. In those instances the Trust Wallet
+    // can be installed and its provider instance can be retrieved by
+    // looking at the global `trustwallet` object.
+    trustWalletProvider = window.trustwallet
+  }
+
+  return trustWalletProvider
 }
 
 trustWalletConnect.type = 'trustWalletConnect' as const

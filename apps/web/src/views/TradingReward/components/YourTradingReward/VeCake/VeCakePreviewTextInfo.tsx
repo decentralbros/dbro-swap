@@ -4,8 +4,8 @@ import { formatNumber, getBalanceAmount, getBalanceNumber } from '@pancakeswap/u
 import BigNumber from 'bignumber.js'
 import { GreyCard } from 'components/Card'
 import { useMemo } from 'react'
-import { useVeCakeUserCreditWithTime } from 'views/StakingDBRO/hooks/useVeCakeUserCreditWithTime'
-import { useCakeLockStatus } from 'views/StakingDBRO/hooks/useVeCakeUserInfo'
+import { useVeCakeUserCreditWithTime } from 'views/CakeStaking/hooks/useVeCakeUserCreditWithTime'
+import { useCakeLockStatus } from 'views/CakeStaking/hooks/useVeCakeUserInfo'
 import { NoLockingCakeModal } from 'views/TradingReward/components/YourTradingReward/VeCake/NoLockingCakeModal'
 import {
   VeCakeAddCakeOrWeeksModal,

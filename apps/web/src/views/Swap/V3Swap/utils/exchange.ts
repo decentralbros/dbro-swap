@@ -1,3 +1,4 @@
+import { OrderType } from '@pancakeswap/price-api-sdk'
 import {
   Currency,
   CurrencyAmount,
@@ -5,7 +6,6 @@ import {
   ONE_HUNDRED_PERCENT,
   Percent,
   Price,
-  Token,
   TradeType,
   ZERO,
 } from '@pancakeswap/sdk'
@@ -52,7 +52,7 @@ export function computeTradePriceBreakdown(trade?: TradeEssentialForPriceBreakdo
 
   const { routes, outputAmount, inputAmount } = trade
   let feePercent = new Percent(0)
-  let outputAmountWithoutPriceImpact = CurrencyAmount.fromRawAmount(trade.outputAmount.wrapped.currency, 0)
+  let outputAmountWithoutPriceImpact = CurrencyAmount.fromRawAmount(trade.outputAmount.currency, 0)
   for (const route of routes) {
     const { inputAmount: routeInputAmount, pools, percent } = route
     const routeFeePercent = ONE_HUNDRED_PERCENT.subtract(
@@ -76,7 +76,10 @@ export function computeTradePriceBreakdown(trade?: TradeEssentialForPriceBreakdo
 
     const midPrice = SmartRouter.getMidPrice(route)
     outputAmountWithoutPriceImpact = outputAmountWithoutPriceImpact.add(
-      midPrice.quote(routeInputAmount.wrapped) as CurrencyAmount<Token>,
+      CurrencyAmount.fromRawAmount(
+        trade.outputAmount.currency,
+        midPrice.wrapped.quote(routeInputAmount.wrapped).quotient,
+      ),
     )
   }
 
@@ -87,9 +90,7 @@ export function computeTradePriceBreakdown(trade?: TradeEssentialForPriceBreakdo
     }
   }
 
-  const priceImpactRaw = outputAmountWithoutPriceImpact
-    .subtract(outputAmount.wrapped)
-    .divide(outputAmountWithoutPriceImpact)
+  const priceImpactRaw = outputAmountWithoutPriceImpact.subtract(outputAmount).divide(outputAmountWithoutPriceImpact)
   const priceImpactPercent = new Percent(priceImpactRaw.numerator, priceImpactRaw.denominator)
   const priceImpactWithoutFee = priceImpactPercent.subtract(feePercent)
   const lpFeeAmount = inputAmount.multiply(feePercent)

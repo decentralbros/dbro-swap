@@ -83,7 +83,9 @@ export const STABLESWAP_SUBGRAPHS_URLS = {
 
 export const TRADING_REWARD_API = '/'
 
-export const QUOTING_API_PREFIX = `${process.env.NEXT_PUBLIC_QUOTING_API}/order-price`
+export const X_API_ENDPOINT = process.env.NEXT_PUBLIC_QUOTING_API
+
+export const QUOTING_API_PREFIX = `${X_API_ENDPOINT}/order-price`
 
 export const QUOTING_API = `${QUOTING_API_PREFIX}/get-price`
 

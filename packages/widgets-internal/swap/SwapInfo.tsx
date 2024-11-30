@@ -1,7 +1,7 @@
-import { useIsMounted } from "@pancakeswap/hooks";
 import { useTranslation } from "@pancakeswap/localization";
-import { AutoColumn, IconButton, PencilIcon, RowBetween, Text, TextProps } from "@pancakeswap/uikit";
+import { useIsMounted } from "@pancakeswap/hooks";
 import { PropsWithChildren, ReactNode } from "react";
+import { AutoColumn, RowBetween, Text, TextProps, IconButton, PencilIcon } from "@pancakeswap/uikit";
 
 type SwapInfoType = {
   price: ReactNode;
@@ -11,7 +11,7 @@ type SwapInfoType = {
 };
 
 export const SwapInfoLabel = (props: PropsWithChildren<TextProps>) => (
-  <Text fontSize="14px" bold color="secondary" {...props} />
+  <Text fontSize="12px" bold color="secondary" {...props} />
 );
 
 export const SwapInfo = ({ allowedSlippage, price, onSlippageClick, allowedSlippageSlot }: SwapInfoType) => {
@@ -32,15 +32,16 @@ export const SwapInfo = ({ allowedSlippage, price, onSlippageClick, allowedSlipp
                 onClick={onSlippageClick}
                 data-dd-action-name="Swap slippage button"
               >
-                <PencilIcon color="primary" width="14px" />
+                <PencilIcon color="primary" width="10px" />
               </IconButton>
             ) : null}
           </SwapInfoLabel>
-          {isMounted && (
-            <Text bold color="primary" fontSize="14px">
-              {allowedSlippage.toFixed(1)}%
-            </Text>
-          )}
+          {isMounted &&
+            (allowedSlippageSlot ?? (
+              <Text bold color="primary">
+                {allowedSlippage / 100}%
+              </Text>
+            ))}
         </RowBetween>
       )}
     </AutoColumn>

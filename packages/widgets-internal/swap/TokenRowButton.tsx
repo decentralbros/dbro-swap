@@ -26,7 +26,6 @@ export function TokenRowButton<T>({
   const { isMobile } = useMatchBreakpoints();
   return !isActive && !isAdded ? (
     <Button
-      style={{ color: "#000" }}
       scale={isMobile ? "sm" : "md"}
       width="fit-content"
       onClick={() => {

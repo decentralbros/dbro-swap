@@ -1,27 +1,29 @@
 import { Trans } from '@pancakeswap/localization'
-import { AtomBox, Heading, Image, Text } from '@pancakeswap/uikit'
-import { useCallback, useState } from 'react'
+import { AtomBox, Button, Heading, Image, LinkExternal, Text } from '@pancakeswap/uikit'
+import { useState, useCallback } from 'react'
 import 'swiper/css'
 import 'swiper/css/autoplay'
-import { Autoplay } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import type { Swiper as SwiperClass } from 'swiper/types'
+import { Autoplay } from 'swiper/modules'
 
 const IntroSteps = [
   {
     title: <Trans>Your first step in the DeFi world</Trans>,
-    icon: '/images/wallets/bolty.webp',
+    icon: 'https://cdn.pancakeswap.com/wallets/wallet_intro.png',
     description: (
-      <Trans>A Web3 Wallet allows you to send and receive crypto assets like ETH, NFTs, and much more.</Trans>
+      <Trans>
+        A Web3 Wallet allows you to send and receive crypto assets like bitcoin, BNB, ETH, NFTs and much more.
+      </Trans>
     ),
   },
   {
     title: <Trans>Login using a wallet connection</Trans>,
-    icon: '/images/wallets/world_lock.webp',
+    icon: 'https://cdn.pancakeswap.com/wallets/world_lock.png',
     description: (
       <Trans>
         Instead of setting up new accounts and passwords for every website, simply set up your wallet in one go, and
-        connect it to your favorite dApps.
+        connect it to your favorite DApps.
       </Trans>
     ),
   },
@@ -87,7 +89,7 @@ const StepIntro = ({ docLink, docText }: { docLink: string; docText: string }) =
             <Heading as="h2" color="secondary">
               {introStep.title}
             </Heading>
-            <Image mx="auto" my="24px" src={introStep.icon} width={198} height={178} />
+            <Image m="auto" src={introStep.icon} width={198} height={178} />
             <Text maxWidth="368px" m="auto" small color="textSubtle">
               {introStep.description}
             </Text>
@@ -98,9 +100,9 @@ const StepIntro = ({ docLink, docText }: { docLink: string; docText: string }) =
         <StepDot place="left" active={step === 0} onClick={handleStepClick(0)} />
         <StepDot place="right" active={step === 1} onClick={handleStepClick(1)} />
       </AtomBox>
-      {/* <Button minHeight={40} variant="subtle" external as={LinkExternal} color="backgroundAlt" href={docLink}>
+      <Button minHeight={40} variant="subtle" external as={LinkExternal} color="backgroundAlt" href={docLink}>
         {docText}
-      </Button> */}
+      </Button>
     </AtomBox>
   )
 }

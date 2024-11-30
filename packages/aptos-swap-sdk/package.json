@@ -1,7 +1,7 @@
 {
   "name": "@pancakeswap/aptos-swap-sdk",
   "license": "MIT",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "🛠 An SDK for building applications on top of Pancakeswap Aptos.",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -37,7 +37,7 @@
     "@aptos-labs/ts-sdk": "1.x"
   },
   "devDependencies": {
-    "@aptos-labs/ts-sdk": "1.12.2",
+    "@aptos-labs/ts-sdk": "catalog:",
     "@types/big.js": "^4.0.5",
     "tsup": "^6.7.0"
   },

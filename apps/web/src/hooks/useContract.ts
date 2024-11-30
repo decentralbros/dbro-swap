@@ -6,7 +6,7 @@ import { usePublicClient, useWalletClient } from 'wagmi'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 
 import addresses from 'config/constants/contracts'
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { getMulticallAddress, getPredictionsV1Address, getZapAddress } from 'utils/addressHelpers'
 import {
   getAffiliateProgramContract,
@@ -24,6 +24,7 @@ import {
   getChainlinkOracleContract,
   getContract,
   getCrossFarmingProxyContract,
+  getCrossFarmingVaultContract,
   getFarmAuctionContract,
   getFixedStakingContract,
   getGaugesVotingContract,
@@ -33,7 +34,6 @@ import {
   getMasterChefV3Contract,
   getNftMarketContract,
   getNftSaleContract,
-  getCrossFarmingVaultContract,
   getPancakeVeSenderV2Contract,
   getPointCenterIfoContract,
   getPositionManagerAdapterContract,
@@ -67,7 +67,7 @@ import {
 } from 'utils/contractHelpers'
 
 import { ChainId } from '@pancakeswap/chains'
-import { ifoV7ABI } from '@pancakeswap/ifos'
+import { ifoV7ABI, ifoV8ABI } from '@pancakeswap/ifos'
 import { WNATIVE, pancakePairV2ABI } from '@pancakeswap/sdk'
 import { CAKE } from '@pancakeswap/tokens'
 import { nonfungiblePositionManagerABI } from '@pancakeswap/v3-sdk'
@@ -105,6 +105,10 @@ export const useIfoV7Contract = (address: Address, options?: UseContractOptions)
   return useContract(address, ifoV7ABI, options)
 }
 
+export const useIfoV8Contract = (address: Address, options?: UseContractOptions) => {
+  return useContract(address, ifoV8ABI, options)
+}
+
 export const useERC20 = (address?: Address, options?: UseContractOptions) => {
   return useContract(address, erc20Abi, options)
 }
@@ -140,16 +144,25 @@ export const useSousChef = (id) => {
   const { data: signer } = useWalletClient()
   const { chainId } = useActiveChainId()
   const publicClient = usePublicClient({ chainId })
-  return useMemo(
-    () =>
-      getPoolContractBySousId({
+  const [contract, setContract] = useState(null)
+
+  useEffect(() => {
+    if (!signer || !chainId || !publicClient || !id) return
+
+    const fetchContract = async () => {
+      const poolContract = await getPoolContractBySousId({
         sousId: id,
         signer,
         chainId,
         publicClient,
-      }),
-    [id, signer, chainId, publicClient],
-  )
+      })
+      setContract(poolContract)
+    }
+
+    fetchContract()
+  }, [id, signer, chainId, publicClient])
+
+  return contract
 }
 
 export const usePointCenterIfoContract = () => {
@@ -397,7 +410,7 @@ export function useBCakeFarmBoosterProxyFactoryContract() {
   return useMemo(() => getBCakeFarmBoosterProxyFactoryContract(signer ?? undefined), [signer])
 }
 
-export function useBCakeProxyContract(proxyContractAddress: Address) {
+export function useBCakeProxyContract(proxyContractAddress: Address | undefined) {
   const { data: signer } = useWalletClient()
   return useMemo(
     () => proxyContractAddress && getBCakeProxyContract(proxyContractAddress, signer ?? undefined),
@@ -440,6 +453,11 @@ export function useV3NFTPositionManagerContract() {
 
 export function useMasterchefV3() {
   const { chainId } = useActiveChainId()
+  const { data: signer } = useWalletClient()
+  return useMemo(() => getMasterChefV3Contract(signer ?? undefined, chainId), [signer, chainId])
+}
+
+export function useMasterchefV3ByChain(chainId: ChainId) {
   const { data: signer } = useWalletClient()
   return useMemo(() => getMasterChefV3Contract(signer ?? undefined, chainId), [signer, chainId])
 }

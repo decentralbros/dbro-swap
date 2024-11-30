@@ -2,8 +2,8 @@ import { useTranslation } from '@pancakeswap/localization'
 import { ArrowUpDownIcon, Box, Flex, InjectedModalProps, Modal, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import React, { useEffect, useState } from 'react'
 import { styled } from 'styled-components'
-import { LockCakeForm } from 'views/StakingDBRO/components/LockCakeForm'
-import { LockWeeksForm } from 'views/StakingDBRO/components/LockWeeksForm'
+import { LockCakeForm } from 'views/CakeStaking/components/LockCakeForm'
+import { LockWeeksForm } from 'views/CakeStaking/components/LockWeeksForm'
 import { PreviewOfVeCakeSnapShotTime } from 'views/TradingReward/components/YourTradingReward/VeCake/PreviewOfVeCakeSnapShotTime'
 
 const StyledSwitchTextContainer = styled(Flex)`
@@ -66,7 +66,7 @@ export const VeCakeAddCakeOrWeeksModal: React.FC<React.PropsWithChildren<VeCakeA
 
   return (
     <Modal
-      title="Increase your veCAKE"
+      title={t('Increase your veCAKE')}
       headerBorderColor="transparent"
       maxWidth={['100%', '100%', '100%', '500px']}
       onDismiss={onDismiss}

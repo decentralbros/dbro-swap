@@ -5,7 +5,7 @@ import { swapReducerAtom } from 'state/swap/reducer'
 import { Field, selectCurrency, switchCurrencies, typeInput, setRecipient } from './actions'
 
 export function useSwapActionHandlers(): {
-  onCurrencySelection: (field: Field, currency: Currency) => void
+  onCurrencySelection: (field: Field, currency?: Currency) => void
   onSwitchTokens: () => void
   onUserInput: (field: Field, typedValue: string) => void
   onChangeRecipient: (recipient: string | null) => void
@@ -17,7 +17,7 @@ export function useSwapActionHandlers(): {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const onCurrencySelection = useCallback((field: Field, currency: Currency) => {
+  const onCurrencySelection = useCallback((field: Field, currency?: Currency) => {
     dispatch(
       selectCurrency({
         field,

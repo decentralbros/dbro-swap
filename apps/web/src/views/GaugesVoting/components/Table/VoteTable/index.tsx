@@ -18,7 +18,7 @@ import NextLink from 'next/link'
 import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { Hex } from 'viem'
-import { useCakeLockStatus } from 'views/StakingDBRO/hooks/useVeCakeUserInfo'
+import { useCakeLockStatus } from 'views/CakeStaking/hooks/useVeCakeUserInfo'
 import { useEpochOnTally } from 'views/GaugesVoting/hooks/useEpochTime'
 import { useEpochVotePower } from 'views/GaugesVoting/hooks/useEpochVotePower'
 import { useGauges } from 'views/GaugesVoting/hooks/useGauges'
@@ -141,7 +141,7 @@ export const VoteTable = () => {
         if (vote && !vote?.locked) {
           const row = gauges?.find((r) => r.hash === slope.hash)
           if (!row) return undefined
-          const currentPower = BigInt((Number(vote.power) * 100).toFixed(0))
+          const currentPower = Number(vote.power) ? BigInt((Number(vote.power) * 100).toFixed(0)) : 0n
           const { nativePower = 0, proxyPower = 0, nativeEnd, proxyEnd } = slope || {}
           // ignore vote if current power is 0 and never voted
           if (currentPower === 0n && nativePower === 0 && proxyPower === 0 && !nativeEnd && !proxyEnd) return undefined

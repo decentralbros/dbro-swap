@@ -30,7 +30,6 @@ export const testnetChainIds = [
   ChainId.ARBITRUM_GOERLI,
   ChainId.SCROLL_SEPOLIA,
   ChainId.LINEA_TESTNET,
-  ChainId.BASE_SEPOLIA,
   ChainId.BASE_TESTNET,
   ChainId.SEPOLIA,
   ChainId.ARBITRUM_SEPOLIA,

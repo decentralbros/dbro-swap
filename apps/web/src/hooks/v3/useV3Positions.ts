@@ -1,4 +1,4 @@
-import { PositionDetails } from '@pancakeswap/farms'
+import { PositionDetails, Protocol } from '@pancakeswap/farms'
 import { masterChefV3ABI } from '@pancakeswap/v3-sdk'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useMasterchefV3, useV3NFTPositionManagerContract } from 'hooks/useContract'
@@ -143,7 +143,7 @@ export function useV3TokenIdsByAccount(
 
   const {
     isLoading: someTokenIdsLoading,
-    data: tokenIds = [],
+    data: tokenIds,
     refetch: refetchTokenIds,
   } = useReadContracts({
     contracts: tokenIdsArgs,
@@ -157,14 +157,14 @@ export function useV3TokenIdsByAccount(
   // check if we can remove this effect when we upgrade to the latest version of wagmi
   useEffect(() => {
     if (account) {
-      refetchBalance()
-      refetchTokenIds()
+      refetchBalance({ cancelRefetch: false })
+      refetchTokenIds({ cancelRefetch: false })
     }
   }, [account, refetchBalance, refetchTokenIds])
 
   return {
     tokenIds: useMemo(
-      () => tokenIds.map((r) => (r.status === 'success' ? r.result : null)).filter(Boolean) as bigint[],
+      () => (tokenIds?.map((r) => (r.status === 'success' ? r.result : null)).filter(Boolean) as bigint[]) ?? [],
       [tokenIds],
     ),
     loading: someTokenIdsLoading || balanceLoading,
@@ -189,6 +189,7 @@ export function useV3Positions(account: Address | null | undefined): UseV3Positi
       positions: positions?.map((position) => ({
         ...position,
         isStaked: Boolean(stakedTokenIds?.find((s) => s === position.tokenId)),
+        protocol: Protocol.V3,
       })),
     }),
     [positions, positionsLoading, stakedTokenIds, tokenIdsLoading],

@@ -43,7 +43,7 @@ export const SEO: DefaultSeoProps = {
     },
     {
       name: 'theme-color',
-      content: '#1bf696', // Replace with your brand color
+      content: '#1bf696',
     },
   ],
 

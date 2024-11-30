@@ -1,5 +1,3 @@
-import { ChainId } from '@pancakeswap/chains'
-import { farmsV3ConfigChainMap } from '@pancakeswap/farms/constants/v3'
 import { useTranslation } from '@pancakeswap/localization'
 import { Currency } from '@pancakeswap/sdk'
 import { AtomBox, AutoColumn, Button, CircleLoader, Text } from '@pancakeswap/uikit'
@@ -7,6 +5,7 @@ import tryParseAmount from '@pancakeswap/utils/tryParseAmount'
 import { FeeAmount } from '@pancakeswap/v3-sdk'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { PairState, useV2Pair } from 'hooks/usePairs'
+import { useV3FarmAPI } from 'hooks/useV3FarmAPI'
 import { PoolState } from 'hooks/v3/types'
 import { useFeeTierDistribution } from 'hooks/v3/useFeeTierDistribution'
 import { usePools } from 'hooks/v3/usePools'
@@ -37,7 +36,7 @@ export default function FeeSelector({
 }) {
   const { t } = useTranslation()
   const { chainId } = useActiveChainId()
-  const farmV3Config = farmsV3ConfigChainMap[currencyA?.chainId as ChainId]
+  const { farms: farmV3Config } = useV3FarmAPI(chainId)
 
   const farmV3 = useMemo(() => {
     if (currencyA && currencyB) {

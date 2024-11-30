@@ -116,7 +116,7 @@ export const CakeInput: React.FC<{
         amount = (Number(dbroBalance) * (percent / 100)).toFixed(0)
       }
 
-      const tx = await writeContract(config, {
+      const tx = await writeContract(config as any, {
         address: contractDBRO.address as `0x${string}`,
         abi: contractDBRO.abi,
         functionName: 'approve',
@@ -124,13 +124,13 @@ export const CakeInput: React.FC<{
         chainId,
       })
 
-      await waitForTransactionReceipt(config, {
+      await waitForTransactionReceipt(config as any, {
         confirmations: 4,
         hash: tx,
         chainId,
       })
 
-      const hash = await writeContract(config, {
+      const hash = await writeContract(config as any, {
         address: contractConfig.address as `0x${string}`,
         abi: contractConfig.abi,
         functionName: 'stake',
@@ -138,7 +138,7 @@ export const CakeInput: React.FC<{
         chainId,
       })
 
-      await waitForTransactionReceipt(config, {
+      await waitForTransactionReceipt(config as any, {
         confirmations: 2,
         hash,
         chainId,
@@ -174,7 +174,7 @@ export const CakeInput: React.FC<{
     try {
       setIsUnstaking(true)
 
-      const hash = await writeContract(config, {
+      const hash = await writeContract(config as any, {
         address: contractConfig.address as `0x${string}`,
         abi: contractConfig.abi,
         functionName: 'unstake',
@@ -182,7 +182,7 @@ export const CakeInput: React.FC<{
         chainId,
       })
 
-      await waitForTransactionReceipt(config, {
+      await waitForTransactionReceipt(config as any, {
         confirmations: 2,
         hash,
         chainId,
@@ -205,7 +205,7 @@ export const CakeInput: React.FC<{
     try {
       setIsClaiming(true)
 
-      const hash = await writeContract(config, {
+      const hash = await writeContract(config as any, {
         address: contractConfig.address as `0x${string}`,
         abi: contractConfig.abi,
         functionName: 'claimReward',
@@ -213,7 +213,7 @@ export const CakeInput: React.FC<{
         chainId,
       })
 
-      await waitForTransactionReceipt(config, {
+      await waitForTransactionReceipt(config as any, {
         confirmations: 2,
         hash,
         chainId,

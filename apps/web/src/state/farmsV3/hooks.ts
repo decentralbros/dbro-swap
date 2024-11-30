@@ -6,13 +6,16 @@ import {
   FarmsV3Response,
   IPendingCakeByTokenId,
   PositionDetails,
+  Protocol,
   SerializedFarmsV3Response,
+  UniversalFarmConfigV3,
   bCakeSupportedChainId,
   createFarmFetcherV3,
+  defineFarmV3ConfigsFromUniversalFarm,
+  fetchUniversalFarms,
   supportedChainIdV3,
 } from '@pancakeswap/farms'
 import { priceHelperTokens } from '@pancakeswap/farms/constants/common'
-import { farmsV3ConfigChainMap } from '@pancakeswap/farms/constants/v3'
 import { bCakeFarmBoosterVeCakeABI } from '@pancakeswap/farms/constants/v3/abi/bCakeFarmBoosterVeCake'
 import { TvlMap, fetchCommonTokenUSDValue } from '@pancakeswap/farms/src/fetchFarmsV3'
 import { deserializeToken } from '@pancakeswap/token-lists'
@@ -24,7 +27,12 @@ import { useCakePrice } from 'hooks/useCakePrice'
 
 import { masterChefV3ABI } from '@pancakeswap/v3-sdk'
 import BN from 'bignumber.js'
-import { useBCakeFarmBoosterVeCakeContract, useMasterchefV3, useV3NFTPositionManagerContract } from 'hooks/useContract'
+import {
+  useBCakeFarmBoosterVeCakeContract,
+  useMasterchefV3,
+  useMasterchefV3ByChain,
+  useV3NFTPositionManagerContract,
+} from 'hooks/useContract'
 import { useV3PositionsFromTokenIds, useV3TokenIdsByAccount } from 'hooks/v3/useV3Positions'
 import toLower from 'lodash/toLower'
 import { useMemo } from 'react'
@@ -78,8 +86,8 @@ export const useFarmsV3Public = () => {
       }
 
       // direct copy from api routes, the client side fetch is preventing cache due to migration phase we want fresh data
-      const farms = farmsV3ConfigChainMap[chainId as ChainId]
-
+      const fetchFarmsV3 = await fetchUniversalFarms(chainId, Protocol.V3)
+      const farms = defineFarmV3ConfigsFromUniversalFarm(fetchFarmsV3 as UniversalFarmConfigV3[])
       const commonPrice = await fetchCommonTokenUSDValue(priceHelperTokens[chainId ?? -1])
 
       try {
@@ -198,10 +206,11 @@ export const useFarmsV3 = ({ mockApr = false, boosterLiquidityX = {} }: UseFarms
 
 const zkSyncChains = [ChainId.ZKSYNC_TESTNET, ChainId.ZKSYNC]
 
-export const useStakedPositionsByUser = (stakedTokenIds: bigint[]) => {
+export const useStakedPositionsByUser = (stakedTokenIds: bigint[], _chainId?: number) => {
   const { address: account } = useAccount()
-  const { chainId } = useActiveChainId()
-  const masterchefV3 = useMasterchefV3()
+  const { chainId: activeChainId } = useActiveChainId()
+  const chainId = _chainId ?? activeChainId
+  const masterchefV3 = useMasterchefV3ByChain(chainId)
 
   const harvestCalls = useMemo(() => {
     if (!masterchefV3?.abi || !account || !supportedChainIdV3.includes(chainId ?? -1)) return []
@@ -225,6 +234,7 @@ export const useStakedPositionsByUser = (stakedTokenIds: bigint[]) => {
         )
       }
     }
+
     return callData
   }, [account, masterchefV3?.abi, stakedTokenIds, chainId])
 
@@ -248,8 +258,7 @@ export const useStakedPositionsByUser = (stakedTokenIds: bigint[]) => {
           })
       })
     },
-
-    enabled: Boolean(account),
+    enabled: Boolean(account && chainId),
     placeholderData: keepPreviousData,
   })
 

@@ -7,20 +7,21 @@ import { useStableSwapNativeHelperContract } from 'hooks/useContract'
 import { PairState } from 'hooks/usePairs'
 import { useStableSwapAPR } from 'hooks/useStableSwapAPR'
 import { Dispatch, ReactElement, SetStateAction, useCallback, useContext, useMemo, useState } from 'react'
+import { logGTMAddLiquidityTxSentEvent, logGTMClickAddLiquidityConfirmEvent } from 'utils/customGTMEventTracking'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { isUserRejected, logError } from 'utils/sentry'
 import { transactionErrorToUserReadableMessage } from 'utils/transactionErrorToUserReadableMessage'
 import { StableConfigContext } from 'views/Swap/hooks/useStableConfig'
 
 import { ApprovalState, useApproveCallback } from 'hooks/useApproveCallback'
-import { Field } from 'state/mint/actions'
+import { CurrencyField as Field } from 'utils/types'
 import { useMintActionHandlers } from 'state/mint/hooks'
 
 import useAccountActiveChain from 'hooks/useAccountActiveChain'
 import { useAddLiquidityV2FormState } from 'state/mint/reducer'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { useGasPrice } from 'state/user/hooks'
-import { calculateGasMargin } from 'utils'
+import { calculateGasMargin, isAddressEqual } from 'utils'
 import { calculateSlippageAmount } from 'utils/exchange'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
 import { Address } from 'viem'
@@ -184,6 +185,7 @@ export default function AddStableLiquidity({
   const addTransaction = useTransactionAdder()
 
   async function onAdd() {
+    logGTMClickAddLiquidityConfirmEvent()
     const contract = needWrapped ? nativeHelperContract : stableSwapContract
 
     if (!chainId || !account || !contract) return
@@ -204,10 +206,12 @@ export default function AddStableLiquidity({
     const quotientB = parsedAmountB?.quotient || 0n
 
     // Ensure the token order [token0, token1]
-    const tokenAmounts =
-      stableSwapConfig?.token0?.wrapped.address === parsedAmountA?.currency?.wrapped?.address
-        ? ([quotientA, quotientB] as const)
-        : ([quotientB, quotientA] as const)
+    const tokenAmounts = isAddressEqual(
+      stableSwapConfig?.token0?.wrapped.address,
+      parsedAmountA?.currency?.wrapped?.address,
+    )
+      ? ([quotientA, quotientB] as const)
+      : ([quotientB, quotientA] as const)
 
     let args_
 
@@ -267,7 +271,7 @@ export default function AddStableLiquidity({
     await call
       .then((response) => {
         setLiquidityState({ attemptingTxn: false, liquidityErrorMessage: undefined, txHash: response })
-
+        logGTMAddLiquidityTxSentEvent()
         const symbolA = currencies[Field.CURRENCY_A]?.symbol
         const amountA = parsedAmounts[Field.CURRENCY_A]?.toSignificant(3) || '0'
         const symbolB = currencies[Field.CURRENCY_B]?.symbol

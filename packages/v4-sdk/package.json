@@ -1,18 +1,17 @@
 {
   "name": "@pancakeswap/v4-sdk",
   "license": "MIT",
-  "private": true,
   "publishConfig": {
     "access": "public"
   },
-  "version": "0.1.0",
+  "version": "0.1.5",
   "description": "⚒️ An SDK for building applications on top of Pancakeswap V4",
   "files": [
     "dist"
   ],
   "keywords": [
     "pancakeswap",
-    "bsc"
+    "v4"
   ],
   "sideEffects": false,
   "main": "dist/index.js",

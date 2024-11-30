@@ -15,9 +15,9 @@ export function MerklTag({ poolAddress }: { poolAddress: string | null }) {
   )
 }
 
-export function MerklRewardsTag({ poolAddress }: { poolAddress: string | null }) {
+export function MerklRewardsTag({ poolAddress }: { poolAddress: string | null | `0x${string}` | undefined }) {
   const { t } = useTranslation()
-  const { hasMerkl } = useMerklInfo(poolAddress)
+  const { hasMerkl } = useMerklInfo(poolAddress as string)
 
   if (!hasMerkl) return null
 

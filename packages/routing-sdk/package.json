@@ -1,6 +1,6 @@
 {
   "name": "@pancakeswap/routing-sdk",
-  "version": "0.0.6",
+  "version": "0.2.2",
   "description": "An SDK for AMM routing",
   "repository": {
     "type": "git",
@@ -29,10 +29,12 @@
     "@pancakeswap/swap-sdk-evm": "workspace:*",
     "debug": "^4.3.4",
     "lodash": "^4.17.21",
-    "tiny-invariant": "^1.3.0"
+    "tiny-invariant": "^1.3.0",
+    "zod": "^3.22.3"
   },
   "devDependencies": {
     "@pancakeswap/tsconfig": "workspace:*",
+    "@pancakeswap/utils": "workspace:*",
     "@types/debug": "^4.1.7",
     "@types/lodash": "^4.14.168",
     "tsup": "^6.7.0"

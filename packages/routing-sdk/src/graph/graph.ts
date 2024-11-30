@@ -2,19 +2,15 @@ import { Currency } from '@pancakeswap/swap-sdk-core'
 import memoize from 'lodash/memoize.js'
 import invariant from 'tiny-invariant'
 
-import { Address, Pool, Edge, Vertice, Graph } from '../types'
-import { getNeighbour } from './edge'
+import { Pool, Edge, Vertice, Graph } from '../types'
+import { getEdgeKey, getNeighbour } from './edge'
+import { getVerticeKey, getWrappedCurrencyKey } from './vertice'
 
 type GraphParams = {
   pools?: Pool[]
 
   // If graph is provided, will clone it without creating new graph from pools
   graph?: Graph
-}
-
-function getEdgeKey(p: Pool, vertA: Vertice, vertB: Vertice): string {
-  const [vert0, vert1] = vertA.currency.wrapped.sortsBefore(vertB.currency.wrapped) ? [vertA, vertB] : [vertB, vertA]
-  return `${vert0.currency.chainId}-${vert0.currency.wrapped.address}-${vert1.currency.wrapped.address}-${p.getId()}`
 }
 
 function cloneGraph(graph: Graph): Graph {
@@ -31,7 +27,7 @@ export function createGraph({ pools, graph }: GraphParams): Graph {
     throw new Error('[Create graph]: Invalid pools')
   }
 
-  const verticeMap = new Map<Address, Vertice>()
+  const verticeMap = new Map<string, Vertice>()
   const edgeMap = new Map<string, Edge>()
 
   for (const p of pools) {
@@ -46,7 +42,7 @@ export function createGraph({ pools, graph }: GraphParams): Graph {
   }
 
   function getVertice(c: Currency): Vertice | undefined {
-    return verticeMap.get(c.wrapped.address)
+    return verticeMap.get(getWrappedCurrencyKey(c))
   }
 
   function getEdge(p: Pool, vert0: Vertice, vert1: Vertice): Edge | undefined {
@@ -58,8 +54,8 @@ export function createGraph({ pools, graph }: GraphParams): Graph {
     if (vert) {
       return vert
     }
-    const vertice: Vertice = { currency: c, edges: [] }
-    verticeMap.set(c.wrapped.address, vertice)
+    const vertice: Vertice = { currency: c.wrapped, edges: [] }
+    verticeMap.set(getWrappedCurrencyKey(c), vertice)
     return vertice
   }
 
@@ -101,7 +97,7 @@ export function createGraph({ pools, graph }: GraphParams): Graph {
       }
       return false
     },
-    (v1, v2, hops) => `${v1.currency.chainId}-${v1.currency.wrapped.address}-${v2.currency.wrapped.address}-${hops}`,
+    (v1, v2, hops) => `${getVerticeKey(v1)}-${getVerticeKey(v2)}-${hops}`,
   )
 
   return {
@@ -135,7 +131,7 @@ export function createGraph({ pools, graph }: GraphParams): Graph {
         )
         const edge = getEdge(p, vertA, vertB)
         invariant(edge !== undefined, '[Apply swap]: No valid edge found')
-        const quoteCurrency = quote.currency.wrapped.equals(vertA.currency.wrapped) ? vertA.currency : vertB.currency
+        const quoteCurrency = quote.currency.wrapped.equals(vertA.currency.wrapped) ? vertB.currency : vertA.currency
         // eslint-disable-next-line no-await-in-loop
         const quoteResult = edge.pool.getQuote({
           amount: quote,

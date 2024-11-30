@@ -1,5 +1,34 @@
 # @pancakeswap/pcsx-sdk
 
+## 1.0.1
+
+### Patch Changes
+
+- Updated dependencies [176eb10]
+- Updated dependencies [176eb10]
+  - @pancakeswap/swap-sdk-core@1.3.0
+  - @pancakeswap/permit2-sdk@1.0.11
+
+## 1.0.0
+
+### Major Changes
+
+- c227943: add eth reactor
+
+## 0.0.13
+
+### Patch Changes
+
+- 6418fde: update address
+
+## 0.0.12
+
+### Patch Changes
+
+- Updated dependencies [f551e5e]
+  - @pancakeswap/swap-sdk-core@1.2.0
+  - @pancakeswap/permit2-sdk@1.0.10
+
 ## 0.0.11
 
 ### Patch Changes

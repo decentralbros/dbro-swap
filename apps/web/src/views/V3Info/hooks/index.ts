@@ -9,7 +9,7 @@ import { getDeltaTimestamps } from 'utils/getDeltaTimestamps'
 import { v3InfoClients } from 'utils/graphql'
 import { useBlocksFromTimestamps } from 'views/Info/hooks/useBlocksFromTimestamps'
 
-import { useQuery } from '@tanstack/react-query'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { chainIdToExplorerInfoChainName, explorerApiClient } from 'state/info/api/client'
 import { useExplorerChainNameByQuery } from 'state/info/api/hooks'
 import { components } from 'state/info/api/schema'
@@ -38,11 +38,11 @@ import {
   TokenData,
   Transaction,
 } from '../types'
+import { transformPoolData } from '../utils'
 
 const QUERY_SETTINGS_IMMUTABLE = {
-  retry: 3,
   retryDelay: 3000,
-  keepPreviousData: true,
+  placeholderData: keepPreviousData,
   refetchOnMount: false,
   refetchOnReconnect: false,
   refetchOnWindowFocus: false,
@@ -327,27 +327,10 @@ export async function fetchTopPools(chainName: components['schemas']['ChainName'
     return {
       data: data.reduce(
         (acc, item) => {
-          // eslint-disable-next-line no-param-reassign
-          acc[item.id] = {
-            ...item,
-            address: item.id,
-            volumeUSD: parseFloat(item.volumeUSD24h),
-            volumeUSDWeek: parseFloat(item.volumeUSD7d),
-            token0: { ...item.token0, address: item.token0.id, derivedETH: 0 },
-            token1: { ...item.token1, address: item.token1.id, derivedETH: 0 },
-            feeUSD: item.totalFeeUSD,
-            liquidity: parseFloat(item.liquidity),
-            sqrtPrice: parseFloat(item.sqrtPrice),
-            tick: item.tick ?? 0,
-            tvlUSD: parseFloat(item.tvlUSD),
-            token0Price: parseFloat(item.token0Price),
-            token1Price: parseFloat(item.token1Price),
-            tvlToken0: parseFloat(item.tvlToken0),
-            tvlToken1: parseFloat(item.tvlToken1),
-            volumeUSDChange: 0,
-            tvlUSDChange: 0,
+          return {
+            ...acc,
+            [item.id]: transformPoolData(item),
           }
-          return acc
         },
         {} as {
           [address: string]: PoolData
@@ -416,14 +399,14 @@ export const usePoolData = (address: string): PoolData | undefined => {
   })
   return data?.data
 }
-export const usePoolTransactions = (address: string): Transaction[] | undefined => {
+export const usePoolTransactions = (address?: string): Transaction[] | undefined => {
   const chainName = useChainNameByQuery()
   const chainId = multiChainId[chainName]
   const explorerChainName = useExplorerChainNameByQuery()
 
   const { data } = useQuery({
     queryKey: [`v3/info/pool/poolTransaction/${chainId}/${address}`, chainId],
-    queryFn: ({ signal }) => fetchPoolTransactions(address, explorerChainName!, signal),
+    queryFn: ({ signal }) => fetchPoolTransactions(address!, explorerChainName!, signal),
     enabled: Boolean(explorerChainName && address && address !== 'undefined'),
     ...QUERY_SETTINGS_IMMUTABLE,
   })
@@ -444,14 +427,14 @@ export const usePoolChartData = (address: string): PoolChartEntry[] | undefined 
   return data?.data
 }
 
-export const usePoolTickData = (address: string): PoolTickData | undefined => {
+export const usePoolTickData = (address?: string): PoolTickData | undefined => {
   const chainName = useChainNameByQuery()
   const chainId = multiChainId[chainName]
   const explorerChainName = useExplorerChainNameByQuery()
 
   const { data } = useQuery({
     queryKey: [`v3/info/pool/poolTickData/${chainId}/${address}`, chainId],
-    queryFn: ({ signal }) => fetchTicksSurroundingPrice(address, explorerChainName!, chainId, undefined, signal),
+    queryFn: ({ signal }) => fetchTicksSurroundingPrice(address!, explorerChainName!, chainId, undefined, signal),
     enabled: Boolean(explorerChainName && address && address !== 'undefined'),
     ...QUERY_SETTINGS_IMMUTABLE,
   })

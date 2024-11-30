@@ -24,10 +24,9 @@ import { FC, useContext, useMemo } from 'react'
 import { type V3Farm } from 'state/farms/types'
 import { ChainLinkSupportChains, multiChainPaths } from 'state/info/constant'
 import { css, keyframes, styled } from 'styled-components'
-import { getBlockExploreLink } from 'utils'
+import { getBlockExploreLink, isAddressEqual } from 'utils'
 import { useMerklUserLink } from 'utils/getMerklLink'
 import { unwrappedToken } from 'utils/wrappedCurrency'
-import { isAddressEqual } from 'viem'
 import { AddLiquidityV3Modal } from 'views/AddLiquidityV3/Modal'
 import { SELECTOR_TYPE } from 'views/AddLiquidityV3/types'
 import { V2Farm } from 'views/Farms/FarmsV3'
@@ -254,7 +253,7 @@ export const ActionPanelV3: FC<ActionPanelV3Props> = ({
   )
 
   const addLiquidityModal = useModalV2()
-  const { merklApr } = useMerklInfo(merklLink ? details.lpAddress : null)
+  const { merklApr } = useMerklInfo(merklLink ? (details.lpAddress as string) : null)
 
   return (
     <>

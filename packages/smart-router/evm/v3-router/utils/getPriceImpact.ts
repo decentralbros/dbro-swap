@@ -8,13 +8,15 @@ export function getPriceImpact(
     routes: Pick<Route, 'path' | 'pools'>[]
   },
 ): Percent {
-  let spotOutputAmount = CurrencyAmount.fromRawAmount(trade.outputAmount.currency.wrapped, 0)
+  let spotOutputAmount = CurrencyAmount.fromRawAmount(trade.outputAmount.currency, 0)
   for (const route of trade.routes) {
     const { inputAmount } = route
     // FIXME typing
     const midPrice: any = getMidPrice(route)
-    spotOutputAmount = spotOutputAmount.add(midPrice.quote(inputAmount.wrapped))
+    spotOutputAmount = spotOutputAmount.add(
+      CurrencyAmount.fromRawAmount(trade.outputAmount.currency, midPrice.wrapped.quote(inputAmount.wrapped).quotient),
+    )
   }
-  const priceImpact = spotOutputAmount.subtract(trade.outputAmount.wrapped).divide(spotOutputAmount)
+  const priceImpact = spotOutputAmount.subtract(trade.outputAmount).divide(spotOutputAmount)
   return new Percent(priceImpact.numerator, priceImpact.denominator)
 }

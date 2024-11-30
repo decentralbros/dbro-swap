@@ -1,5 +1,153 @@
 # @pancakeswap/widgets-internal
 
+## 0.3.14
+
+### Patch Changes
+
+- @pancakeswap/farms@1.0.81
+
+## 0.3.13
+
+### Patch Changes
+
+- Updated dependencies [176eb10]
+- Updated dependencies [176eb10]
+  - @pancakeswap/swap-sdk-core@1.3.0
+  - @pancakeswap/farms@1.0.80
+  - @pancakeswap/hooks@0.0.33
+  - @pancakeswap/sdk@5.8.9
+  - @pancakeswap/utils@6.0.9
+  - @pancakeswap/v3-sdk@3.8.12
+  - @pancakeswap/uikit@0.67.3
+  - @pancakeswap/tokens@0.6.28
+  - @pancakeswap/pools@5.1.35
+
+## 0.3.12
+
+### Patch Changes
+
+- Updated dependencies [a0e17e0]
+  - @pancakeswap/uikit@0.67.2
+
+## 0.3.11
+
+### Patch Changes
+
+- @pancakeswap/farms@1.0.79
+
+## 0.3.10
+
+### Patch Changes
+
+- @pancakeswap/farms@1.0.78
+
+## 0.3.9
+
+### Patch Changes
+
+- Updated dependencies [8218dbf]
+  - @pancakeswap/tokens@0.6.27
+  - @pancakeswap/farms@1.0.77
+  - @pancakeswap/pools@5.1.34
+
+## 0.3.8
+
+### Patch Changes
+
+- Updated dependencies [72fb1db]
+  - @pancakeswap/tokens@0.6.26
+  - @pancakeswap/farms@1.0.76
+  - @pancakeswap/pools@5.1.33
+
+## 0.3.7
+
+### Patch Changes
+
+- @pancakeswap/farms@1.0.75
+
+## 0.3.6
+
+### Patch Changes
+
+- Updated dependencies [b0d3ac4]
+- Updated dependencies [6d4ecf0]
+  - @pancakeswap/pools@5.1.32
+  - @pancakeswap/tokens@0.6.25
+  - @pancakeswap/farms@1.0.74
+
+## 0.3.5
+
+### Patch Changes
+
+- Updated dependencies [103dd63]
+- Updated dependencies [1c1d186]
+- Updated dependencies [c6e9e02]
+  - @pancakeswap/tokens@0.6.24
+  - @pancakeswap/pools@5.1.31
+  - @pancakeswap/farms@1.0.73
+
+## 0.3.4
+
+### Patch Changes
+
+- Updated dependencies [f551e5e]
+  - @pancakeswap/swap-sdk-core@1.2.0
+  - @pancakeswap/farms@1.0.72
+  - @pancakeswap/hooks@0.0.32
+  - @pancakeswap/sdk@5.8.8
+  - @pancakeswap/utils@6.0.9
+  - @pancakeswap/v3-sdk@3.8.11
+  - @pancakeswap/uikit@0.67.1
+  - @pancakeswap/tokens@0.6.23
+  - @pancakeswap/pools@5.1.30
+
+## 0.3.3
+
+### Patch Changes
+
+- Updated dependencies [bf07bfa]
+  - @pancakeswap/pools@5.1.29
+
+## 0.3.2
+
+### Patch Changes
+
+- Updated dependencies [911d107]
+  - @pancakeswap/v3-sdk@3.8.10
+  - @pancakeswap/farms@1.0.71
+
+## 0.3.1
+
+### Patch Changes
+
+- Updated dependencies [fe96bb1]
+  - @pancakeswap/v3-sdk@3.8.9
+  - @pancakeswap/farms@1.0.70
+
+## 0.3.0
+
+### Minor Changes
+
+- c9c6c44: Added FeatureStack component
+- 42dfc77: new UIKit: TreeSelect
+- a3ca679: Added FeeTierTooltip component
+
+### Patch Changes
+
+- Updated dependencies [4e3ed54]
+- Updated dependencies [4628ab7]
+- Updated dependencies [6eac78f]
+- Updated dependencies [76f049e]
+- Updated dependencies [c9c6c44]
+- Updated dependencies [8f573cf]
+- Updated dependencies [57bac78]
+- Updated dependencies [42dfc77]
+- Updated dependencies [a3ca679]
+  - @pancakeswap/uikit@0.67.0
+  - @pancakeswap/tokens@0.6.22
+  - @pancakeswap/farms@1.0.69
+  - @pancakeswap/pools@5.1.28
+
 ## 0.2.2
 
 ### Patch Changes

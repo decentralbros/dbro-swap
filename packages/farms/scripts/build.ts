@@ -1,22 +1,15 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
-import path from 'path'
+import { ChainId } from '@pancakeswap/chains'
 import fs from 'fs'
-import ethFarms from '../constants/eth'
-import goerliFarms from '../constants/goerli'
-import bscTestnetFarms from '../constants/bscTestnet'
-import bscFarms from '../constants/bsc'
-
+import path from 'path'
 import lpHelpers1 from '../constants/priceHelperLps/1'
-import lpHelpers5 from '../constants/priceHelperLps/5'
-import lpHelpers97 from '../constants/priceHelperLps/97'
 import lpHelpers56 from '../constants/priceHelperLps/56'
+import { fetchUniversalFarms } from '../src/fetchUniversalFarms'
 
 const chains = [
-  [1, ethFarms, lpHelpers1],
-  [5, goerliFarms, lpHelpers5],
-  [56, bscFarms, lpHelpers56],
-  [97, bscTestnetFarms, lpHelpers97],
+  [1, fetchUniversalFarms(ChainId.ETHEREUM), lpHelpers1],
+  [56, fetchUniversalFarms(ChainId.BSC), lpHelpers56],
 ]
 
 export const saveList = async () => {
@@ -27,12 +20,15 @@ export const saveList = async () => {
   } catch (error) {
     //
   }
-  for (const [chain, farm, lpHelper] of chains) {
+
+  for (const [chain, farmPromise, lpHelper] of chains) {
     console.info('Starting build farm config', chain)
+    const farm = await farmPromise
     const farmListPath = `${path.resolve()}/lists/${chain}.json`
     const stringifiedList = JSON.stringify(farm, null, 2)
     fs.writeFileSync(farmListPath, stringifiedList)
     console.info('Farm list saved to ', farmListPath)
+
     const lpPriceHelperListPath = `${path.resolve()}/lists/priceHelperLps/${chain}.json`
     const stringifiedHelperList = JSON.stringify(lpHelper, null, 2)
     fs.writeFileSync(lpPriceHelperListPath, stringifiedHelperList)
