@@ -8,23 +8,17 @@
       "outputs": ["dist/**", ".next/**/*", "!.next/cache/**", "!.vercel/**/*"]
     },
     "test": {
+      "dependsOn": ["^build"],
       "outputs": ["coverage/**"],
-      "dependsOn": ["^build"]
+      "inputs": ["src/**/*.tsx", "src/**/*.ts", "test/**/*.ts", "test/**/*.tsx"]
     },
     "test:config": {
       "dependsOn": ["^build"]
     },
-    "build:storybook": {
-      "dependsOn": ["^build"],
-      "outputs": ["storybook-static/**"]
-    },
-    "build:uikit": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**"]
-    },
     "lint": {
       "dependsOn": ["@pancakeswap/next-config#build"],
-      "outputs": []
+      "outputs": [],
+      "inputs": ["src/**/*.tsx", "src/**/*.ts", "src/**/*.js", "src/**/*.jsx"]
     },
     "dev": {
       "dependsOn": ["@pancakeswap/next-config#build"],
@@ -33,6 +27,14 @@
     },
     "start": {
       "cache": false
+    },
+    "build:storybook": {
+      "dependsOn": ["^build"],
+      "outputs": ["storybook-static/**"]
+    },
+    "build:uikit": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
     },
     "build:list": {
       "outputs": ["list/**"]
