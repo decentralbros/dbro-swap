@@ -3,81 +3,13 @@ import { Box, Button, Flex, Input, QuestionHelper, Text } from '@pancakeswap/uik
 import { useUserSlippage } from '@pancakeswap/utils/user'
 import { useState } from 'react'
 
-// enum SlippageError {
-//   InvalidInput = 'InvalidInput',
-//   RiskyLow = 'RiskyLow',
-//   RiskyHigh = 'RiskyHigh',
-// }
-
-// enum DeadlineError {
-//   InvalidInput = 'InvalidInput',
-// }
-
-// const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`) // match escaped "." characters via in a non-capturing group
-// const THREE_DAYS_IN_SECONDS = 60 * 60 * 24 * 3
-
-export const DEFAULT_SLIPPAGE_TOLERANCE = 50
+export const DEFAULT_SLIPPAGE_TOLERANCE = 3
 
 const SlippageTabs = () => {
   const [userSlippageTolerance, setUserSlippageTolerance] = useUserSlippage()
-  // const [ttl, setTTL] = useUserTransactionTTL()
   const [slippageInput, setSlippageInput] = useState('')
-  // const [deadlineInput, setDeadlineInput] = useState('')
 
   const { t } = useTranslation()
-
-  // const slippageInputIsValid =
-  //   slippageInput === '' || userSlippageTolerance.toFixed(1) === Number.parseFloat(slippageInput).toFixed(1)
-  // const deadlineInputIsValid =
-  //   deadlineInput === '' || (ttl !== undefined && (Number(ttl) / 60).toString() === deadlineInput)
-
-  // let slippageError: SlippageError | undefined
-  // if (slippageInput !== '' && !slippageInputIsValid) {
-  //   slippageError = SlippageError.InvalidInput
-  // } else if (slippageInputIsValid && userSlippageTolerance < 50) {
-  //   slippageError = SlippageError.RiskyLow
-  // } else if (slippageInputIsValid && userSlippageTolerance > 500) {
-  //   slippageError = SlippageError.RiskyHigh
-  // } else {
-  //   slippageError = undefined
-  // }
-
-  // let deadlineError: DeadlineError | undefined
-  // if (deadlineInput !== '' && !deadlineInputIsValid) {
-  //   deadlineError = DeadlineError.InvalidInput
-  // } else {
-  //   deadlineError = undefined
-  // }
-
-  // const parseCustomSlippage = (value: string) => {
-  //   if (value === '' || inputRegex.test(escapeRegExp(value))) {
-  //     setSlippageInput(value)
-
-  //     try {
-  //       const valueAsIntFromRoundedFloat = Number.parseInt(Number.parseFloat(value).toFixed(1))
-  //       if (!Number.isNaN(valueAsIntFromRoundedFloat) && valueAsIntFromRoundedFloat < 10) {
-  //         setUserSlippageTolerance(valueAsIntFromRoundedFloat)
-  //       }
-  //     } catch (error) {
-  //       console.error(error)
-  //     }
-  //   }
-  // }
-
-  // const parseCustomDeadline = (value: string) => {
-  //   setDeadlineInput(value)
-
-  //   try {
-  //     const valueAsInt: number = Number.parseInt(value) * 60
-  //     if (!Number.isNaN(valueAsInt) && valueAsInt > 60 && valueAsInt < THREE_DAYS_IN_SECONDS) {
-  //       setTTL(valueAsInt)
-  //     } else {
-  //       deadlineError = DeadlineError.InvalidInput
-  //     }
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }
 
   return (
     <Flex flexDirection="column">
