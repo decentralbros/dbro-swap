@@ -1,4 +1,4 @@
-import { Text, AtomBox, SwapCSS } from "@pancakeswap/uikit";
+import { AtomBox, SwapCSS, Text } from "@pancakeswap/uikit";
 
 import { NumericalInput, NumericalInputProps } from "./NumericalInput";
 
@@ -71,10 +71,6 @@ export function CurrencyInputPanel({
             {error}
           </Text>
         ) : null}
-
-        {disabled && (
-          <AtomBox role="presentation" position="absolute" inset="0px" backgroundColor="backgroundAlt" opacity="0.6" />
-        )}
       </AtomBox>
     </AtomBox>
   );
