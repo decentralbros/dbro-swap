@@ -9,12 +9,13 @@ import { Provider } from 'react-redux'
 import { createWagmiConfig } from 'utils/wagmi'
 import { WagmiProvider } from 'wagmi'
 
-// Create a client
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 5000,
       refetchInterval: 10000,
+      retry: 3,
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
     },
   },
 })
@@ -31,9 +32,10 @@ const Providers: React.FC<
   React.PropsWithChildren<{ store: Store; children: React.ReactNode; dehydratedState: any }>
 > = ({ children, store, dehydratedState }) => {
   const wagmiConfig = useMemo(() => createWagmiConfig(), [])
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <WagmiProvider reconnectOnMount config={wagmiConfig}>
+    <WagmiProvider reconnectOnMount config={wagmiConfig}>
+      <QueryClientProvider client={queryClient}>
         <HydrationBoundary state={dehydratedState}>
           <Provider store={store}>
             <NextThemeProvider>
@@ -47,8 +49,8 @@ const Providers: React.FC<
             </NextThemeProvider>
           </Provider>
         </HydrationBoundary>
-      </WagmiProvider>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
   )
 }
 

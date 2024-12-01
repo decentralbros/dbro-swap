@@ -1,14 +1,14 @@
 /* eslint-disable no-restricted-globals */
+import { ChainId } from '@pancakeswap/chains'
 import { useTranslation } from '@pancakeswap/localization'
 import { AutoRow, Box, Text } from '@pancakeswap/uikit'
+import { formatUnits } from '@pancakeswap/utils/viem/formatUnits'
+import deployedContracts from 'config/abi/deployedContracts'
+import { DBRO_API } from 'config/constants/endpoints'
+import qs from 'qs'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { useAccount, useChainId, useReadContract } from 'wagmi'
-import deployedContracts from 'config/abi/deployedContracts'
-import { ChainId } from '@pancakeswap/chains'
-import { formatUnits } from '@pancakeswap/utils/viem/formatUnits'
-import { DBRO_API } from 'config/constants/endpoints'
-import qs from 'qs'
 import { MyVeCakeCard } from '../MyVeCakeCard'
 import { DataRow } from './DataBox'
 
@@ -24,17 +24,7 @@ interface NewStakingDataSetProps {
   customDataRow?: JSX.Element
 }
 
-const RYFT_ADDRESS = '0x7aBe92aA0b6da4AeEf832F5Ce540dc49EAAd2dCA'
 const DBRO_CONTRACT = '0x6a4e0F83D7882BcACFF89aaF6f60D24E13191E9F'
-const erc20ABI = [
-  {
-    inputs: [{ name: 'account', type: 'address' }],
-    name: 'balanceOf',
-    outputs: [{ name: '', type: 'uint256' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-] as const
 
 export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataSetProps>> = ({
   cakeAmount = 0,

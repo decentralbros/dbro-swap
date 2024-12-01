@@ -139,11 +139,13 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
   const [claimValue, setClaimValue] = useState('0.00')
 
   const fetchUSDValues = useCallback(async () => {
+    if (!account) return
+
     try {
       const params = {
         chainId: ChainId.BASE,
-        address: account,
         native: false,
+        address: account,
         contract: DBRO_CONTRACT,
         decimals: 8,
       }
