@@ -56,7 +56,7 @@ const config = {
     ignoreBuildErrors: false,
   },
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false,
   },
   async headers() {
     return [
