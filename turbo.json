@@ -4,29 +4,15 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "env": [],
+      "env": ["RISK_APP_SECRET", "SERVER_NODE_REAL_API_ETH", "SERVER_NODE_REAL_API_GOERLI"],
       "outputs": ["dist/**", ".next/**/*", "!.next/cache/**", "!.vercel/**/*"]
     },
     "test": {
-      "dependsOn": ["^build"],
       "outputs": ["coverage/**"],
-      "inputs": ["src/**/*.tsx", "src/**/*.ts", "test/**/*.ts", "test/**/*.tsx"]
+      "dependsOn": ["^build"]
     },
     "test:config": {
       "dependsOn": ["^build"]
-    },
-    "lint": {
-      "dependsOn": ["@pancakeswap/next-config#build"],
-      "outputs": [],
-      "inputs": ["src/**/*.tsx", "src/**/*.ts", "src/**/*.js", "src/**/*.jsx"]
-    },
-    "dev": {
-      "dependsOn": ["@pancakeswap/next-config#build"],
-      "cache": false,
-      "persistent": true
-    },
-    "start": {
-      "cache": false
     },
     "build:storybook": {
       "dependsOn": ["^build"],
@@ -35,6 +21,18 @@
     "build:uikit": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
+    },
+    "lint": {
+      "dependsOn": ["@pancakeswap/next-config#build"],
+      "outputs": []
+    },
+    "dev": {
+      "dependsOn": ["@pancakeswap/next-config#build"],
+      "cache": false,
+      "persistent": true
+    },
+    "start": {
+      "cache": false
     },
     "build:list": {
       "outputs": ["list/**"]
