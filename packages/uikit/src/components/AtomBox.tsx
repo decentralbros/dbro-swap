@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
+import { Slot } from "@radix-ui/react-slot";
 import clsx, { ClassValue } from "clsx";
 import * as React from "react";
-import { Slot } from "@radix-ui/react-slot";
 import { atoms, Atoms } from "../css/atoms";
 import { sprinkles } from "../css/sprinkles.css";
 

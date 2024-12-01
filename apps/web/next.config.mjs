@@ -50,13 +50,62 @@ const config = {
     // https://github.com/TanStack/query/issues/6560#issuecomment-1975771676
     '@tanstack/query-core',
   ],  
-  swcMinify: true,
   reactStrictMode: true,
+  swcMinify: false,
   typescript: {
     ignoreBuildErrors: false,
   },
   eslint: {
     ignoreDuringBuilds: false,
+  },
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Cross-Origin-Opener-Policy',
+            value: 'same-origin-allow-popups'
+          }
+        ]
+      },
+      {
+        source: '/favicon.ico',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, immutable, max-age=31536000',
+          },
+        ],
+      },
+      {
+        source: '/logo.png',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, immutable, max-age=31536000',
+          },
+        ],
+      },
+      {
+        source: '/images/:all*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, immutable, max-age=31536000',
+          },
+        ],
+      },
+      {
+        source: '/images/tokens/:all*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, immutable, max-age=604800',
+          },
+        ],
+      },
+    ]
   },
   webpack: (webpackConfig, { webpack, isServer }) => {
     // tree shake sentry tracing
