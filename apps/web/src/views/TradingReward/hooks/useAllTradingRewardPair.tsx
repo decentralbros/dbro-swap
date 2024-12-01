@@ -183,7 +183,7 @@ const useAllTradingRewardPair = ({ status, type }: UseAllTradingRewardPairProps)
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     initialData: initialAllTradingRewardState,
-    enabled: Boolean(status && type),
+    enabled: false,
   })
 
   return {

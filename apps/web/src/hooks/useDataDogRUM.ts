@@ -3,8 +3,6 @@ import { useEffect } from 'react'
 import { datadogRum } from 'utils/datadog'
 import { useAccount } from 'wagmi'
 
-import { useGlobalSettingsEvaluation } from './useGlobalSettingsEvaluation'
-
 const readyAtom = atom(false)
 
 export function useDataDogRUMReady() {
@@ -15,7 +13,6 @@ export function useDataDogRUMReady() {
 export function useDataDogRUM() {
   const [ready, setReady] = useAtom(readyAtom)
   const { address } = useAccount()
-  useGlobalSettingsEvaluation()
 
   useEffect(() => {
     if (ready) {

@@ -24,7 +24,6 @@ import { POOLS_FAST_REVALIDATE, POOLS_NORMAL_REVALIDATE } from 'config/pools'
 import { useIsWrapping } from 'hooks/useWrapCallback'
 import { useCurrentBlock } from 'state/block/hooks'
 import { useFeeDataWithGasPrice } from 'state/user/hooks'
-import { tracker } from 'utils/datadog'
 import { basisPointsToPercent } from 'utils/exchange'
 import { createViemPublicClientGetter } from 'utils/viem'
 import { publicClient } from 'utils/wagmi'
@@ -386,15 +385,6 @@ function bestTradeHookFactory<
           nativeCurrencyUsdPrice,
           signal,
         })
-        const duration = Math.floor(performance.now() - startTime)
-
-        if (trackPerf) {
-          tracker.log(`[PERF] ${key} duration:${duration}ms`, {
-            chainId: currency.chainId,
-            label: key,
-            duration,
-          })
-        }
 
         if (!res) {
           return undefined
@@ -529,7 +519,7 @@ function createUseWorkerGetBestTradeOffchain() {
           }
           return V4Router.Transformer.parseTrade(currency.chainId, result) ?? null
         } catch (e) {
-          console.error(e)
+          console.info(e)
           throw new NoValidRouteError()
         }
       },
@@ -645,16 +635,6 @@ export function useBestTradeFromApi({
         currencyOut: isExactIn ? currency : amount.currency,
         tradeType,
       })
-
-      const duration = Math.floor(performance.now() - startTime)
-
-      if (trackPerf) {
-        tracker.log(`[PERF] ${key} duration:${duration}ms`, {
-          chainId: currency.chainId,
-          label: key,
-          duration,
-        })
-      }
 
       return result
     },
@@ -781,16 +761,6 @@ export function useBestTradeFromApiShadow(
         currencyOut: isExactIn ? currency : amount.currency,
         tradeType,
       })
-
-      const duration = Math.floor(performance.now() - startTime)
-
-      if (trackPerf) {
-        tracker.log(`[PERF] ${key} duration:${duration}ms`, {
-          chainId: currency.chainId,
-          label: key,
-          duration,
-        })
-      }
 
       return result
     },

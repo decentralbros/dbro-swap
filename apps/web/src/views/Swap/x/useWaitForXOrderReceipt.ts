@@ -1,6 +1,5 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query'
 import { viemClientsPublicNodes } from 'hooks/usePublicNodeWaitForTransaction'
-import { logger } from 'utils/datadog'
 import { createQueryKey, type UseQueryParameters } from 'utils/reactQuery'
 import type { Hash, TransactionReceipt } from 'viem'
 import { waitForTransactionReceipt } from 'viem/actions'
@@ -80,7 +79,7 @@ export function useWaitForXOrderReceipt<selectData = GetXOrderReceiptReturnType>
             : undefined,
         }
       } catch (error) {
-        logger.error('useWaitForUserOperationReceipt', {
+        console.info('useWaitForUserOperationReceipt', {
           error,
         })
         throw error

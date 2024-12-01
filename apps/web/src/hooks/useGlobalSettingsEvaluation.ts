@@ -1,9 +1,9 @@
 import {
   useAudioPlay,
   useExpertMode,
+  useSpeedQuote,
   useUserSingleHopOnly,
   useUserSlippage,
-  useSpeedQuote,
 } from '@pancakeswap/utils/user'
 
 import { useFeatureFlagEvaluation } from 'hooks/useDataDogRUM'

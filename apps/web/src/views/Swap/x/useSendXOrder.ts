@@ -1,6 +1,5 @@
 import { ExclusiveDutchOrder, type ExclusiveDutchOrderInfo } from '@pancakeswap/pcsx-sdk'
 import { useMutation } from '@tanstack/react-query'
-import { logger } from 'utils/datadog'
 import { useSignTypedData } from 'wagmi'
 import { submitXOrder } from './api'
 
@@ -9,7 +8,7 @@ export function useSendXOrder() {
 
   return useMutation({
     onError(error, variables) {
-      logger.error('useSendXOrder', {
+      console.info('useSendXOrder', {
         error,
         context: variables,
       })

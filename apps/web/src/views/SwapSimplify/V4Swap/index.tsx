@@ -11,7 +11,6 @@ import { useCurrencyUsdPrice } from 'hooks/useCurrencyUsdPrice'
 import { useMemo } from 'react'
 import { Field } from 'state/swap/actions'
 import { useSwapState } from 'state/swap/hooks'
-import { logger } from 'utils/datadog'
 import { MevToggle } from 'views/Mev/MevToggle'
 import { SwapType } from '../../Swap/types'
 import { useIsWrapping } from '../../Swap/V3Swap/hooks'
@@ -74,7 +73,7 @@ export function V4SwapForm() {
           const ammOutputAmount = ammOrder?.trade?.outputAmount.toExact()
           const xInputAmount = xOrder?.trade?.inputAmount.toExact()
           const xOutputAmount = xOrder?.trade?.outputAmount.toExact()
-          logger.info('X/AMM Quote Comparison', {
+          console.info('X/AMM Quote Comparison', {
             chainId,
             tradeType,
             inputNative: inputCurrency.isNative,
