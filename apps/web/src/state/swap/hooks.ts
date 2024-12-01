@@ -1,6 +1,7 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { Currency, CurrencyAmount, Price, Trade, TradeType } from '@pancakeswap/sdk'
-import { CAKE, STABLE_COIN, USDC, USDT } from '@pancakeswap/tokens'
+import { STABLE_COIN, USDC, USDT } from '@pancakeswap/tokens'
+import { PairDataTimeWindowEnum } from '@pancakeswap/uikit'
 import tryParseAmount from '@pancakeswap/utils/tryParseAmount'
 import { useUserSlippage } from '@pancakeswap/utils/user'
 import { useQuery } from '@tanstack/react-query'
@@ -16,11 +17,10 @@ import { useRouter } from 'next/router'
 import { ParsedUrlQuery } from 'querystring'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { ChartPeriod, chainIdToExplorerInfoChainName, explorerApiClient } from 'state/info/api/client'
-import { isAddressEqual, safeGetAddress } from 'utils'
+import { safeGetAddress } from 'utils'
 import { computeSlippageAdjustedAmounts } from 'utils/exchange'
 import { getTokenAddress } from 'views/Swap/components/Chart/utils'
 import { useAccount } from 'wagmi'
-import { PairDataTimeWindowEnum } from '@pancakeswap/uikit'
 import { useCurrencyBalances } from '../wallet/hooks'
 import { Field, replaceSwapState } from './actions'
 import { SwapState, swapReducerAtom } from './reducer'
@@ -43,8 +43,8 @@ const BAD_RECIPIENT_ADDRESSES: string[] = [
  */
 function involvesAddress(trade: Trade<Currency, Currency, TradeType>, checksummedAddress: string): boolean {
   return (
-    trade.route.path.some((token) => isAddressEqual(token.address, checksummedAddress)) ||
-    trade.route.pairs.some((pair) => isAddressEqual(pair.liquidityToken.address, checksummedAddress))
+    trade.route.path.some((token) => token.address === checksummedAddress) ||
+    trade.route.pairs.some((pair) => pair.liquidityToken.address === checksummedAddress)
   )
 }
 
@@ -264,7 +264,7 @@ export function useDefaultsFromURLSearch():
     const parsed = queryParametersToSwapState(
       query,
       native.symbol,
-      CAKE[chainId]?.address ?? STABLE_COIN[chainId]?.address ?? USDC[chainId]?.address ?? USDT[chainId]?.address,
+      STABLE_COIN[chainId]?.address ?? USDC[chainId]?.address ?? USDT[chainId]?.address,
     )
 
     dispatch(
