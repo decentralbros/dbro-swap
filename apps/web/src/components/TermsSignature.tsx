@@ -139,10 +139,10 @@ const AddressDisplay = styled.div`
   word-break: break-word;
 `
 
-const TermsSignature = ({ signMessageAsync, isPending, isSuccess }) => {
+const TermsSignature = ({ signMessageAsync, isPending }) => {
   const account = useAccount()
 
-  const TERMS_MESSAGE = `I have read and agree to the Terms of Service available at:\n\nhttps://decentralbros.finance/terms-of-service\n\n\nDate: ${dayjs().format(
+  const TERMS_MESSAGE = `I have read and agree to the Terms of Service available at:\n\nhttps://decentralbros.finance/terms-of-service\n\nDate: ${dayjs().format(
     'MMMM DD, YYYY',
   )}`
 

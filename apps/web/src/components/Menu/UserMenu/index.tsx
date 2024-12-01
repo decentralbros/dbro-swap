@@ -11,31 +11,27 @@ import {
   useModal,
 } from '@pancakeswap/uikit'
 import ConnectWalletButton from 'components/ConnectWalletButton'
+import TermsSignature from 'components/TermsSignature'
 import Trans from 'components/Trans'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import useAuth from 'hooks/useAuth'
 import { useDomainNameForAddress } from 'hooks/useDomain'
+import { useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
 import { useProfile } from 'state/profile/hooks'
 import { usePendingTransactions } from 'state/transactions/hooks'
 import { useAccount, useSignMessage } from 'wagmi'
-import TermsSignature from 'components/TermsSignature'
 import WalletModal, { WalletView } from './WalletModal'
 import WalletUserMenuItem from './WalletUserMenuItem'
 
 const UserMenuItems = () => {
   const { t } = useTranslation()
-  const { chainId, isWrongNetwork } = useActiveChainId()
+  const { isWrongNetwork } = useActiveChainId()
   const { logout } = useAuth()
-  // const { address: account } = useAccount()
   const { hasPendingTransactions } = usePendingTransactions()
-  // const { isInitialized, isLoading, profile } = useProfile()
-  // const { shouldShowModal } = useAirdropModalStatus()
-
   const [onPresentWalletModal] = useModal(<WalletModal initialView={WalletView.WALLET_INFO} />)
   const [onPresentTransactionModal] = useModal(<WalletModal initialView={WalletView.TRANSACTIONS} />)
   const [onPresentWrongNetworkModal] = useModal(<WalletModal initialView={WalletView.WRONG_NETWORK} />)
-  // const hasProfile = isInitialized && !!profile
 
   const onClickWalletMenu = useCallback((): void => {
     if (isWrongNetwork) {
@@ -53,15 +49,6 @@ const UserMenuItems = () => {
         {hasPendingTransactions && <RefreshIcon spin />}
       </UserMenuItem>
       <UserMenuDivider />
-      {/* <NextLink href={`/profile/${account?.toLowerCase()}`} passHref>
-        <UserMenuItem disabled={isWrongNetwork || chainId !== ChainId.BSC}>{t('Your NFTs')}</UserMenuItem>
-      </NextLink> */}
-      {/* {shouldShowModal && <ClaimYourNFT />}
-      <ProfileUserMenuItem
-        isLoading={isLoading}
-        hasProfile={hasProfile}
-        disabled={isWrongNetwork || chainId !== ChainId.BSC}
-      /> */}
       <UserMenuDivider />
       <UserMenuItem as="button" onClick={logout}>
         <Flex alignItems="center" justifyContent="space-between" width="100%">
@@ -74,7 +61,7 @@ const UserMenuItems = () => {
 }
 
 const UserMenu = () => {
-  const SIGNED = !!localStorage?.getItem('signed-dbro-terms')
+  const SIGNED = !!localStorage.getItem('signed-dbro-terms')
   const { t } = useTranslation()
   const { address: account } = useAccount()
   const { domainName, avatar } = useDomainNameForAddress(account)
@@ -85,6 +72,9 @@ const UserMenu = () => {
   const [userMenuText, setUserMenuText] = useState<string>('')
   const [userMenuVariable, setUserMenuVariable] = useState<UserMenuVariant>('default')
   const { signMessageAsync, isPending, isSuccess } = useSignMessage()
+  const router = useRouter()
+  const isTerms = router.pathname === '/terms-of-service'
+  const isPolicy = router.pathname === '/privacy-policy'
 
   useEffect(() => {
     if (hasPendingTransactions) {
@@ -109,8 +99,8 @@ const UserMenu = () => {
     )
   }
 
-  if (!isSuccess && !SIGNED)
-    return <TermsSignature signMessageAsync={signMessageAsync} isPending={isPending} isSuccess={isSuccess} />
+  if (!isSuccess && !SIGNED && !isTerms && !isPolicy)
+    return <TermsSignature signMessageAsync={signMessageAsync} isPending={isPending} />
 
   if (isWrongNetwork) {
     return (
