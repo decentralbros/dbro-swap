@@ -1,7 +1,60 @@
-import { useAccount } from 'wagmi'
-import styled from 'styled-components'
+import { Box, Button } from '@pancakeswap/uikit'
 import dayjs from 'dayjs'
-import { Button } from '@pancakeswap/uikit'
+import { useEffect } from 'react'
+import styled, { css, keyframes } from 'styled-components'
+import { useAccount } from 'wagmi'
+
+const unmountAnimation = keyframes`
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  `
+
+const mountAnimation = keyframes`
+    0% {
+     opacity: 0;
+    }
+    100% {
+     opacity: 1;
+    }
+  `
+
+const StyledOverlay = styled(Box)<{ isUnmounting?: boolean }>`
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  background-color: ${({ theme }) => `${theme.colors.text99}`};
+  z-index: 20;
+  will-change: opacity;
+  animation: ${mountAnimation} 350ms ease forwards;
+  ${({ isUnmounting }) =>
+    isUnmounting &&
+    css`
+      animation: ${unmountAnimation} 350ms ease forwards;
+    `}
+`
+
+const BodyLock = () => {
+  useEffect(() => {
+    document.body.style.cssText = `
+      overflow: hidden;
+    `
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.cssText = `
+        overflow: visible;
+        overflow: overlay;
+      `
+    }
+  }, [])
+
+  return null
+}
 
 const Container = styled.div`
   max-width: 36rem;
@@ -14,6 +67,7 @@ const Container = styled.div`
   left: 0;
   right: 0;
   transform: translate(0%, 360px);
+  z-index: 30;
 `
 
 const Dialog = styled.div`
@@ -103,33 +157,38 @@ const TermsSignature = ({ signMessageAsync, isPending, isSuccess }) => {
   }
 
   return (
-    <Container>
-      <Dialog>
-        <DialogContent onClick={(e) => e.stopPropagation()}>
-          <DialogTitle>Terms of Service Agreement</DialogTitle>
-          <DialogDescription>
-            <p>Please review our Terms of Service before proceeding:</p>
-            <br />
-            <Link href="https://decentralbros.finance/terms-of-service" target="_blank" rel="noopener noreferrer">
-              View Terms of Service
-            </Link>
+    <>
+      <Container>
+        <Dialog>
+          <DialogContent onClick={(e) => e.stopPropagation()}>
+            <DialogTitle>Terms of Service Agreement</DialogTitle>
+            <DialogDescription>
+              <p>Please review our Terms of Service before proceeding:</p>
+              <br />
+              <Link href="https://decentralbros.finance/terms-of-service" target="_blank" rel="noopener noreferrer">
+                View Terms of Service
+              </Link>
 
-            <TermsMessage>
-              Signing with wallet:
-              <AddressDisplay>{account.address}</AddressDisplay>
-            </TermsMessage>
+              <TermsMessage>
+                Signing with wallet:
+                <AddressDisplay>{account.address}</AddressDisplay>
+              </TermsMessage>
 
-            <TermsMessage>{TERMS_MESSAGE}</TermsMessage>
-          </DialogDescription>
+              <TermsMessage>{TERMS_MESSAGE}</TermsMessage>
+            </DialogDescription>
 
-          <ButtonGroup>
-            <Button scale="md" variant="secondary" onClick={handleSign} disabled={isPending}>
-              {isPending ? 'Signing...' : 'Sign & Accept'}
-            </Button>
-          </ButtonGroup>
-        </DialogContent>
-      </Dialog>
-    </Container>
+            <ButtonGroup>
+              <Button scale="md" variant="secondary" onClick={handleSign} disabled={isPending}>
+                {isPending ? 'Signing...' : 'Sign & Accept'}
+              </Button>
+            </ButtonGroup>
+          </DialogContent>
+        </Dialog>
+      </Container>
+
+      <BodyLock />
+      <StyledOverlay role="presentation" />
+    </>
   )
 }
 

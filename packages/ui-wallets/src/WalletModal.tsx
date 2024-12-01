@@ -10,6 +10,8 @@ import {
   ModalWrapper,
   MoreHorizontalIcon,
   SvgProps,
+  Tab,
+  TabMenu,
   Text,
   WarningIcon,
 } from '@pancakeswap/uikit'
@@ -78,16 +80,16 @@ const TabContainer = ({ children, docLink, docText }: PropsWithChildren<{ docLin
 
   return (
     <AtomBox position="relative" zIndex="modal" className={modalWrapperClass}>
-      {/* <AtomBox position="absolute" style={{ top: '-50px' }}>
+      <AtomBox position="absolute" style={{ top: '-50px' }}>
         <TabMenu activeIndex={index} onItemClick={setIndex} gap="0px" isColorInverse isShowBorderBottom={false}>
           <Tab>{t('Connect Wallet')}</Tab>
           <Tab>{t('What’s a Web3 Wallet?')}</Tab>
         </TabMenu>
-      </AtomBox> */}
+      </AtomBox>
       <AtomBox
         display="flex"
         position="relative"
-        background="background"
+        background="backgroundAlt"
         borderRadius="card"
         borderBottomRadius={{
           xs: '0',
@@ -96,14 +98,13 @@ const TabContainer = ({ children, docLink, docText }: PropsWithChildren<{ docLin
         zIndex="modal"
         width="100%"
       >
-        <>{children}</>
+        {index === 0 && children}
+        {index === 1 && (
+          <Suspense>
+            <StepIntro docLink={docLink} docText={docText} />
+          </Suspense>
+        )}
       </AtomBox>
-
-      {!isMobile && (
-        <Suspense>
-          <StepIntro docLink={docLink} docText={docText} />
-        </Suspense>
-      )}
     </AtomBox>
   )
 }
@@ -319,7 +320,7 @@ function DesktopModal<T>({
       <AtomBox
         display="flex"
         flexDirection="column"
-        bg="background"
+        bg="backgroundAlt"
         py="32px"
         zIndex="modal"
         borderRadius="card"
@@ -355,7 +356,7 @@ function DesktopModal<T>({
       </AtomBox>
       <AtomBox
         flex={1}
-        px="24px"
+        mx="24px"
         display={{
           xs: 'none',
           sm: 'flex',
@@ -363,11 +364,9 @@ function DesktopModal<T>({
         justifyContent="center"
         flexDirection="column"
         alignItems="center"
-        bg="background"
-        borderRadius="card"
       >
         <AtomBox display="flex" flexDirection="column" alignItems="center" style={{ gap: '24px' }} textAlign="center">
-          {/* {!selected && <Intro docLink={docLink} docText={docText} />}
+          {!selected && <Intro docLink={docLink} docText={docText} />}
           {selected && selected.installed !== false && (
             <>
               {typeof selected.icon === 'string' && <Image src={selected.icon} width={108} height={108} />}
@@ -380,7 +379,7 @@ function DesktopModal<T>({
                 <Text>{t('Please confirm in %wallet%', { wallet: selected.title })}</Text>
               )}
             </>
-          )} */}
+          )}
           {selected && selected.installed === false && <NotInstalled qrCode={qrCode} wallet={selected} />}
         </AtomBox>
       </AtomBox>
@@ -438,10 +437,7 @@ export function WalletModalV2<T = unknown>(props: WalletModalV2Props<T>) {
 
   return (
     <ModalV2 closeOnOverlayClick disableOutsidePointerEvents={false} {...rest}>
-      <ModalWrapper
-        onDismiss={props.onDismiss}
-        style={{ overflow: 'visible', border: 'none', backgroundColor: '#000' }}
-      >
+      <ModalWrapper onDismiss={props.onDismiss} style={{ overflow: 'visible', border: 'none' }}>
         <AtomBox position="relative">
           <TabContainer docLink={docLink} docText={docText}>
             {isMobile ? (
@@ -456,17 +452,17 @@ export function WalletModalV2<T = unknown>(props: WalletModalV2Props<T>) {
   )
 }
 
-// const Intro = ({ docLink, docText }: { docLink: string; docText: string }) => {
-//   const { t } = useTranslation()
-//   return (
-//     <>
-//       <Heading as="h1" fontSize="20px" color="secondary">
-//         {t('Connect your wallet to begin!')}
-//       </Heading>
-//       <Image src="/images/wallets/bolty.webp" width={198} height={198} />
-//     </>
-//   )
-// }
+const Intro = ({ docLink, docText }: { docLink: string; docText: string }) => {
+  const { t } = useTranslation()
+  return (
+    <>
+      <Heading as="h1" fontSize="20px" color="secondary">
+        Please login with your Web3 Wallet
+      </Heading>
+      <Image src="/images/wallets/wallet.webp" width={198} height={198} />
+    </>
+  )
+}
 
 const NotInstalled = ({ wallet, qrCode }: { wallet: WalletConfigV2; qrCode?: string }) => {
   const { t } = useTranslation()
