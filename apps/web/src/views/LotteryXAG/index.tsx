@@ -1,12 +1,12 @@
+import { ChainId } from '@pancakeswap/chains'
 import { useTranslation } from '@pancakeswap/localization'
 import { Box, Flex, Heading, PageSection, Skeleton } from '@pancakeswap/uikit'
+import deployedContracts from 'config/abi/deployedContracts'
 import useTheme from 'hooks/useTheme'
 import { useState } from 'react'
-import { useFetchLottery, useLottery } from 'state/lottery/hooks'
+import { useLottery } from 'state/lottery/hooks'
 import { styled } from 'styled-components'
 import { useReadContract } from 'wagmi'
-import deployedContracts from 'config/abi/deployedContracts'
-import { ChainId } from '@pancakeswap/chains'
 import AllHistoryCard from './components/AllHistoryCard'
 import CheckPrizesSection from './components/CheckPrizesSection'
 import Countdown from './components/Countdown'
@@ -17,17 +17,14 @@ import NextDrawCard from './components/NextDrawCard'
 import YourHistoryCard from './components/YourHistoryCard'
 import useGetNextLotteryEvent from './hooks/useGetNextLotteryEvent'
 import useShowMoreUserHistory from './hooks/useShowMoreUserRounds'
-import useStatusTransitions from './hooks/useStatusTransitions'
 
 const LotteryPage = styled.div`
   min-height: calc(100vh - 64px);
 `
 
 const LotteryXAG = () => {
-  useFetchLottery()
-  useStatusTransitions()
   const { t } = useTranslation()
-  const { isDark, theme } = useTheme()
+  const { theme } = useTheme()
   const {
     currentRound: { status, endTime },
   } = useLottery()
