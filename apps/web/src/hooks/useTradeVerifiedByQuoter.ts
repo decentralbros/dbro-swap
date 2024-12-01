@@ -1,12 +1,12 @@
+import { fetchQuotes } from '@pancakeswap/routing-sdk-addon-quoter'
 import { V4Router } from '@pancakeswap/smart-router'
 import { CurrencyAmount, Fraction, TradeType } from '@pancakeswap/swap-sdk-core'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
-import { fetchQuotes, Quote } from '@pancakeswap/routing-sdk-addon-quoter'
 
-import { getViemClients } from 'utils/viem'
-import { toRoutingSDKTrade } from 'utils/convertTrade'
 import { POOLS_NORMAL_REVALIDATE } from 'config/pools'
+import { toRoutingSDKTrade } from 'utils/convertTrade'
+import { getViemClients } from 'utils/viem'
 
 type Params = {
   isLoading?: boolean
@@ -14,6 +14,11 @@ type Params = {
   enabled?: boolean
   syncing?: boolean
   error?: Error
+}
+
+type Quote = {
+  quote: CurrencyAmount<Currency>
+  gasUseEstimate: bigint
 }
 
 export function useTradeVerifiedByQuoter<P extends Params>(p: P): P {
