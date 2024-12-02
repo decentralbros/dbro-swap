@@ -1,5 +1,6 @@
 import { Box, Button } from '@pancakeswap/uikit'
 import dayjs from 'dayjs'
+import useAuth from 'hooks/useAuth'
 import { useEffect } from 'react'
 import styled, { css, keyframes } from 'styled-components'
 import { useAccount } from 'wagmi'
@@ -141,6 +142,7 @@ const AddressDisplay = styled.div`
 
 const TermsSignature = ({ signMessageAsync, isPending }) => {
   const account = useAccount()
+  const { logout } = useAuth()
 
   const TERMS_MESSAGE = `I have read and agree to the Terms of Service available at:\n\nhttps://decentralbros.finance/terms-of-service\n\nDate: ${dayjs().format(
     'MMMM DD, YYYY',
@@ -152,7 +154,7 @@ const TermsSignature = ({ signMessageAsync, isPending }) => {
 
       localStorage.setItem('signed-dbro-terms', account.address as string)
     } catch (error) {
-      console.error('Error signing message:', error)
+      console.info('Error signing message:', error)
     }
   }
 
@@ -178,7 +180,11 @@ const TermsSignature = ({ signMessageAsync, isPending }) => {
             </DialogDescription>
 
             <ButtonGroup>
-              <Button scale="md" variant="secondary" onClick={handleSign} disabled={isPending}>
+              <Button scale="md" variant="secondary" onClick={logout} disabled={isPending}>
+                Disconnect
+              </Button>
+
+              <Button scale="md" variant="primary" onClick={handleSign} style={{ color: '#000' }} disabled={isPending}>
                 {isPending ? 'Signing...' : 'Sign & Accept'}
               </Button>
             </ButtonGroup>
