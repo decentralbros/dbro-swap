@@ -356,7 +356,7 @@ function DesktopModal<T>({
         alignItems="center"
       >
         <AtomBox display="flex" flexDirection="column" alignItems="center" style={{ gap: '24px' }} textAlign="center">
-          {!selected && <Intro docLink={docLink} docText={docText} />}
+          {!selected && <Intro />}
           {selected && selected.installed !== false && (
             <>
               {typeof selected.icon === 'string' && <Image src={selected.icon} width={108} height={108} />}
@@ -392,7 +392,7 @@ export function WalletModalV2<T = unknown>(props: WalletModalV2Props<T>) {
       wallets
         .map((w) => w.icon)
         .filter((icon) => typeof icon === 'string')
-        .concat('https://cdn.pancakeswap.com/wallets/wallet_intro.png') as string[],
+        .concat('https://decentralbros.finance/images/wallets/wallet.webp') as string[],
     [wallets],
   )
 
@@ -442,12 +442,11 @@ export function WalletModalV2<T = unknown>(props: WalletModalV2Props<T>) {
   )
 }
 
-const Intro = ({ docLink, docText }: { docLink: string; docText: string }) => {
-  const { t } = useTranslation()
+const Intro = () => {
   return (
     <>
       <Heading as="h1" fontSize="20px" color="secondary">
-        Please login with your Web3 Wallet
+        Please connect your Web3 Wallet
       </Heading>
       <Image src="/images/wallets/wallet.webp" width={198} height={198} />
     </>
