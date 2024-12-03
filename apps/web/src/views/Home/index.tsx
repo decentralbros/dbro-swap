@@ -1,11 +1,11 @@
+import { useTheme } from '@pancakeswap/hooks'
 import { Box, PageSection, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { styled } from 'styled-components'
-import { useTheme } from '@pancakeswap/hooks'
-import Hero from './components/Hero'
-import { InnerWedgeWrapper, OuterWedgeWrapper, WedgeTopLeft } from './components/WedgeSvgs'
+import CommunitySection from './components/CommunitySection'
 import EcoSystemSection from './components/EcoSystemSection'
 import Footer from './components/Footer'
-import CommunitySection from './components/CommunitySection'
+import Hero from './components/Hero'
+import { InnerWedgeWrapper, OuterWedgeWrapper, WedgeTopLeft } from './components/WedgeSvgs'
 
 const StyledHeroSection = styled(PageSection)`
   padding-top: 16px;
@@ -32,34 +32,22 @@ const Home: React.FC<React.PropsWithChildren> = () => {
       <style jsx global>
         {`
           #home-1 .page-bg {
-            background: #faf9fa;
-          }
-          [data-theme='dark'] #home-1 .page-bg {
             background: #000;
           }
+
           #home-2 .page-bg {
-            background: linear-gradient(180deg, #ffffff 22%, #d7caec 100%);
-          }
-          [data-theme='dark'] #home-2 .page-bg {
             background: #000;
           }
+
           #home-3 .page-bg {
-            background: linear-gradient(180deg, #6fb6f1 0%, #eaf2f6 100%);
-          }
-          [data-theme='dark'] #home-3 .page-bg {
             background: linear-gradient(180deg, #0b4576 0%, #091115 100%);
           }
+
           #home-4 .inner-wedge svg {
-            fill: #d8cbed;
-          }
-          [data-theme='dark'] #home-4 .inner-wedge svg {
             fill: #201335;
           }
 
           #bottom-wedge4-2 svg {
-            fill: #72b8f2;
-          }
-          [data-theme='dark'] #bottom-wedge4-2 svg {
             fill: #0b4576;
           }
         `}

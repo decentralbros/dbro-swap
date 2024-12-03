@@ -1,10 +1,11 @@
+import { isCyberWallet } from '@cyberlab/cyber-app-sdk'
 import { WalletConfigV2 } from '@pancakeswap/ui-wallets'
 import { WalletFilledIcon } from '@pancakeswap/uikit'
 import { getTrustWalletProvider } from '@pancakeswap/wagmi/connectors/trustWallet'
 import type { ExtendEthereum } from 'global'
+import { isFirefox } from 'react-device-detect'
 import { Config } from 'wagmi'
 import { ConnectMutateAsync } from 'wagmi/query'
-import { isFirefox } from 'react-device-detect'
 import { chains, createWagmiConfig, walletConnectNoQrCodeConnector } from '../utils/wagmi'
 
 export enum ConnectorNames {
@@ -16,7 +17,7 @@ export enum ConnectorNames {
   BinanceW3W = 'BinanceW3WSDK',
   Blocto = 'blocto',
   WalletLink = 'coinbaseWalletSDK',
-  // Ledger = 'ledger',
+  Ledger = 'ledger',
   TrustWallet = 'trust',
   CyberWallet = 'cyberWallet',
 }
@@ -230,36 +231,36 @@ const walletsConfig = <config extends Config = Config, context = unknown>({
       },
       qrCode,
     },
-    // {
-    //   id: 'blocto',
-    //   title: 'Blocto',
-    //   icon: `/images/wallets/blocto.png`,
-    //   connectorId: ConnectorNames.Blocto,
-    //   get installed() {
-    //     return typeof window !== 'undefined' && Boolean((window.ethereum as ExtendEthereum)?.isBlocto)
-    //       ? true
-    //       : undefined // undefined to show SDK
-    //   },
-    // },
-    // {
-    //   id: 'cyberwallet',
-    //   title: 'CyberWallet',
-    //   icon: `/images/wallets/cyberwallet.png`,
-    //   connectorId: ConnectorNames.CyberWallet,
-    //   get installed() {
-    //     return typeof window !== 'undefined' && isCyberWallet()
-    //   },
-    //   isNotExtension: true,
-    //   guide: {
-    //     desktop: 'https://docs.cyber.co/sdk/cyber-account#supported-chains',
-    //   },
-    // },
-    // {
-    //   id: 'ledger',
-    //   title: 'Ledger',
-    //   icon: `/images/wallets/ledger.png`,
-    //   connectorId: ConnectorNames.Ledger,
-    // },
+    {
+      id: 'blocto',
+      title: 'Blocto',
+      icon: `/images/wallets/blocto.png`,
+      connectorId: ConnectorNames.Blocto,
+      get installed() {
+        return typeof window !== 'undefined' && Boolean((window.ethereum as ExtendEthereum)?.isBlocto)
+          ? true
+          : undefined // undefined to show SDK
+      },
+    },
+    {
+      id: 'cyberwallet',
+      title: 'CyberWallet',
+      icon: `/images/wallets/cyberwallet.png`,
+      connectorId: ConnectorNames.CyberWallet,
+      get installed() {
+        return typeof window !== 'undefined' && isCyberWallet()
+      },
+      isNotExtension: true,
+      guide: {
+        desktop: 'https://docs.cyber.co/sdk/cyber-account#supported-chains',
+      },
+    },
+    {
+      id: 'ledger',
+      title: 'Ledger',
+      icon: `/images/wallets/ledger.png`,
+      connectorId: ConnectorNames.Ledger,
+    },
   ]
 }
 
