@@ -301,7 +301,7 @@ const useDecentralBrosData = () => {
     return [
       {
         title: t('Swap'),
-        description: t('Trade crypto instantly across multiple chains'),
+        description: t('Fast, secure, and user-friendly decentralized exchange'),
         ctaTitle: t('Trade Now'),
         image: `/images/affiliates-program/real-time-reporting.png`,
         defaultImage: `/images/affiliates-program/real-time-reporting.png`,
@@ -309,7 +309,7 @@ const useDecentralBrosData = () => {
       },
       {
         title: t('Staking'),
-        description: t('Enjoy the benefits of hybrid staking your DBRO'),
+        description: t('Leverage your assets with hybrid staking for high-yield returns'),
         ctaTitle: t('Stake Now'),
         image: `/old-logo.jpg`,
         defaultImage: `/old-logo.jpg`,
@@ -317,7 +317,7 @@ const useDecentralBrosData = () => {
       },
       {
         title: t('Lottery'),
-        description: t('Play to win your favorite tokens, coming soon...'),
+        description: t('Play for a chance to win big, with each ticket bringing you closer to substantial rewards'),
         ctaTitle: t('Buy Tickets'),
         image: `/images/lottery/ticket-r.png`,
         defaultImage: `/images/lottery/ticket-r.png`,
@@ -408,7 +408,7 @@ const EcoSystemSection: React.FC = () => {
           bold
           color={theme.colors.text}
         >
-          {t('Enter The')}
+          {t('Start Your Journey With')}
         </Text>
         <Text
           fontSize={['32px', null, null, '40px']}
@@ -418,7 +418,7 @@ const EcoSystemSection: React.FC = () => {
           lineHeight="110%"
           color={theme.colors.secondary}
         >
-          {t('Revolution')}
+          {t("DBRO's")}
         </Text>
       </Text>
       <CardWrapper>
@@ -429,15 +429,15 @@ const EcoSystemSection: React.FC = () => {
           justifyContent="center"
         >
           <Image
-            style={{ marginLeft: isMobile ? -32 : -72, transform: 'scaleX(-1)' }}
-            src="/images/wallets/bolty.webp"
-            alt="trader girl"
+            style={{ marginLeft: isMobile ? 0 : -72, transform: 'scaleX(-1)' }}
+            src="/images/swap/gif-guy.gif"
+            alt="dbro's character"
             width={344}
             height={360}
             unoptimized
           />
           <Flex flexDirection="column">
-            <Title>{t('Power Your Profits')}</Title>
+            <Title>{t('Trade Stake Win')}</Title>
             <FeatureBoxesWrapper>
               {decentralBrosData.map((item) => (
                 <FeatureBox

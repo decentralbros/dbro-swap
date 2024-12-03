@@ -1,11 +1,11 @@
+import { useTheme } from '@pancakeswap/hooks'
 import { Box, PageSection, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { styled } from 'styled-components'
-import { useTheme } from '@pancakeswap/hooks'
-import Hero from './components/Hero'
-import { InnerWedgeWrapper, OuterWedgeWrapper, WedgeTopLeft } from './components/WedgeSvgs'
+import CommunitySection from './components/CommunitySection'
 import EcoSystemSection from './components/EcoSystemSection'
 import Footer from './components/Footer'
-import CommunitySection from './components/CommunitySection'
+import Hero from './components/Hero'
+import { InnerWedgeWrapper, OuterWedgeWrapper, WedgeTopLeft } from './components/WedgeSvgs'
 
 const StyledHeroSection = styled(PageSection)`
   padding-top: 16px;

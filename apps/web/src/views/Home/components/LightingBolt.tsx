@@ -29,13 +29,12 @@ const LightningBolt = () => {
           }}
         />
         <img
-          src="/boltz.webp"
-          alt="Lightning Bolt Logo"
+          src="/images/swap/bolt-guy.webp"
+          alt="dbro character"
           style={{
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            borderRadius: '50%',
             display: 'block',
           }}
         />
