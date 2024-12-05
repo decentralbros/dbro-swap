@@ -3,11 +3,13 @@ import { useTranslation } from '@pancakeswap/localization'
 import { AutoRow, Box, Text } from '@pancakeswap/uikit'
 import { formatUnits } from '@pancakeswap/utils/viem/formatUnits'
 import deployedContracts from 'config/abi/deployedContracts'
-import { DBRO_API } from 'config/constants/endpoints'
-import qs from 'qs'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+
+import React, { useEffect, useMemo } from 'react'
 import styled from 'styled-components'
 import { useAccount, useChainId, useReadContract } from 'wagmi'
+import { refetchOptions } from 'config/query'
+import { DBRO_CONTRACT, REWARD_WALLET, RYFT_ADDRESS } from 'config/constants/contracts'
+import { useStakingUSD } from 'hooks/useStakingUSD'
 import { MyVeCakeCard } from '../MyVeCakeCard'
 import { DataRow } from './DataBox'
 
@@ -23,9 +25,6 @@ interface NewStakingDataSetProps {
   customDataRow?: JSX.Element
 }
 
-const RYFT_ADDRESS = '0x7aBe92aA0b6da4AeEf832F5Ce540dc49EAAd2dCA'
-const DBRO_CONTRACT = '0x6a4e0F83D7882BcACFF89aaF6f60D24E13191E9F'
-const REWARD_WALLET = '0xE31b8Ebc6b9Ae3622cF1e3bFf4c129A15b8d548c'
 const erc20ABI = [
   {
     inputs: [{ name: 'account', type: 'address' }],
@@ -66,6 +65,9 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
     abi: erc20ABI,
     functionName: 'balanceOf',
     args: [REWARD_WALLET as `0x${string}`],
+    query: {
+      ...refetchOptions,
+    },
   })
 
   const { data: stakeInfo } = useReadContract({
@@ -94,6 +96,9 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
     address: contractConfig.address as `0x${string}`,
     abi: contractConfig.abi,
     functionName: 'totalRewardTokens',
+    query: {
+      ...refetchOptions,
+    },
   })
 
   const { data: maxStake } = useReadContract({
@@ -107,6 +112,9 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
     address: DBRO_CONTRACT,
     functionName: 'balanceOf',
     args: [RYFT_ADDRESS],
+    query: {
+      ...refetchOptions,
+    },
   })
 
   const useMaxStake = useMemo((): bigint => {
@@ -133,69 +141,20 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
     }
   }, [requiredDBRO])
 
-  const [poolValue, setPoolValue] = useState('0.00')
-  const [walletValue, setWalletValue] = useState('0.00')
-  const [wrappedValue, setWrappedValue] = useState('0.00')
-  const [claimValue, setClaimValue] = useState('0.00')
+  const { data: usdValues } = useStakingUSD({
+    account,
+    contractTokens,
+    treasuryBalance,
+    dbroBalance,
+    useRequiredDBRO,
+  })
 
-  const fetchUSDValues = useCallback(async () => {
-    if (!account) return
-
-    try {
-      const params = {
-        chainId: ChainId.BASE,
-        native: false,
-        address: account,
-        contract: DBRO_CONTRACT,
-        decimals: 8,
-      }
-
-      const response = await fetch(`${DBRO_API}/balance/usd?${qs.stringify(params)}`)
-      const usd = await response.json()
-
-      if (usd && contractTokens) {
-        const pool = formatUnits(BigInt(String(contractTokens)), 8)
-
-        setPoolValue((Number(usd) * Number(pool)).toFixed(2))
-      } else {
-        setPoolValue('0.00')
-      }
-
-      if (usd && treasuryBalance) {
-        const treasury = formatUnits(BigInt(treasuryBalance), 8)
-
-        setWalletValue((Number(usd) * Number(treasury)).toFixed(2))
-      } else {
-        setWalletValue('0.00')
-      }
-
-      if (usd && dbroBalance) {
-        const dbro = formatUnits(BigInt(dbroBalance), 8)
-
-        setWrappedValue((Number(usd) * Number(dbro)).toFixed(2))
-      } else {
-        setWrappedValue('0.00')
-      }
-
-      if (usd && useRequiredDBRO) {
-        const claim = formatUnits(BigInt(useRequiredDBRO), 8)
-
-        setClaimValue((Number(usd) * Number(claim)).toFixed(2))
-      } else {
-        setClaimValue('0.00')
-      }
-    } catch {
-      setPoolValue('0.00')
-      setWalletValue('0.00')
-      setWrappedValue('0.00')
-      setClaimValue('0.00')
-    }
-  }, [account, contractTokens, dbroBalance, useRequiredDBRO, treasuryBalance])
-
-  useEffect(() => {
-    fetchUSDValues()
-    // eslint-disable-next-line
-  }, [contractTokens, dbroBalance, treasuryBalance])
+  const { poolValue, walletValue, wrappedValue, claimValue } = usdValues ?? {
+    poolValue: '0.00',
+    walletValue: '0.00',
+    wrappedValue: '0.00',
+    claimValue: '0.00',
+  }
 
   return (
     <>

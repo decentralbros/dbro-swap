@@ -20,15 +20,14 @@ import { useSwapActionHandlers } from 'state/swap/useSwapActionHandlers'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { config } from 'utils/wagmi'
 import { useAccount, useChainId, useReadContract } from 'wagmi'
+import { refetchOptions } from 'config/query'
+import { ETHEREUM, ZEROX_ADDRESS } from 'config/constants/contracts'
 import { abi } from '../abi'
 import { useSlippageAdjustedAmounts } from '../hooks'
 import { useConfirmModalState } from '../hooks/useConfirmModalState'
 import { useSwapCurrency } from '../hooks/useSwapCurrency'
 import { useSwapValues } from '../hooks/useSwapValues'
 import { CommitButtonProps } from '../types'
-
-const ZEROX_ADDRESS = '0x0000000000001fF3684f28c67538d4D072C22734' as `0x${string}`
-const ETHEREUM = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE' as `0x${string}`
 
 interface SwapCommitButtonPropsType {
   trade?: SmartRouterTrade<TradeType>
@@ -160,7 +159,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     args: [account as `0x${string}`, ZEROX_ADDRESS],
     query: {
       enabled: Boolean(account),
-      refetchInterval: 5_000,
+      ...refetchOptions,
     },
   })
 

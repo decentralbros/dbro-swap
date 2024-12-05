@@ -5,10 +5,10 @@ import { useUserSlippage } from '@pancakeswap/utils/user'
 import { parseUnits } from '@pancakeswap/utils/viem/parseUnits'
 import { useSwapState } from 'state/swap/hooks'
 import { useAccount } from 'wagmi'
+import { ETHEREUM } from 'config/constants/contracts'
 import { useSwapCurrency } from './useSwapCurrency'
 
-const FEE_ADDRESS: string = '0x5688C2882c54498D34dbe1Ab835F087a5b0B87c4'
-const ETHEREUM: string = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
+const FEE_ADDRESS: string = process.env.NEXT_PUBLIC_FEE_ADDRESS as string
 
 const APPROVED_TOKENS: { [key: string]: { symbol: string; chainId: number } } = {
   // Mainnet stables

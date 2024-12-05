@@ -4,11 +4,11 @@ import { useTranslation } from '@pancakeswap/localization'
 import { AutoRow, Box, Text } from '@pancakeswap/uikit'
 import { formatUnits } from '@pancakeswap/utils/viem/formatUnits'
 import deployedContracts from 'config/abi/deployedContracts'
-import { DBRO_API } from 'config/constants/endpoints'
-import qs from 'qs'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import { useAccount, useChainId, useReadContract } from 'wagmi'
+import { refetchOptions } from 'config/query'
+import { useWrappedUSD } from 'hooks/useWrappedUSD'
 import { MyVeCakeCard } from '../MyVeCakeCard'
 import { DataRow } from './DataBox'
 
@@ -23,8 +23,6 @@ interface NewStakingDataSetProps {
   customVeCakeCard?: JSX.Element
   customDataRow?: JSX.Element
 }
-
-const DBRO_CONTRACT = '0x6a4e0F83D7882BcACFF89aaF6f60D24E13191E9F'
 
 export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataSetProps>> = ({
   cakeAmount = 0,
@@ -46,7 +44,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
     args: [account as `0x${string}`, BigInt(0)],
     query: {
       enabled: Boolean(account),
-      refetchInterval: 5_000,
+      ...refetchOptions,
     },
   })
 
@@ -61,6 +59,10 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
     abi: contractRYFT.abi,
     functionName: 'totalSupply',
     args: [BigInt(0)],
+    query: {
+      enabled: Boolean(account),
+      ...refetchOptions,
+    },
   })
 
   const { data: unwrapFEE } = useReadContract({
@@ -87,37 +89,11 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
     functionName: 'REQUIRED_DBRO',
   })
 
-  const [wrappedValue, setWrappedValue] = useState<any>('0.00')
-
-  const fetchUSDValues = useCallback(async () => {
-    try {
-      const params = {
-        chainId: ChainId.BASE,
-        native: false,
-        address: account,
-        contract: DBRO_CONTRACT,
-        decimals: 8,
-      }
-
-      const response = await fetch(`${DBRO_API}/balance/usd?${qs.stringify(params)}`)
-      const usd = await response.json()
-
-      if (usd && requiredDBRO && nftBalance) {
-        const dbro = formatUnits(requiredDBRO as bigint, 8)
-
-        setWrappedValue((Number(usd) * Number(dbro) * Number(nftBalance)).toFixed(2))
-      } else {
-        setWrappedValue('0.00')
-      }
-    } catch {
-      setWrappedValue('0.00')
-    }
-  }, [account, requiredDBRO, nftBalance])
-
-  useEffect(() => {
-    fetchUSDValues()
-    // eslint-disable-next-line
-  }, [requiredDBRO, nftBalance])
+  const { data: wrappedValue = '0.00' } = useWrappedUSD({
+    account,
+    requiredDBRO,
+    nftBalance,
+  })
 
   return (
     <>
@@ -170,7 +146,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
                     {t('Wrapped Value')}
                   </Text>
                 }
-                value={<ValueText>&bull; ${!wrappedValue || isNaN(wrappedValue) ? '0.00' : wrappedValue}</ValueText>}
+                value={<ValueText>&bull; ${wrappedValue}</ValueText>}
               />
               <DataRow
                 label={

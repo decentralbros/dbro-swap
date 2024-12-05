@@ -6,6 +6,12 @@ import { CAKE_VAULT } from '@pancakeswap/pools'
 import { V3_QUOTER_ADDRESSES } from '@pancakeswap/smart-router'
 import { DEPLOYER_ADDRESSES, NFT_POSITION_MANAGER_ADDRESSES } from '@pancakeswap/v3-sdk'
 
+export const RYFT_ADDRESS = '0x7aBe92aA0b6da4AeEf832F5Ce540dc49EAAd2dCA'
+export const DBRO_CONTRACT = '0x6a4e0F83D7882BcACFF89aaF6f60D24E13191E9F'
+export const REWARD_WALLET = '0xE31b8Ebc6b9Ae3622cF1e3bFf4c129A15b8d548c'
+export const ZEROX_ADDRESS = '0x0000000000001fF3684f28c67538d4D072C22734' as `0x${string}`
+export const ETHEREUM = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE' as `0x${string}`
+
 export default {
   masterChef: {
     [ChainId.BSC_TESTNET]: '0xB4A466911556e39210a6bB2FaECBB59E4eB7E43d',
