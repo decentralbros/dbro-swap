@@ -1,11 +1,19 @@
-import { useTheme } from '@pancakeswap/hooks'
-import { Box, PageSection, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { Box, Flex, PageSection, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
+import useTheme from 'hooks/useTheme'
 import { styled } from 'styled-components'
+import CakeDataRow from './components/CakeDataRow'
+import CakeSection from './components/CakeSection'
 import CommunitySection from './components/CommunitySection'
-import EcoSystemSection from './components/EcoSystemSection'
 import Footer from './components/Footer'
 import Hero from './components/Hero'
-import { InnerWedgeWrapper, OuterWedgeWrapper, WedgeTopLeft } from './components/WedgeSvgs'
+import {
+  InnerWedgeWrapper,
+  OuterWedgeWrapper,
+  WedgeBottomRight,
+  WedgeTopLeft,
+  WedgeTopRight,
+} from './components/WedgeSvgs'
+import EcoSystemSection from './components/EcoSystemSection'
 
 const StyledHeroSection = styled(PageSection)`
   padding-top: 16px;
@@ -76,6 +84,27 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         <MetricsSection />
       </PageSection> */}
 
+      {/* <PageSection
+        innerProps={{ style: HomeSectionContainerStyles }}
+        background={theme.colors.background}
+        containerProps={{
+          id: 'home4-2',
+        }}
+        index={2}
+        hasCurvedDivider={false}
+      >
+        <CakeSection /> */}
+      {/* <Flex style={{ gap: 5 }} justifyContent="center" mt="40px">
+          <Text fontSize={24} bold>
+            CAKE
+          </Text>
+          <Text fontSize={24} bold color="secondary">
+            Figures
+          </Text>
+        </Flex>
+        <CakeDataRow /> */}
+      {/* </PageSection> */}
+
       <PageSection
         innerProps={{ style: { ...HomeSectionContainerStyles, maxWidth: 'auto', paddingBottom: '32px' } }}
         background={theme.colors.background}
@@ -92,37 +121,6 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         </OuterWedgeWrapper>
         <EcoSystemSection />
       </PageSection>
-
-      {/* <PageSection
-        innerProps={{ style: HomeSectionContainerStyles }}
-        background={theme.colors.background}
-        containerProps={{
-          id: 'home-2',
-        }}
-        index={2}
-        hasCurvedDivider={false}
-      > */}
-      {/* <OuterWedgeWrapper>
-          <InnerWedgeWrapper width="150%" top>
-            <WedgeTopRight />
-          </InnerWedgeWrapper>
-        </OuterWedgeWrapper> */}
-      {/* <CakeSection /> */}
-      {/* <Flex style={{ gap: 5 }} justifyContent="center" mt="40px">
-          <Text fontSize={24} bold>
-            {t('CAKE')}
-          </Text>
-          <Text fontSize={24} bold color="secondary">
-            {t('Figures')}
-          </Text>
-        </Flex>
-        <CakeDataRow /> */}
-      {/* <OuterWedgeWrapper>
-          <InnerWedgeWrapper id="bottom-wedge4-2"> */}
-      {/* <WedgeBottomRight />
-          </InnerWedgeWrapper>
-        </OuterWedgeWrapper> */}
-      {/* </PageSection> */}
 
       <PageSection
         innerProps={{ style: HomeSectionContainerStyles }}

@@ -11,16 +11,7 @@ import { useDrawSequenceImages } from '../../hooks/useDrawSequence'
 import { checkIsIOS } from '../../hooks/useIsIOS'
 import { useObserverOnce } from '../../hooks/useObserver'
 
-import {
-  CakePartnerTag,
-  CakeSectionTag,
-  EcoSystemTagOuterWrapper,
-  FeatureTagsWrapper,
-  PartnerTagOuterWrapper,
-  PartnerTagsWrapper,
-  useEcosystemTagData,
-  usePartnerData,
-} from './CakeSectionTag'
+import { useEcosystemTagData, usePartnerData } from './CakeSectionTag'
 
 const LINE_TRANSITION_TIMES = 0.35
 const COVER_TRANSITION_TIMES = 0.45
@@ -354,92 +345,91 @@ const height = 900
 const CakeSection: React.FC = () => {
   const { theme } = useTheme()
   const { t } = useTranslation()
-  const ecosystemTagData = useEcosystemTagData()
-  const partnerData = usePartnerData()
-  const videoRef = useRef<HTMLVideoElement>()
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const leftRef = useRef<HTMLDivElement>(null)
-  const leftLineRef = useRef<HTMLDivElement>(null)
-  const rightRef = useRef<HTMLDivElement>(null)
-  const bottomRef = useRef<HTMLDivElement>(null)
-  const played = useRef<boolean>(false)
-  const cakeBoxRef = useRef<HTMLDivElement>(null)
-  const internalRef = useRef(0)
-  const seqIntervalRef = useRef(0)
+  // const ecosystemTagData = useEcosystemTagData()
+  // const partnerData = usePartnerData()
+  // const videoRef = useRef<HTMLVideoElement>()
+  // const canvasRef = useRef<HTMLCanvasElement>(null)
+  // const leftRef = useRef<HTMLDivElement>(null)
+  // const leftLineRef = useRef<HTMLDivElement>(null)
+  // const rightRef = useRef<HTMLDivElement>(null)
+  // const bottomRef = useRef<HTMLDivElement>(null)
+  // const played = useRef<boolean>(false)
+  // const cakeBoxRef = useRef<HTMLDivElement>(null)
+  // const internalRef = useRef(0)
+  // const seqIntervalRef = useRef(0)
   const { isMobile, isTablet } = useMatchBreakpoints()
-  const { totalApr } = useFourYearTotalVeCakeApr()
 
-  useLayoutEffect(() => {
-    if (checkIsIOS() || isMobile) return
-    const video = document.createElement('video')
-    video.autoplay = true
-    video.playsInline = true
-    video.width = width
-    video.src = `${ASSET_CDN}/web/landing/cake-alpha.webm`
-    video.muted = true
-    videoRef.current = video
-  }, [isMobile])
+  // useLayoutEffect(() => {
+  //   if (checkIsIOS() || isMobile) return
+  //   const video = document.createElement('video')
+  //   video.autoplay = true
+  //   video.playsInline = true
+  //   video.width = width
+  //   video.src = `${ASSET_CDN}/web/landing/cake-alpha.webm`
+  //   video.muted = true
+  //   videoRef.current = video
+  // }, [isMobile])
 
-  const { drawImage, isVideoPlaying } = useDrawCanvas(videoRef, canvasRef, internalRef, width, height, () => {
-    if (isVideoPlaying.current === false) {
-      isVideoPlaying.current = true
-      internalRef.current = window.requestAnimationFrame(() => {
-        drawImage?.()
-      })
-      triggerCssAnimation()
-    }
-  })
+  // const { drawImage, isVideoPlaying } = useDrawCanvas(videoRef, canvasRef, internalRef, width, height, () => {
+  //   if (isVideoPlaying.current === false) {
+  //     isVideoPlaying.current = true
+  //     internalRef.current = window.requestAnimationFrame(() => {
+  //       drawImage?.()
+  //     })
+  //     triggerCssAnimation()
+  //   }
+  // })
 
-  useObserverOnce(cakeBoxRef, () => {
-    if (checkIsIOS() || isMobile) {
-      if (playing.current === false) {
-        playing.current = true
-        seqIntervalRef.current = window.setInterval(() => {
-          drawSequenceImage(900, 900)
-        }, 1000 / 32)
-      }
-      triggerCssAnimation()
-    } else videoRef.current?.play()
-  })
+  // useObserverOnce(cakeBoxRef, () => {
+  //   if (checkIsIOS() || isMobile) {
+  //     if (playing.current === false) {
+  //       playing.current = true
+  //       seqIntervalRef.current = window.setInterval(() => {
+  //         drawSequenceImage(900, 900)
+  //       }, 1000 / 32)
+  //     }
+  //     triggerCssAnimation()
+  //   } else videoRef.current?.play()
+  // })
 
-  const { drawSequenceImage, playing } = useDrawSequenceImages(
-    `${ASSET_CDN}/web/landing/cake-token-sequence`,
-    checkIsIOS() || isMobile ? 201 : 0,
-    canvasRef,
-    seqIntervalRef,
-    () => clearInterval(seqIntervalRef.current),
-  )
+  // const { drawSequenceImage, playing } = useDrawSequenceImages(
+  //   `${ASSET_CDN}/web/landing/cake-token-sequence`,
+  //   checkIsIOS() || isMobile ? 201 : 0,
+  //   canvasRef,
+  //   seqIntervalRef,
+  //   () => clearInterval(seqIntervalRef.current),
+  // )
 
-  const triggerCssAnimation = useCallback(() => {
-    setTimeout(() => {
-      if (leftRef.current) leftRef.current?.classList.add('show')
-      if (leftLineRef.current) leftLineRef.current?.classList.add('show')
-    }, 1000)
-    setTimeout(() => {
-      if (rightRef.current) rightRef.current?.classList.add('show')
-    }, 2000)
-    setTimeout(() => {
-      if (bottomRef.current) bottomRef.current?.classList.add('show')
-    }, 3000)
-    played.current = true
-  }, [])
+  // const triggerCssAnimation = useCallback(() => {
+  //   setTimeout(() => {
+  //     if (leftRef.current) leftRef.current?.classList.add('show')
+  //     if (leftLineRef.current) leftLineRef.current?.classList.add('show')
+  //   }, 1000)
+  //   setTimeout(() => {
+  //     if (rightRef.current) rightRef.current?.classList.add('show')
+  //   }, 2000)
+  //   setTimeout(() => {
+  //     if (bottomRef.current) bottomRef.current?.classList.add('show')
+  //   }, 3000)
+  //   played.current = true
+  // }, [])
 
-  const triggerAnimation = useCallback(() => {
-    if (played.current) {
-      if (leftRef.current) leftRef.current?.classList.add('show')
-      if (leftLineRef.current) leftLineRef.current?.classList.add('show')
-      if (rightRef.current) rightRef.current?.classList.add('show')
-      if (bottomRef.current) bottomRef.current?.classList.add('show')
-    }
-  }, [])
+  // const triggerAnimation = useCallback(() => {
+  //   if (played.current) {
+  //     if (leftRef.current) leftRef.current?.classList.add('show')
+  //     if (leftLineRef.current) leftLineRef.current?.classList.add('show')
+  //     if (rightRef.current) rightRef.current?.classList.add('show')
+  //     if (bottomRef.current) bottomRef.current?.classList.add('show')
+  //   }
+  // }, [])
 
-  useLayoutEffect(() => {
-    triggerAnimation()
-    return () => {
-      cancelAnimationFrame(internalRef.current)
-      clearInterval(seqIntervalRef.current)
-    }
-  }, [drawImage, triggerAnimation])
+  // useLayoutEffect(() => {
+  //   triggerAnimation()
+  //   return () => {
+  //     cancelAnimationFrame(internalRef.current)
+  //     clearInterval(seqIntervalRef.current)
+  //   }
+  // }, [drawImage, triggerAnimation])
 
   return (
     <Flex
@@ -457,39 +447,39 @@ const CakeSection: React.FC = () => {
           fontWeight={600}
           display="inline"
           marginLeft={10}
-          color={theme.isDark ? '#A881FC' : theme.colors.secondary}
+          color="secondary"
           fontSize={['32px', null, null, '40px']}
           lineHeight="110%"
         >
-          {t('CAKE')}
+          {t('DBRO')}
         </Text>
       </Text>
       <Flex justifyContent="center">
         <Text
           fontSize={['16px', null, null, '20px']}
           fontWeight={600}
-          color={theme.isDark ? '#B8ADD2' : '#7A6EAA'}
+          color="#B8ADD2"
           textAlign="center"
           lineHeight="110%"
-          padding="0px 16px"
+          paddingX={['16px', '16px', '120px', '120px']}
         >
-          {t(
-            'Experience the power of community ownership, global governance, and explore infinite use cases within the PancakeSwap ecosystem',
-          )}
+          {t('Experience the power of community ownership and explore infinite use cases within the DBRO ecosystem')}
         </Text>
       </Flex>
       <Flex justifyContent="center" style={{ gap: 14 }}>
-        <NextLink href="/swap?outputCurrency=0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82&chainId=56">
-          <Button variant="primary">{t('Buy CAKE')}</Button>
+        <NextLink href="/swap?chain=base&outputCurrency=0x6a4e0F83D7882BcACFF89aaF6f60D24E13191E9F">
+          <Button variant="primary" style={{ color: '#000' }}>
+            Buy DBRO
+          </Button>
         </NextLink>
-        <Link href="https://docs.pancakeswap.finance/governance-and-tokenomics/cake-tokenomics">
+        {/* <Link href="https://docs.pancakeswap.finance/governance-and-tokenomics/cake-tokenomics">
           <Button pl="0" endIcon={<OpenNewIcon color="primary" />} variant="text">
             {t('Learn')}
           </Button>
-        </Link>
+        </Link> */}
       </Flex>
       <Flex flexDirection={['column']} mb="40px">
-        <CakeSectionMainBox>
+        {/* <CakeSectionMainBox>
           <CakeLeftLine ref={leftLineRef} className={played?.current ? 'show' : ''} />
           <CakeSectionLeftBox>
             <CakeLeftBorderBox ref={leftRef} className={played?.current ? 'show' : ''}>
@@ -527,25 +517,24 @@ const CakeSection: React.FC = () => {
               </PartnerTagOuterWrapper>
             </CakeRightBorderBox>
           </CakeSectionRightBox>
-        </CakeSectionMainBox>
+        </CakeSectionMainBox> */}
         <CakeSectionBottomBox
           flexDirection="column"
           position="relative"
           mt={['48px', '48px', '48px', '48px', '0']}
-          ref={bottomRef}
-          className={played?.current ? 'show' : ''}
+          className="show"
         >
-          <CakeBottomLine />
+          {/* <CakeBottomLine /> */}
           <BottomCakeContainer flexDirection="column">
             <Text textAlign="center" fontSize="40px" fontWeight="600">
               {t('Staking')}
             </Text>
             <Text color="secondary" textAlign="center" fontSize="20px" fontWeight="600" mb="16px">
-              {t('Earn up to %apr%% APR', { apr: totalApr.toFixed(2) })}
+              {t('Earn up to %apr%% APY', { apr: 30 })}
             </Text>
-            <NextLink href="/cake-staking">
+            <NextLink href="/staking/learn">
               <StyledLink color="primary" margin="auto">
-                <Button variant="secondary">{t('Lock CAKE Now!')}🔥</Button>
+                <Button variant="secondary">{t('Stake DBRO ')}⚡</Button>
               </StyledLink>
             </NextLink>
           </BottomCakeContainer>

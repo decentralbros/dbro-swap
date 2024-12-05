@@ -238,7 +238,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
               <DataRow
                 label={
                   <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                    {t('YAPY')}
+                    {t('APY')}
                   </Text>
                 }
                 value={<ValueText>&bull; {`${rewardRate ?? 0}%`}</ValueText>}

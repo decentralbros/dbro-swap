@@ -1,4 +1,13 @@
-import { BaseIcon, BinanceChainIcon, EthChainIcon, Svg, SvgProps, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
+import {
+  BaseIcon,
+  BinanceChainIcon,
+  EthChainIcon,
+  LineaIcon,
+  Svg,
+  SvgProps,
+  Text,
+  useMatchBreakpoints,
+} from '@pancakeswap/uikit'
 import React, { cloneElement } from 'react'
 import Marquee from 'react-fast-marquee'
 import { styled } from 'styled-components'
@@ -108,12 +117,12 @@ const newsItems = [
   //   background: '#6E89AE',
   //   iconWidth: '20px',
   // },
-  // {
-  //   key: 'Linea',
-  //   component: <LineaIcon />,
-  //   background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.10) 100%), #81D8EA',
-  //   iconWidth: '18px',
-  // },
+  {
+    key: 'Linea',
+    component: <LineaIcon />,
+    background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.10) 100%), #81D8EA',
+    iconWidth: '18px',
+  },
   {
     key: 'Base',
     component: (
