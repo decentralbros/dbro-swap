@@ -3,9 +3,9 @@ import { ChainId } from '@pancakeswap/chains'
 import { Estimate } from '@pancakeswap/swap-sdk-core'
 import { useUserSlippage } from '@pancakeswap/utils/user'
 import { parseUnits } from '@pancakeswap/utils/viem/parseUnits'
+import { ETHEREUM } from 'config/constants/contracts'
 import { useSwapState } from 'state/swap/hooks'
 import { useAccount } from 'wagmi'
-import { ETHEREUM } from 'config/constants/contracts'
 import { useSwapCurrency } from './useSwapCurrency'
 
 const FEE_ADDRESS: string = process.env.NEXT_PUBLIC_FEE_ADDRESS as string
@@ -14,14 +14,19 @@ const APPROVED_TOKENS: { [key: string]: { symbol: string; chainId: number } } = 
   // Mainnet stables
   '0xdac17f958d2ee523a2206206994597c13d831ec7': { symbol: 'USDT', chainId: 1 },
   '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48': { symbol: 'USDC', chainId: 1 },
+  // Mainnet WETH
+  '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2': { symbol: 'WETH', chainId: 1 },
 
   // Arbitrum stables
   '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9': { symbol: 'USDT', chainId: 42161 },
   '0xaf88d065e77c8cc2239327c5edb3a432268e5831': { symbol: 'USDC', chainId: 42161 },
+  // Arbitrum WETH
+  '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1': { symbol: 'WETH', chainId: 42161 },
 
   // Base stables
   '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913': { symbol: 'USDC', chainId: 8453 },
-
+  // Base WETH
+  '0x4200000000000000000000000000000000000006': { symbol: 'WETH', chainId: 8453 },
   // Decentral Bros
   '0x6a4e0f83d7882bcacff89aaf6f60d24e13191e9f': { symbol: 'DBRO', chainId: 8453 },
 }
