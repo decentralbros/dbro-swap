@@ -1,3 +1,4 @@
+import { ChainId } from '@pancakeswap/chains'
 import { useTranslation } from '@pancakeswap/localization'
 import {
   Balance,
@@ -10,18 +11,17 @@ import {
   Text,
   useToast,
 } from '@pancakeswap/uikit'
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import Image from 'next/image'
-import { ChainId } from '@pancakeswap/chains'
-import deployedContracts from 'config/abi/deployedContracts'
-import { waitForTransactionReceipt, writeContract } from '@wagmi/core'
-import { config } from 'utils/wagmi'
-import { useAccount, useChainId, useReadContract } from 'wagmi'
 import { formatUnits } from '@pancakeswap/utils/viem/formatUnits'
 import { parseUnits } from '@pancakeswap/utils/viem/parseUnits'
+import { waitForTransactionReceipt, writeContract } from '@wagmi/core'
 import { ToastDescriptionWithTx } from 'components/Toast'
+import deployedContracts from 'config/abi/deployedContracts'
 import { DBRO_API } from 'config/constants/endpoints'
+import Image from 'next/image'
 import qs from 'qs'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { config } from 'utils/wagmi'
+import { useAccount, useChainId, useReadContract } from 'wagmi'
 import { useBSCCakeBalance } from '../../hooks/useBSCCakeBalance'
 
 const percentShortcuts = [25, 50, 75]
@@ -340,7 +340,12 @@ export const CakeInput: React.FC<{
 
       {account && (
         <Flex flexDirection={['column']} alignItems="center" width="100%">
-          <Button disabled={!canStake || isStaking} style={{ color: '#000' }} width={['100%']} onClick={handleStake}>
+          <Button
+            disabled={isStaking || Number(value) < 1}
+            style={{ color: '#000' }}
+            width={['100%']}
+            onClick={handleStake}
+          >
             {!isStaking ? 'Stake' : <Dots>Staking</Dots>}
           </Button>
 
