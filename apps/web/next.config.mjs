@@ -1,13 +1,10 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
+// next.config.mjs
 import BundleAnalyzer from '@next/bundle-analyzer'
 import { withWebSecurityHeaders } from '@pancakeswap/next-config/withWebSecurityHeaders'
 import smartRouterPkgs from '@pancakeswap/smart-router/package.json' with { type: 'json' }
 import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin'
-import vercelToolbarPlugin from '@vercel/toolbar/plugins/next'
 import path from 'path'
 import { fileURLToPath } from 'url'
-
-const withVercelToolbar = vercelToolbarPlugin()
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -23,21 +20,59 @@ const workerDeps = Object.keys(smartRouterPkgs.dependencies)
 
 /** @type {import('next').NextConfig} */
 const config = {
-  typescript: {
-    tsconfigPath: 'tsconfig.json',
-  },
   compiler: {
     styledComponents: true,
+    removeConsole: process.env.NODE_ENV === 'production' ? {
+      exclude: ['error', 'warn'],
+    } : false,
   },
+
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
+
   experimental: {
-    scrollRestoration: true,
     fallbackNodePolyfills: false,
     outputFileTracingRoot: path.join(__dirname, '../../'),
     outputFileTracingExcludes: {
-      '*': [],
+      '*': [
+        '**/*.map',
+        '.next/cache/**',
+      ],
     },
-    optimizePackageImports: ['@pancakeswap/widgets-internal', '@pancakeswap/uikit'],
+    optimizePackageImports: [
+      '@pancakeswap/widgets-internal',
+      '@pancakeswap/uikit',
+      '@pancakeswap/farms',
+      '@pancakeswap/hooks',
+    ],
   },
+
+  generateBuildId: () => 'build-' + new Date().toISOString(),
+  
+  swcMinify: false,
+  reactStrictMode: true,
+  
+  typescript: {
+    ignoreBuildErrors: false,
+    tsconfigPath: 'tsconfig.json',
+  },
+  
+  eslint: {
+    ignoreDuringBuilds: false,
+  },
+
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
+  },
+
   transpilePackages: [
     '@pancakeswap/farms',
     '@pancakeswap/position-managers',
@@ -47,78 +82,41 @@ const config = {
     '@pancakeswap/widgets-internal',
     '@pancakeswap/ifos',
     '@pancakeswap/uikit',
-    // https://github.com/TanStack/query/issues/6560#issuecomment-1975771676
     '@tanstack/query-core',
-  ],  
-  reactStrictMode: true,
-  swcMinify: false,
-  typescript: {
-    ignoreBuildErrors: false,
-  },
-  eslint: {
-    ignoreDuringBuilds: false,
-  },
-  async headers() {
-    return [
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'Cross-Origin-Opener-Policy',
-            value: 'same-origin-allow-popups'
-          }
-        ]
-      },
-      {
-        source: '/favicon.ico',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, immutable, max-age=31536000',
-          },
-        ],
-      },
-      {
-        source: '/logo.png',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, immutable, max-age=31536000',
-          },
-        ],
-      },
-      {
-        source: '/images/:all*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, immutable, max-age=31536000',
-          },
-        ],
-      },
-      {
-        source: '/images/tokens/:all*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, immutable, max-age=604800',
-          },
-        ],
-      },
-    ]
-  },
-  webpack: (webpackConfig, { webpack, isServer }) => {
-    // tree shake sentry tracing
+  ],
+
+  headers: async () => [
+    {
+      source: '/:path*',
+      headers: [
+        {
+          key: 'Cross-Origin-Opener-Policy',
+          value: 'same-origin-allow-popups',
+        },
+      ],
+    },
+    {
+      source: '/images/tokens/:all*',
+      headers: [
+        {
+          key: 'Cache-Control',
+          value: 'public, immutable, max-age=604800',
+        },
+      ],
+    },
+  ],
+
+  webpack: (webpackConfig, { webpack, isServer, dev }) => {
+    // Sentry optimization
     webpackConfig.plugins.push(
       new webpack.DefinePlugin({
         __SENTRY_DEBUG__: false,
         __SENTRY_TRACING__: false,
-      }),
+      })
     )
+
+    // Worker chunks optimization
     if (!isServer && webpackConfig.optimization.splitChunks) {
-      // webpack doesn't understand worker deps on quote worker, so we need to manually add them
-      // https://github.com/webpack/webpack/issues/16895
-      // eslint-disable-next-line no-param-reassign
       webpackConfig.optimization.splitChunks.cacheGroups.workerChunks = {
         chunks: 'all',
         test(module) {
@@ -130,10 +128,17 @@ const config = {
         reuseExistingChunk: true,
       }
     }
+
+    // Production optimizations
+    if (!dev) {
+      webpackConfig.optimization.moduleIds = 'deterministic'
+      webpackConfig.optimization.chunkIds = 'deterministic'
+    }
+
     return webpackConfig
   },
 }
 
-export default withVercelToolbar(
-  withBundleAnalyzer(withVanillaExtract(withWebSecurityHeaders(config)))
+export default withBundleAnalyzer(
+  withVanillaExtract(withWebSecurityHeaders(config))
 )
