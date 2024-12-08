@@ -58,10 +58,10 @@ export const BENEFITS: Record<BenefitCardType, BenefitItem> = {
     headImg: '/images/cake-staking/benefit-farm-boost.png',
     title: <Trans>Workshops</Trans>,
     btnText: <Trans>Check Workshops</Trans>,
-    link: 'https://workshop.decentralbros.xyz',
+    link: 'https://www.decentralbros.dev',
     desc: [
       <Trans>Access our live coding workshops and benefit from team mentorship</Trans>,
-      <Trans>Wrapped Or Held Token Value: $200</Trans>,
+      <Trans>Requires 7 Wrapped NFTs for Access</Trans>,
     ],
     key: 'benefit-farm-boost',
   },
@@ -72,7 +72,7 @@ export const BENEFITS: Record<BenefitCardType, BenefitItem> = {
     link: 'https://www.decentralbros.xyz',
     desc: [
       <Trans>Use your utility NFTs for discounted rates on custom development services</Trans>,
-      <Trans>Wrapped Or Held Token Value: $500</Trans>,
+      <Trans>Requires 15 Wrapped NFTs for Access</Trans>,
     ],
     key: 'benefit-snapshot-voting',
   },
@@ -80,10 +80,10 @@ export const BENEFITS: Record<BenefitCardType, BenefitItem> = {
     headImg: '/images/cake-staking/benefit-ifo.png',
     title: <Trans>Merchandise</Trans>,
     btnText: <Trans>Browse Store</Trans>,
-    link: 'https://www.decentralbros.xyz',
+    link: 'https://www.decentralbros.dev',
     desc: [
       <Trans>Discounted DBRO merchandise including shirts, hats, and more</Trans>,
-      <Trans>Wrapped Or Held Token Value: $100</Trans>,
+      <Trans>Requires 3 Wrapped NFTs for Access</Trans>,
     ],
     key: 'benefit-ifo',
   },
@@ -93,9 +93,9 @@ export const BENEFITS: Record<BenefitCardType, BenefitItem> = {
     btnText: <Trans>Learn More</Trans>,
     desc: [
       <Trans>Gain exclusive to pre-built templates for your own unique dApps</Trans>,
-      <Trans>Wrapped Or Held Token Value: $150</Trans>,
+      <Trans>Requires 5 Wrapped NFTs for Access</Trans>,
     ],
-    link: 'https://www.decentralbros.xyz',
+    link: 'https://www.decentralbros.dev',
     key: 'benefit-more',
   },
 }

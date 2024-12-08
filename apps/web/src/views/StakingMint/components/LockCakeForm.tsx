@@ -7,6 +7,7 @@ import { waitForTransactionReceipt, writeContract } from '@wagmi/core'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import deployedContracts from 'config/abi/deployedContracts'
+import { refetchOptions } from 'config/query'
 import { useCallback, useMemo, useState } from 'react'
 import { config } from 'utils/wagmi'
 import { useAccount, useChainId, useReadContract } from 'wagmi'
@@ -124,7 +125,7 @@ export const LockCakeForm: React.FC<{
     chainId,
     query: {
       enabled: Boolean(account),
-      refetchInterval: 5_000,
+      ...refetchOptions,
     },
   })
 
@@ -267,7 +268,7 @@ export const LockCakeForm: React.FC<{
           <FlexGap gap="4px" alignItems="center" width="100%">
             <Text color="warning" fontSize={16} bold>
               Unwrapping your NFT will forfeit all utilities, and you must have at least{' '}
-              <span style={{ color: '#1bf696' }}>2 wrapped NFTs</span> to redeem utilities
+              <span style={{ color: '#1bf696' }}>3 wrapped NFTs</span> to redeem utilities
             </Text>
           </FlexGap>
         </>
