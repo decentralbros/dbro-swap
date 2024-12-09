@@ -126,8 +126,6 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   const Layout = Component.Layout || Fragment
   const ShowMenu = Component.mp ? Fragment : Menu
   const isShowScrollToTopButton = Component.isShowScrollToTopButton || true
-  // const shouldScreenWallet = Component.screen || false
-  // const isShowV4IconButton = Component.isShowV4IconButton || false
 
   return (
     <>
@@ -140,8 +138,6 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
       <FixedSubgraphHealthIndicator />
       <TransactionsDetailModal />
       {isShowScrollToTopButton && <ScrollToTopButtonV2 />}
-      {/* {shouldScreenWallet && <Blocklist />} */}
-      {/* {isShowV4IconButton && <V4CakeIcon />} */}
     </>
   )
 }

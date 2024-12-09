@@ -18,6 +18,5 @@ const IndexPage = () => {
 // }
 
 IndexPage.chains = []
-IndexPage.isShowV4IconButton = false
 
 export default IndexPage
