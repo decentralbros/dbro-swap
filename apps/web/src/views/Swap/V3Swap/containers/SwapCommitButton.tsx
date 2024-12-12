@@ -12,6 +12,7 @@ import { CommitButton } from 'components/CommitButton'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import { ETHEREUM, ZEROX_ADDRESS } from 'config/constants/contracts'
 import { refetchOptions } from 'config/query'
+import { utils } from 'ethers'
 import { useCurrency } from 'hooks/Tokens'
 import { useIsTransactionUnsupported } from 'hooks/Trades'
 import useWrapCallback, { WrapType } from 'hooks/useWrapCallback'
@@ -21,7 +22,6 @@ import { useSwapState } from 'state/swap/hooks'
 import { useSwapActionHandlers } from 'state/swap/useSwapActionHandlers'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { config } from 'utils/wagmi'
-import { parseGwei } from 'viem/_types/utils/unit/parseGwei'
 import { useAccount, useChainId, useReadContract } from 'wagmi'
 import { abi } from '../abi'
 import { useSlippageAdjustedAmounts } from '../hooks'
@@ -209,8 +209,8 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         gas: transaction.gas,
         gasPrice: BigInt(transaction.gasPrice),
         value: transaction.value,
-        maxFeePerGas: parseGwei('200'),
-        maxPriorityFeePerGas: parseGwei('5'),
+        maxFeePerGas: utils.parseUnits('200', 'gwei').toBigInt(),
+        maxPriorityFeePerGas: utils.parseUnits('5', 'gwei').toBigInt(),
       })
 
       if (chainId !== ChainId.ETHEREUM) {
