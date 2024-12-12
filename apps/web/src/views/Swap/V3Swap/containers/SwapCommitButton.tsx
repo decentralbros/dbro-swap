@@ -10,6 +10,8 @@ import { parseUnits } from '@pancakeswap/utils/viem/parseUnits'
 import { sendTransaction, waitForTransactionReceipt, writeContract } from '@wagmi/core'
 import { CommitButton } from 'components/CommitButton'
 import ConnectWalletButton from 'components/ConnectWalletButton'
+import { ETHEREUM, ZEROX_ADDRESS } from 'config/constants/contracts'
+import { refetchOptions } from 'config/query'
 import { useCurrency } from 'hooks/Tokens'
 import { useIsTransactionUnsupported } from 'hooks/Trades'
 import useWrapCallback, { WrapType } from 'hooks/useWrapCallback'
@@ -19,9 +21,8 @@ import { useSwapState } from 'state/swap/hooks'
 import { useSwapActionHandlers } from 'state/swap/useSwapActionHandlers'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { config } from 'utils/wagmi'
+import { parseGwei } from 'viem/_types/utils/unit/parseGwei'
 import { useAccount, useChainId, useReadContract } from 'wagmi'
-import { refetchOptions } from 'config/query'
-import { ETHEREUM, ZEROX_ADDRESS } from 'config/constants/contracts'
 import { abi } from '../abi'
 import { useSlippageAdjustedAmounts } from '../hooks'
 import { useConfirmModalState } from '../hooks/useConfirmModalState'
@@ -201,13 +202,17 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
       const quote = await response.json()
       const { transaction } = quote
 
+      const gas: number = chainId === ChainId.ETHEREUM ? 1.2 : 2
+
       const tx: `0x${string}` = await sendTransaction(config as any, {
         account,
         to: transaction.to,
         data: transaction.data,
         gas: transaction.gas,
-        gasPrice: BigInt(transaction.gasPrice * 2),
+        gasPrice: BigInt(transaction.gasPrice),
         value: transaction.value,
+        maxFeePerGas: parseGwei('200'),
+        maxPriorityFeePerGas: parseGwei('5'),
       })
 
       if (chainId !== ChainId.ETHEREUM) {
