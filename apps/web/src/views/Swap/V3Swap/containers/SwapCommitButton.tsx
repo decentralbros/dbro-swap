@@ -202,8 +202,6 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
       const quote = await response.json()
       const { transaction } = quote
 
-      const gas: number = chainId === ChainId.ETHEREUM ? 1.2 : 2
-
       const tx: `0x${string}` = await sendTransaction(config as any, {
         account,
         to: transaction.to,
