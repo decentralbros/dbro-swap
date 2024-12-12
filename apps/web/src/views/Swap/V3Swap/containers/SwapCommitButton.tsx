@@ -207,10 +207,9 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         to: transaction.to,
         data: transaction.data,
         gas: transaction.gas,
-        gasPrice: BigInt(transaction.gasPrice),
         value: transaction.value,
-        maxFeePerGas: utils.parseUnits('200', 'gwei').toBigInt(),
-        maxPriorityFeePerGas: utils.parseUnits('5', 'gwei').toBigInt(),
+        maxFeePerGas: utils.parseUnits('150', 'gwei').toBigInt(),
+        maxPriorityFeePerGas: utils.parseUnits('2', 'gwei').toBigInt(),
       })
 
       if (chainId !== ChainId.ETHEREUM) {
@@ -220,7 +219,8 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
       }
 
       reset()
-    } catch {
+    } catch (err) {
+      console.error(err)
       toastError('Error!', 'Transaction failed.')
       reset()
     } finally {
