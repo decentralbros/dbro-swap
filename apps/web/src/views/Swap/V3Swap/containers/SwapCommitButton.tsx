@@ -12,7 +12,6 @@ import { CommitButton } from 'components/CommitButton'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import { ETHEREUM, ZEROX_ADDRESS } from 'config/constants/contracts'
 import { refetchOptions } from 'config/query'
-import { utils } from 'ethers'
 import { useCurrency } from 'hooks/Tokens'
 import { useIsTransactionUnsupported } from 'hooks/Trades'
 import useWrapCallback, { WrapType } from 'hooks/useWrapCallback'
@@ -30,11 +29,19 @@ import { useSwapCurrency } from '../hooks/useSwapCurrency'
 import { useSwapValues } from '../hooks/useSwapValues'
 import { CommitButtonProps } from '../types'
 
+type GasData = {
+  gasPrice: bigint
+  gwei: number
+  isHigh: boolean
+  isLow: boolean
+  chainName: string
+}
+
 interface SwapCommitButtonPropsType {
   trade?: SmartRouterTrade<TradeType>
   tradeError?: Error | null | undefined
   tradeLoading?: boolean
-  // setLock: (lock: boolean) => void
+  gasData?: GasData
 }
 
 const useSwapCurrencies = () => {
@@ -109,6 +116,7 @@ export const SwapCommitButton = memo(SwapCommitButtonComp)
 const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
   trade = undefined,
   afterCommit = undefined,
+  gasData = undefined,
 }: SwapCommitButtonPropsType & CommitButtonProps) {
   const { address: account } = useAccount()
   const { t } = useTranslation()
@@ -164,8 +172,29 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     },
   })
 
+  const getGasFees = (gas: GasData) => {
+    const baseGwei = String(gas.gwei)
+
+    const baseFee = parseUnits(baseGwei, 9)
+
+    let maxPriorityFeePerGas = parseUnits('1.5', 9)
+
+    if (gas.isHigh) {
+      maxPriorityFeePerGas = parseUnits('2.5', 9)
+    } else if (gas.isLow) {
+      maxPriorityFeePerGas = parseUnits('1', 9)
+    }
+
+    const maxFeePerGas = baseFee * 2n + maxPriorityFeePerGas
+
+    return {
+      maxFeePerGas,
+      maxPriorityFeePerGas,
+    }
+  }
+
   const handleSwap = useCallback(async () => {
-    if (!swapParams || !inputCurrency || !outputCurrency) {
+    if (!swapParams || !inputCurrency || !outputCurrency || !gasData) {
       reset()
       setLoadSwap(false)
       return
@@ -202,14 +231,16 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
       const quote = await response.json()
       const { transaction } = quote
 
+      const { maxFeePerGas, maxPriorityFeePerGas } = getGasFees(gasData)
+
       const tx: `0x${string}` = await sendTransaction(config as any, {
         account,
         to: transaction.to,
         data: transaction.data,
-        gas: transaction.gas,
         value: transaction.value,
-        maxFeePerGas: utils.parseUnits('150', 'gwei').toBigInt(),
-        maxPriorityFeePerGas: utils.parseUnits('2', 'gwei').toBigInt(),
+        gas: transaction.gas,
+        maxFeePerGas,
+        maxPriorityFeePerGas,
       })
 
       if (chainId !== ChainId.ETHEREUM) {
@@ -230,6 +261,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     swapParams,
     inputCurrency,
     outputCurrency,
+    gasData,
     reset,
     typedValue,
     allowance,

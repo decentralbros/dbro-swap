@@ -58,7 +58,6 @@ export const useGasPrice = ({ chainId, account }: { chainId: number; account?: `
   return useQuery({
     queryKey: ['gasPrice', chainId, account],
     queryFn: async (): Promise<GasData> => {
-      // Type guard for supported chains
       if (!isSupportedChain(chainId)) {
         throw new Error(`Chain ID ${chainId} not supported. Supported chains: ${Object.keys(THRESHOLDS).join(', ')}`)
       }
@@ -79,6 +78,7 @@ export const useGasPrice = ({ chainId, account }: { chainId: number; account?: `
       }
     },
     enabled: Boolean(account),
-    refetchInterval: 10000,
+    refetchInterval: 15_000,
+    refetchIntervalInBackground: false,
   })
 }
