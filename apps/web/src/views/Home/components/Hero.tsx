@@ -4,9 +4,9 @@ import { NextLinkFromReactRouter } from '@pancakeswap/widgets-internal'
 
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import useTheme from 'hooks/useTheme'
+import Image from 'next/image'
 import { styled } from 'styled-components'
 import { useAccount } from 'wagmi'
-import LightningBolt from './LightingBolt'
 
 // const BgWrapper = styled.div`
 //   z-index: -1;
@@ -184,7 +184,7 @@ const Hero = () => {
         >
           <BunnyWrapper>
             <CakeBox>
-              <LightningBolt />
+              <Image src="/images/swap/bolt-guy.webp" height={500} width={500} alt="dbro character" />
             </CakeBox>
           </BunnyWrapper>
         </Flex>

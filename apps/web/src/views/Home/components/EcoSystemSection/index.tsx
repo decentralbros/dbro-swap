@@ -418,7 +418,7 @@ const EcoSystemSection: React.FC = () => {
           lineHeight="110%"
           color={theme.colors.secondary}
         >
-          {t('Revolution')}
+          {t('Ecosystem')}
         </Text>
       </Text>
       <CardWrapper>
@@ -430,9 +430,9 @@ const EcoSystemSection: React.FC = () => {
         >
           <Image
             style={{ marginLeft: isMobile ? -32 : -72, transform: 'scaleX(-1)' }}
-            src="/images/wallets/bolty.webp"
+            src="/images/swap/gif-guy.gif"
             alt="trader girl"
-            width={344}
+            width={360}
             height={360}
             unoptimized
           />
