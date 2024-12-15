@@ -301,37 +301,38 @@ const useDecentralBrosData = () => {
     return [
       {
         title: t('Swap'),
-        description: t('Trade crypto instantly across multiple chains'),
-        ctaTitle: t('Trade Now'),
+        description: t('Fast, secure, and user-friendly decentralized exchange'),
+        ctaTitle: t('Start Trading'),
         image: `/images/affiliates-program/real-time-reporting.png`,
         defaultImage: `/images/affiliates-program/real-time-reporting.png`,
         path: '/swap',
       },
       {
         title: t('Staking'),
-        description: t('Enjoy the benefits of hybrid staking your DBRO'),
+        description: t('Leverage your assets with hybrid staking for high-yield returns'),
         ctaTitle: t('Stake Now'),
-        image: `/old-logo.jpg`,
-        defaultImage: `/old-logo.jpg`,
+        image: `/images/cake-staking/lock.png`,
+        defaultImage: `/images/cake-staking/lock.png`,
         path: '/staking',
       },
       {
         title: t('Lottery'),
-        description: t('Play to win your favorite tokens, coming soon...'),
+        description: t('Play for a chance to win big with your favorite tokens'),
         ctaTitle: t('Buy Tickets'),
         image: `/images/lottery/ticket-r.png`,
         defaultImage: `/images/lottery/ticket-r.png`,
         path: '/lottery',
         className: 'adjust-height',
       },
-      // {
-      //   title: t('Buy Crypto'),
-      //   description: t('Buy crypto with your preferred currency and payment method'),
-      //   ctaTitle: t('Buy Now'),
-      //   image: `${ASSET_CDN}/web/landing/trade-buy-crypto.png`,
-      //   defaultImage: `${ASSET_CDN}/web/landing/trade-buy-crypto-purple.png`,
-      //   path: '/buy-crypto',
-      // },
+      {
+        title: t('Utilities'),
+        description: t('Unlock utilities powered by DBRO Hybrid Wrapped NFTs'),
+        ctaTitle: t('Learn More'),
+        image: `/logo.webp`,
+        defaultImage: `/logo.webp`,
+        path: '/staking/learn',
+        className: 'adjust-height',
+      },
     ]
   }, [t])
 }
@@ -359,16 +360,16 @@ const FeatureBox: React.FC<{
         <Image
           className="default"
           src={defaultImage}
-          width={108}
-          height={108}
+          width={80}
+          height={80}
           alt={title}
           style={{ borderRadius: '100%' }}
         />
         <Image
           className="hover"
           src={image}
-          width={108}
-          height={108}
+          width={80}
+          height={80}
           alt={title}
           style={{ borderRadius: '100%', transform: 'scale(108%)' }}
         />
@@ -437,11 +438,11 @@ const EcoSystemSection: React.FC = () => {
             unoptimized
           />
           <Flex flexDirection="column">
-            <Title>{t('Power Your Profits')}</Title>
+            <Title>{t('Trade Stake Win')}</Title>
             <FeatureBoxesWrapper>
               {decentralBrosData.map((item) => (
                 <FeatureBox
-                  key={`${item.title}Block`}
+                  key={`${item.title} Block`}
                   className="type-a"
                   title={item.title}
                   description={item.description}

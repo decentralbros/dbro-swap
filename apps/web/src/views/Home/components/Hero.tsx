@@ -3,7 +3,6 @@ import { Button, Flex, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { NextLinkFromReactRouter } from '@pancakeswap/widgets-internal'
 
 import ConnectWalletButton from 'components/ConnectWalletButton'
-import useTheme from 'hooks/useTheme'
 import Image from 'next/image'
 import { styled } from 'styled-components'
 import { useAccount } from 'wagmi'
@@ -87,17 +86,13 @@ const StyledText = styled(Text)`
     font-size: 64px;
   }
   ${({ theme }) => theme.mediaQueries.xxl} {
-    font-size: 88px;
+    font-size: 72px;
   }
 `
-
-const width = 1080
-const height = 1080
 
 const Hero = () => {
   const { t } = useTranslation()
   const { address: account } = useAccount()
-  const { theme } = useTheme()
   const { isMobile, isXs, isMd } = useMatchBreakpoints()
 
   return (
@@ -136,7 +131,7 @@ const Hero = () => {
         <Flex flex="1" flexDirection="column">
           <Text textAlign={isMobile || isMd ? 'center' : 'left'} pr={isMobile ? 0 : '10px'} mb="16px">
             <StyledText display="inline-block" lineHeight="110%" fontWeight={600} color="text" mr="8px">
-              {t('Never')}
+              {t('Welcome')}
             </StyledText>
             <StyledText
               display="inline-block"
@@ -145,23 +140,23 @@ const Hero = () => {
               color="text"
               mr={isMobile ? 0 : '8px'}
             >
-              {t('Stop')}
+              {t('To')}
             </StyledText>
             {isMobile && <br />}
             <StyledText display="inline-block" lineHeight="110%" color="secondary" fontWeight={600}>
-              {t('Winning')}
+              {t('Decentral Bros')}
             </StyledText>
           </Text>
           <Text
             mb="24px"
-            color={theme.isDark ? '#FFF' : '#000'}
+            color="#FFF"
             maxWidth={600}
             fontSize={['20px', '20px', null, '24px']}
             textAlign={isMobile ? 'center' : 'left'}
             lineHeight="110%"
             fontWeight={600}
           >
-            {t('Unleash lightning-fast trades across the blockchain universe – your all-in-one power station')}
+            {t('Experience lightning-fast trading, hybrid staking, and rewards across the blockchain universe')}
           </Text>
 
           <Flex justifyContent={isMobile || isMd ? 'center' : 'start'}>
