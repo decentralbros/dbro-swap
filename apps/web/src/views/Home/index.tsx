@@ -78,18 +78,6 @@ const Home: React.FC<React.PropsWithChildren> = () => {
       </PageSection> */}
 
       <PageSection
-        innerProps={{ style: { ...HomeSectionContainerStyles, maxWidth: 'auto', paddingBottom: '32px' } }}
-        background={theme.colors.background}
-        containerProps={{
-          id: 'home-1',
-        }}
-        index={2}
-        hasCurvedDivider={false}
-      >
-        <EcoSystemSection />
-      </PageSection>
-
-      <PageSection
         innerProps={{ style: HomeSectionContainerStyles }}
         background={theme.colors.background}
         containerProps={{
@@ -108,6 +96,18 @@ const Home: React.FC<React.PropsWithChildren> = () => {
           </Text>
         </Flex>
         <DBRODataRow />
+      </PageSection>
+
+      <PageSection
+        innerProps={{ style: { ...HomeSectionContainerStyles, maxWidth: 'auto', paddingBottom: '32px' } }}
+        background={theme.colors.background}
+        containerProps={{
+          id: 'home-1',
+        }}
+        index={2}
+        hasCurvedDivider={false}
+      >
+        <EcoSystemSection />
       </PageSection>
 
       <PageSection
