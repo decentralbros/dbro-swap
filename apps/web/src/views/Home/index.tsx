@@ -1,11 +1,12 @@
-import { Box, PageSection, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { Box, Flex, PageSection, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import useTheme from 'hooks/useTheme'
 import { styled } from 'styled-components'
+import CakeSection from './components/CakeSection'
 import CommunitySection from './components/CommunitySection'
+import DBRODataRow from './components/DBRODataRow'
 import EcoSystemSection from './components/EcoSystemSection'
 import Footer from './components/Footer'
 import Hero from './components/Hero'
-import { InnerWedgeWrapper, OuterWedgeWrapper, WedgeTopLeft } from './components/WedgeSvgs'
 
 const StyledHeroSection = styled(PageSection)`
   padding-top: 16px;
@@ -53,7 +54,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         `}
       </style>
       <StyledHeroSection
-        innerProps={{ style: { margin: '0', width: '100%', overflow: 'visible', padding: '16px' } }}
+        innerProps={{ style: { margin: '0', width: '100%', overflow: 'visible', padding: '16px', paddingBottom: '0' } }}
         containerProps={{
           id: 'home-1',
         }}
@@ -76,27 +77,6 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         <MetricsSection />
       </PageSection> */}
 
-      {/* <PageSection
-        innerProps={{ style: HomeSectionContainerStyles }}
-        background={theme.colors.background}
-        containerProps={{
-          id: 'home4-2',
-        }}
-        index={2}
-        hasCurvedDivider={false}
-      >
-        <CakeSection /> */}
-      {/* <Flex style={{ gap: 5 }} justifyContent="center" mt="40px">
-          <Text fontSize={24} bold>
-            CAKE
-          </Text>
-          <Text fontSize={24} bold color="secondary">
-            Figures
-          </Text>
-        </Flex>
-        <CakeDataRow /> */}
-      {/* </PageSection> */}
-
       <PageSection
         innerProps={{ style: { ...HomeSectionContainerStyles, maxWidth: 'auto', paddingBottom: '32px' } }}
         background={theme.colors.background}
@@ -106,12 +86,28 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         index={2}
         hasCurvedDivider={false}
       >
-        <OuterWedgeWrapper>
-          <InnerWedgeWrapper top>
-            <WedgeTopLeft />
-          </InnerWedgeWrapper>
-        </OuterWedgeWrapper>
         <EcoSystemSection />
+      </PageSection>
+
+      <PageSection
+        innerProps={{ style: HomeSectionContainerStyles }}
+        background={theme.colors.background}
+        containerProps={{
+          id: 'home4-2',
+        }}
+        index={2}
+        hasCurvedDivider={false}
+      >
+        <CakeSection />
+        <Flex style={{ gap: 5 }} justifyContent="center" mt="40px">
+          <Text fontSize={24} bold color="secondary">
+            DBRO
+          </Text>
+          <Text fontSize={24} bold>
+            Figures
+          </Text>
+        </Flex>
+        <DBRODataRow />
       </PageSection>
 
       <PageSection

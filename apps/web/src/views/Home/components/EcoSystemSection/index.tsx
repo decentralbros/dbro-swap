@@ -409,7 +409,7 @@ const EcoSystemSection: React.FC = () => {
           bold
           color={theme.colors.text}
         >
-          {t('Enter The')}
+          {t('Explore The')}
         </Text>
         <Text
           fontSize={['32px', null, null, '40px']}

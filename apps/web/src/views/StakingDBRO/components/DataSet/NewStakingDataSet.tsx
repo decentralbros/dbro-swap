@@ -230,7 +230,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
                 }
                 value={
                   <ValueText>
-                    &bull; <>{(contractTokens as bigint) && formatBalance(BigInt(String(contractTokens)), 8)}</> DBRO
+                    &bull; <>{(contractTokens as bigint) ? formatBalance(BigInt(String(contractTokens)), 8) : 0}</> DBRO
                   </ValueText>
                 }
               />
@@ -242,7 +242,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
                 }
                 value={
                   <ValueText>
-                    &bull; <>${poolValue}</>
+                    &bull; <>${Math.floor(Number(poolValue)).toLocaleString()}</>
                   </ValueText>
                 }
               />
@@ -254,8 +254,8 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
                 }
                 value={
                   <ValueText>
-                    &bull;{' '}
-                    <>{((treasuryBalance as bigint) && formatBalance(BigInt(String(treasuryBalance)), 8)) ?? 0}</> DBRO
+                    &bull; <>{(treasuryBalance as bigint) ? formatBalance(BigInt(String(treasuryBalance)), 8) : 0}</>{' '}
+                    DBRO
                   </ValueText>
                 }
               />
@@ -267,7 +267,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
                 }
                 value={
                   <ValueText>
-                    &bull; <>${walletValue}</>
+                    &bull; <>${Math.floor(Number(walletValue)).toLocaleString()}</>
                   </ValueText>
                 }
               />
@@ -291,7 +291,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
                 }
                 value={
                   <ValueText>
-                    &bull; <>${wrappedValue}</>
+                    &bull; <>${Math.floor(Number(wrappedValue)).toLocaleString()}</>
                   </ValueText>
                 }
               />

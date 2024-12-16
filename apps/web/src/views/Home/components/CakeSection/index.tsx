@@ -1,17 +1,9 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { Button, Flex, Link, OpenNewIcon, StyledLink, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
-import { ASSET_CDN } from 'config/constants/endpoints'
+import { Button, Flex, StyledLink, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import useTheme from 'hooks/useTheme'
 import NextLink from 'next/link'
-import React, { memo, useCallback, useLayoutEffect, useRef } from 'react'
+import React, { memo } from 'react'
 import { css, keyframes, styled } from 'styled-components'
-import { useFourYearTotalVeCakeApr } from 'views/StakingDBRO/hooks/useAPR'
-import { useDrawCanvas } from '../../hooks/useDrawCanvas'
-import { useDrawSequenceImages } from '../../hooks/useDrawSequence'
-import { checkIsIOS } from '../../hooks/useIsIOS'
-import { useObserverOnce } from '../../hooks/useObserver'
-
-import { useEcosystemTagData, usePartnerData } from './CakeSectionTag'
 
 const LINE_TRANSITION_TIMES = 0.35
 const COVER_TRANSITION_TIMES = 0.45
@@ -526,10 +518,10 @@ const CakeSection: React.FC = () => {
         >
           {/* <CakeBottomLine /> */}
           <BottomCakeContainer flexDirection="column">
-            <Text textAlign="center" fontSize="40px" fontWeight="600">
+            <Text textAlign="center" fontSize="40px" fontWeight="600" color="secondary">
               {t('Staking')}
             </Text>
-            <Text color="secondary" textAlign="center" fontSize="20px" fontWeight="600" mb="16px">
+            <Text textAlign="center" fontSize="20px" fontWeight="600" mb="16px">
               {t('Earn up to %apr%% APY', { apr: 30 })}
             </Text>
             <NextLink href="/staking/learn">
