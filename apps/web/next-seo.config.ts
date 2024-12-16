@@ -22,7 +22,7 @@ export const SEO: DefaultSeoProps = {
     images: [
       {
         url: 'https://decentralbros.finance/dbro-swap.jpg',
-        alt: 'DBRO Swap Interface',
+        alt: 'DBRO Swap',
         type: 'image/jpeg',
       },
     ],
@@ -31,7 +31,7 @@ export const SEO: DefaultSeoProps = {
   additionalMetaTags: [
     {
       name: 'keywords',
-      content: 'DBRO, DEX, cryptocurrency, trading, defi, multichain, earn, stake, base network',
+      content: 'Decentral Bros, DBRO, swap, cryptocurrency, trading, multichain, staking, base network',
     },
     {
       name: 'viewport',
