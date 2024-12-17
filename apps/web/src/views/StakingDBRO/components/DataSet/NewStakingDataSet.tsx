@@ -67,7 +67,9 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
     args: [REWARD_WALLET as `0x${string}`],
     query: {
       ...refetchOptions,
+      enabled: chainId === ChainId.BASE,
     },
+    chainId: ChainId.BASE,
   })
 
   const { data: stakeInfo } = useReadContract({
@@ -76,28 +78,39 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
     functionName: 'getStakeInfoAndPendingRewards',
     args: [account as `0x${string}`],
     query: {
-      enabled: Boolean(account),
+      enabled: Boolean(account) && chainId === ChainId.BASE,
     },
+    chainId: ChainId.BASE,
   })
 
   const { data: requiredDBRO } = useReadContract({
     address: contractConfig.address as `0x${string}`,
     abi: contractConfig.abi,
     functionName: 'REQUIRED_DBRO',
+    query: {
+      enabled: chainId === ChainId.BASE,
+    },
+    chainId: ChainId.BASE,
   })
 
   const { data: rewardRate } = useReadContract({
     address: contractConfig.address as `0x${string}`,
     abi: contractConfig.abi,
     functionName: 'getAnnualRewardRate',
+    query: {
+      enabled: chainId === ChainId.BASE,
+    },
+    chainId: ChainId.BASE,
   })
 
   const { data: contractTokens } = useReadContract({
     address: contractConfig.address as `0x${string}`,
     abi: contractConfig.abi,
     functionName: 'totalRewardTokens',
+    chainId: ChainId.BASE,
     query: {
       ...refetchOptions,
+      enabled: chainId === ChainId.BASE,
     },
   })
 
@@ -105,6 +118,10 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
     address: contractConfig.address as `0x${string}`,
     abi: contractConfig.abi,
     functionName: 'MAX_STAKE',
+    query: {
+      enabled: chainId === ChainId.BASE,
+    },
+    chainId: ChainId.BASE,
   })
 
   const { data: dbroBalance } = useReadContract({
@@ -114,7 +131,9 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
     args: [RYFT_ADDRESS],
     query: {
       ...refetchOptions,
+      enabled: chainId === ChainId.BASE,
     },
+    chainId: ChainId.BASE,
   })
 
   const useMaxStake = useMemo((): bigint => {
@@ -142,7 +161,6 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
   }, [requiredDBRO])
 
   const { data: usdValues } = useStakingUSD({
-    account,
     contractTokens,
     treasuryBalance,
     dbroBalance,

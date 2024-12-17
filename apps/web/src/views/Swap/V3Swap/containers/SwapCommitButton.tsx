@@ -172,26 +172,26 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     },
   })
 
-  // const getGasFees = (gas: GasData) => {
-  //   const baseGwei = String(gas.gwei)
+  const getGasFees = (gas: GasData) => {
+    const baseGwei = String(gas.gwei)
 
-  //   const baseFee = parseUnits(baseGwei, 9)
+    const baseFee = parseUnits(baseGwei, 9)
 
-  //   let maxPriorityFeePerGas = parseUnits('1.5', 9)
+    let maxPriorityFeePerGas = parseUnits('1.5', 9)
 
-  //   if (gas.isHigh) {
-  //     maxPriorityFeePerGas = parseUnits('2.5', 9)
-  //   } else if (gas.isLow) {
-  //     maxPriorityFeePerGas = parseUnits('1', 9)
-  //   }
+    if (gas.isHigh) {
+      maxPriorityFeePerGas = parseUnits('2.5', 9)
+    } else if (gas.isLow) {
+      maxPriorityFeePerGas = parseUnits('1', 9)
+    }
 
-  //   const maxFeePerGas = baseFee * 2n + maxPriorityFeePerGas
+    const maxFeePerGas = baseFee * 2n + maxPriorityFeePerGas
 
-  //   return {
-  //     maxFeePerGas,
-  //     maxPriorityFeePerGas,
-  //   }
-  // }
+    return {
+      maxFeePerGas,
+      maxPriorityFeePerGas,
+    }
+  }
 
   const handleSwap = useCallback(async () => {
     if (!swapParams || !inputCurrency || !outputCurrency || !gasData) {
@@ -231,7 +231,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
       const quote = await response.json()
       const { transaction } = quote
 
-      // const { maxFeePerGas, maxPriorityFeePerGas } = getGasFees(gasData)
+      const { maxFeePerGas, maxPriorityFeePerGas } = getGasFees(gasData)
 
       const tx: `0x${string}` = await sendTransaction(config as any, {
         account,
@@ -239,7 +239,8 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
         data: transaction.data,
         value: transaction.value,
         gas: transaction.gas,
-        gasPrice: BigInt(transaction.gasPrice * 2),
+        maxFeePerGas,
+        maxPriorityFeePerGas,
       })
 
       if (chainId !== ChainId.ETHEREUM) {

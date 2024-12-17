@@ -1,4 +1,5 @@
 /* eslint-disable no-restricted-globals */
+import { ChainId } from '@pancakeswap/chains'
 import { useTranslation } from '@pancakeswap/localization'
 import { AutoRow, Box, Text } from '@pancakeswap/uikit'
 import { formatUnits } from '@pancakeswap/utils/viem/formatUnits'
@@ -101,69 +102,73 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
 
   return (
     <>
-      <Text fontSize={12} bold color="secondary" textTransform="uppercase">
-        {t('minting overview')}
-      </Text>
-      <Box padding={['16px 0', '16px 0', 12]}>
-        {customVeCakeCard ?? <MyVeCakeCard type="row" value={String(nftBalance ?? 0)} />}
+      {chainId === ChainId.BASE && account && (
+        <>
+          <Text fontSize={12} bold color="secondary" textTransform="uppercase">
+            {t('minting overview')}
+          </Text>
+          <Box padding={['16px 0', '16px 0', 12]}>
+            {customVeCakeCard ?? <MyVeCakeCard type="row" value={String(nftBalance ?? 0)} />}
 
-        <AutoRow px={['0px', '0px', '16px']} py={['16px', '16px', '12px']} gap="8px">
-          {customDataRow}
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Token Id')}
-              </Text>
-            }
-            value={<ValueText>&bull; {String(tokenId ?? 0)}</ValueText>}
-          />
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Unwrapping Fee')}
-              </Text>
-            }
-            value={<ValueText>&bull; {`${useUnwrapFee}%`}</ValueText>}
-          />
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Wrapped DBRO')}
-              </Text>
-            }
-            value={
-              <ValueText>
-                &bull;{' '}
-                {nftBalance && requiredDBRO
-                  ? Number(
-                      formatUnits(BigInt(Number(nftBalance) * Number(requiredDBRO) * 0.99) ?? 0, 8),
-                    ).toLocaleString()
-                  : 0}
-              </ValueText>
-            }
-          />
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Wrapped Value')}
-              </Text>
-            }
-            value={
-              <ValueText>
-                &bull; <>${Math.floor(Number(wrappedValue)).toLocaleString()}</>
-              </ValueText>
-            }
-          />
-          <DataRow
-            label={
-              <Text fontSize={14} color="textSubtle" textTransform="capitalize">
-                {t('Claimed NFTs')}
-              </Text>
-            }
-            value={<ValueText>&bull; {String(totalNFTSupply ?? 0)}</ValueText>}
-          />
-        </AutoRow>
-      </Box>
+            <AutoRow px={['0px', '0px', '16px']} py={['16px', '16px', '12px']} gap="8px">
+              {customDataRow}
+              <DataRow
+                label={
+                  <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                    {t('Token Id')}
+                  </Text>
+                }
+                value={<ValueText>&bull; {String(tokenId ?? 0)}</ValueText>}
+              />
+              <DataRow
+                label={
+                  <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                    {t('Unwrapping Fee')}
+                  </Text>
+                }
+                value={<ValueText>&bull; {`${useUnwrapFee}%`}</ValueText>}
+              />
+              <DataRow
+                label={
+                  <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                    {t('Wrapped DBRO')}
+                  </Text>
+                }
+                value={
+                  <ValueText>
+                    &bull;{' '}
+                    {nftBalance && requiredDBRO
+                      ? Number(
+                          formatUnits(BigInt(Number(nftBalance) * Number(requiredDBRO) * 0.99) ?? 0, 8),
+                        ).toLocaleString()
+                      : 0}
+                  </ValueText>
+                }
+              />
+              <DataRow
+                label={
+                  <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                    {t('Wrapped Value')}
+                  </Text>
+                }
+                value={
+                  <ValueText>
+                    &bull; <>${Math.floor(Number(wrappedValue)).toLocaleString()}</>
+                  </ValueText>
+                }
+              />
+              <DataRow
+                label={
+                  <Text fontSize={14} color="textSubtle" textTransform="capitalize">
+                    {t('Claimed NFTs')}
+                  </Text>
+                }
+                value={<ValueText>&bull; {String(totalNFTSupply ?? 0)}</ValueText>}
+              />
+            </AutoRow>
+          </Box>
+        </>
+      )}
     </>
   )
 }
