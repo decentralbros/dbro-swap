@@ -209,15 +209,20 @@ export const LockCakeForm: React.FC<{
             </Text>
           </FlexGap>
 
-          <FlexGap>
+          <FlexGap gap="4px" alignItems="center" width="100%">
             <Text color="textSubtle" fontSize={16} bold mr={1}>
-              {t('Required:')}
+              &bull; {t('Required:')}
             </Text>
             <Text color="secondary" fontSize={16} bold mr={1}>
               {requiredDBRO ? `${formatNumberWithCommas(formatUnits(BigInt(requiredDBRO.toString()), 8))} ` : 0}
             </Text>
             <Text color="secondary" fontSize={16} bold>
               DBRO
+            </Text>
+          </FlexGap>
+          <FlexGap gap="4px" alignItems="center" width="100%">
+            <Text color="textSubtle" fontSize={16} bold mr={1}>
+              &bull; Enter quantity between 1-10
             </Text>
           </FlexGap>
         </>
@@ -266,8 +271,14 @@ export const LockCakeForm: React.FC<{
           </FlexGap>
 
           <FlexGap gap="4px" alignItems="center" width="100%">
+            <Text color="textSubtle" fontSize={16} bold mr={1}>
+              &bull; Enter quantity between 1-10
+            </Text>
+          </FlexGap>
+
+          <FlexGap gap="4px" alignItems="center" width="100%">
             <Text color="warning" fontSize={16} bold>
-              Unwrapping your NFT will forfeit all utilities, and you must have at least{' '}
+              &bull; Unwrapping your NFT will forfeit all utilities, and you must have at least{' '}
               <span style={{ color: '#1bf696' }}>3 wrapped NFTs</span> to redeem utilities
             </Text>
           </FlexGap>
