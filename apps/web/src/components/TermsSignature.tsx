@@ -154,6 +154,7 @@ const TermsSignature = ({ signMessageAsync, isPending }) => {
 
       localStorage.setItem('signed-dbro-terms', account.address as string)
     } catch (error) {
+      logout()
       console.info('Error signing message:', error)
     }
   }
