@@ -1,27 +1,24 @@
-import { ModalV2, PageHeader } from '@pancakeswap/uikit'
-import { CrossChainVeCakeModal } from 'components/CrossChainVeCakeModal'
-import { useCallback, useState } from 'react'
+import { PageHeader } from '@pancakeswap/uikit'
 import styled from 'styled-components'
-import { CakeRewardsCard } from './components/CakeRewardsCard'
 import { LockCake } from './components/LockCake'
 import { PageHead } from './components/PageHead'
 
 const StakingMint = () => {
-  const [cakeRewardModalVisible, setCakeRewardModalVisible] = useState(false)
-  const handleDismiss = useCallback(() => setCakeRewardModalVisible(false), [])
-  const [isOpen, setIsOpen] = useState(false)
+  // const [cakeRewardModalVisible, setCakeRewardModalVisible] = useState(false)
+  // const handleDismiss = useCallback(() => setCakeRewardModalVisible(false), [])
+  // const [isOpen, setIsOpen] = useState(false)
 
   return (
     <>
-      <ModalV2 isOpen={cakeRewardModalVisible} closeOnOverlayClick onDismiss={handleDismiss}>
+      {/* <ModalV2 isOpen={cakeRewardModalVisible} closeOnOverlayClick onDismiss={handleDismiss}>
         <CakeRewardsCard onDismiss={handleDismiss} />
-      </ModalV2>
+      </ModalV2> */}
       <StyledPageHeader background="#000">
         <PageHead />
         <LockCake />
       </StyledPageHeader>
 
-      <CrossChainVeCakeModal isOpen={isOpen} setIsOpen={setIsOpen} onDismiss={() => setIsOpen(false)} />
+      {/* <CrossChainVeCakeModal isOpen={isOpen} setIsOpen={setIsOpen} onDismiss={() => setIsOpen(false)} /> */}
     </>
   )
 }

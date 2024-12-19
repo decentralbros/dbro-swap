@@ -1,8 +1,7 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { Card, Grid, Heading, PageHeader, QuestionHelper, useMatchBreakpoints, FlexGap, Text } from '@pancakeswap/uikit'
+import { Card, FlexGap, Grid, Heading, PageHeader, QuestionHelper, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { formatAmount } from '@pancakeswap/utils/formatInfoNumbers'
 import Page from 'components/Layout/Page'
-import { useState } from 'react'
 import styled from 'styled-components'
 import { useGauges } from 'views/GaugesVoting/hooks/useGauges'
 import { BenefitCard } from './components/BenefitCard'
@@ -49,7 +48,7 @@ const StakingLearn = () => {
   const { data: gauges } = useGauges()
   const gaugesVotingCount = gauges?.length
   const snapshotProposalsCount = useSnapshotProposalsCount()
-  const [cakeRewardModalVisible, setCakeRewardModalVisible] = useState(false)
+  // const [cakeRewardModalVisible, setCakeRewardModalVisible] = useState(false)
   const totalIFOSold = useTotalIFOSold()
   const { isDesktop } = useMatchBreakpoints()
 
@@ -93,9 +92,6 @@ const StakingLearn = () => {
               />
             }
             dataText={`${0} DBRO`}
-            onClick={() => {
-              setCakeRewardModalVisible(true)
-            }}
           />
           <BenefitCard
             headSlot={
