@@ -5,6 +5,7 @@
     "skipLibCheck": true,
     "strictNullChecks": true,
     "noImplicitAny": false,
+    "resolveJsonModule": true,
     "noFallthroughCasesInSwitch": true,
     "downlevelIteration": true,
     "target": "ES2020",
