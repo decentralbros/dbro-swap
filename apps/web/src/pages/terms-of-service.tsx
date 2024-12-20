@@ -41,13 +41,13 @@ const TermsOfService = () => {
         The following Standard Terms and Conditions upon which Decentral Bros, LLC (along with its affiliates and
         subsidiaries, the “Company”) offers access to their “website” (the below mentioned sites and any software
         provided by the Company for use with these sites, including (www.decentralbros.xyz, decentralbros.finance,
-        www.decentralbros.social & www.decentralbros.tech). These Terms and Conditions shall manage your usage of the
-        Website, as the customer, irrespective of whether or not you are an Account holder ("You") and the use of its
-        services provided via the Site (the "Services"). Minors or persons below the age of 18 years old shall not be
-        allowed to use this Website, even if they are in accordance with all other policies listed herein. By using this
-        Website, you agreed to accept all terms and conditions herein and agree to be legally bound by these Terms and
-        all terms, policies, and guidelines incorporated by reference in these Terms. You shall not use this Website if
-        you disagree with any of these Website Standard Terms and Conditions.
+        www.decentralbros.social, decentralbros.tech, & www.decentralbros.tech). These Terms and Conditions shall manage
+        your usage of the Website, as the customer, irrespective of whether or not you are an Account holder ("You") and
+        the use of its services provided via the Site (the "Services"). Minors or persons below the age of 18 years old
+        shall not be allowed to use this Website, even if they are in accordance with all other policies listed herein.
+        By using this Website, you agreed to accept all terms and conditions herein and agree to be legally bound by
+        these Terms and all terms, policies, and guidelines incorporated by reference in these Terms. You shall not use
+        this Website if you disagree with any of these Website Standard Terms and Conditions.
         <br />
         <br />
         If at any time, you do not wish to accept the Terms and Conditions, you may not use the Site. Any terms and
