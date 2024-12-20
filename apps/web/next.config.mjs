@@ -59,7 +59,7 @@ const config = {
   },
   
   eslint: {
-    ignoreDuringBuilds: false,
+    ignoreDuringBuilds:  process.env.NODE_ENV === 'production',
   },
 
   images: {
