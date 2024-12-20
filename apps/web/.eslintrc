@@ -7,19 +7,7 @@
   "rules": {
     "no-empty-function": 0,
     "no-restricted-syntax": 0,
-    "import/no-unresolved": [
-      0,
-      {
-        "ignore": [".json$"]
-      }
-    ],
-    "import/extensions": [
-      0,
-      "ignorePackages",
-      {
-        "json": "always"
-      }
-    ],
+    "import/no-unresolved": 0,
     "no-console": ["warn", { "allow": ["info", "warn", "error", "debug", "time", "timeLog", "timeEnd"] }],
     "no-plusplus": 0,
     "prefer-destructuring": ["warn", { "object": true, "array": false }],
