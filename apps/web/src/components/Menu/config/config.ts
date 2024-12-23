@@ -49,14 +49,10 @@ const config: (
       href: '/lottery',
       showOnMobile: false,
       items: [
-        {
-          label: t('DBRO'),
-          href: '/lottery',
-        },
-        {
-          label: t('XAG'),
-          href: '/lottery/xag',
-        },
+        // {
+        //   label: t('DBRO'),
+        //   href: '/lottery',
+        // },
       ],
     },
     {
