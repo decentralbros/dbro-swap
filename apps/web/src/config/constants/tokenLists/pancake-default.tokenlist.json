@@ -28,17 +28,7 @@
       "name": "Based Street Bets",
       "symbol": "BSB",
       "decimals": 18,
-      "logoURI": "https://decentralbros.finance/images/tokens/bsb.webp",
-      "pairs": []
-    },
-    {
-      "type": "BASE",
-      "chainId": 8453,
-      "address": "0x5985c6c9db08964c05629DC59E76bc2858F5C6c8",
-      "name": "XAG Silver Chads",
-      "symbol": "XAG",
-      "decimals": 18,
-      "logoURI": "https://decentralbros.finance/images/partners/xag.webp",
+      "logoURI": "https://decentralbros.finance/images/partners/bsb.webp",
       "pairs": []
     },
     {
