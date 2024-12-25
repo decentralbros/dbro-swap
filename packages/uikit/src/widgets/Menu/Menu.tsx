@@ -2,7 +2,9 @@ import { useIsMounted } from "@pancakeswap/hooks";
 import throttle from "lodash/throttle";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { styled } from "styled-components";
+import { CakePrice } from "../../components";
 import { AtomBox } from "../../components/AtomBox";
+import BottomNav from "../../components/BottomNav";
 import { Box } from "../../components/Box";
 import Flex from "../../components/Box/Flex";
 import Footer from "../../components/Footer";
@@ -152,7 +154,7 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
               </Flex>
               <Flex alignItems="center" height="100%">
                 <AtomBox mr="12px" display={{ xs: "none", xxl: "block" }}>
-                  {/* } <CakePrice chainId={chainId} showSkeleton={false} cakePriceUsd={cakePriceUsd} /> */}
+                  <CakePrice chainId={8543} showSkeleton={false} cakePriceUsd={cakePriceUsd} />
                 </AtomBox>
                 {/*  <Box mt="4px">
                   <LangSelector
@@ -206,9 +208,9 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
         buyCakeLink={buyCakeLink}
         mb={[`0px`, null, "0px"]}
       />
-      {/* <AtomBox display={{ xs: "block", lg: "none" }}>
+      <AtomBox display={{ xs: "block", lg: "none" }}>
         <BottomNav items={links} activeItem={activeItem} activeSubItem={activeSubItem} />
-      </AtomBox> */}
+      </AtomBox>
     </MenuContext.Provider>
   );
 };

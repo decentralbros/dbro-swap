@@ -1,5 +1,15 @@
 import { ContextApi } from '@pancakeswap/localization'
-import { DropdownMenuItems, DropdownMenuItemType, MenuItemsType, SwapFillIcon, SwapIcon } from '@pancakeswap/uikit'
+import {
+  DropdownMenuItems,
+  DropdownMenuItemType,
+  EarnFillIcon,
+  EarnIcon,
+  MenuItemsType,
+  SwapFillIcon,
+  SwapIcon,
+  TrophyFillIcon,
+  TrophyIcon,
+} from '@pancakeswap/uikit'
 
 export type ConfigMenuDropDownItemsType = DropdownMenuItems & { hideSubNav?: boolean }
 export type ConfigMenuItemsType = Omit<MenuItemsType, 'items'> & { hideSubNav?: boolean; image?: string } & {
@@ -28,9 +38,9 @@ const config: (
   [
     {
       label: t('Trade'),
+      href: '/swap',
       icon: SwapIcon,
       fillIcon: SwapFillIcon,
-      href: '/swap',
       showItemsOnMobile: false,
       items: [
         {
@@ -47,7 +57,9 @@ const config: (
     {
       label: t('Lottery'),
       href: '/lottery',
-      showOnMobile: false,
+      icon: TrophyIcon,
+      fillIcon: TrophyFillIcon,
+      showItemsOnMobile: false,
       items: [
         // {
         //   label: t('DBRO'),
@@ -58,7 +70,9 @@ const config: (
     {
       label: t('Staking'),
       href: '/staking',
-      showOnMobile: false,
+      icon: EarnIcon,
+      fillIcon: EarnFillIcon,
+      showItemsOnMobile: false,
       items: [
         {
           label: t('Stake'),

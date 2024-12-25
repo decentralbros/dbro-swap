@@ -11,7 +11,7 @@ export default {
   component: BottomNav,
   argTypes: {
     activeItem: {
-      options: ["/swap", "/earn", "/win", "/nft"],
+      options: ["/swap", "/lottery", "/stake"],
       control: { type: "select" },
     },
   },
