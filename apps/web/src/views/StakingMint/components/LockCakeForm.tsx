@@ -231,7 +231,7 @@ export const LockCakeForm: React.FC<{
       {chainId !== ChainId.BASE && (
         <FlexGap gap="4px" alignItems="center" mb="4px" width="100%">
           <Text color="warning" fontSize={16} bold>
-            Please switch to Base network to mint or unwrap
+            Please connect to Base network to mint or unwrap
           </Text>
         </FlexGap>
       )}
