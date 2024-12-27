@@ -26,9 +26,8 @@ const config = {
   },
 
   logging: {
-    fetches: {
-      fullUrl: true,
-    },
+    fetches: process.env.NODE_ENV !== 'production',
+    webVitals: process.env.NODE_ENV !== 'production'
   },
 
   experimental: {
@@ -48,7 +47,7 @@ const config = {
     ],
   },
 
-  generateBuildId: () => 'build-' + new Date().toISOString(),
+  generateBuildId: () => `build-${new Date().toISOString()}`,
   
   swcMinify: false,
   reactStrictMode: true,

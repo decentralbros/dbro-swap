@@ -9,7 +9,6 @@ import 'core-js/features/string/replace-all'
 import { useAccountEventListener } from 'hooks/useAccountEventListener'
 import useEagerConnect from 'hooks/useEagerConnect'
 import useLockedEndNotification from 'hooks/useLockedEndNotification'
-import useThemeCookie from 'hooks/useThemeCookie'
 import useUserAgent from 'hooks/useUserAgent'
 import { useVercelFeatureFlagOverrides } from 'hooks/useVercelToolbar'
 import { useWeb3WalletView } from 'hooks/useWeb3WalletView'
@@ -22,12 +21,11 @@ import { Fragment } from 'react'
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistor, useStore } from 'state'
 import { usePollBlockNumber } from 'state/block/hooks'
+import { disableLogging } from 'utils/errors'
 import { SEO } from '../../next-seo.config'
 import Providers from '../Providers'
 import Menu from '../components/Menu'
 import GlobalStyle from '../style/Global'
-
-// const EasterEgg = dynamic(() => import('components/EasterEgg'), { ssr: false })
 
 // This config is required for number formatting
 BigNumber.config({
@@ -42,18 +40,19 @@ function GlobalHooks() {
   useEagerConnect()
   useUserAgent()
   useAccountEventListener()
-  useThemeCookie()
   useLockedEndNotification()
+  disableLogging()
+
   return null
 }
 
-function MPGlobalHooks() {
-  usePollBlockNumber()
-  useUserAgent()
-  useAccountEventListener()
-  useLockedEndNotification()
-  return null
-}
+// function MPGlobalHooks() {
+//   usePollBlockNumber()
+//   useUserAgent()
+//   useAccountEventListener()
+//   useLockedEndNotification()
+//   return null
+// }
 
 function MyApp(props: AppProps<{ initialReduxState: any; dehydratedState: any }>) {
   const { pageProps, Component } = props
@@ -62,10 +61,7 @@ function MyApp(props: AppProps<{ initialReduxState: any; dehydratedState: any }>
   return (
     <>
       <Head>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1, viewport-fit=cover"
-        />
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, viewport-fit=cover" />
         <meta name="description" content="Cheaper and faster than Uniswap? Discover DBRO Swap." />
         <meta name="theme-color" content="#1bf696" />
         {/* {(Component as NextPageWithLayout).mp && (
@@ -80,7 +76,7 @@ function MyApp(props: AppProps<{ initialReduxState: any; dehydratedState: any }>
           // @ts-ignore
           <Component.Meta {...pageProps} />
         )}
-        {(Component as NextPageWithLayout).mp ? <MPGlobalHooks /> : <GlobalHooks />}
+        <GlobalHooks />
         <ResetCSS />
         <GlobalStyle />
         <GlobalCheckClaimStatus excludeLocations={[]} />

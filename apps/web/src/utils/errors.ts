@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { BaseError, UnknownRpcError } from 'viem'
 
 export function parseViemError<TError>(err: TError): BaseError | null {
@@ -33,5 +34,14 @@ export class UserUnexpectedTxError extends BaseError {
         `  Actual data: ${actualData}`,
       ],
     })
+  }
+}
+
+export function disableLogging() {
+  if (process.env.NODE_ENV === 'production') {
+    console.log = () => {}
+    console.error = () => {}
+    console.warn = () => {}
+    console.info = () => {}
   }
 }
