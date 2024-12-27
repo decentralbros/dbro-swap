@@ -1,5 +1,5 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { ArrowForwardIcon, Box, Button, Flex, Grid, Text, Heading } from '@pancakeswap/uikit'
+import { ArrowForwardIcon, Box, Button, Flex, Grid, Heading, Text } from '@pancakeswap/uikit'
 import { NextLinkFromReactRouter } from '@pancakeswap/widgets-internal'
 import { useMemo } from 'react'
 import styled, { css } from 'styled-components'

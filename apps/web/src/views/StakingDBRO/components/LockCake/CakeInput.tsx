@@ -271,11 +271,11 @@ export const CakeInput: React.FC<{
   }, [account, contractDBRO.address, value])
 
   useEffect(() => {
-    if (value) {
+    if (value && account) {
       fetchInputUSD()
     }
     // eslint-disable-next-line
-  }, [value])
+  }, [value, account])
 
   const balance = (
     <Flex>
