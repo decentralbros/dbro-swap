@@ -12,6 +12,7 @@ import { useCallback, useMemo } from 'react'
 import { getOptionsUrl } from 'utils/getOptionsUrl'
 import UserMenu from './UserMenu'
 import { UseMenuItemsParams, useMenuItems } from './hooks/useMenuItems'
+import { useTokenValue } from './hooks/useTokenValue'
 import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
 // import GlobalSettings from './GlobalSettings'
 // import { SettingsMode } from './GlobalSettings/types'
@@ -81,12 +82,14 @@ const Menu = (props) => {
   const activeSubMenuItem = getActiveSubMenuItem({ menuItem: activeMenuItem, pathname })
 
   const toggleTheme = useMemo(() => {
-    return () => setTheme(isDark ? 'light' : 'dark')
+    return () => setTheme(isDark ? 'dark' : 'dark')
   }, [setTheme, isDark])
 
   const getFooterLinks = useMemo(() => {
     return footerLinks(t)
   }, [t])
+
+  const { data: tokenValue } = useTokenValue()
 
   return (
     <>
@@ -106,7 +109,7 @@ const Menu = (props) => {
         currentLang={currentLanguage.code}
         langs={languageList}
         setLang={setLanguage}
-        cakePriceUsd={undefined}
+        cakePriceUsd={tokenValue}
         links={menuItems}
         subLinks={activeMenuItem?.hideSubNav || activeSubMenuItem?.hideSubNav ? [] : activeMenuItem?.items}
         footerLinks={getFooterLinks}

@@ -1,9 +1,8 @@
 import React from "react";
 import { styled } from "styled-components";
-import LogoRound from "../Svg/Icons/LogoRound";
-import Text from "../Text/Text";
-import Skeleton from "../Skeleton/Skeleton";
 import { Colors } from "../../theme";
+import Skeleton from "../Skeleton/Skeleton";
+import Text from "../Text/Text";
 
 export interface Props {
   color?: keyof Colors;
@@ -29,15 +28,11 @@ const CakePrice: React.FC<React.PropsWithChildren<Props>> = ({
   cakePriceUsd,
   color = "textSubtle",
   showSkeleton = true,
-  chainId,
 }) => {
   return cakePriceUsd ? (
-    <PriceLink
-      href={`https://pancakeswap.finance/swap?outputCurrency=0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82&chainId=${chainId}`}
-      target="_blank"
-    >
-      <LogoRound width="24px" mr="8px" />
-      <Text color={color} bold>{`$${cakePriceUsd.toFixed(3)}`}</Text>
+    <PriceLink href="https://decentralbros.finance/swap?chain=base&outputCurrency=0x6a4e0F83D7882BcACFF89aaF6f60D24E13191E9F">
+      <img src="/token.webp" alt="token" width="24px" height="24px" />
+      <Text color={color} bold>{`$${cakePriceUsd.toFixed(4)}`}</Text>
     </PriceLink>
   ) : showSkeleton ? (
     <Skeleton width={80} height={24} />
