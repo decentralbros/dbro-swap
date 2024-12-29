@@ -23,10 +23,8 @@ import { useTransactionAdder } from 'state/transactions/hooks'
 import { config } from 'utils/wagmi'
 import { useAccount, useChainId, useReadContract } from 'wagmi'
 import { abi } from '../abi'
-import { useSlippageAdjustedAmounts } from '../hooks'
+import { useSlippageAdjustedAmounts, useSwapCurrency, useSwapValues } from '../hooks'
 import { useConfirmModalState } from '../hooks/useConfirmModalState'
-import { useSwapCurrency } from '../hooks/useSwapCurrency'
-import { useSwapValues } from '../hooks/useSwapValues'
 import { CommitButtonProps } from '../types'
 
 type GasData = {
@@ -182,7 +180,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     if (gas.isHigh) {
       maxPriorityFeePerGas = parseUnits('2.5', 9)
     } else if (gas.isLow) {
-      maxPriorityFeePerGas = parseUnits('1', 9)
+      maxPriorityFeePerGas = parseUnits('1.2', 9)
     }
 
     const maxFeePerGas = baseFee * 2n + maxPriorityFeePerGas

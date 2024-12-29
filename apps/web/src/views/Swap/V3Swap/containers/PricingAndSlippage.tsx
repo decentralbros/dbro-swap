@@ -5,11 +5,10 @@ import { Currency, Price } from '@pancakeswap/sdk'
 import { useUserSlippage } from '@pancakeswap/utils/user'
 import { memo } from 'react'
 
-import { useGasPrice } from 'hooks/useGasPrice'
 import { useAccount, useChainId } from 'wagmi'
 import SettingsModal from '../../../../components/Menu/GlobalSettings/SettingsModal'
 import { SettingsMode } from '../../../../components/Menu/GlobalSettings/types'
-import { useIsWrapping } from '../hooks'
+import { useGasPrice, useIsWrapping } from '../hooks'
 
 interface Props {
   showSlippage?: boolean

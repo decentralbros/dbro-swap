@@ -90,7 +90,7 @@ export const PUBLIC_NODES = {
     'https://polygon-zkevm-testnet.rpc.thirdweb.com',
   ],
   [ChainId.ZKSYNC]: [...zkSync.rpcUrls.default.http],
-  [ChainId.LINEA]: linea.rpcUrls.default.http,
+  [ChainId.LINEA]: [process.env.NEXT_PUBLIC_NODIES_LINEA || '', linea.rpcUrls.default.http].filter(notEmpty),
   [ChainId.LINEA_TESTNET]: [
     'https://rpc.goerli.linea.build',
     'https://linea-testnet.rpc.thirdweb.com',

@@ -1,11 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
 import { utils } from 'ethers'
 import { createPublicClient, http } from 'viem'
-import { arbitrum, base, mainnet } from 'viem/chains'
+import { arbitrum, base, linea, mainnet } from 'viem/chains'
 
 const MAINNET_RPC = process.env.NEXT_PUBLIC_NODIES_ETH as string
 const ARBITRUM_RPC = process.env.NEXT_PUBLIC_NODIES_ARB as string
 const BASE_RPC = process.env.NEXT_PUBLIC_NODIES_BASE as string
+const LINEA_RPC = process.env.NEXT_PUBLIC_NODIES_LINEA as string
 
 type GasData = {
   gasPrice: bigint
@@ -17,7 +18,7 @@ type GasData = {
 
 const THRESHOLDS = {
   [mainnet.id]: {
-    high: 150,
+    high: 50,
     low: 30,
     name: 'Ethereum',
   },
@@ -27,9 +28,14 @@ const THRESHOLDS = {
     name: 'Base',
   },
   [arbitrum.id]: {
-    high: 0.5,
+    high: 0.15,
     low: 0.1,
     name: 'Arbitrum',
+  },
+  [linea.id]: {
+    high: 0.15,
+    low: 0.05,
+    name: 'Linea',
   },
 } as const
 
@@ -45,6 +51,10 @@ const clients = {
   [arbitrum.id]: createPublicClient({
     chain: arbitrum,
     transport: http(ARBITRUM_RPC),
+  }),
+  [linea.id]: createPublicClient({
+    chain: linea,
+    transport: http(LINEA_RPC),
   }),
 }
 
@@ -80,5 +90,7 @@ export const useGasPrice = ({ chainId, account }: { chainId: number; account?: `
     enabled: Boolean(account),
     refetchInterval: 15_000,
     refetchIntervalInBackground: false,
+    retry: 3,
+    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30_000),
   })
 }

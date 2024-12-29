@@ -23,8 +23,8 @@ export function useTokenValue() {
   return useQuery({
     queryKey: ['token-value'],
     queryFn: () => fetchAndCalculateUSDValue(),
-    refetchInterval: 60_000,
-    staleTime: 30_000,
+    refetchInterval: 300_000,
+    staleTime: 180_000,
     retry: 3,
     retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
   })
