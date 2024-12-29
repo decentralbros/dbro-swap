@@ -35,7 +35,7 @@ export const SEO: DefaultSeoProps = {
     },
     {
       name: 'viewport',
-      content: 'width=device-width, initial-scale=1, maximum-scale=5',
+      content: 'width=device-width, initial-scale=1, maximum-scale=1',
     },
     {
       name: 'apple-mobile-web-app-title',
