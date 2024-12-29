@@ -1,6 +1,6 @@
-import { styled } from "styled-components";
 import { useTranslation } from "@pancakeswap/localization";
-import { Button, RowFixed, Text, CheckmarkCircleIcon, useMatchBreakpoints } from "@pancakeswap/uikit";
+import { Button, CheckmarkCircleIcon, RowFixed, Text, useMatchBreakpoints } from "@pancakeswap/uikit";
+import { styled } from "styled-components";
 
 const CheckIcon = styled(CheckmarkCircleIcon)`
   height: 16px;
@@ -28,6 +28,7 @@ export function TokenRowButton<T>({
     <Button
       scale={isMobile ? "sm" : "md"}
       width="fit-content"
+      style={{ color: "#000" }}
       onClick={() => {
         if (setImportToken) {
           setImportToken(token);

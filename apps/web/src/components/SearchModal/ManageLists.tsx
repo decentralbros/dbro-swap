@@ -316,7 +316,7 @@ function ManageLists({
                   <Text>{t('Loaded')}</Text>
                 </RowFixed>
               ) : (
-                <Button width="fit-content" onClick={handleImport}>
+                <Button width="fit-content" onClick={handleImport} style={{ color: '#000' }}>
                   {t('Import')}
                 </Button>
               )}

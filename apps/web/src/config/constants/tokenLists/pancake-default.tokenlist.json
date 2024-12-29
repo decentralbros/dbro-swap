@@ -1,6 +1,6 @@
 {
   "name": "DBRO Swap OnRamp List",
-  "timestamp": "2024-11-13T11:45:00Z",
+  "timestamp": "2024-12-29T11:45:00Z",
   "version": {
     "major": 4,
     "minor": 0,
@@ -10,6 +10,16 @@
   "logoURI": "https://decentralbros.finance/logo.png",
   "keywords": ["dbro", "default"],
   "tokens": [
+    {
+      "type": "ERC20",
+      "chainId": 59144,
+      "address": "0x5FBDF89403270a1846F5ae7D113A989F850d1566",
+      "name": "Foxy",
+      "symbol": "FOXY",
+      "decimals": 18,
+      "logoURI": "https://assets.coingecko.com/coins/images/36870/standard/Foxy_Logo_Square_200x200.png",
+      "pairs": []
+    },
     {
       "asset": "c10042221_t0x9623063377AD1B27544C965cCd7342f7EA7e88C7",
       "type": "ARBITRUM",
