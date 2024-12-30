@@ -34,7 +34,7 @@ const THRESHOLDS = {
   },
   [linea.id]: {
     high: 0.15,
-    low: 0.05,
+    low: 0.1,
     name: 'Linea',
   },
 } as const

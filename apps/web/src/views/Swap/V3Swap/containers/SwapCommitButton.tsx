@@ -10,7 +10,7 @@ import { parseUnits } from '@pancakeswap/utils/viem/parseUnits'
 import { sendTransaction, waitForTransactionReceipt, writeContract } from '@wagmi/core'
 import { CommitButton } from 'components/CommitButton'
 import ConnectWalletButton from 'components/ConnectWalletButton'
-import { ETHEREUM, ZEROX_ADDRESS } from 'config/constants/contracts'
+import { ETHEREUM, ZEROX_ADDRESS, ZEROX_LINEA } from 'config/constants/contracts'
 import { refetchOptions } from 'config/query'
 import { useCurrency } from 'hooks/Tokens'
 import { useIsTransactionUnsupported } from 'hooks/Trades'
@@ -67,7 +67,7 @@ const WrapCommitButtonReplace: React.FC<React.PropsWithChildren> = ({ children }
   if (!showWrap) return children
 
   return (
-    <CommitButton width="100%" disabled={Boolean(wrapInputError)} onClick={onWrap}>
+    <CommitButton width="100%" disabled={Boolean(wrapInputError)} onClick={onWrap} style={{ color: '#000' }}>
       {wrapInputError ?? (wrapType === WrapType.WRAP ? t('Wrap') : wrapType === WrapType.UNWRAP ? t('Unwrap') : null)}
     </CommitButton>
   )
@@ -159,11 +159,18 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
 
   const swapParams = useSwapValues()
 
+  const ZEROX = useMemo(() => (chainId !== ChainId.LINEA ? ZEROX_ADDRESS : ZEROX_LINEA), [chainId])
+
+  const NATIVE = useMemo(
+    () => (inputCurrency && !inputCurrency.isNative ? (inputCurrency.address as `0x${string}`) : ETHEREUM),
+    [inputCurrency],
+  )
+
   const { data: allowance } = useReadContract({
     abi,
-    address: inputCurrency && !inputCurrency.isNative ? (inputCurrency.address as `0x${string}`) : ETHEREUM,
+    address: NATIVE,
     functionName: 'allowance',
-    args: [account as `0x${string}`, ZEROX_ADDRESS],
+    args: [account as `0x${string}`, ZEROX],
     query: {
       enabled: Boolean(account),
       ...refetchOptions,
@@ -211,7 +218,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
             abi,
             address: inputCurrency.address as `0x${string}`,
             functionName: 'approve',
-            args: [ZEROX_ADDRESS, amount],
+            args: [ZEROX, amount],
             chainId,
           })
 
@@ -265,6 +272,7 @@ const SwapCommitButtonInner = memo(function SwapCommitButtonInner({
     allowance,
     account,
     chainId,
+    ZEROX,
     addTransaction,
     toastSuccess,
     toastError,

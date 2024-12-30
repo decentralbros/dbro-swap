@@ -11,6 +11,7 @@ export const DBRO_CONTRACT = '0x6a4e0F83D7882BcACFF89aaF6f60D24E13191E9F'
 export const STAKING_CONTRACT = '0x7e6Ee299aebe5808D1B0602Cea274Ee5f01a3DeE'
 export const REWARD_WALLET = process.env.NEXT_PUBLIC_TREASURY as string
 export const ZEROX_ADDRESS = '0x0000000000001fF3684f28c67538d4D072C22734' as `0x${string}`
+export const ZEROX_LINEA = '0x000000000000175a8b9bC6d539B3708EEd92EA6c' as `0x${string}`
 export const ETHEREUM = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE' as `0x${string}`
 
 export default {
