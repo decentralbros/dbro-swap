@@ -18,13 +18,15 @@ const getPathList = (t: ContextApi['t']): PathList => {
   return {
     paths: {
       '/': { title: t('Home') },
-      '/swap': { title: t('Exchange'), image: `https://decentralbros.finance/logo.png` },
-      '/staking': { title: t('Earn'), image: `https://decentralbros.finance/logo.png` },
+      '/swap': { title: t('Trade'), image: `https://decentralbros.finance/logo.png` },
+      '/staking': { title: t('Stake'), image: `https://decentralbros.finance/logo.png` },
+      '/staking/learn': { title: t('Learn'), image: `https://decentralbros.finance/logo.png` },
+      '/staking/mint': { title: t('Mint'), image: `https://decentralbros.finance/logo.png` },
       '/lottery': { title: t('Lottery'), image: `https://decentralbros.finance/logo.png` },
-      '/nfts': { title: t('NFT Marketplace'), image: `https://decentralbros.finance/logo.png` },
-      '/affiliates': { title: t('Affiliate Program'), image: `https://decentralbros.finance/logo.png` },
 
       // everything else
+      '/nfts': { title: t('NFT Marketplace'), image: `https://decentralbros.finance/logo.png` },
+      '/affiliates': { title: t('Affiliate Program'), image: `https://decentralbros.finance/logo.png` },
       '/limit-orders': { basePath: true, title: t('Limit Orders'), image: `${ASSET_CDN}/web/og/limit.jpg` },
       '/add': { basePath: true, title: t('Add Liquidity'), image: `${ASSET_CDN}/web/og/liquidity.jpg` },
       '/remove': { basePath: true, title: t('Remove Liquidity'), image: `${ASSET_CDN}/web/og/liquidity.jpg` },

@@ -42,14 +42,22 @@ const config: (
       icon: SwapIcon,
       fillIcon: SwapFillIcon,
       showItemsOnMobile: false,
+      items: [],
+    },
+    {
+      label: t('Bridge'),
+      icon: SwapIcon,
+      fillIcon: SwapFillIcon,
+      showItemsOnMobile: false,
       items: [
         {
-          label: t('Swap'),
-          href: '/swap',
+          label: t('ETH Bridge'),
+          href: 'https://app.across.to/bridge',
+          type: DropdownMenuItemType.EXTERNAL_LINK,
         },
         {
-          label: t('Bridge'),
-          href: 'https://app.across.to/bridge',
+          label: t('BNB Bridge'),
+          href: 'https://www.bnbchain.org/en/bnb-chain-bridge',
           type: DropdownMenuItemType.EXTERNAL_LINK,
         },
       ],
