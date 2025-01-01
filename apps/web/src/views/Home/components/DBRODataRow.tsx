@@ -6,7 +6,7 @@ import { DBRO_CONTRACT, REWARD_WALLET, RYFT_ADDRESS } from 'config/constants/con
 import { useStakingUSD } from 'hooks/useStakingUSD'
 import { useMemo } from 'react'
 import { styled } from 'styled-components'
-import { useAccount, useReadContract } from 'wagmi'
+import { useReadContract } from 'wagmi'
 
 const StyledColumn = styled(Flex)<{ noMobileBorder?: boolean; noDesktopBorder?: boolean }>`
   flex-direction: column;
@@ -70,7 +70,6 @@ const erc20ABI = [
 const DBRODataRow = () => {
   const { t } = useTranslation()
   const { isMobile } = useMatchBreakpoints()
-  const { address: account } = useAccount()
 
   const stakingContract = deployedContracts[8453].DBROWrappedStaking
 
