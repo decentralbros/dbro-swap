@@ -7,6 +7,7 @@ const MAINNET_RPC = process.env.NEXT_PUBLIC_NODIES_ETH as string
 const ARBITRUM_RPC = process.env.NEXT_PUBLIC_NODIES_ARB as string
 const BASE_RPC = process.env.NEXT_PUBLIC_NODIES_BASE as string
 const LINEA_RPC = process.env.NEXT_PUBLIC_NODIES_LINEA as string
+// const BNB_RPC = process.env.NEXT_PUBLIC_NODIES_BNB as string
 
 type GasData = {
   gasPrice: bigint

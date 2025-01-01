@@ -21,19 +21,25 @@ const ARBITRUM_NODES = [
   ...arbitrum.rpcUrls.default.http,
   'https://arbitrum-one.publicnode.com',
   'https://arbitrum.llamarpc.com',
-].filter(notEmpty)
+]
 
 export const SERVER_NODES = {
   [ChainId.BSC]: [
+    process.env.NEXT_PUBLIC_NODIES_BNB || '',
     'https://bsc.publicnode.com',
     'https://binance.llamarpc.com',
     'https://bsc-dataseed1.defibit.io',
     'https://bsc-dataseed1.binance.org',
   ].filter(notEmpty),
   [ChainId.BSC_TESTNET]: ['https://data-seed-prebsc-1-s1.binance.org:8545'],
-  [ChainId.ETHEREUM]: ['https://ethereum.publicnode.com', 'https://eth.llamarpc.com', 'https://cloudflare-eth.com'],
+  [ChainId.ETHEREUM]: [
+    process.env.NEXT_PUBLIC_NODIES_ETH || '',
+    'https://ethereum.publicnode.com',
+    'https://eth.llamarpc.com',
+    'https://cloudflare-eth.com',
+  ].filter(notEmpty),
   [ChainId.GOERLI]: ['https://eth-goerli.public.blastapi.io'].filter(notEmpty),
-  [ChainId.ARBITRUM_ONE]: ARBITRUM_NODES,
+  [ChainId.ARBITRUM_ONE]: [process.env.NEXT_PUBLIC_NODIES_ARB || '', ...ARBITRUM_NODES].filter(notEmpty),
   [ChainId.ARBITRUM_GOERLI]: arbitrumGoerli.rpcUrls.default.http,
   [ChainId.POLYGON_ZKEVM]: [
     'https://f2562de09abc5efbd21eefa083ff5326.zkevm-rpc.com/',
@@ -53,8 +59,8 @@ export const SERVER_NODES = {
   [ChainId.OPBNB_TESTNET]: opBNBTestnet.rpcUrls.default.http,
   [ChainId.OPBNB]: [...opBNB.rpcUrls.default.http],
   [ChainId.BASE]: [
+    process.env.NEXT_PUBLIC_NODIES_BASE || '',
     'https://base.publicnode.com',
-    // process.env.NEXT_PUBLIC_NODE_REAL_BASE_PRODUCTION,
     ...base.rpcUrls.default.http,
   ],
   [ChainId.BASE_TESTNET]: baseGoerli.rpcUrls.default.http,
@@ -66,6 +72,7 @@ export const SERVER_NODES = {
 
 export const PUBLIC_NODES = {
   [ChainId.BSC]: [
+    process.env.NEXT_PUBLIC_NODIES_BNB || '',
     'https://bsc.publicnode.com',
     'https://binance.llamarpc.com',
     'https://bsc-dataseed1.defibit.io',
