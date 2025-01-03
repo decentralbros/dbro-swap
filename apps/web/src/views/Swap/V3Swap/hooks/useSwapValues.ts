@@ -31,7 +31,8 @@ const APPROVED_TOKENS: { [key: string]: { symbol: string; chainId: number } } = 
   '0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f': { symbol: 'WETH', chainId: 59144 },
 
   // BNB
-  '0x55d398326f99059fF775485246999027B3197955': { symbol: 'USDT', chainId: 56 },
+  '0x55d398326f99059ff775485246999027b3197955': { symbol: 'USDT', chainId: 56 },
+  '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c': { symbol: 'WBNB', chainId: 56 },
 }
 
 export const useSwapValues = (): Estimate | undefined => {
@@ -47,6 +48,7 @@ export const useSwapValues = (): Estimate | undefined => {
   const buyToken: string = outputCurrency.isNative ? ETHEREUM : outputCurrency.address
 
   const swapFeeToken: string = !inputCurrency.isNative && !outputCurrency.isNative ? inputCurrency.address : ETHEREUM
+
   const isApproved: string = !inputCurrency.isNative && !outputCurrency.isNative ? inputCurrency.address : ETHEREUM
 
   const sellAmount = parseUnits(typedValue, inputCurrency.decimals)
@@ -77,7 +79,7 @@ export const useSwapValues = (): Estimate | undefined => {
       swapFeeRecipient: FEE_ADDRESS,
       swapFeeBps: 100, // 1%
       swapFeeToken,
-      slippageBps: allowedSlippage * 100, // 100 is 1%
+      slippageBps: allowedSlippage * 100,
     }
 
     return estimate
@@ -89,7 +91,7 @@ export const useSwapValues = (): Estimate | undefined => {
     sellToken,
     sellAmount,
     taker: account as string,
-    slippageBps: allowedSlippage * 100, // 100 is 1%
+    slippageBps: allowedSlippage * 100,
   }
 
   return estimate
