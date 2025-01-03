@@ -1,5 +1,4 @@
 /* eslint-disable address/addr-type */
-import { ChainId } from '@pancakeswap/chains'
 import { Estimate } from '@pancakeswap/swap-sdk-core'
 import { useUserSlippage } from '@pancakeswap/utils/user'
 import { parseUnits } from '@pancakeswap/utils/viem/parseUnits'
@@ -30,6 +29,9 @@ const APPROVED_TOKENS: { [key: string]: { symbol: string; chainId: number } } = 
   '0xa219439258ca9da29e9cc4ce5596924745e12b93': { symbol: 'USDT', chainId: 59144 },
   '0x176211869ca2b568f2a7d4ee941e073a821ee1ff': { symbol: 'USDC', chainId: 59144 },
   '0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f': { symbol: 'WETH', chainId: 59144 },
+
+  // BNB
+  '0x55d398326f99059fF775485246999027B3197955': { symbol: 'USDT', chainId: 56 },
 }
 
 export const useSwapValues = (): Estimate | undefined => {
@@ -38,7 +40,7 @@ export const useSwapValues = (): Estimate | undefined => {
   const { address: account, chainId } = useAccount()
   const [allowedSlippage] = useUserSlippage()
 
-  if (!inputCurrency || !outputCurrency || chainId === ChainId.BSC) return undefined
+  if (!inputCurrency || !outputCurrency) return undefined
 
   const sellToken: string = inputCurrency.isNative ? ETHEREUM : inputCurrency.address
 
