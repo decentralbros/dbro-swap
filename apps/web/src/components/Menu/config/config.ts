@@ -1,5 +1,6 @@
 import { ContextApi } from '@pancakeswap/localization'
 import {
+  BridgeIcon,
   DropdownMenuItems,
   DropdownMenuItemType,
   EarnFillIcon,
@@ -46,8 +47,9 @@ const config: (
     },
     {
       label: t('Bridge'),
-      icon: SwapIcon,
-      fillIcon: SwapFillIcon,
+      href: 'https://app.across.to/bridge',
+      icon: BridgeIcon,
+      fillIcon: BridgeIcon,
       showItemsOnMobile: false,
       items: [
         {
