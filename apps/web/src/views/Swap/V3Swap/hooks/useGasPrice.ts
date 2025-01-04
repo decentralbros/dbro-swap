@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
 import { utils } from 'ethers'
 import { createPublicClient, http } from 'viem'
-import { arbitrum, base, linea, mainnet } from 'viem/chains'
+import { arbitrum, base, bsc, linea, mainnet } from 'viem/chains'
 
 const MAINNET_RPC = process.env.NEXT_PUBLIC_NODIES_ETH as string
 const ARBITRUM_RPC = process.env.NEXT_PUBLIC_NODIES_ARB as string
 const BASE_RPC = process.env.NEXT_PUBLIC_NODIES_BASE as string
 const LINEA_RPC = process.env.NEXT_PUBLIC_NODIES_LINEA as string
-// const BNB_RPC = process.env.NEXT_PUBLIC_NODIES_BNB as string
+const BNB_RPC = process.env.NEXT_PUBLIC_NODIES_BNB as string
 
 type GasData = {
   gasPrice: bigint
@@ -38,6 +38,11 @@ const THRESHOLDS = {
     low: 0.1,
     name: 'Linea',
   },
+  [bsc.id]: {
+    high: 3,
+    low: 1.5,
+    name: 'BNB Chain',
+  },
 } as const
 
 const clients = {
@@ -56,6 +61,10 @@ const clients = {
   [linea.id]: createPublicClient({
     chain: linea,
     transport: http(LINEA_RPC),
+  }),
+  [bsc.id]: createPublicClient({
+    chain: bsc,
+    transport: http(BNB_RPC),
   }),
 }
 
