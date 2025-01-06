@@ -1,13 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
+import { ARBITRUM_RPC, BASE_RPC, BNB_RPC, LINEA_RPC, MAINNET_RPC } from 'config/constants/rpcs'
 import { utils } from 'ethers'
 import { createPublicClient, http } from 'viem'
 import { arbitrum, base, bsc, linea, mainnet } from 'viem/chains'
-
-const MAINNET_RPC = process.env.NEXT_PUBLIC_NODIES_ETH as string
-const ARBITRUM_RPC = process.env.NEXT_PUBLIC_NODIES_ARB as string
-const BASE_RPC = process.env.NEXT_PUBLIC_NODIES_BASE as string
-const LINEA_RPC = process.env.NEXT_PUBLIC_NODIES_LINEA as string
-const BNB_RPC = process.env.NEXT_PUBLIC_NODIES_BNB as string
 
 type GasData = {
   gasPrice: bigint
