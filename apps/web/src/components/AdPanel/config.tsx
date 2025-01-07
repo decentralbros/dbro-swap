@@ -1,10 +1,4 @@
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
-import { AdCakeStaking } from './Ads/AdCakeStaking'
-import { AdMevProtection } from './Ads/AdMevProtection'
-import { AdOptionsTrading } from './Ads/AdOptionsTrading'
-import { AdPCSX } from './Ads/AdPCSX'
-import { AdRocker } from './Ads/AdRocker'
-import { AdTelegramBot } from './Ads/AdTelegramBot'
 import { ExpandableAd } from './Expandable/ExpandableAd'
 import { shouldRenderOnPages } from './renderConditions'
 
@@ -31,33 +25,33 @@ export const useAdConfig = () => {
       id: 'expandable-ad',
       component: <ExpandableAd />,
       priority: Priority.FIRST_AD,
-      shouldRender: [shouldRenderOnPages(['/buy-crypto', '/', '/prediction'])],
+      shouldRender: [shouldRenderOnPages(['/swap'])],
     },
-    {
-      id: 'ad-mev',
-      component: <AdMevProtection />,
-    },
-    {
-      id: 'prediction-telegram-bot',
-      component: <AdTelegramBot />,
-    },
-    {
-      id: 'pcsx',
-      component: <AdPCSX />,
-    },
-    {
-      id: 'cake-staking',
-      component: <AdCakeStaking />,
-    },
-    {
-      id: 'clamm-options-trading',
-      component: <AdOptionsTrading />,
-    },
+    // {
+    //   id: 'ad-mev',
+    //   component: <AdMevProtection />,
+    // },
+    // {
+    //   id: 'prediction-telegram-bot',
+    //   component: <AdTelegramBot />,
+    // },
+    // {
+    //   id: 'pcsx',
+    //   component: <AdPCSX />,
+    // },
+    // {
+    //   id: 'cake-staking',
+    //   component: <AdCakeStaking />,
+    // },
+    // {
+    //   id: 'clamm-options-trading',
+    //   component: <AdOptionsTrading />,
+    // },
 
-    {
-      id: 'rocker-meme-career',
-      component: <AdRocker />,
-    },
+    // {
+    //   id: 'rocker-meme-career',
+    //   component: <AdRocker />,
+    // },
   ]
 
   return adList
@@ -81,7 +75,6 @@ const commonLayoutAdIgnoredPages = [
  */
 export const layoutMobileAdIgnoredPages = [
   ...commonLayoutAdIgnoredPages,
-  '/',
   '/prediction',
   '/liquidity/pools',
   '/migration/bcake',
@@ -95,4 +88,4 @@ export const layoutMobileAdIgnoredPages = [
 export const layoutDesktopAdIgnoredPages = [...commonLayoutAdIgnoredPages]
 
 // NOTE: In current phase, we're adding pages to whitelist as well for AdPlayer.
-export const commonLayoutWhitelistedPages = ['/', '/buy-crypto', '/prediction']
+export const commonLayoutWhitelistedPages = ['/', '/swap']

@@ -133,7 +133,6 @@ const Footer = () => {
         <Flex position="relative" zIndex={2} alignItems="center" justifyContent="center" width="100%" height="100%">
           <StyledSunburst />
         </Flex>
-        {/* <ImageBox /> */}
       </BgWrapper>
 
       <Wrapper>

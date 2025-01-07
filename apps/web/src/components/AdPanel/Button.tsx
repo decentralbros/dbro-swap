@@ -68,12 +68,13 @@ interface ExpandButtonProps extends AdButtonProps {
 export const ExpandButton = ({ isExpanded, ...props }: ExpandButtonProps) => {
   return (
     <AdButton
-      variant={isExpanded ? 'text' : 'subtle'}
+      variant={isExpanded ? 'secondary' : 'primary'}
+      style={{ color: isExpanded ? '#1bf696' : '#000' }}
       endIcon={
         isExpanded ? (
-          <ChevronsCollapseIcon color="primary60" />
+          <ChevronsCollapseIcon color="secondary" />
         ) : isExpanded === false ? (
-          <ChevronsExpandIcon color="invertedContrast" />
+          <ChevronsExpandIcon color="black" />
         ) : null
       }
       {...props}

@@ -32,7 +32,7 @@ export const ExpandableActions = ({
         onClick={isExpanded ? handleDismiss : handleExpand}
         isExpanded={isExpanded}
       />
-      {isExpanded && actionButton && <StyledBox>{actionButton}</StyledBox>}
+      {/* {isExpanded && actionButton && <StyledBox>{actionButton}</StyledBox>} */}
     </ActionContainer>
   )
 }

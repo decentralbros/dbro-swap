@@ -42,7 +42,7 @@ export const ExpandableAd = (props: AdPlayerProps) => {
       isExpanded={isExpanded}
       {...props}
       ref={adCardRef}
-      style={{ maxHeight: isMobile ? '500px' : '700px' }}
+      style={{ maxHeight: isMobile ? '500px' : '700px', backgroundColor: '#08060B' }}
     >
       <Flex flexDirection="column" justifyContent="space-between" height="100%" flexGrow={0}>
         <ExpandableContent
