@@ -152,7 +152,7 @@ const DBRODataRow = () => {
   }
 
   return (
-    <StyledWrapper mb={isMobile ? '30px' : '50px'}>
+    <StyledWrapper>
       <StyledColumn>
         <Text bold fontSize={isMobile ? '14px' : undefined}>
           {t('Total Supply')}

@@ -399,9 +399,9 @@ const EcoSystemSection: React.FC = () => {
   const decentralBrosData = useDecentralBrosData()
 
   return (
-    <Flex justifyContent="center" alignItems="center" flexDirection="column" pt={isMobile ? '24px' : '60px'}>
+    <Flex justifyContent="center" alignItems="center" flexDirection="column">
       {/* <Image src="/logo.webp" alt="dbro swap" height={100} width={100} /> */}
-      <Text textAlign="center" p="20px">
+      <Text textAlign="center" px="20px">
         <Text
           fontSize={['32px', null, null, '40px']}
           lineHeight="110%"

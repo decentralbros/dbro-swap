@@ -7,6 +7,7 @@ import DBRODataRow from './components/DBRODataRow'
 import EcoSystemSection from './components/EcoSystemSection'
 import Footer from './components/Footer'
 import Hero from './components/Hero'
+import { ChainTags } from './components/MetricsSection/ChainTags'
 
 const StyledHeroSection = styled(PageSection)`
   padding-top: 16px;
@@ -65,8 +66,8 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         <Hero />
       </StyledHeroSection>
 
-      {/* <PageSection
-        innerProps={{ style: { ...HomeSectionContainerStyles, maxWidth: 'auto' } }}
+      <PageSection
+        innerProps={{ style: { ...HomeSectionContainerStyles } }}
         background={theme.colors.background}
         containerProps={{
           id: 'home-1',
@@ -74,8 +75,8 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         index={2}
         hasCurvedDivider={false}
       >
-        <MetricsSection />
-      </PageSection> */}
+        <ChainTags />
+      </PageSection>
 
       <PageSection
         innerProps={{ style: HomeSectionContainerStyles }}
@@ -87,7 +88,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         hasCurvedDivider={false}
       >
         <CakeSection />
-        <Flex style={{ gap: 5 }} justifyContent="center" mt="40px">
+        <Flex style={{ gap: 5 }} justifyContent="center" mt="48px">
           <Text fontSize={24} bold color="secondary">
             DBRO
           </Text>
@@ -99,7 +100,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
       </PageSection>
 
       <PageSection
-        innerProps={{ style: { ...HomeSectionContainerStyles, maxWidth: 'auto', paddingBottom: '32px' } }}
+        innerProps={{ style: { ...HomeSectionContainerStyles } }}
         background={theme.colors.background}
         containerProps={{
           id: 'home-1',

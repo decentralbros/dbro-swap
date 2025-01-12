@@ -2,7 +2,6 @@ import { useTranslation } from '@pancakeswap/localization'
 import { Flex, Heading, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import useTheme from 'hooks/useTheme'
 import { styled } from 'styled-components'
-import CommunitySummary from './CommunitySummary'
 import { CommunityTags } from './CommunityTags'
 
 const TransparentFrame = styled.div<{ isDark: boolean }>`
@@ -14,6 +13,7 @@ const TransparentFrame = styled.div<{ isDark: boolean }>`
   box-sizing: border-box;
   backdrop-filter: blur(20px);
   border-radius: 72px;
+  margin-bottom: 96px;
 
   ${({ theme }) => theme.mediaQueries.md} {
     padding: 40px;
@@ -51,15 +51,15 @@ const TransparentFrame = styled.div<{ isDark: boolean }>`
 //   ${sharedCss}
 // `
 
-const BgWrapper = styled.div`
-  z-index: -1;
-  overflow: hidden;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0px;
-  left: 0px;
-`
+// const BgWrapper = styled.div`
+//   z-index: -1;
+//   overflow: hidden;
+//   position: absolute;
+//   width: 100%;
+//   height: 100%;
+//   top: 0px;
+//   left: 0px;
+// `
 
 const CommunitySection = () => {
   const { t } = useTranslation()

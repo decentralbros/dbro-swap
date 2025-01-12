@@ -349,7 +349,7 @@ const CakeSection: React.FC = () => {
   // const cakeBoxRef = useRef<HTMLDivElement>(null)
   // const internalRef = useRef(0)
   // const seqIntervalRef = useRef(0)
-  const { isMobile, isTablet } = useMatchBreakpoints()
+  const { isMobile } = useMatchBreakpoints()
 
   // useLayoutEffect(() => {
   //   if (checkIsIOS() || isMobile) return
@@ -425,6 +425,7 @@ const CakeSection: React.FC = () => {
 
   return (
     <Flex
+      mt="48px"
       flexDirection="column"
       style={{ gap: 32 }}
       marginLeft={isMobile ? '-16px' : '0px'}

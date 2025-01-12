@@ -111,17 +111,11 @@ const newsItems = [
   //   background: '#686EA7',
   //   iconWidth: '26px',
   // },
-  // {
-  //   key: 'Arbitrum One',
-  //   component: <ArbitrumIcon />,
-  //   background: '#6E89AE',
-  //   iconWidth: '20px',
-  // },
   {
-    key: 'Linea',
-    component: <LineaIcon />,
-    background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.10) 100%), #81D8EA',
-    iconWidth: '18px',
+    key: 'Arbitrum One',
+    component: <ArbitrumIcon />,
+    background: '#6E89AE',
+    iconWidth: '20px',
   },
   {
     key: 'Base',
@@ -132,6 +126,12 @@ const newsItems = [
     ),
     background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.10) 100%), #75A1FF',
     iconWidth: '20px',
+  },
+  {
+    key: 'Linea',
+    component: <LineaIcon />,
+    background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.10) 100%), #81D8EA',
+    iconWidth: '18px',
   },
   {
     key: 'BNB Chain',
