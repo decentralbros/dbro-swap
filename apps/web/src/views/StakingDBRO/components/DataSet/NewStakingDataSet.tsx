@@ -78,6 +78,7 @@ export const NewStakingDataSet: React.FC<React.PropsWithChildren<NewStakingDataS
     functionName: 'getStakeInfoAndPendingRewards',
     args: [account as `0x${string}`],
     query: {
+      ...refetchOptions,
       enabled: Boolean(account) && chainId === ChainId.BASE,
     },
     chainId: ChainId.BASE,
