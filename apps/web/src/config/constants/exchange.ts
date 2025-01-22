@@ -77,7 +77,7 @@ export const SUGGESTED_BASES: ChainTokenList = {
     opBnbTestnetTokens.usdc,
     opBnbTestnetTokens.weth,
   ],
-  [ChainId.BASE]: [baseTokens.usdc, baseTokens.weth],
+  [ChainId.BASE]: [baseTokens.usdc, baseTokens.weth, baseTokens.dbro],
   [ChainId.BASE_TESTNET]: [baseTestnetTokens.usdc, baseTestnetTokens.weth],
   [ChainId.SCROLL_SEPOLIA]: [scrollSepoliaTokens.usdc, scrollSepoliaTokens.weth],
   [ChainId.SEPOLIA]: [scrollSepoliaTokens.usdc, scrollSepoliaTokens.weth],

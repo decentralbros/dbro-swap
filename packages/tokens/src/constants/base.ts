@@ -1,10 +1,11 @@
 import { ChainId } from '@pancakeswap/chains'
 import { ERC20Token, WETH9 } from '@pancakeswap/sdk'
-import { CAKE, USDC } from './common'
+import { CAKE, DBRO, USDC } from './common'
 
 export const baseTokens = {
   weth: WETH9[ChainId.BASE],
   usdc: USDC[ChainId.BASE],
+  dbro: DBRO[ChainId.BASE],
   cake: CAKE[ChainId.BASE],
   cbETH: new ERC20Token(
     ChainId.BASE,

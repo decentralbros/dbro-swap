@@ -51,6 +51,16 @@
       "logoURI": "https://decentralbros.finance/logo.webp"
     },
     {
+      "type": "BASE",
+      "chainId": 8453,
+      "address": "0xF1B4ddF712E108cf43711B1C39f2fDDb0d5Ce243",
+      "name": "BrianArmstrongCoinbaseUSDC2012Normie",
+      "symbol": "BASE",
+      "decimals": 18,
+      "logoURI": "https://decentralbros.finance/images/partners/base.webp",
+      "pairs": []
+    },
+    {
       "type": "ERC20",
       "chainId": 1,
       "address": "0xD939212F16560447ED82ce46cA40A63DB62419B5",

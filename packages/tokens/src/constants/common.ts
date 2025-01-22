@@ -474,6 +474,17 @@ export const WBTC_ETH = new ERC20Token(
   'https://bitcoin.org/',
 )
 
+export const DBRO = {
+  [ChainId.BASE]: new ERC20Token(
+    ChainId.BASE,
+    '0x6a4e0F83D7882BcACFF89aaF6f60D24E13191E9F',
+    8,
+    'DBRO',
+    'Decentral Bros',
+    'https://decentralbros.finance/',
+  ),
+}
+
 export const STABLE_COIN = {
   [ChainId.ETHEREUM]: USDT[ChainId.ETHEREUM],
   [ChainId.GOERLI]: USDC[ChainId.GOERLI],
