@@ -15,7 +15,7 @@
       "chainId": 56,
       "address": "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c",
       "name": "Binance BTC",
-      "symbol": "BTBC",
+      "symbol": "BTCB",
       "decimals": 18,
       "logoURI": "https://decentralbros.finance/images/tokens/btcb.png",
       "pairs": []
