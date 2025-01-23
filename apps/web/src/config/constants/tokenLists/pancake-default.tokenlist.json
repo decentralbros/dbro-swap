@@ -12,12 +12,22 @@
   "tokens": [
     {
       "type": "ERC20",
+      "chainId": 56,
+      "address": "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c",
+      "name": "Binance BTC",
+      "symbol": "BTBC",
+      "decimals": 18,
+      "logoURI": "https://decentralbros.finance/images/tokens/btcb.png",
+      "pairs": []
+    },
+    {
+      "type": "ERC20",
       "chainId": 59144,
       "address": "0x5FBDF89403270a1846F5ae7D113A989F850d1566",
       "name": "Foxy",
       "symbol": "FOXY",
       "decimals": 18,
-      "logoURI": "https://assets.coingecko.com/coins/images/36870/standard/Foxy_Logo_Square_200x200.png",
+      "logoURI": "https://decentralbros.finance/images/tokens/foxy.png",
       "pairs": []
     },
     {
@@ -28,7 +38,7 @@
       "name": "The Graph",
       "symbol": "GRT",
       "decimals": 18,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/arbitrum/assets/0x9623063377AD1B27544C965cCd7342f7EA7e88C7/logo.png",
+      "logoURI": "https://decentralbros.finance/images/tokens/graph.png",
       "pairs": []
     },
     {
@@ -87,7 +97,7 @@
       "name": "ArcBlock",
       "symbol": "ABT",
       "decimals": 18,
-      "logoURI": "https://assets.coingecko.com/coins/images/2341/standard/arcblock.png",
+      "logoURI": "https://decentralbros.finance/images/partners/ant.webp",
       "pairs": []
     },
     {
@@ -98,7 +108,7 @@
       "name": "0x",
       "symbol": "ZRX",
       "decimals": 18,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/ethereum/assets/0xE41d2489571d322189246DaFA5ebDe1F4699F498/logo.png",
+      "logoURI": "https://decentralbros.finance/images/tokens/0x.png",
       "pairs": []
     }
   ]
