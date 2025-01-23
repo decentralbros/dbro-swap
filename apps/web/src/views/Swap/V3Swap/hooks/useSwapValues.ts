@@ -61,7 +61,7 @@ export const useSwapValues = (): Estimate | undefined => {
       sellAmount,
       taker: account as string,
       swapFeeRecipient: FEE_ADDRESS,
-      swapFeeBps: 100, // 1%
+      swapFeeBps: 50, // 1%
       swapFeeToken,
       slippageBps: allowedSlippage * 100, // 100 is 1%
     }
