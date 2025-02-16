@@ -1,4 +1,4 @@
-import { GithubIcon, Link, TelegramIcon, TwitterIcon } from '@pancakeswap/uikit'
+import { DiscordIcon, GithubIcon, Link, TelegramIcon, TwitterIcon } from '@pancakeswap/uikit'
 import { cloneElement } from 'react'
 import { styled } from 'styled-components'
 
@@ -40,7 +40,7 @@ const communityData = [
     href: 'https://github.com/decentralbros',
     alt: 'Github',
   },
-  // { icon: <DiscordIcon />, href: 'https://discord.gg/pancakeswap', alt: 'DiscordIcon' },
+  { icon: <DiscordIcon />, href: 'https://discord.gg/qyYdrd4uGg', alt: 'DiscordIcon' },
   // { icon: <InstagramIcon />, href: 'https://www.instagram.com/pancakeswap_official/', alt: 'InstagramIcon' },
   // { icon: <RedditIcon />, href: 'https://www.reddit.com/r/pancakeswap/', alt: 'RedditIcon' },
   // { icon: <YoutubeIcon />, href: 'https://www.youtube.com/@pancakeswap_official', alt: 'YoutubeIcon' },
