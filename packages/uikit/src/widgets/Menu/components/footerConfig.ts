@@ -50,6 +50,10 @@ export const footerLinks: (t: ContextApi["t"]) => FooterLinkType[] = (t) => [
         label: t("Telegram"),
         href: "https://t.me/DecentralBros",
       },
+      {
+        label: t("Discord"),
+        href: "https://discord.gg/qyYdrd4uGg",
+      },
     ],
   },
   {

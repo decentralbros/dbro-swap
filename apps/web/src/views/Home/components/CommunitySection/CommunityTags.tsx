@@ -35,12 +35,12 @@ const CommunityTag = styled.div`
 const communityData = [
   { icon: <TwitterIcon />, href: 'https://x.com/DecentralBros_', alt: 'TwitterIcon' },
   { icon: <TelegramIcon />, href: 'https://t.me/DecentralBros', alt: 'TelegramIcon' },
+  { icon: <DiscordIcon />, href: 'https://discord.gg/qyYdrd4uGg', alt: 'DiscordIcon' },
   {
     icon: <GithubIcon />,
     href: 'https://github.com/decentralbros',
     alt: 'Github',
   },
-  { icon: <DiscordIcon />, href: 'https://discord.gg/qyYdrd4uGg', alt: 'DiscordIcon' },
   // { icon: <InstagramIcon />, href: 'https://www.instagram.com/pancakeswap_official/', alt: 'InstagramIcon' },
   // { icon: <RedditIcon />, href: 'https://www.reddit.com/r/pancakeswap/', alt: 'RedditIcon' },
   // { icon: <YoutubeIcon />, href: 'https://www.youtube.com/@pancakeswap_official', alt: 'YoutubeIcon' },
