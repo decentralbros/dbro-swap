@@ -140,8 +140,48 @@ const AddressDisplay = styled.div`
   word-break: break-word;
 `
 
+type AuthResponse = {
+  isValid: boolean
+  error?: string
+}
+
+/**
+ * Submit wallet signature to authenticate user
+ */
+export const authenticateWallet = async (
+  message: string,
+  signature: string,
+  address: string,
+): Promise<AuthResponse> => {
+  try {
+    const response = await fetch('/api/verify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message, signature, address }),
+    })
+
+    const data: AuthResponse = await response.json()
+
+    if (!response.ok) {
+      return {
+        isValid: false,
+        error: data.error || `Request failed with status ${response.status}`,
+      }
+    }
+
+    return data
+  } catch (error) {
+    return {
+      isValid: false,
+      error: error instanceof Error ? error.message : 'Authentication request failed',
+    }
+  }
+}
+
 const TermsSignature = ({ signMessageAsync, isPending }) => {
-  const account = useAccount()
+  const { address } = useAccount()
   const { logout } = useAuth()
 
   const TERMS_MESSAGE = `I have read and agree to the Terms of Service available at:\n\nhttps://decentralbros.finance/terms-of-service\n\nDate: ${dayjs().format(
@@ -149,10 +189,19 @@ const TermsSignature = ({ signMessageAsync, isPending }) => {
   )}`
 
   const handleSign = async () => {
-    try {
-      await signMessageAsync({ message: TERMS_MESSAGE })
+    if (!address) return
 
-      localStorage.setItem('signed-dbro-terms', account.address as string)
+    try {
+      const signature = await signMessageAsync({ message: TERMS_MESSAGE })
+
+      authenticateWallet(TERMS_MESSAGE, signature, address).then((result) => {
+        if (result.isValid) {
+          localStorage.setItem('signed-dbro-terms', address)
+        } else {
+          logout()
+          console.error('Authentication failed:', result.error)
+        }
+      })
     } catch (error) {
       logout()
       console.info('Error signing message:', error)
@@ -174,7 +223,7 @@ const TermsSignature = ({ signMessageAsync, isPending }) => {
 
               <TermsMessage>
                 Signing with wallet:
-                <AddressDisplay>{account.address}</AddressDisplay>
+                <AddressDisplay>{address}</AddressDisplay>
               </TermsMessage>
 
               <TermsMessage>{TERMS_MESSAGE}</TermsMessage>
