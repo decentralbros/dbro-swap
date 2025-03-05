@@ -11,6 +11,7 @@ type BenefitItem = {
   desc: React.ReactNode[]
   btnText?: React.ReactNode
   link?: string
+  internal?: boolean
   key?: string
 }
 
@@ -32,6 +33,7 @@ export const BENEFITS: Record<BenefitCardType, BenefitItem> = {
     subTitle: <Trans>Reward Wallet</Trans>,
     btnText: <Trans>Start Earning</Trans>,
     link: '/staking',
+    internal: true,
     desc: [
       <Trans>Stake earn, mint, and wrap</Trans>,
       <Trans>Low fees on Base network</Trans>,
@@ -46,6 +48,7 @@ export const BENEFITS: Record<BenefitCardType, BenefitItem> = {
     subTitle: <Trans>Claimed NFTs</Trans>,
     btnText: <Trans>Mint & Wrap</Trans>,
     link: '/staking/mint',
+    internal: true,
     desc: [
       <Trans>Earn or mint DBRO wrapped utility NFTs</Trans>,
       <Trans>Unwrap NFTs for DBRO tokens</Trans>,
@@ -170,7 +173,13 @@ export const BenefitCard: React.FC<{
           </StyleUl>
         </Text>
         <Flex style={{ gap: 10 }}>
-          {button && info.link ? (
+          {button && info.link && !info.internal ? (
+            <Link href={info.link} target="_blank" rel="noreferrer" style={{ width: '100%' }}>
+              {button}
+            </Link>
+          ) : null}
+
+          {button && info.link && info.internal ? (
             <Link href={info.link} style={{ width: '100%' }}>
               {button}
             </Link>
@@ -183,19 +192,19 @@ export const BenefitCard: React.FC<{
   )
 }
 
-const HeadImage = styled.div`
-  width: 68px;
-  height: 68px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+// const HeadImage = styled.div`
+//   width: 68px;
+//   height: 68px;
+//   display: inline-flex;
+//   align-items: center;
+//   justify-content: center;
 
-  ${({ theme }) => theme.mediaQueries.lg} {
-    width: 72px;
-    height: 72px;
-  }
+//   ${({ theme }) => theme.mediaQueries.lg} {
+//     width: 72px;
+//     height: 72px;
+//   }
 
-  img {
-    height: 100%;
-  }
-`
+//   img {
+//     height: 100%;
+//   }
+// `
