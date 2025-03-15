@@ -4,10 +4,14 @@ import { AbortControl, isAbortError } from '@pancakeswap/utils/abortControl'
 import retry from 'async-retry'
 import { Abi, Address } from 'viem'
 
+import { binQuoterAbi } from '../../abis/IBinQuoter'
+import { clQuoterAbi } from '../../abis/ICLQuoter'
 import { mixedRouteQuoterV1ABI } from '../../abis/IMixedRouteQuoterV1'
 import { quoterV2ABI } from '../../abis/IQuoterV2'
+import { v4MixedRouteQuoterAbi } from '../../abis/IV4MixedRouteQuoter'
 import { MIXED_ROUTE_QUOTER_ADDRESSES, V3_QUOTER_ADDRESSES } from '../../constants'
 import { BATCH_MULTICALL_CONFIGS } from '../../constants/multicall'
+import { V4_BIN_QUOTER_ADDRESSES, V4_CL_QUOTER_ADDRESSES, V4_MIXED_ROUTE_QUOTER_ADDRESSES } from '../../constants/v4'
 import { BatchMulticallConfigs, ChainMap } from '../../types'
 import {
   GasModel,
@@ -19,15 +23,11 @@ import {
   RouteWithoutQuote,
 } from '../types'
 import { encodeMixedRouteToPath, getQuoteCurrency, isStablePool, isV2Pool, isV3Pool } from '../utils'
-import { Result } from './multicallProvider'
-import { PancakeMulticallProvider } from './multicallSwapProvider'
-import { V4_BIN_QUOTER_ADDRESSES, V4_CL_QUOTER_ADDRESSES, V4_MIXED_ROUTE_QUOTER_ADDRESSES } from '../../constants/v4'
-import { clQuoterAbi } from '../../abis/ICLQuoter'
-import { PathKey, encodeV4RouteToPath } from '../utils/encodeV4RouteToPath'
-import { v4MixedRouteQuoterAbi } from '../../abis/IV4MixedRouteQuoter'
 import { encodeV4MixedRouteActions } from '../utils/encodeV4MixedRouteActions'
 import { encodeV4MixedRouteParams } from '../utils/encodeV4MixedRouteParams'
-import { binQuoterAbi } from '../../abis/IBinQuoter'
+import { PathKey, encodeV4RouteToPath } from '../utils/encodeV4RouteToPath'
+import { Result } from './multicallProvider'
+import { PancakeMulticallProvider } from './multicallSwapProvider'
 
 const DEFAULT_BATCH_RETRIES = 2
 
@@ -52,6 +52,7 @@ const SUCCESS_RATE_CONFIG = {
   [ChainId.SEPOLIA]: 0.1,
   [ChainId.ARBITRUM_SEPOLIA]: 0.1,
   [ChainId.BASE_SEPOLIA]: 0.1,
+  [ChainId.MONAD_TESTNET]: 0.1,
 } as const satisfies Record<ChainId, number>
 
 type V4ClInputs = [

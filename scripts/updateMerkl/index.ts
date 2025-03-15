@@ -9,70 +9,61 @@ type MerklConfigPool = {
   link: string
 }
 
-type MerklPool = {
-  ammName: string
-  chainId: number
-  pool: `0x${string}`
-  token0: `0x${string}`
-  token1: `0x${string}`
-  symbolToken0: string
-  symbolToken1: string
-  aprs: Record<string, number>
-}
-
-type MerklConfig = {
-  merkleRoot: string
-  message: string
-  pools: {
-    [address: string]: MerklPool
-  }
-}
-
-type MerklConfigResponse = {
-  [chainId: number]: MerklConfig
-}
-
 export const chainIdToChainName = {
   1: 'ethereum',
   56: 'bnb smart chain',
-  324: 'zkync',
+  324: 'zksync',
   1101: 'polygon zkevm',
   8453: 'base',
   42161: 'arbitrum',
   59144: 'linea',
 } as const
 
-const fetchAllMerklConfig = async (): Promise<MerklConfigResponse> => {
-  const response = await fetch('https://api.angle.money/v2/merkl')
+const fetchAllMerklConfig = async (): Promise<any[]> => {
+  const response = await fetch(
+    `https://api.merkl.xyz/v4/opportunities/?chainId=${Object.keys(chainIdToChainName).join(
+      ',',
+    )}&test=false&status=LIVE&items=1000&action=POOL,HOLD`,
+  )
 
   if (!response.ok) {
     throw new Error('Unable to fetch merkl config')
   }
 
-  return response.json() as Promise<MerklConfigResponse>
+  return response.json() as Promise<any[]>
 }
 
-const parseMerklConfig = (merklConfig: MerklConfig[]): MerklConfigPool[] => {
-  const pools = merklConfig.reduce((acc, config) => {
-    const _pools = Object.values(config.pools).filter(
-      (pool) => Object.keys(pool.aprs).length > 1 && pool.ammName.toLowerCase().startsWith('pancakeswap'),
+const parseMerklConfig = (merklConfigResponse: any[]): MerklConfigPool[] => {
+  return merklConfigResponse
+    .sort((a, b) => {
+      if (a.chainId === b.chainId) {
+        return a.id - b.id
+      }
+      return a.chainId - b.chainId
+    })
+    .filter(
+      (opportunity) =>
+        (opportunity?.tokens?.[0]?.symbol?.toLowerCase().startsWith('cake-lp') ||
+          opportunity?.protocol?.id?.toLowerCase().startsWith('pancakeswap')) &&
+        opportunity?.apr > 0,
     )
-    return [...acc, ..._pools]
-  }, [] as MerklPool[])
-
-  return pools.map((pool) => ({
-    chainId: pool.chainId,
-    address: pool.pool,
-    link: encodeURI(`https://merkl.angle.money/${chainIdToChainName[pool.chainId]}/pool/2/${pool.pool}`),
-  }))
+    .map((pool) => ({
+      chainId: pool.chainId,
+      address: pool.identifier,
+      link: encodeURI(
+        `https://merkl.angle.money/${chainIdToChainName[pool.chainId]}/pool/${pool.type === 'ERC20' ? 1 : 2}/${
+          pool.identifier
+        }`,
+      ),
+    }))
 }
 
 const run = async () => {
   console.info('Fetching merkl config...')
   const merklConfig = await fetchAllMerklConfig()
-  console.info('Fetched merkl config!', Object.keys(merklConfig).length)
+  console.info('Fetched merkl config!', merklConfig.length)
   console.info('Parsing merkl config...')
-  const merklPools = parseMerklConfig(Object.values(merklConfig))
+  const merklPools = parseMerklConfig(merklConfig)
   console.info('Writing merkl config...')
 
   fs.writeFile(`apps/web/src/config/constants/merklPools.json`, JSON.stringify(merklPools, null, 2) + os.EOL, (err) => {

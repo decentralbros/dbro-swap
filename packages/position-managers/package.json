@@ -1,6 +1,6 @@
 {
   "name": "@pancakeswap/position-managers",
-  "version": "0.1.40",
+  "version": "0.1.42",
   "sideEffects": false,
   "private": true,
   "scripts": {

@@ -22,7 +22,6 @@ import { CrossChainFarmStepType, FarmTransactionStatus } from 'state/transaction
 import { useCrossChainFarmPendingTransaction, useTransactionAdder } from 'state/transactions/hooks'
 import { styled } from 'styled-components'
 import { logGTMClickStakeFarmConfirmEvent, logGTMStakeFarmTxSentEvent } from 'utils/customGTMEventTracking'
-import { useIsBloctoETH } from 'views/Farms'
 import { useBCakeBoostLimitAndLockInfo } from 'views/Farms/components/YieldBooster/hooks/bCakeV3/useBCakeV3Info'
 import { useFirstTimeCrossFarming } from '../../hooks/useFirstTimeCrossFarming'
 import { YieldBoosterStateContext } from '../YieldBooster/components/ProxyFarmContainer'
@@ -87,7 +86,6 @@ const StakeAction: React.FC<React.PropsWithChildren<FarmCardActionsProps>> = ({
   const { boosterState } = useContext(YieldBoosterStateContext)
   const pendingFarm = useCrossChainFarmPendingTransaction(lpAddress)
   const { isFirstTime, refresh: refreshFirstTime } = useFirstTimeCrossFarming(vaultPid)
-  const isBloctoETH = useIsBloctoETH()
   const isBoosterAndRewardInRange = isBooster && bCakePublicData?.isRewardInRange
   const { locked } = useBCakeBoostLimitAndLockInfo()
 
@@ -309,7 +307,7 @@ const StakeAction: React.FC<React.PropsWithChildren<FarmCardActionsProps>> = ({
         <IconButton mr="6px" variant="secondary" disabled={pendingFarm.length > 0} onClick={onPresentWithdraw}>
           <MinusIcon color="primary" width="14px" />
         </IconButton>
-        <IconButton variant="secondary" onClick={onPresentDeposit} disabled={isStakeReady || isBloctoETH}>
+        <IconButton variant="secondary" onClick={onPresentDeposit} disabled={isStakeReady}>
           <AddIcon color="primary" width="14px" />
         </IconButton>
       </IconButtonWrapper>
@@ -332,7 +330,7 @@ const StakeAction: React.FC<React.PropsWithChildren<FarmCardActionsProps>> = ({
   // TODO: Move this out to prevent unnecessary re-rendered
   if (!isApproved && stakedBalance?.eq(0)) {
     return (
-      <Button mt="8px" width="100%" disabled={pendingTx || isBloctoETH} onClick={handleApprove}>
+      <Button mt="8px" width="100%" disabled={pendingTx} onClick={handleApprove}>
         {t('Enable Contract')}
       </Button>
     )

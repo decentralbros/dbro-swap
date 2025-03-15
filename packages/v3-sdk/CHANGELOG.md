@@ -1,5 +1,24 @@
 # @pancakeswap/v3-sdk
 
+## 3.9.0
+
+### Minor Changes
+
+- 6a6acdb: support monad testnet
+
+### Patch Changes
+
+- Updated dependencies [6a6acdb]
+  - @pancakeswap/chains@0.5.0
+  - @pancakeswap/sdk@5.8.11
+
+## 3.8.13
+
+### Patch Changes
+
+- Updated dependencies [36f8955]
+  - @pancakeswap/sdk@5.8.10
+
 ## 3.8.12
 
 ### Patch Changes

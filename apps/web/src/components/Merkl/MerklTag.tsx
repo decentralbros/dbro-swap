@@ -2,7 +2,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import { Tag } from '@pancakeswap/uikit'
 import { useMerklInfo } from 'hooks/useMerkl'
 
-export function MerklTag({ poolAddress }: { poolAddress: string | null }) {
+export function MerklTag({ poolAddress }: { poolAddress?: string | null }) {
   const { t } = useTranslation()
   const { hasMerkl } = useMerklInfo(poolAddress)
 
@@ -15,9 +15,9 @@ export function MerklTag({ poolAddress }: { poolAddress: string | null }) {
   )
 }
 
-export function MerklRewardsTag({ poolAddress }: { poolAddress: string | null | `0x${string}` | undefined }) {
+export function MerklRewardsTag({ poolAddress }: { poolAddress?: string }) {
   const { t } = useTranslation()
-  const { hasMerkl } = useMerklInfo(poolAddress as string)
+  const { hasMerkl } = useMerklInfo(poolAddress)
 
   if (!hasMerkl) return null
 

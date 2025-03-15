@@ -41,5 +41,11 @@ export function parseNumberToFraction(num: number, precision = 6) {
     return undefined
   }
   const scalar = 10 ** precision
-  return new Fraction(BigInt(Math.floor(num * scalar)), BigInt(scalar))
+  const scaledNum = num * scalar
+
+  if (Number.isNaN(scaledNum) || !Number.isFinite(scaledNum)) {
+    return undefined
+  }
+
+  return new Fraction(BigInt(Math.floor(scaledNum)), BigInt(scalar))
 }

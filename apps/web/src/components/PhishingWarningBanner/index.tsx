@@ -137,7 +137,7 @@ const PhishingWarningBanner: React.FC<React.PropsWithChildren> = () => {
   const [, setPerCentage] = useState(0)
   const showInBigDevice = isDesktop || isLg
   const [step, setStep] = useState(0)
-  const timer = useRef<number | null>(null)
+  const timer = useRef<any>(null)
   const [showAnimation, setShowAnimation] = useState(false)
   const [remainingTimer, setRemainingTimer] = useState(DISPLAY_TIMER)
   const banner = useMemo(() => CONFIG[step], [step])

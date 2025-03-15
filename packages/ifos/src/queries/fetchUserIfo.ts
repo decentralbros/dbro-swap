@@ -105,12 +105,23 @@ export async function getUserIfoInfo({ account, ifo, chainId, provider }: GetIfo
   }
 }
 
-export async function getCurrentIfoRatio({ chainId, provider }: Omit<Params, 'account'>): Promise<number> {
+export async function getCurrentIfoRatio({ chainId, provider, account }: Params): Promise<number> {
   if (!chainId) {
     return 0
   }
   try {
     const ifoCreditContract = getIfoCreditAddressContract(chainId, provider)
+    if (account) {
+      const [specialRatio, precision, ratio] = await Promise.all([
+        // @ts-ignore
+        ifoCreditContract.read.userRatioOverride([account]),
+        // @ts-ignore
+        ifoCreditContract.read.RATION_PRECISION(),
+        // @ts-ignore
+        ifoCreditContract.read.ratio(),
+      ])
+      return new BigNumber((specialRatio || ratio).toString()).div(new BigNumber(precision.toString())).toNumber()
+    }
     const [ratio, precision] = await Promise.all([
       // @ts-ignore
       ifoCreditContract.read.ratio(),

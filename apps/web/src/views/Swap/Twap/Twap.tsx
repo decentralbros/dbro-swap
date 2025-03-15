@@ -1,37 +1,12 @@
-import { Orders, TWAP as PancakeTWAP } from '@orbs-network/twap-ui-pancake'
-import { ChainId } from '@pancakeswap/chains'
-import { useTranslation } from '@pancakeswap/localization'
+import { Orders, TWAP as PancakeTWAP, ToastProps } from '@orbs-network/twap-ui-pancake'
+import { useTheme } from '@pancakeswap/hooks'
 import { Currency, CurrencyAmount, TradeType } from '@pancakeswap/swap-sdk-core'
-import {
-  ArrowUpIcon,
-  AtomBox,
-  AutoColumn,
-  AutoRenewIcon,
-  Box,
-  BscScanIcon,
-  Button,
-  ChartDisableIcon,
-  ChartIcon,
-  ColumnCenter,
-  Flex,
-  IconButton,
-  Link,
-  Loading,
-  Spinner,
-  SwapCSS,
-  SyncAltIcon,
-  Text,
-  useMatchBreakpoints,
-  useModal,
-  useTooltip,
-} from '@pancakeswap/uikit'
-import replaceBrowserHistory from '@pancakeswap/utils/replaceBrowserHistory'
-import truncateHash from '@pancakeswap/utils/truncateHash'
+import { AutoColumn, Button, useMatchBreakpoints, useModal, useToast, useTooltip } from '@pancakeswap/uikit'
+import replaceBrowserHistoryMultiple from '@pancakeswap/utils/replaceBrowserHistoryMultiple'
 import { useUserSingleHopOnly } from '@pancakeswap/utils/user'
-import { ApproveModalContentV1, Swap, SwapTransactionReceiptModalContentV1 } from '@pancakeswap/widgets-internal'
-import AddToWalletButton, { AddToWalletTextOptions } from 'components/AddToWallet/AddToWalletButton'
-import { BodyWrapper } from 'components/App/AppBody'
+import { CurrencyLogo, NumericalInput, SwapUIV2 } from '@pancakeswap/widgets-internal'
 import ConnectWalletButton from 'components/ConnectWalletButton'
+import { AutoRow } from 'components/Layout/Row'
 import CurrencySearchModal from 'components/SearchModal/CurrencySearchModal'
 import { CommonBasesType } from 'components/SearchModal/types'
 import { useAllTokens, useCurrency } from 'hooks/Tokens'
@@ -39,9 +14,9 @@ import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useBestAMMTrade } from 'hooks/useBestAMMTrade'
 import { useCurrencyUsdPrice } from 'hooks/useCurrencyUsdPrice'
 import useNativeCurrency from 'hooks/useNativeCurrency'
-import { useSwapHotTokenDisplay } from 'hooks/useSwapHotTokenDisplay'
-import { useTheme } from 'next-themes'
-import { ReactNode, useCallback, useContext, useMemo } from 'react'
+import { LottieRefCurrentProps } from 'lottie-react'
+import dynamic from 'next/dynamic'
+import { memo, useCallback, useMemo, useRef } from 'react'
 import { Field } from 'state/swap/actions'
 import { useSwapState } from 'state/swap/hooks'
 import { useSwapActionHandlers } from 'state/swap/useSwapActionHandlers'
@@ -51,15 +26,16 @@ import {
   useUserV2SwapEnable,
   useUserV3SwapEnable,
 } from 'state/user/smartRouter'
-import { styled } from 'styled-components'
-import { getBlockExploreLink, getBlockExploreName } from 'utils'
+import { keyframes, styled } from 'styled-components'
 import currencyId from 'utils/currencyId'
 import { useAccount } from 'wagmi'
+import ArrowDark from '../../../../public/images/swap/arrow_dark.json' assert { type: 'json' }
+import ArrowLight from '../../../../public/images/swap/arrow_light.json' assert { type: 'json' }
 import { Wrapper } from '../components/styleds'
 import { SwapTransactionErrorContent } from '../components/SwapTransactionErrorContent'
 import useWarningImport from '../hooks/useWarningImport'
-import { SwapFeaturesContext } from '../SwapFeaturesContext'
-import { FormContainer } from '../V3Swap/components'
+
+const Lottie = dynamic(() => import('lottie-react'), { ssr: false })
 
 const useBestTrade = (fromToken?: string, toToken?: string, value?: string) => {
   const independentCurrency = useCurrency(fromToken)
@@ -79,7 +55,7 @@ const useBestTrade = (fromToken?: string, toToken?: string, value?: string) => {
   const [v3Swap] = useUserV3SwapEnable()
   const [stableSwap] = useUserStableSwapEnable()
 
-  const { isLoading, trade } = useBestAMMTrade({
+  const { trade } = useBestAMMTrade({
     amount,
     currency: dependentCurrency,
     baseCurrency: independentCurrency,
@@ -91,24 +67,31 @@ const useBestTrade = (fromToken?: string, toToken?: string, value?: string) => {
     stableSwap,
     type: 'auto',
     trackPerf: true,
+    autoRevalidate: false,
   })
 
+  const inCurrency = useCurrency(fromToken)
+  const outCurrency = useCurrency(toToken)
+
+  const loading = useMemo(() => {
+    if (!inCurrency || !outCurrency || !trade) return true
+    return (
+      !trade?.inputAmount.equalTo(amount?.numerator.toString() || '') ||
+      !trade.inputAmount.currency.equals(inCurrency) ||
+      !trade.outputAmount.currency.equals(outCurrency)
+    )
+  }, [inCurrency, outCurrency, trade, amount])
+
   return {
-    isLoading: !value ? false : isLoading,
+    isLoading: !value ? false : loading,
     outAmount: value ? trade?.outputAmount.numerator.toString() : '0',
   }
 }
 
 const useUsd = (address?: string) => {
   const currency = useCurrency(address)
-
   return useCurrencyUsdPrice(currency).data
 }
-
-const ColoredIconButton = styled(IconButton)`
-  color: ${({ theme }) => theme.colors.textSubtle};
-  overflow: hidden;
-`
 
 const useTokenModal = (
   onCurrencySelect: (value: Currency) => void,
@@ -130,48 +113,52 @@ const useTokenModal = (
   return onPresentCurrencyModal
 }
 
+const TransactionErrorContent = ({ onClick, message }: { onClick: () => void; message?: string }) => {
+  return <SwapTransactionErrorContent onDismiss={onClick} message={message || ''} openSettingModal={undefined} />
+}
+
+const useTwapToast = () => {
+  const { toastSuccess, toastWarning, toastError } = useToast()
+
+  return useCallback(
+    (props: ToastProps) => {
+      const toast = props.variant === 'error' ? toastError : props.variant === 'warning' ? toastWarning : toastSuccess
+      toast(props.title, props.message, { duration: props.autoCloseMillis })
+    },
+    [toastError, toastSuccess, toastWarning],
+  )
+}
+
 export function TWAPPanel({ limit }: { limit?: boolean }) {
   const { isDesktop } = useMatchBreakpoints()
   const { chainId } = useActiveChainId()
   const tokens = useAllTokens()
   const { connector, address } = useAccount()
-  const { resolvedTheme } = useTheme()
-  const { isChartSupported, isChartDisplayed, setIsChartDisplayed } = useContext(SwapFeaturesContext)
+  const { isDark } = useTheme()
   const native = useNativeCurrency()
   const { onCurrencySelection } = useSwapActionHandlers()
   const warningSwapHandler = useWarningImport()
-
+  const toast = useTwapToast()
   const {
     [Field.INPUT]: { currencyId: inputCurrencyId },
     [Field.OUTPUT]: { currencyId: outputCurrencyId },
   } = useSwapState()
 
   const handleCurrencySelect = useCallback(
-    (isInput: boolean, newCurrency: Currency) => {
+    (isInput: boolean, newCurrency?: Currency) => {
       onCurrencySelection(isInput ? Field.INPUT : Field.OUTPUT, newCurrency)
       warningSwapHandler(newCurrency)
 
       const oldCurrencyId = isInput ? inputCurrencyId : outputCurrencyId
       const otherCurrencyId = isInput ? outputCurrencyId : inputCurrencyId
-      const newCurrencyId = currencyId(newCurrency)
-      if (newCurrencyId === otherCurrencyId) {
-        replaceBrowserHistory(isInput ? 'outputCurrency' : 'inputCurrency', oldCurrencyId)
-      }
-      replaceBrowserHistory(isInput ? 'inputCurrency' : 'outputCurrency', newCurrencyId)
+      const newCurrencyId = newCurrency ? currencyId(newCurrency) : undefined
+      replaceBrowserHistoryMultiple({
+        ...(newCurrencyId === otherCurrencyId && { [isInput ? 'outputCurrency' : 'inputCurrency']: oldCurrencyId }),
+        [isInput ? 'inputCurrency' : 'outputCurrency']: newCurrencyId,
+      })
     },
     [onCurrencySelection, warningSwapHandler, inputCurrencyId, outputCurrencyId],
   )
-
-  const [, setIsSwapHotTokenDisplay] = useSwapHotTokenDisplay()
-
-  const toggleChartDisplayed = useCallback(() => {
-    setIsChartDisplayed?.((currentIsChartDisplayed) => {
-      if (!currentIsChartDisplayed) {
-        setIsSwapHotTokenDisplay(false)
-      }
-      return !currentIsChartDisplayed
-    })
-  }, [setIsChartDisplayed, setIsSwapHotTokenDisplay])
 
   const onSrcTokenSelected = useCallback(
     (token: Currency) => {
@@ -187,152 +174,136 @@ export function TWAPPanel({ limit }: { limit?: boolean }) {
     [handleCurrencySelect],
   )
 
+  const inputCurrency = useCurrency(inputCurrencyId)
+  const outputCurrency = useCurrency(outputCurrencyId)
+
   return (
-    <>
-      <Header
-        toggleChartDisplayed={toggleChartDisplayed}
-        limit={limit}
-        isChartSupported={isChartSupported}
-        isChartDisplayed={isChartDisplayed}
-      />
-
-      <FormContainer>
-        <PancakeTWAP
-          ConnectButton={ConnectWalletButton}
-          connectedChainId={chainId}
-          account={address}
-          limit={limit}
-          usePriceUSD={useUsd}
-          useTrade={useBestTrade}
-          dappTokens={tokens}
-          isDarkTheme={resolvedTheme === 'dark'}
-          srcToken={inputCurrencyId}
-          dstToken={outputCurrencyId}
-          useTokenModal={useTokenModal}
-          onSrcTokenSelected={onSrcTokenSelected}
-          onDstTokenSelected={onDstTokenSelected}
-          isMobile={!isDesktop}
-          nativeToken={native}
-          connector={connector}
-          useTooltip={useTooltip}
-          Button={Button}
-          ApproveModalContent={ApproveModalContentV1}
-          SwapTransactionErrorContent={SwapTransactionErrorContent}
-          SwapPendingModalContent={SwapPendingModalContent}
-          SwapTransactionReceiptModalContent={TwapSwapTransactionReceiptModalContent}
-          AddToWallet={AddToWallet}
-          TradePrice={TradePrice}
-          TradePriceToggle={TradePriceToggle}
-        />
-      </FormContainer>
-    </>
+    <PancakeTWAP
+      ConnectButton={ConnectWalletButton}
+      connectedChainId={chainId}
+      account={address}
+      limit={limit}
+      usePriceUSD={useUsd}
+      useTrade={useBestTrade}
+      dappTokens={tokens}
+      isDarkTheme={isDark}
+      srcToken={inputCurrency as any}
+      dstToken={outputCurrency as any}
+      useTokenModal={useTokenModal}
+      onSrcTokenSelected={onSrcTokenSelected}
+      onDstTokenSelected={onDstTokenSelected}
+      isMobile={!isDesktop}
+      nativeToken={native}
+      connector={connector}
+      useTooltip={useTooltip}
+      Button={Button}
+      TransactionErrorContent={TransactionErrorContent}
+      toast={toast}
+      FlipButton={FlipButton}
+      Input={Input}
+      CurrencyLogo={TokenLogo}
+    />
   )
 }
 
-const TradePriceToggle = ({ onClick, loading }: { onClick: () => void; loading: boolean }) => {
-  return loading ? (
-    <AtomBox className={SwapCSS.iconButtonClass}>
-      <Loading width="14px" height="14px" />
-    </AtomBox>
-  ) : (
-    <AtomBox role="button" className={SwapCSS.iconButtonClass} onClick={onClick}>
-      <AutoRenewIcon width="16px" />
-    </AtomBox>
-  )
+const TokenLogo = ({ address, size }: { address?: string; size?: string }) => {
+  const currency = useCurrency(address)
+
+  if (!currency) {
+    return null
+  }
+  return <CurrencyLogo currency={currency} size={size} />
 }
 
-function TradePrice({ price, leftSymbol, rightSymbol }: { price?: string; leftSymbol?: string; rightSymbol?: string }) {
+const switchAnimation = keyframes`
+  from {transform: rotate(0deg);}
+  to {transform: rotate(180deg);}
+`
+
+const FlipButtonWrapper = styled.div`
+  will-change: transform;
+  &.switch-animation {
+    animation: ${switchAnimation} 0.25s forwards ease-in-out;
+  }
+`
+
+export const Line = styled.div`
+  position: absolute;
+  left: -16px;
+  right: -16px;
+  height: 1px;
+  background-color: ${({ theme }) => theme.colors.cardBorder};
+  top: calc(50% + 6px);
+`
+
+const FlipButton = memo(function FlipButton({ onClick }: { onClick: () => void }) {
+  const flipButtonRef = useRef<HTMLDivElement>(null)
+  const lottieRef = useRef<LottieRefCurrentProps | null>(null)
+  const { isDark } = useTheme()
+  const { isDesktop } = useMatchBreakpoints()
+
+  const animationData = useMemo(() => (isDark ? ArrowDark : ArrowLight), [isDark])
+
+  const handleAnimatedButtonClick = useCallback(() => {
+    onClick()
+
+    if (flipButtonRef.current && !flipButtonRef.current.classList.contains('switch-animation')) {
+      flipButtonRef.current.classList.add('switch-animation')
+    }
+  }, [onClick])
+
+  const handleAnimationEnd = useCallback(() => {
+    flipButtonRef.current?.classList.remove('switch-animation')
+  }, [])
+
   return (
-    <Text fontSize="14px" style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
-      {`1 ${leftSymbol}`}
-      <SyncAltIcon width="14px" height="14px" color="textSubtle" ml="4px" mr="4px" />
-      {`${price} ${rightSymbol}`}
-    </Text>
+    <AutoColumn justify="space-between" position="relative">
+      <AutoRow justify="center" style={{ padding: '0 1rem' }}>
+        {isDesktop ? (
+          <FlipButtonWrapper ref={flipButtonRef} onAnimationEnd={handleAnimationEnd}>
+            <Lottie
+              lottieRef={lottieRef}
+              animationData={animationData}
+              style={{ height: '40px', cursor: 'pointer' }}
+              onClick={handleAnimatedButtonClick}
+              autoplay={false}
+              loop={false}
+              onMouseEnter={() => lottieRef.current?.playSegments([7, 19], true)}
+              onMouseLeave={() => {
+                handleAnimationEnd()
+                lottieRef.current?.playSegments([39, 54], true)
+              }}
+            />
+          </FlipButtonWrapper>
+        ) : (
+          <SwapUIV2.SwitchButtonV2 onClick={onClick} />
+        )}
+      </AutoRow>
+    </AutoColumn>
   )
-}
+})
 
-export const SwapPendingModalContent: React.FC<{ title: string; showIcon?: boolean; children?: ReactNode }> = ({
-  title,
-  showIcon,
-  children,
-}) => {
-  return (
-    <Box width="100%">
-      {showIcon ? (
-        <Box margin="auto auto 36px auto" width="fit-content">
-          <ArrowUpIcon color="success" width={80} height={80} />
-        </Box>
-      ) : (
-        <Box mb="16px">
-          <ColumnCenter>
-            <Spinner />
-          </ColumnCenter>
-        </Box>
-      )}
-      <AutoColumn gap="12px" justify="center">
-        <Text bold textAlign="center">
-          {title}
-        </Text>
-        {children}
-      </AutoColumn>
-    </Box>
-  )
-}
-
-const TwapSwapTransactionReceiptModalContent = ({ txHash, children }: { txHash: string; children: ReactNode }) => {
-  const { t } = useTranslation()
-  const { chainId } = useActiveChainId()
-  return (
-    <SwapTransactionReceiptModalContentV1>
-      {chainId && (
-        <Link external small href={getBlockExploreLink(txHash, 'transaction', chainId)}>
-          {t('View on %site%', { site: getBlockExploreName(chainId) })}: {truncateHash(txHash, 8, 0)}
-          {chainId === ChainId.BSC && <BscScanIcon color="primary" ml="4px" />}
-        </Link>
-      )}
-      {children}
-    </SwapTransactionReceiptModalContentV1>
-  )
-}
-
-const Header = ({
-  toggleChartDisplayed,
-  limit,
-  isChartSupported,
-  isChartDisplayed,
+const Input = ({
+  loading,
+  disabled,
+  value,
+  onChange,
 }: {
-  toggleChartDisplayed: () => void
-  limit?: boolean
-  isChartSupported: boolean
-  isChartDisplayed: boolean
+  loading?: boolean
+  disabled?: boolean
+  value: string
+  onChange: (value: string) => void
 }) => {
   return (
-    <div>
-      <Swap.CurrencyInputHeader
-        title={
-          <Flex alignItems="center" width="100%" justifyContent="space-between">
-            <Swap.CurrencyInputHeaderTitle>{limit ? 'LIMIT' : 'TWAP'}</Swap.CurrencyInputHeaderTitle>
-            {isChartSupported && (
-              <ColoredIconButton
-                onClick={() => {
-                  toggleChartDisplayed()
-                }}
-                variant="text"
-                scale="sm"
-                data-dd-action-name="Price chart button"
-              >
-                {isChartDisplayed ? (
-                  <ChartDisableIcon color="textSubtle" />
-                ) : (
-                  <ChartIcon width="24px" color="textSubtle" />
-                )}
-              </ColoredIconButton>
-            )}
-          </Flex>
-        }
-        subtitle={<></>}
-      />
-    </div>
+    <NumericalInput
+      disabled={disabled}
+      loading={loading}
+      className="token-amount-input"
+      value={value}
+      onUserInput={(val) => {
+        onChange(val)
+      }}
+    />
   )
 }
 
@@ -340,38 +311,10 @@ export const OrderHistory = () => {
   const { isDesktop } = useMatchBreakpoints()
 
   return (
-    <BodyWrapper style={{ maxWidth: 'unset', marginTop: isDesktop ? 0 : 20 }}>
+    <div style={{ maxWidth: 'unset', marginTop: isDesktop ? 0 : 20 }}>
       <Wrapper id="swap-page" style={{ padding: 0 }}>
         <Orders />
       </Wrapper>
-    </BodyWrapper>
-  )
-}
-
-const AddToWallet = ({
-  logo,
-  symbol,
-  address,
-  decimals,
-}: {
-  address: string
-  symbol: string
-  decimals: number
-  logo: string
-}) => {
-  return (
-    <AddToWalletButton
-      mt="39px"
-      height="auto"
-      variant="tertiary"
-      width="fit-content"
-      padding="6.5px 20px"
-      marginTextBetweenLogo="6px"
-      textOptions={AddToWalletTextOptions.TEXT_WITH_ASSET}
-      tokenAddress={address}
-      tokenSymbol={symbol}
-      tokenDecimals={decimals}
-      tokenLogo={logo}
-    />
+    </div>
   )
 }

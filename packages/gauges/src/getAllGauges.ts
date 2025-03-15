@@ -1,3 +1,4 @@
+import { cacheByLRU } from '@pancakeswap/utils/cacheByLRU'
 import keyBy from 'lodash/keyBy'
 import { PublicClient } from 'viem'
 import { getGauges } from './constants/config/getGauges'
@@ -29,11 +30,11 @@ export const getAllGauges = async (
   const gaugesCMS = testnet ? CONFIG_TESTNET : await getGauges()
   gaugesCMS.sort((a, b) => (a.gid < b.gid ? -1 : 1))
   const gaugesSC = await fetchGaugesSC(client, killed, blockNumber)
-  const gaugesSCMap = keyBy(gaugesSC, 'gid')
+  const gaugesCMSMap = keyBy(gaugesCMS, 'gid')
 
-  const allGaugeInfoConfigs = (killed ? gaugesCMS : gaugesCMS.filter((g) => !g.killed)).map((config) => {
-    const correspondingSC = gaugesSCMap[config.gid]
-    const mergedConfig: GaugeInfoConfig = { ...config, ...correspondingSC }
+  const allGaugeInfoConfigs = (killed ? gaugesSC : gaugesSC.filter((g) => !g.killed)).map((config) => {
+    const correspondingCMS: any = gaugesCMSMap[config.gid]
+    const mergedConfig: GaugeInfoConfig = { ...correspondingCMS, ...config }
     return mergedConfig
   })
 
@@ -60,7 +61,7 @@ export const getAllGauges = async (
   }, [] as Gauge[])
 }
 
-async function fetchGaugesSC(client: PublicClient, killed?: boolean, blockNumber?: bigint) {
+async function _fetchGaugesSC(client: PublicClient, killed?: boolean, blockNumber?: bigint) {
   let gaugesSC = await fetchAllGauges(client, {
     blockNumber,
   })
@@ -68,3 +69,12 @@ async function fetchGaugesSC(client: PublicClient, killed?: boolean, blockNumber
   if (!killed) gaugesSC = gaugesSC.filter((gauge) => !gauge.killed)
   return gaugesSC
 }
+
+const fetchGaugesSC = cacheByLRU(_fetchGaugesSC, {
+  name: 'gaugesSC',
+  ttl: 15000,
+  key: (params) => {
+    const [, killed, blockNumber] = params
+    return [killed, blockNumber]
+  },
+})

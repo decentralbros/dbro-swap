@@ -61,15 +61,12 @@ export const AprButton = memo(function YieldInfo({
   const { data: rewardUsdPrice } = useCurrencyUsdPrice(rewardToken)
   const tokenBalanceMultiplier = useMemo(() => new BigNumber(10).pow(lpTokenDecimals), [lpTokenDecimals])
   const tokenBalance = useMemo(
-    () =>
-      new BigNumber(Number(((userLpAmounts ?? 0n) * 10000n) / (precision ?? 1n)) / 10000 ?? 0).times(
-        tokenBalanceMultiplier,
-      ),
+    () => new BigNumber(0).times(tokenBalanceMultiplier),
     [userLpAmounts, precision, tokenBalanceMultiplier],
   )
 
   const tokenPrice = useMemo(
-    () => totalStakedInUsd / (Number(((totalSupplyAmounts ?? 0n) * 10000n) / (precision ?? 1n)) / 10000 ?? 0),
+    () => totalStakedInUsd / (Number(0) / 0),
     [totalSupplyAmounts, precision, totalStakedInUsd],
   )
 

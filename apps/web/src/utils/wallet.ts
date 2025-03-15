@@ -1,10 +1,18 @@
-// Set of helper functions to facilitate wallet setup
+import { Connector } from 'wagmi'
 
-export const canRegisterToken = () =>
-  typeof window !== 'undefined' &&
-  // @ts-ignore
-  !window?.ethereum?.isSafePal &&
-  (window?.ethereum?.isMetaMask ||
-    window?.ethereum?.isTrust ||
-    window?.ethereum?.isCoinbaseWallet ||
-    window?.ethereum?.isTokenPocket)
+export const checkWalletCanRegisterToken = async (connector: Connector) => {
+  try {
+    if (typeof connector.getProvider !== 'function') return false
+
+    const provider = (await connector.getProvider()) as any
+
+    return Boolean(
+      provider &&
+        !provider.isSafePal &&
+        (provider.isMetaMask || provider.isTrust || provider.isCoinbaseWallet || provider.isTokenPocket),
+    )
+  } catch (error) {
+    console.error(error, 'Error determining wallet token registration support')
+    return false
+  }
+}

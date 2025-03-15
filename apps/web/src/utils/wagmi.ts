@@ -2,7 +2,7 @@ import { getWagmiConnectorV2 } from '@binance/w3w-wagmi-connector-v2'
 import { CHAINS } from 'config/chains'
 import { PUBLIC_NODES } from 'config/nodes'
 import memoize from 'lodash/memoize'
-import { Transport } from 'viem'
+import { Transport, custom } from 'viem'
 import { createConfig, fallback, http } from 'wagmi'
 import { mainnet } from 'wagmi/chains'
 import { coinbaseWallet, injected, safe, walletConnect } from 'wagmi/connectors'
@@ -46,7 +46,7 @@ export const noopStorage = {
   removeItem: (_key: any) => {},
 }
 
-const PUBLIC_MAINNET = 'https://ethereum-rpc.publicnode.com'
+const PUBLIC_MAINNET = 'https://ethereum.publicnode.com'
 
 export const transports = chains.reduce((ts, chain) => {
   let httpStrings: string[] | readonly string[] = []
@@ -66,6 +66,27 @@ export const transports = chains.reduce((ts, chain) => {
 
   return {
     [chain.id]: fallback(httpStrings.map((t: any) => http(t))),
+  }
+}, {} as Record<number, Transport>)
+
+const injectedTransports = chains.reduce((ts, chain) => {
+  let httpStrings: string[] | readonly string[] = []
+
+  httpStrings = PUBLIC_NODES[chain.id] ? PUBLIC_NODES[chain.id] : []
+
+  const injectedTransport =
+    typeof window !== 'undefined' && window.ethereum ? custom(window.ethereum as any) : undefined
+
+  const allTransports = [injectedTransport, ...httpStrings.map((t: any) => http(t))].filter(Boolean) as Transport[]
+
+  if (ts) {
+    // eslint-disable-next-line no-param-reassign
+    ts[chain.id] = fallback(allTransports)
+    return ts
+  }
+
+  return {
+    [chain.id]: fallback(allTransports),
   }
 }, {} as Record<number, Transport>)
 
@@ -92,13 +113,24 @@ export const config = createConfig({
     // ledgerConnector,
     trustConnector,
     binanceWeb3WalletConnector(),
-
     // ...(cyberWalletConnector ? [cyberWalletConnector as any] : []),
   ],
 })
 
 export function createWagmiConfig() {
   return config
+}
+
+export const createW3WWagmiConfig = () => {
+  return createConfig({
+    chains,
+    ssr: true,
+    syncConnectedChain: true,
+    transports: injectedTransports,
+    ...CLIENT_CONFIG,
+
+    connectors: [injectedConnector, binanceWeb3WalletConnector()],
+  })
 }
 
 export const CHAIN_IDS = chains.map((c) => c.id)

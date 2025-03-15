@@ -123,7 +123,7 @@ describe('PancakeSquad/utils/getEventText', () => {
     const result = getEventText({ eventStatus, saleStatus, startTimestamp, t })
 
     // Then
-    expect(result).toEqual('Public Sale: Sold Out!')
+    expect(result).toEqual('Public IFO: Sold Out!')
   })
 
   it('Should return live text', () => {
@@ -137,7 +137,7 @@ describe('PancakeSquad/utils/getEventText', () => {
     const result = getEventText({ eventStatus, saleStatus, startTimestamp, t })
 
     // Then
-    expect(result).toEqual('Public Sale: Now Live')
+    expect(result).toEqual('Public IFO: Now Live')
   })
 
   it('Should return upcoming text', () => {
@@ -151,7 +151,7 @@ describe('PancakeSquad/utils/getEventText', () => {
     const result = getEventText({ eventStatus, saleStatus, startTimestamp, t })
 
     // Then
-    expect(result).toEqual('Public Sale: ')
+    expect(result).toEqual('Public IFO: ')
   })
 
   it('Should return past text', () => {
@@ -165,7 +165,7 @@ describe('PancakeSquad/utils/getEventText', () => {
     const result = getEventText({ eventStatus, saleStatus, startTimestamp, t })
 
     // Then
-    expect(result).toEqual('Public Sale')
+    expect(result).toEqual('Public IFO')
   })
 })
 

@@ -1,6 +1,6 @@
 {
   "name": "@pancakeswap/pools",
-  "version": "5.1.35",
+  "version": "5.1.37",
   "sideEffects": false,
   "scripts": {
     "build": "tsup",

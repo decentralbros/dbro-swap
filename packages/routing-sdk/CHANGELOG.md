@@ -1,5 +1,17 @@
 # @pancakeswap/routing-sdk
 
+## 0.3.0
+
+### Minor Changes
+
+- 6a6acdb: support monad testnet
+
+### Patch Changes
+
+- Updated dependencies [6a6acdb]
+  - @pancakeswap/chains@0.5.0
+  - @pancakeswap/swap-sdk-evm@1.1.0
+
 ## 0.2.2
 
 ### Patch Changes

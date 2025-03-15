@@ -1,20 +1,21 @@
 import { ChainId } from '@pancakeswap/chains'
 import {
-  bsc,
-  bscTestnet,
-  goerli,
-  mainnet,
-  zkSync,
-  zksyncSepoliaTestnet,
-  polygonZkEvmTestnet,
-  polygonZkEvm,
-  lineaTestnet,
   arbitrum,
   arbitrumGoerli,
   base,
   baseGoerli,
-  scrollSepolia as scrollSepolia_,
+  bsc,
+  bscTestnet,
   Chain,
+  goerli,
+  lineaTestnet,
+  mainnet,
+  monadTestnet,
+  polygonZkEvm,
+  polygonZkEvmTestnet,
+  scrollSepolia as scrollSepolia_,
+  zkSync,
+  zksyncSepoliaTestnet,
 } from 'viem/chains'
 
 const scrollSepolia = {
@@ -130,4 +131,5 @@ export const CHAINS = [
   baseGoerli,
   opbnbTestnet,
   scrollSepolia,
+  monadTestnet,
 ]

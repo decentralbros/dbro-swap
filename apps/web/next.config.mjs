@@ -5,6 +5,7 @@ import smartRouterPkgs from '@pancakeswap/smart-router/package.json' with { type
 import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { RetryChunkLoadPlugin } from 'webpack-retry-chunk-load-plugin'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -20,30 +21,28 @@ const workerDeps = Object.keys(smartRouterPkgs.dependencies)
 
 /** @type {import('next').NextConfig} */
 const config = {
+  typescript: {
+    ignoreBuildErrors: false,
+    tsconfigPath: 'tsconfig.json',
+  },
   compiler: {
     styledComponents: true,
     removeConsole: process.env.NODE_ENV === 'production'
   },
-
   logging: {
     fetches: process.env.NODE_ENV !== 'production',
     webVitals: process.env.NODE_ENV !== 'production'
   },
-
   experimental: {
+    scrollRestoration: true,
     fallbackNodePolyfills: false,
     outputFileTracingRoot: path.join(__dirname, '../../'),
     outputFileTracingExcludes: {
-      '*': [
-        '**/*.map',
-        '.next/cache/**',
-      ],
+      '*': [],
     },
     optimizePackageImports: [
       '@pancakeswap/widgets-internal',
       '@pancakeswap/uikit',
-      '@pancakeswap/farms',
-      '@pancakeswap/hooks',
     ],
   },
 
@@ -51,16 +50,9 @@ const config = {
   
   swcMinify: false,
   reactStrictMode: true,
-  
-  typescript: {
-    ignoreBuildErrors: false,
-    tsconfigPath: 'tsconfig.json',
-  },
-  
   eslint: {
     ignoreDuringBuilds: false,
   },
-
   images: {
     remotePatterns: [
       {
@@ -69,7 +61,6 @@ const config = {
       },
     ],
   },
-
   transpilePackages: [
     '@pancakeswap/farms',
     '@pancakeswap/position-managers',
@@ -81,7 +72,6 @@ const config = {
     '@pancakeswap/uikit',
     '@tanstack/query-core',
   ],
-
   headers: async () => [
     {
       source: '/:path*',
@@ -89,6 +79,33 @@ const config = {
         {
           key: 'Cross-Origin-Opener-Policy',
           value: 'same-origin-allow-popups',
+        },
+      ],
+    },
+    {
+      source: '/favicon.ico',
+      headers: [
+        {
+          key: 'Cache-Control',
+          value: 'public, immutable, max-age=604800',
+        },
+      ],
+    },
+    {
+      source: '/logo.png',
+      headers: [
+        {
+          key: 'Cache-Control',
+          value: 'public, immutable, max-age=604800',
+        },
+      ],
+    },
+    {
+      source: '/images/:all*',
+      headers: [
+        {
+          key: 'Cache-Control',
+          value: 'public, immutable, max-age=604800',
         },
       ],
     },
@@ -102,7 +119,6 @@ const config = {
       ],
     },
   ],
-
   webpack: (webpackConfig, { webpack, isServer, dev }) => {
     // Sentry optimization
     webpackConfig.plugins.push(
@@ -110,6 +126,17 @@ const config = {
         __SENTRY_DEBUG__: false,
         __SENTRY_TRACING__: false,
       })
+    )
+    webpackConfig.plugins.push(
+      new RetryChunkLoadPlugin({
+        cacheBust: `function() {
+          return 'cache-bust=' + Date.now();
+        }`,
+        retryDelay: `function(retryAttempt) {
+          return 2 ** (retryAttempt - 1) * 500;
+        }`,
+        maxRetries: 5,
+      }),
     )
 
     // Worker chunks optimization

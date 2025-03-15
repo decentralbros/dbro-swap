@@ -3,9 +3,9 @@ import { createStore, Store } from '@reduxjs/toolkit'
 import {
   addTransaction,
   checkedTransaction,
+  clearAllChainTransactions,
   clearAllTransactions,
   finalizeTransaction,
-  clearAllChainTransactions,
 } from './actions'
 import reducer, { initialState, TransactionState } from './reducer'
 

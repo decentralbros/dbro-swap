@@ -21,6 +21,7 @@ export const chainNames: Record<ChainId, string> = {
   [ChainId.SEPOLIA]: 'sepolia',
   [ChainId.ARBITRUM_SEPOLIA]: 'arbSepolia',
   [ChainId.BASE_SEPOLIA]: 'baseSepolia',
+  [ChainId.MONAD_TESTNET]: 'monadTestnet',
 }
 
 export const chainNamesInKebabCase = {
@@ -44,6 +45,7 @@ export const chainNamesInKebabCase = {
   [ChainId.SEPOLIA]: 'sepolia',
   [ChainId.ARBITRUM_SEPOLIA]: 'arbitrum-sepolia',
   [ChainId.BASE_SEPOLIA]: 'base-sepolia',
+  [ChainId.MONAD_TESTNET]: 'monad-testnet',
 } as const
 
 export const mainnetChainNamesInKebabCase = {
@@ -98,4 +100,5 @@ export const defiLlamaChainNames: Record<ChainId, string> = {
   [ChainId.SEPOLIA]: '',
   [ChainId.ARBITRUM_SEPOLIA]: '',
   [ChainId.BASE_SEPOLIA]: '',
+  [ChainId.MONAD_TESTNET]: '',
 }

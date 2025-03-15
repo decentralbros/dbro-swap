@@ -13,6 +13,7 @@ const replaceBrowserHistoryMultiple = (params: { [key: string]: string | number 
 
   const urlString = url.toString()
   window.history.replaceState({ ...window.history.state, as: urlString, url: urlString }, '', url)
+  window.dispatchEvent(new Event('popstate#pcs'))
 }
 
 export default replaceBrowserHistoryMultiple

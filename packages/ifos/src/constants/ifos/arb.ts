@@ -5,12 +5,11 @@ export const ifos: BaseIfoConfig[] = [
   {
     id: 'eigenpie',
     version: 8,
-
     address: '0xa6f907493269BEF3383fF0CBFd25e1Cc35167c3B',
     plannedStartTime: 1727172900,
     plannedEndTime: 1727259300,
 
-    isActive: true,
+    isActive: false,
     name: 'Eigenpie IFO',
     description:
       'Eigenpie is a Liquid Restaking Platform built on top of EigenLayer that allows users to restake their ETH or LSTs to validate new services while earning rewards and maintaining liquidity through LRTs',

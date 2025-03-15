@@ -1,7 +1,8 @@
 import { Currency } from '@pancakeswap/sdk'
-import { FeeAmount, Pool, TICK_SPACINGS, tickToPrice } from '@pancakeswap/v3-sdk'
+import { FeeAmount, Pool, tickToPrice } from '@pancakeswap/v3-sdk'
 import { useMemo } from 'react'
 
+import { getActiveTick } from 'utils/getActiveTick'
 import { PoolState, TickProcessed } from './types'
 import useAllV3TicksQuery, { TickData } from './useAllV3TicksQuery'
 import { usePool } from './usePools'
@@ -9,37 +10,43 @@ import computeSurroundingTicks from './utils/computeSurroundingTicks'
 
 const PRICE_FIXED_DIGITS = 8
 
-const getActiveTick = (tickCurrent: number | undefined, feeAmount: FeeAmount | undefined) =>
-  tickCurrent !== undefined && feeAmount
-    ? Math.floor(tickCurrent / TICK_SPACINGS[feeAmount]) * TICK_SPACINGS[feeAmount]
-    : undefined
-
 function useTicksFromSubgraph(
   currencyA: Currency | undefined | null,
   currencyB: Currency | undefined | null,
   feeAmount: FeeAmount | undefined,
+  activeTick: number | undefined,
   enabled = true,
 ) {
-  const poolAddress =
-    currencyA && currencyB && feeAmount
-      ? Pool.getAddress(currencyA?.wrapped, currencyB?.wrapped, feeAmount, undefined)
-      : undefined
+  const poolAddress = useMemo(
+    () =>
+      currencyA && currencyB && feeAmount
+        ? Pool.getAddress(currencyA.wrapped, currencyB.wrapped, feeAmount)
+        : undefined,
+    [currencyA, currencyB, feeAmount],
+  )
 
-  return useAllV3TicksQuery(poolAddress, 30000, enabled)
+  return useAllV3TicksQuery(poolAddress, activeTick, 30000, enabled)
 }
 
 // Fetches all ticks for a given pool
-export function useAllV3Ticks(
-  currencyA: Currency | undefined | null,
-  currencyB: Currency | undefined | null,
-  feeAmount: FeeAmount | undefined,
+export function useAllV3Ticks({
+  currencyA,
+  currencyB,
+  feeAmount,
+  activeTick,
   enabled = true,
-): {
+}: {
+  currencyA?: Currency | null
+  currencyB?: Currency | null
+  feeAmount?: FeeAmount
+  activeTick?: number
+  enabled?: boolean
+}): {
   isLoading: boolean
   error: unknown
   ticks: TickData[] | undefined
 } {
-  const subgraphTickData = useTicksFromSubgraph(currencyA, currencyB, feeAmount, enabled)
+  const subgraphTickData = useTicksFromSubgraph(currencyA, currencyB, feeAmount, activeTick, enabled)
 
   return {
     isLoading: subgraphTickData.isLoading,
@@ -63,7 +70,7 @@ export function usePoolActiveLiquidity(
   // Find nearest valid tick for pool in case tick is not initialized.
   const activeTick = useMemo(() => getActiveTick(pool[1]?.tickCurrent, feeAmount), [pool, feeAmount])
 
-  const { isLoading, error, ticks } = useAllV3Ticks(currencyA, currencyB, feeAmount)
+  const { isLoading, error, ticks } = useAllV3Ticks({ currencyA, currencyB, feeAmount, activeTick })
 
   return useMemo(() => {
     if (

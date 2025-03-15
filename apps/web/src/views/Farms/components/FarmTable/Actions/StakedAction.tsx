@@ -27,7 +27,6 @@ import { styled } from 'styled-components'
 import { logGTMClickStakeFarmConfirmEvent } from 'utils/customGTMEventTracking'
 import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
 import { Hash } from 'viem'
-import { useIsBloctoETH } from 'views/Farms'
 import { useBCakeBoostLimitAndLockInfo } from 'views/Farms/components/YieldBooster/hooks/bCakeV3/useBCakeV3Info'
 
 import { useAccount } from 'wagmi'
@@ -191,7 +190,6 @@ const Staked: React.FunctionComponent<React.PropsWithChildren<StackedActionProps
   const isBoosterAndRewardInRange = isBooster && bCakePublicData?.isRewardInRange
   const { toastSuccess } = useToast()
   const addTransaction = useTransactionAdder()
-  const isBloctoETH = useIsBloctoETH()
   const { fetchWithCatchTxError, fetchTxResponse, loading: pendingTx } = useCatchTxError()
   const { account, chainId } = useAccountActiveChain()
 
@@ -445,7 +443,7 @@ const Staked: React.FunctionComponent<React.PropsWithChildren<StackedActionProps
     return (
       <FarmWidget.FarmTable.EnableStakeAction
         bCakeInfoSlot={bCakeInfoSlot}
-        pendingTx={pendingTx || isBloctoETH}
+        pendingTx={pendingTx}
         handleApprove={handleApprove}
       />
     )
@@ -460,7 +458,7 @@ const Staked: React.FunctionComponent<React.PropsWithChildren<StackedActionProps
       <FarmWidget.FarmTable.StakedActionComponent
         lpSymbol={lpSymbol}
         disabledMinusButton={pendingFarm.length > 0}
-        disabledPlusButton={isStakeReady || isBloctoETH}
+        disabledPlusButton={isStakeReady}
         onPresentWithdraw={onPresentWithdraw}
         onPresentDeposit={onPresentDeposit}
         bCakeInfoSlot={bCakeInfoSlot}

@@ -12,7 +12,14 @@ import {
 } from '@pancakeswap/uikit'
 import { BIG_ZERO } from '@pancakeswap/utils/bigNumber'
 import { formatPrice } from '@pancakeswap/utils/formatFractions'
-import { FeeCalculator, Pool, encodeSqrtRatioX96, isPoolTickInRange, parseProtocolFees } from '@pancakeswap/v3-sdk'
+import {
+  FeeCalculator,
+  Pool,
+  encodeSqrtRatioX96,
+  isPoolTickInRange,
+  parseProtocolFees,
+  TickMath,
+} from '@pancakeswap/v3-sdk'
 import {
   RoiCalculatorModalV2,
   RoiCalculatorPositionInfo,
@@ -39,6 +46,7 @@ import currencyId from 'utils/currencyId'
 
 import { useUserPositionInfo } from 'views/Farms/components/YieldBooster/hooks/bCakeV3/useBCakeV3Info'
 import { BoostStatus, useBoostStatus } from 'views/Farms/components/YieldBooster/hooks/bCakeV3/useBoostStatus'
+import { getActiveTick } from 'utils/getActiveTick'
 import { useV3MintActionHandlers } from '../formViews/V3FormView/form/hooks/useV3MintActionHandlers'
 import { useV3FormState } from '../formViews/V3FormView/form/reducer'
 
@@ -100,12 +108,17 @@ export function AprCalculator({
   const poolAddress = useMemo(() => (pool ? Pool.getAddress(pool.token0, pool.token1, pool.fee) : undefined), [pool])
 
   const prices = usePairTokensPrice(poolAddress, priceSpan, baseCurrency?.chainId, isOpen)
-  const { ticks: data } = useAllV3Ticks(baseCurrency, quoteCurrency, feeAmount)
+  const sqrtRatioX96 = useMemo(() => price && encodeSqrtRatioX96(price.numerator, price.denominator), [price])
+  const tickCurrent = useMemo(
+    () => (sqrtRatioX96 ? TickMath.getTickAtSqrtRatio(sqrtRatioX96) : undefined),
+    [sqrtRatioX96],
+  )
+  const activeTick = useMemo(() => getActiveTick(tickCurrent, feeAmount), [tickCurrent, feeAmount])
+  const { ticks: data } = useAllV3Ticks({ currencyA: baseCurrency, currencyB: quoteCurrency, feeAmount, activeTick })
   const volume24H = usePoolAvgTradingVolume({
     address: poolAddress,
     chainId: pool?.token0.chainId,
   })
-  const sqrtRatioX96 = useMemo(() => price && encodeSqrtRatioX96(price.numerator, price.denominator), [price])
   const { [Bound.LOWER]: tickLower, [Bound.UPPER]: tickUpper } = ticks
   const { [Bound.LOWER]: priceLower, [Bound.UPPER]: priceUpper } = pricesAtTicks
   const { [Field.CURRENCY_A]: amountA, [Field.CURRENCY_B]: amountB } = parsedAmounts

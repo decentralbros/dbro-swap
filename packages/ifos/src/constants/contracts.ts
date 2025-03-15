@@ -8,7 +8,7 @@ export type ContractAddresses<T extends ChainId = SupportedChainId> = {
 }
 
 export const ICAKE = {
-  [ChainId.BSC]: '0x9C46110Eb094866922045729AEFcdff91f2CFFF5',
+  [ChainId.BSC]: '0xd68A31C3f2b61C621a7619b6F4667a2aee959132',
   [ChainId.BSC_TESTNET]: '0x5FB0b7a782c2f192493d86922dD3873b6392C8e8',
   [ChainId.GOERLI]: '0x45A33F911F9E2ea404303920E9775467518a4ed7',
   [ChainId.ARBITRUM_ONE]: '0x747A78d0EB1adAeca945ECc578feB17065a1dA39',

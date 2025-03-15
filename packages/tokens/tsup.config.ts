@@ -1,5 +1,5 @@
-import { defineConfig } from 'tsup'
 import { exec } from 'child_process'
+import { defineConfig } from 'tsup'
 
 export default defineConfig((options) => {
   return {

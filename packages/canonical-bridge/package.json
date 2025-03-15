@@ -1,0 +1,63 @@
+{
+  "name": "@pancakeswap/canonical-bridge",
+  "version": "0.0.2",
+  "sideEffects": false,
+  "private": true,
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch --mode development",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.mjs",
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "viem": "catalog:",
+    "wagmi": "catalog:",
+    "@tanstack/react-query": "^5.52.1",
+    "styled-components": "6.0.7",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
+    "@solana/web3.js": "^1",
+    "@solana/spl-token": "^0",
+    "tronweb": "^6",
+    "@solana/wallet-adapter-react": "^0",
+    "@tronweb3/tronwallet-adapter-react-hooks": "^1",
+    "@pancakeswap/uikit": "workspace:*",
+    "@pancakeswap/localization": "workspace:*"
+  },
+  "dependencies": {
+    "@bnb-chain/canonical-bridge-widget": "0.5.15",
+    "axios": "~1.6.8",
+    "polished": "^4.2.2"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.168",
+    "@vitejs/plugin-react": "4.2.1",
+    "vite": "5.0.12",
+    "vite-plugin-dts": "^3.5.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.0.6",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/react-transition-group": "^4.4.1",
+    "viem": "catalog:",
+    "wagmi": "catalog:",
+    "@pancakeswap/uikit": "workspace:*",
+    "@pancakeswap/localization": "workspace:*"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  }
+}

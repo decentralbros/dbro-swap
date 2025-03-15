@@ -53,11 +53,16 @@ export const getProposal = async (id: string): Promise<Proposal> => {
           type
           scores
           scores_total
+          space {
+            id
+            name
+          }
         }
       }
     `,
     { id },
   )
+
   return response.proposal
 }
 

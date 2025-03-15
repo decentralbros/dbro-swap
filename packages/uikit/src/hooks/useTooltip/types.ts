@@ -1,4 +1,5 @@
 import { Padding, Placement, PositioningStrategy } from "@popperjs/core";
+import React from "react";
 
 export interface TooltipRefs {
   targetRef: React.Dispatch<React.SetStateAction<HTMLElement | null>>;

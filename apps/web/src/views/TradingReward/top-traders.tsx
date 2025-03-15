@@ -67,7 +67,7 @@ const TradingRewardTopTraders = () => {
           campaignClaimEndTime: tradingRewardPair?.campaignClaimEndTime,
         }
       })
-      .filter((item) => currentTime > Number(item?.campaignClaimTime) ?? 0)
+      .filter((item) => currentTime > Number(item?.campaignClaimTime ?? 0))
   }, [allTradingRewardPairData, allUserCampaignInfo])
 
   if (chainId !== ChainId.BSC) {

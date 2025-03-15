@@ -1,4 +1,4 @@
-import { CurrencyAmount, Percent, TradeType } from '@pancakeswap/sdk'
+import { CurrencyAmount, ONE_HUNDRED_PERCENT, Percent, TradeType } from '@pancakeswap/sdk'
 
 import { Route, SmartRouterTrade } from '../types'
 import { getMidPrice } from './route'
@@ -16,6 +16,9 @@ export function getPriceImpact(
     spotOutputAmount = spotOutputAmount.add(
       CurrencyAmount.fromRawAmount(trade.outputAmount.currency, midPrice.wrapped.quote(inputAmount.wrapped).quotient),
     )
+  }
+  if (spotOutputAmount.equalTo(0)) {
+    return ONE_HUNDRED_PERCENT
   }
   const priceImpact = spotOutputAmount.subtract(trade.outputAmount).divide(spotOutputAmount)
   return new Percent(priceImpact.numerator, priceImpact.denominator)

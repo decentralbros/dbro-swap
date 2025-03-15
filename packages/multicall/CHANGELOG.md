@@ -1,5 +1,24 @@
 # @pancakeswap/multicall
 
+## 3.6.0
+
+### Minor Changes
+
+- 6a6acdb: support monad testnet
+
+### Patch Changes
+
+- Updated dependencies [6a6acdb]
+  - @pancakeswap/chains@0.5.0
+  - @pancakeswap/sdk@5.8.11
+
+## 3.5.10
+
+### Patch Changes
+
+- Updated dependencies [36f8955]
+  - @pancakeswap/sdk@5.8.10
+
 ## 3.5.9
 
 ### Patch Changes

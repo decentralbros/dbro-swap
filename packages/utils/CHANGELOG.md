@@ -1,5 +1,12 @@
 # @pancakeswap/utils
 
+## 6.0.10
+
+### Patch Changes
+
+- Updated dependencies [6a6acdb]
+  - @pancakeswap/chains@0.5.0
+
 ## 6.0.9
 
 ### Patch Changes

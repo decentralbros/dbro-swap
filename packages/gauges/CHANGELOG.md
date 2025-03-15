@@ -1,5 +1,30 @@
 # @pancakeswap/gauges
 
+## 2.0.5
+
+### Patch Changes
+
+- Updated dependencies [6a6acdb]
+- Updated dependencies [77db844]
+  - @pancakeswap/chains@0.5.0
+  - @pancakeswap/tokens@0.7.0
+  - @pancakeswap/v3-sdk@3.9.0
+  - @pancakeswap/utils@6.0.10
+
+## 2.0.4
+
+### Patch Changes
+
+- e02271e: Updated new GAUGES_CALC_ADDRESS
+
+## 2.0.3
+
+### Patch Changes
+
+- b529b61: Update mainnet gauges contract address
+  - @pancakeswap/tokens@0.6.29
+  - @pancakeswap/v3-sdk@3.8.13
+
 ## 2.0.2
 
 ### Patch Changes

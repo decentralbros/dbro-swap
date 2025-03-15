@@ -7,4 +7,3 @@ export * as RoiWidget from "./roi";
 export * from "./swap";
 export { SwapUIV2 } from "./swap-v2";
 export * from "./swap/LiquidityChartRangeInput";
-export * as UsdvWidget from "./usdv";

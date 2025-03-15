@@ -16,7 +16,7 @@ import {
   useTooltip,
 } from '@pancakeswap/uikit'
 import { BIG_ZERO } from '@pancakeswap/utils/bigNumber'
-import { Position, encodeSqrtRatioX96 } from '@pancakeswap/v3-sdk'
+import { Position, TickMath, encodeSqrtRatioX96 } from '@pancakeswap/v3-sdk'
 import { FarmWidget } from '@pancakeswap/widgets-internal'
 import { RoiCalculatorModalV2, useRoi } from '@pancakeswap/widgets-internal/roi'
 import BigNumber from 'bignumber.js'
@@ -36,6 +36,7 @@ import { CurrencyField as Field } from 'utils/types'
 import LiquidityFormProvider from 'views/AddLiquidityV3/formViews/V3FormView/form/LiquidityFormProvider'
 import { useV3FormState } from 'views/AddLiquidityV3/formViews/V3FormView/form/reducer'
 import { FarmsV3Context } from 'views/Farms'
+import { getActiveTick } from 'utils/getActiveTick'
 import { USER_ESTIMATED_MULTIPLIER, useUserPositionInfo } from '../../YieldBooster/hooks/bCakeV3/useBCakeV3Info'
 import { BoostStatus, useBoostStatus } from '../../YieldBooster/hooks/bCakeV3/useBoostStatus'
 import { getDisplayApr } from '../../getDisplayApr'
@@ -104,11 +105,7 @@ function FarmV3ApyButton_({
 
   const [priceTimeWindow, setPriceTimeWindow] = useState(PairDataTimeWindowEnum.DAY)
   const prices = usePairTokensPrice(lpAddress, priceTimeWindow, baseCurrency?.chainId, roiModal.isOpen)
-
-  const { ticks: data } = useAllV3Ticks(baseCurrency, quoteCurrency, feeAmount, roiModal.isOpen)
-
   const formState = useV3FormState()
-
   const { pool, ticks, price, pricesAtTicks, currencyBalances, outOfRange } = useV3DerivedInfo(
     baseCurrency ?? undefined,
     quoteCurrency ?? undefined,
@@ -117,10 +114,22 @@ function FarmV3ApyButton_({
     existingPosition,
     formState,
   )
+  const sqrtRatioX96 = useMemo(() => price && encodeSqrtRatioX96(price.numerator, price.denominator), [price])
+  const tickCurrent = useMemo(
+    () => (sqrtRatioX96 ? TickMath.getTickAtSqrtRatio(sqrtRatioX96) : undefined),
+    [sqrtRatioX96],
+  )
+  const activeTick = useMemo(() => getActiveTick(tickCurrent, feeAmount), [tickCurrent, feeAmount])
+  const { ticks: data } = useAllV3Ticks({
+    currencyA: baseCurrency,
+    currencyB: quoteCurrency,
+    feeAmount,
+    activeTick,
+    enabled: roiModal.isOpen,
+  })
 
   const cakePrice = useCakePrice()
 
-  const sqrtRatioX96 = price && encodeSqrtRatioX96(price.numerator, price.denominator)
   const { [Bound.LOWER]: tickLower, [Bound.UPPER]: tickUpper } = ticks
   const { [Bound.LOWER]: priceLower, [Bound.UPPER]: priceUpper } = pricesAtTicks
 

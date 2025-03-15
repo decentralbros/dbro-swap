@@ -5,8 +5,8 @@ import { confirmOrderCancellation, confirmOrderSubmission, saveOrder } from 'uti
 import { Hash } from 'viem'
 import { resetUserState } from '../global/actions'
 import {
-  FarmTransactionStatus,
   CrossChainFarmTransactionType,
+  FarmTransactionStatus,
   SerializableTransactionReceipt,
   TransactionType,
   addTransaction,

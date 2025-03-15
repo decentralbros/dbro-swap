@@ -1,5 +1,5 @@
-import { useCallback, useEffect } from "react";
 import debounce from "lodash/debounce";
+import { useCallback, useEffect } from "react";
 
 type ParticleOptions = {
   size?: number;

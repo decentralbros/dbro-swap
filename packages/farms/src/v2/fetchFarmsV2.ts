@@ -43,6 +43,11 @@ const evmNativeStableLpMap: Record<
     wNative: 'WETH',
     stable: 'USDC',
   },
+  [ChainId.MONAD_TESTNET]: {
+    address: '0x4E96D2e92680Ca65D58A0e2eB5bd1c0f44cAB897',
+    wNative: 'MON',
+    stable: 'USDC',
+  },
 }
 
 export const getTokenAmount = (balance: BN, decimals: number) => {

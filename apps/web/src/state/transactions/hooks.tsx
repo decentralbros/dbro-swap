@@ -1,4 +1,7 @@
 import { Order } from '@gelatonetwork/limit-orders-lib'
+import { useTranslation } from '@pancakeswap/localization'
+import { Token } from '@pancakeswap/swap-sdk-core'
+import { FeeAmount } from '@pancakeswap/v3-sdk'
 import isEmpty from 'lodash/isEmpty'
 import keyBy from 'lodash/keyBy'
 import mapValues from 'lodash/mapValues'
@@ -8,20 +11,17 @@ import pickBy from 'lodash/pickBy'
 import { useCallback, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { AppState, useAppDispatch } from 'state'
-import { useAccount } from 'wagmi'
 import { Hash } from 'viem'
-import { Token } from '@pancakeswap/swap-sdk-core'
-import { FeeAmount } from '@pancakeswap/v3-sdk'
-import { useTranslation } from '@pancakeswap/localization'
+import { useAccount } from 'wagmi'
 
 import { useActiveChainId } from 'hooks/useActiveChainId'
 
 import useAccountActiveChain from 'hooks/useAccountActiveChain'
 import { useSafeTxHashTransformer } from 'hooks/useSafeTxHashTransformer'
 import {
-  FarmTransactionStatus,
   CrossChainFarmStepType,
   CrossChainFarmTransactionType,
+  FarmTransactionStatus,
   TransactionType,
   addTransaction,
 } from './actions'
@@ -230,7 +230,7 @@ export function useHasPendingRevocation(token?: Token, spender?: string) {
     }
     return undefined
   }, [allTransactions, spender, token?.address])
-  return pendingApprovals === 0n ?? false
+  return typeof pendingApprovals === 'bigint' && pendingApprovals === 0n
 }
 
 // we want the latest one to come first, so return negative if a is after b

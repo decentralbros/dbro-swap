@@ -35,7 +35,7 @@ const StakeModalContainer = ({
 
   const boostedApr = useBoostedPoolApr({
     chainId,
-    enabled: !pool.isFinished ?? true,
+    enabled: false,
     contractAddress: pool.contractAddress,
   })
 

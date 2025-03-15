@@ -15,6 +15,9 @@ import { CurrencyLogo } from '@pancakeswap/widgets-internal'
 import { LightGreyCard } from 'components/Card'
 
 import { Currency, CurrencyAmount } from '@pancakeswap/swap-sdk-core'
+import { useMemo } from 'react'
+import { getMerklLink } from 'utils/getMerklLink'
+import { ChainId } from '@pancakeswap/chains'
 import useMerkl from '../../hooks/useMerkl'
 
 function TextWarning({ tokenAmount }: { tokenAmount: CurrencyAmount<Currency> }) {
@@ -39,37 +42,39 @@ function TextWarning({ tokenAmount }: { tokenAmount: CurrencyAmount<Currency> })
   )
 }
 
+const LearnMoreLink = () => {
+  const { t } = useTranslation()
+
+  return (
+    <Link color="currentColor" fontSize="md" external style={{ display: 'inline-flex' }} href="https://docs.merkl.xyz/">
+      {t('Learn more about Merkl')}
+    </Link>
+  )
+}
+
 export function MerklSection({
   poolAddress,
+  chainId,
   notEnoughLiquidity,
   outRange,
   disabled,
 }: {
+  poolAddress?: `0x${string}`
+  chainId?: ChainId
+  notEnoughLiquidity: boolean
   outRange: boolean
   disabled: boolean
-  poolAddress: string | null
-  notEnoughLiquidity: boolean
 }) {
   const { t } = useTranslation()
 
   const { claimTokenReward, isClaiming, rewardsPerToken, hasMerkl } = useMerkl(poolAddress)
 
+  const merklLink = useMemo(() => getMerklLink({ chainId, lpAddress: poolAddress }), [chainId, poolAddress])
+
   if (!rewardsPerToken.length || (!hasMerkl && rewardsPerToken.every((r) => r.equalTo('0')))) return null
 
-  const learnMoreComp = (
-    <Link
-      color="currentColor"
-      fontSize="md"
-      external
-      style={{ display: 'inline-flex' }}
-      href="https://docs.angle.money/merkl/introduction"
-    >
-      {t('Learn more about Merkl')}
-    </Link>
-  )
-
   return (
-    <Column justifyContent="space-between" gap="8px" width="100%" ml={['0px', '0px', '16px', '16px']} mt="24px">
+    <Column justifyContent="space-between" gap="8px" width="100%">
       <AutoRow justifyContent="space-between">
         <Text fontSize="12px" color="secondary" bold textTransform="uppercase">
           {t('Merkl Rewards')}
@@ -82,12 +87,7 @@ export function MerklSection({
           {isClaiming ? t('Claiming...') : t('Claim')}
         </Button>
       </AutoRow>
-      <LightGreyCard
-        mr="4px"
-        style={{
-          padding: '16px 8px',
-        }}
-      >
+      <LightGreyCard mr="4px" padding="16px 8px">
         {rewardsPerToken.map((tokenAmount) => (
           <AutoRow justifyContent="space-between">
             <Flex>
@@ -108,7 +108,7 @@ export function MerklSection({
           <MessageText color="textSubtle">
             {t('This Merkl campaign is NOT rewarding out-of-range liquidity. To earn rewards, adjust your position.')}
             <br />
-            {learnMoreComp}
+            <LearnMoreLink />
           </MessageText>
         </Message>
       ) : hasMerkl ? (
@@ -125,12 +125,12 @@ export function MerklSection({
               external
               color="currentColor"
               style={{ display: 'inline-flex' }}
-              href="https://merkl.angle.money/?times=active%2Cfuture%2C&phrase=PancakeSwap"
+              href={merklLink ?? 'https://merkl.angle.money/?search=PancakeSwap&status=live%2Csoon'}
             >
               {t('here')}
-            </Link>{' '}
+            </Link>
             <br />
-            {learnMoreComp}
+            <LearnMoreLink />
           </MessageText>
         </Message>
       ) : null}

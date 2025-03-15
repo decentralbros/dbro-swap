@@ -31,9 +31,6 @@
       "not op_mini all"
     ]
   },
-  "engines": {
-    "node": ">=16.0.0"
-  },
   "dependencies": {
     "@binance/w3w-utils": "1.1.4",
     "@binance/w3w-wagmi-connector-v2": "^1.2.3",
@@ -42,12 +39,13 @@
     "@datadog/browser-rum": "^5.8.0",
     "@gelatonetwork/limit-orders-lib": "^4.1.0",
     "@gnosis.pm/safe-apps-wagmi": "^1.2.0",
-    "@kyberswap/pancake-liquidity-widgets": "1.0.2",
+    "@kyberswap/pancake-liquidity-widgets": "1.0.6",
     "@next/bundle-analyzer": "13.0.7",
-    "@orbs-network/twap-ui": "0.11.4",
-    "@orbs-network/twap-ui-pancake": "0.11.4",
+    "@orbs-network/twap-ui": "0.11.31",
+    "@orbs-network/twap-ui-pancake": "0.11.31",
     "@pancakeswap/achievements": "workspace:*",
     "@pancakeswap/blog": "workspace:*",
+    "@pancakeswap/canonical-bridge": "workspace:*",
     "@pancakeswap/chains": "workspace:*",
     "@pancakeswap/farms": "workspace:*",
     "@pancakeswap/gauges": "workspace:*",
@@ -84,7 +82,6 @@
     "@sentry/nextjs": "^8.16.0",
     "@snapshot-labs/snapshot.js": "^0.4.40",
     "@tanstack/react-query": "^5.52.1",
-    "@usdv/usdv-widget": "^0.9.9",
     "@vanilla-extract/next-plugin": "^2.3.0",
     "@wagmi/core": "2.10.5",
     "@wallchain/sdk": "^0.6.8",
@@ -130,6 +127,7 @@
     "react-device-detect": "^2.1.2",
     "react-dom": "^18.2.0",
     "react-fast-marquee": "^1.6.0",
+    "react-hook-form": "^7.54.2",
     "react-redux": "^8.0.5",
     "react-transition-group": "^4.4.5",
     "react-window": "^1.8.7",
@@ -145,6 +143,7 @@
     "uuid": "^8.0.0",
     "viem": "catalog:",
     "wagmi": "catalog:",
+    "vconsole": "^3.15.1",
     "zod": "^3.22.3"
   },
   "devDependencies": {
@@ -159,7 +158,7 @@
     "@types/d3": "^7.4.0",
     "@types/js-cookie": "^3.0.2",
     "@types/lodash": "^4.14.178",
-    "@types/node": "^13.13.5",
+    "@types/node": "^18.18.14",
     "@types/qs": "^6.0.0",
     "@types/react": "^18.2.21",
     "@types/react-datepicker": "^4.4.1",
@@ -193,7 +192,8 @@
     "stylelint-config-standard": "^25.0.0",
     "stylelint-config-styled-components": "^0.1.1",
     "tilg": "^0.1.1",
-    "typescript": "5.2.2",
-    "vite-tsconfig-paths": "^4.0.3"
+    "typescript": "5.7.3",
+    "vite-tsconfig-paths": "^4.0.3",
+    "webpack-retry-chunk-load-plugin": "3.1.1"
   }
 }

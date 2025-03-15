@@ -7,10 +7,29 @@ export const iCakeABI = [
   {
     anonymous: false,
     inputs: [
+      { indexed: true, internalType: 'address', name: 'delegator', type: 'address' },
+      { indexed: true, internalType: 'address', name: 'VECakeUser', type: 'address' },
+    ],
+    name: 'Approve',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
       { indexed: true, internalType: 'address', name: 'previousOwner', type: 'address' },
       { indexed: true, internalType: 'address', name: 'newOwner', type: 'address' },
     ],
     name: 'OwnershipTransferred',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'address', name: 'user', type: 'address' },
+      { indexed: true, internalType: 'address', name: 'oldDelegator', type: 'address' },
+      { indexed: true, internalType: 'address', name: 'delegator', type: 'address' },
+    ],
+    name: 'UpdateDelegator',
     type: 'event',
   },
   {
@@ -23,6 +42,15 @@ export const iCakeABI = [
     anonymous: false,
     inputs: [{ indexed: false, internalType: 'uint256', name: 'newRatio', type: 'uint256' }],
     name: 'UpdateRatio',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'address', name: 'userAddress', type: 'address' },
+      { indexed: false, internalType: 'uint256', name: 'ratio', type: 'uint256' },
+    ],
+    name: 'UpdateUserRatioOverride',
     type: 'event',
   },
   {
@@ -42,6 +70,34 @@ export const iCakeABI = [
   {
     inputs: [],
     name: 'admin',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: '_VECakeUser', type: 'address' }],
+    name: 'approveToVECakeUser',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'delegated',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'delegator',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'delegatorApprove',
     outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
@@ -81,6 +137,13 @@ export const iCakeABI = [
     type: 'function',
   },
   {
+    inputs: [{ internalType: 'address', name: '_user', type: 'address' }],
+    name: 'getVeCakeUser',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [],
     name: 'ifoDeployerAddress',
     outputs: [{ internalType: 'address', name: '', type: 'address' }],
@@ -101,7 +164,32 @@ export const iCakeABI = [
     stateMutability: 'view',
     type: 'function',
   },
+  { inputs: [], name: 'removeDelegator', outputs: [], stateMutability: 'nonpayable', type: 'function' },
   { inputs: [], name: 'renounceOwnership', outputs: [], stateMutability: 'nonpayable', type: 'function' },
+  {
+    inputs: [{ internalType: 'address', name: '_delegator', type: 'address' }],
+    name: 'setDelegator',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        components: [
+          { internalType: 'address', name: 'VECakeUser', type: 'address' },
+          { internalType: 'address', name: 'delegator', type: 'address' },
+        ],
+        internalType: 'struct ICakeV3.DelegatorConfig[]',
+        name: '_delegatorConfigs',
+        type: 'tuple[]',
+      },
+    ],
+    name: 'setDelegators',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
   {
     inputs: [{ internalType: 'address', name: 'newOwner', type: 'address' }],
     name: 'transferOwnership',
@@ -121,6 +209,23 @@ export const iCakeABI = [
     name: 'updateRatio',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: '_user', type: 'address' },
+      { internalType: 'uint256', name: '_newRatio', type: 'uint256' },
+    ],
+    name: 'updateUserRatio',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'userRatioOverride',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
     type: 'function',
   },
   {

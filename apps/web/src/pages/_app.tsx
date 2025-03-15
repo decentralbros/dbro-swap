@@ -49,14 +49,6 @@ function GlobalHooks() {
   return null
 }
 
-// function MPGlobalHooks() {
-//   usePollBlockNumber()
-//   useUserAgent()
-//   useAccountEventListener()
-//   useLockedEndNotification()
-//   return null
-// }
-
 function MyApp(props: AppProps<{ initialReduxState: any; dehydratedState: any }>) {
   const { pageProps, Component } = props
   const store = useStore(pageProps.initialReduxState)
@@ -73,7 +65,11 @@ function MyApp(props: AppProps<{ initialReduxState: any; dehydratedState: any }>
         )} */}
       </Head>
       <DefaultSeo {...SEO} />
-      <Providers store={store} dehydratedState={pageProps.dehydratedState}>
+      <Providers
+        store={store}
+        dehydratedState={pageProps.dehydratedState}
+        w3wWagmiConfig={(Component as any).w3wWagmiConfig}
+      >
         <PageMeta />
         {(Component as NextPageWithLayout).Meta && (
           // @ts-ignore

@@ -9,7 +9,7 @@
     "apis/*",
     "scripts"
   ],
-  "packageManager": "pnpm@9.12.1",
+  "packageManager": "pnpm@9.15.3",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev": "turbo run dev --filter=web... --concurrency=50",
@@ -22,7 +22,7 @@
     "build:blog": "turbo run build --filter=blog...",
     "build:aptos": "turbo run build --filter=aptos-web...",
     "build:bridge": "turbo run build --filter=bridge...",
-    "build:packages": "turbo run build --filter=./packages/*",
+    "build:packages": "turbo run build --filter=./packages/* --filter=./packages/routing-sdk/addons/*",
     "start": "turbo run start --filter=web",
     "test:config": "pnpm turbo run test:config --filter=web...[HEAD^1]",
     "test:ci": "pnpm turbo run test --filter=[HEAD^1]",
@@ -65,13 +65,13 @@
     "tilg": "^0.1.1",
     "tsx": "^4.6.1",
     "turbo": "2.0.6",
-    "typescript": "5.2.2",
+    "typescript": "5.7.3",
     "vitest": "^1.5.0",
     "wrangler": "catalog:"
   },
   "volta": {
     "node": "20.17.0",
-    "pnpm": "9.12.1"
+    "pnpm": "9.15.3"
   },
   "dependencies": {
     "ws": "^8.17.1",

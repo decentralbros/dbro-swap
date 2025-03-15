@@ -19,6 +19,7 @@ test('exports', () => {
       "Protocol",
       "isActiveV3Farm",
       "formatUniversalFarmToSerializedFarm",
+      "getFarmConfigKey",
       "deserializeFarm",
       "deserializeFarmUserData",
       "deserializeFarmBCakeUserData",

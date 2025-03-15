@@ -332,7 +332,7 @@ const SingleFarmV3Card: React.FunctionComponent<
                 earnings={totalEarnings}
                 earningsBusd={earningsBusd}
                 pendingTx={attemptingTxn || (harvesting ?? false)}
-                disabled={!pendingCakeByTokenIds?.[position.tokenId.toString()] ?? true}
+                disabled={!pendingCakeByTokenIds?.[position.tokenId.toString()]}
                 userDataReady
                 handleHarvest={handleHarvest}
               />

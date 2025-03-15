@@ -1,4 +1,3 @@
-import { UsdvWidget } from '@pancakeswap/widgets-internal'
 import { useDebounce, useSortedTokensByQuery } from '@pancakeswap/hooks'
 import { useTranslation } from '@pancakeswap/localization'
 /* eslint-disable no-restricted-syntax */
@@ -10,19 +9,18 @@ import { KeyboardEvent, RefObject, useCallback, useEffect, useMemo, useRef, useS
 import { FixedSizeList } from 'react-window'
 import { isAddress } from 'viem'
 
-import { safeGetAddress } from 'utils'
-import { useAllLists, useInactiveListUrls } from 'state/lists/hooks'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import useNativeCurrency from 'hooks/useNativeCurrency'
-import { useUsdvMintAvailable } from 'hooks/useUsdvMintAvailable'
+import { useAllLists, useInactiveListUrls } from 'state/lists/hooks'
+import { safeGetAddress } from 'utils'
 
+import { useTokenComparator } from 'hooks/useTokenComparator'
 import { useAllTokens, useIsUserAddedToken, useToken } from '../../hooks/Tokens'
 import Row from '../Layout/Row'
 import CommonBases from './CommonBases'
 import CurrencyList from './CurrencyList'
-import useTokenComparator from './sorting'
-import { getSwapSound } from './swapSound'
 import ImportRow from './ImportRow'
+import { getSwapSound } from './swapSound'
 
 interface CurrencySearchProps {
   selectedCurrency?: Currency | null
@@ -100,10 +98,6 @@ function CurrencySearch({
 
   const [searchQuery, setSearchQuery] = useState<string>('')
   const debouncedQuery = useDebounce(searchQuery, 200)
-  const usdvMintAvailable = useUsdvMintAvailable({
-    chainId,
-    tokenSymbol: debouncedQuery,
-  })
 
   const [invertSearchOrder] = useState<boolean>(false)
 
@@ -200,7 +194,7 @@ function CurrencySearch({
     }
 
     return Boolean(filteredSortedTokens?.length) || hasFilteredInactiveTokens ? (
-      <Box mx="-24px" my="24px">
+      <Box mx="-24px" mt="20px" mb="24px">
         <CurrencyList
           height={isMobile ? (showCommonBases ? height || 250 : height ? height + 80 : 350) : 390}
           showNative={showNative}
@@ -249,7 +243,7 @@ function CurrencySearch({
           <Row>
             <Input
               id="token-search-input"
-              placeholder={t('Search name or paste address')}
+              placeholder={t('Search by name or paste address')}
               scale="lg"
               autoComplete="off"
               value={searchQuery}
@@ -267,7 +261,6 @@ function CurrencySearch({
             commonBasesType={commonBasesType}
           />
         )}
-        {usdvMintAvailable ? <UsdvWidget.MintLink mt="0.625rem" /> : null}
       </AutoColumn>
       {getCurrencyListRows()}
     </>

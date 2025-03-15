@@ -1,5 +1,11 @@
 # @pancakeswap/chains
 
+## 0.5.0
+
+### Minor Changes
+
+- 6a6acdb: support monad testnet
+
 ## 0.4.6
 
 ### Patch Changes

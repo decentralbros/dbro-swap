@@ -5,6 +5,7 @@ import { UniversalFarmConfig } from '../types'
 import { bscTestnetFarmConfig } from './bscTestnet'
 import { polygonZkEVMTestnetFarmConfig } from './polygonZkEVMTestnet'
 import { zkSyncTestnetFarmConfig } from './zkSyncTestnet'
+import { getFarmConfigKey } from '../utils'
 
 const chainIds: ChainId[] = [
   ChainId.BSC,
@@ -35,7 +36,7 @@ export const fetchAllUniversalFarmsMap = async (): Promise<Record<string, Univer
     const farmConfig = await fetchAllUniversalFarms()
 
     return farmConfig.reduce((acc, farm) => {
-      set(acc, `${farm.chainId}:${farm.lpAddress}`, farm)
+      set(acc, getFarmConfigKey(farm), farm)
       return acc
     }, {} as Record<string, UniversalFarmConfig>)
   } catch (error) {

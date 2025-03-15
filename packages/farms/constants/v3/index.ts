@@ -15,6 +15,7 @@ export const bCakeFarmBoosterV3VeCakeAddress: Addresses = {
   [ChainId.ARBITRUM_ONE]: '0xc4EfD50205Ccd15c192F342B3837d644c8fff99a',
   [ChainId.ETHEREUM]: '0xE604940C06DF1B6A9851f8E8D8d22468CB932E38',
   [ChainId.ZKSYNC]: '0xBF5412F6217Fd57caf46e51f7929ea6f74739D21',
+  [ChainId.BASE]: '0xe1B937722686f1967C22238B510595b610Ad2032',
 }
 
 export const bCakeFarmWrapperBoosterVeCakeAddress: Addresses = {
@@ -22,4 +23,5 @@ export const bCakeFarmWrapperBoosterVeCakeAddress: Addresses = {
   [ChainId.ARBITRUM_ONE]: '0x21Eb14cf06270Ef944A1480bEf9163fe4Cf7DB14',
   [ChainId.ETHEREUM]: '0xB509DBeE68B273767Cd8D45c1Ce95453391741f6',
   [ChainId.ZKSYNC]: '0x5497577d6d37B825C74B0d41F580a009b79362eB',
+  [ChainId.BASE]: '0x6EFA94A69D9b8ECdBE6916Fa290DB7a96ED9912F',
 }

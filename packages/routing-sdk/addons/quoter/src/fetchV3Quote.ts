@@ -1,12 +1,12 @@
+import { ChainId } from '@pancakeswap/chains'
 import { StablePool } from '@pancakeswap/routing-sdk-addon-stable-swap'
 import { V2Pool } from '@pancakeswap/routing-sdk-addon-v2'
 import { V3Pool } from '@pancakeswap/routing-sdk-addon-v3'
-import { ChainId } from '@pancakeswap/chains'
 import { CurrencyAmount } from '@pancakeswap/swap-sdk-core'
 
-import type { FetchQuote, QuoteRoute } from './types'
-import { V3_QUOTER_ADDRESSES } from './constants'
 import { quoterV2ABI } from './abis/IQuoterV2'
+import { V3_QUOTER_ADDRESSES } from './constants'
+import type { FetchQuote, QuoteRoute } from './types'
 import { encodeRouteToPath } from './utils'
 
 export type SupportedPool = V3Pool | V2Pool | StablePool

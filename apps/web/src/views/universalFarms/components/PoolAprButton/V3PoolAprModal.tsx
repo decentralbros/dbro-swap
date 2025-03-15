@@ -1,6 +1,6 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { PairDataTimeWindowEnum, UseModalV2Props } from '@pancakeswap/uikit'
-import { encodeSqrtRatioX96, parseProtocolFees } from '@pancakeswap/v3-sdk'
+import { encodeSqrtRatioX96, parseProtocolFees, TickMath } from '@pancakeswap/v3-sdk'
 import { RoiCalculatorModalV2 } from '@pancakeswap/widgets-internal/roi'
 import BigNumber from 'bignumber.js'
 import { useCakePrice } from 'hooks/useCakePrice'
@@ -13,6 +13,7 @@ import { CakeApr } from 'state/farmsV4/atom'
 import { useExtraV3PositionInfo } from 'state/farmsV4/hooks'
 import { PositionDetail } from 'state/farmsV4/state/accountPositions/type'
 import { PoolInfo } from 'state/farmsV4/state/type'
+import { getActiveTick } from 'utils/getActiveTick'
 import { useV3FormState } from 'views/AddLiquidityV3/formViews/V3FormView/form/reducer'
 import { useLmPoolLiquidity } from 'views/Farms/hooks/useLmPoolLiquidity'
 
@@ -46,9 +47,20 @@ const AprModal: React.FC<V3PoolAprModalProps> = ({ modal, poolInfo, userPosition
     position,
     formState,
   )
-  const { ticks: ticksData } = useAllV3Ticks(poolInfo.token0, poolInfo.token1, poolInfo.feeTier, modal.isOpen)
+  const sqrtRatioX96 = useMemo(() => price && encodeSqrtRatioX96(price.numerator, price.denominator), [price])
+  const tickCurrent = useMemo(
+    () => (sqrtRatioX96 ? TickMath.getTickAtSqrtRatio(sqrtRatioX96) : undefined),
+    [sqrtRatioX96],
+  )
+  const activeTick = useMemo(() => getActiveTick(tickCurrent, poolInfo.feeTier), [tickCurrent, poolInfo.feeTier])
+  const { ticks: ticksData } = useAllV3Ticks({
+    currencyA: poolInfo.token0,
+    currencyB: poolInfo.token1,
+    feeAmount: poolInfo.feeTier,
+    activeTick,
+    enabled: modal.isOpen,
+  })
   const prices = usePairTokensPrice(poolInfo?.lpAddress, priceTimeWindow, poolInfo?.chainId, modal.isOpen)
-  const sqrtRatioX96 = price && encodeSqrtRatioX96(price.numerator, price.denominator)
   const depositUsdAsBN = useMemo(
     () =>
       token0PriceUsd &&

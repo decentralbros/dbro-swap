@@ -1,6 +1,6 @@
 {
   "name": "@pancakeswap/uikit",
-  "version": "0.67.3",
+  "version": "0.67.4",
   "description": "Set of UI components for pancake projects",
   "type": "module",
   "main": "dist/index.cjs",
@@ -52,7 +52,7 @@
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.3",
+    "@babel/core": "7.23.9",
     "@babel/preset-env": "^7.23.3",
     "@babel/preset-react": "^7.23.3",
     "@pancakeswap/chains": "workspace:*",

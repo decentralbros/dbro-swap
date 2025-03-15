@@ -411,6 +411,10 @@ export interface Proposal {
   type: ProposalTypeName
   scores: number[]
   scores_total: number
+  space: {
+    id: string
+    name: string
+  }
 }
 
 export interface Vote {

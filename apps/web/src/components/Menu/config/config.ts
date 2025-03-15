@@ -79,7 +79,7 @@ const config: (
     },
     {
       label: t('Staking'),
-      href: '/staking',
+      href: '/staking/learn',
       icon: EarnIcon,
       fillIcon: EarnFillIcon,
       showItemsOnMobile: false,

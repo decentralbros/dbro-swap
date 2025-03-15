@@ -8,7 +8,6 @@ import React, { memo, useState } from 'react'
 import { NumberDisplay } from '@pancakeswap/widgets-internal'
 import { RowBetween, RowFixed } from 'components/Layout/Row'
 import { RoutingSettingsButton } from 'components/Menu/GlobalSettings/SettingsModal'
-import { Field } from 'state/swap/actions'
 import { SlippageAdjustedAmounts } from '../V3Swap/utils/exchange'
 import { useFeeSaved } from '../hooks/useFeeSaved'
 import FormattedPriceImpact from './FormattedPriceImpact'
@@ -56,11 +55,7 @@ export const TradeSummary = memo(function TradeSummary({
           />
         </RowFixed>
         <RowFixed>
-          <Text fontSize="14px">
-            {isExactIn
-              ? `${formatAmount(slippageAdjustedAmounts[Field.OUTPUT], 4)} ${outputAmount?.currency?.symbol}` ?? '-'
-              : `${formatAmount(slippageAdjustedAmounts[Field.INPUT], 4)} ${inputAmount?.currency?.symbol}` ?? '-'}
-          </Text>
+          <Text fontSize="14px">{isExactIn ? '-' : '-'}</Text>
         </RowFixed>
       </RowBetween>
       {feeSavedAmount ? (

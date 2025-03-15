@@ -16,6 +16,9 @@ const fetchLmPoolLiquidity = async (lpAddress: Address, chainId: number): Promis
       abi: pancakeV3PoolABI,
       functionName: 'lmPool',
     })
+
+    if (isAddressEqual(lmPool, zeroAddress)) return 0n
+
     const lmPoolLiquidity = await client.readContract({
       address: lmPool,
       abi: lmPoolAbi,
