@@ -28,6 +28,7 @@ const Providers: React.FC<
   }>
 > = ({ children, store, dehydratedState, w3wWagmiConfig }) => {
   const wagmiConfig = useMemo(() => (w3wWagmiConfig ? createW3WWagmiConfig() : createWagmiConfig()), [w3wWagmiConfig])
+
   return (
     <WagmiProvider reconnectOnMount config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>

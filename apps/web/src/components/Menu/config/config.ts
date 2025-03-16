@@ -43,8 +43,18 @@ const config: (
       icon: SwapIcon,
       fillIcon: SwapFillIcon,
       showItemsOnMobile: false,
-      items: [],
+      items: [
+        {
+          label: t('Swap'),
+          href: '/swap',
+        },
+        {
+          label: t('Trending'),
+          href: '/trending',
+        },
+      ],
     },
+
     {
       label: t('Bridge'),
       href: 'https://app.across.to/bridge',

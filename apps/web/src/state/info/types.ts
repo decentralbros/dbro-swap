@@ -128,6 +128,15 @@ export type TokenData = {
   campaignId?: string
   pairs?: ComputedFarmConfigV3[]
 }
+
+export type TrendingData = {
+  address: string
+  symbol: string
+  chainName: string
+  totalVolumeUSD: number
+  count: number
+}
+
 export enum InfoDataSource {
   V3,
   V2,
