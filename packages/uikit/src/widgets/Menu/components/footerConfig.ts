@@ -15,7 +15,7 @@ export const footerLinks: (t: ContextApi["t"]) => FooterLinkType[] = (t) => [
       },
       {
         label: t("Staking"),
-        href: "https://decentralbros.finance/staking",
+        href: "https://decentralbros.finance/staking/learn",
       },
       // {
       //   label: t("Game"),
