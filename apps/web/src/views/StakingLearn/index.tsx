@@ -33,8 +33,8 @@ const VideoPlayer = () => {
   return (
     <VideoContainer>
       <ResponsiveIframe
-        src="https://www.youtube.com/embed/djJQkT6rVF0?si=I3AQrNe7m_kTrMTQ&vq=hd1080"
-        title="YouTube video player"
+        src="https://decentralbros.s3.us-east-1.amazonaws.com/dbro-wrapped-staking.mp4"
+        title="DBRO Wrapped Staking"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerPolicy="strict-origin-when-cross-origin"
         allowFullScreen
