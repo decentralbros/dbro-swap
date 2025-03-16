@@ -48,7 +48,7 @@ const Trending: React.FC<React.PropsWithChildren> = () => {
         `}
       </style>
       <StyledHeroSection
-        innerProps={{ style: { margin: '0', width: '100%', overflow: 'visible', padding: '16px', paddingBottom: '0' } }}
+        innerProps={{ style: { margin: '0', width: '100%', overflow: 'visible', padding: '16px' } }}
         containerProps={{
           id: 'home-1',
         }}

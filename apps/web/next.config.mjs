@@ -1,4 +1,5 @@
 // next.config.mjs
+/* eslint-disable no-param-reassign */
 import BundleAnalyzer from '@next/bundle-analyzer'
 import { withWebSecurityHeaders } from '@pancakeswap/next-config/withWebSecurityHeaders'
 import smartRouterPkgs from '@pancakeswap/smart-router/package.json' with { type: 'json' }
@@ -27,11 +28,14 @@ const config = {
   },
   compiler: {
     styledComponents: true,
-    removeConsole: process.env.NODE_ENV === 'production'
+    removeConsole: process.env.NODE_ENV === 'production',
   },
   logging: {
-    fetches: process.env.NODE_ENV !== 'production',
-    webVitals: process.env.NODE_ENV !== 'production'
+    webVitals: process.env.NODE_ENV !== 'production',
+    fetches: {
+      includeRequest:  process.env.NODE_ENV !== 'production',
+      includeResponse:  process.env.NODE_ENV !== 'production',
+    },
   },
   experimental: {
     scrollRestoration: true,

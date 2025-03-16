@@ -5,7 +5,7 @@
   "homepage_url": "https://decentralbros.finance",
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#ffffff",
+  "theme_color": "#1bf696",
   "background_color": "#000000",
   "orientation": "portrait",
   "icons": [

@@ -31,7 +31,8 @@ export const SEO: DefaultSeoProps = {
   additionalMetaTags: [
     {
       name: 'keywords',
-      content: 'Decentral Bros, DBRO, swap, cryptocurrency, trading, multichain, staking, base network',
+      content:
+        'DBRO Swap, DEX, decentralized exchange, cryptocurrency, trading, staking, utility NFTs, multichain, DeFi',
     },
     {
       name: 'viewport',
@@ -54,7 +55,7 @@ export const SEO: DefaultSeoProps = {
     },
     {
       rel: 'apple-touch-icon',
-      href: '/apple-icon.png',
+      href: '/apple-touch.png',
       sizes: '180x180',
     },
   ],

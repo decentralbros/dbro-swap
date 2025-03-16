@@ -1,4 +1,4 @@
-import { Box, Skeleton, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { Box, Skeleton, Text } from '@pancakeswap/uikit'
 import { Fragment, useEffect, useMemo, useState } from 'react'
 import { styled } from 'styled-components'
 
@@ -50,7 +50,7 @@ const DataRow: React.FC<React.PropsWithChildren<{ tokenData: TrendingData; index
   tokenData,
   index,
 }) => {
-  const { isXs, isSm } = useMatchBreakpoints()
+  // const { isXs, isSm } = useMatchBreakpoints()
 
   return (
     <ResponsiveGrid>
