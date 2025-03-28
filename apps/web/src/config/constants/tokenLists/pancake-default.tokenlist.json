@@ -71,6 +71,26 @@
       "pairs": []
     },
     {
+      "type": "BASE",
+      "chainId": 8453,
+      "address": "0x7fE0244A02630C7cf649c07339aCceCc6f2976b4",
+      "name": "Mr.Puggles",
+      "symbol": "Puggles",
+      "decimals": 18,
+      "logoURI": "https://decentralbros.finance/images/partners/puggles.webp",
+      "pairs": []
+    },
+    {
+      "type": "BASE",
+      "chainId": 8453,
+      "address": "0xb0E87796380172f911214208df966a84CceAaf82",
+      "name": "DOM",
+      "symbol": "DOM",
+      "decimals": 18,
+      "logoURI": "https://decentralbros.finance/images/partners/dom.webp",
+      "pairs": []
+    },
+    {
       "type": "ERC20",
       "chainId": 1,
       "address": "0xD939212F16560447ED82ce46cA40A63DB62419B5",
@@ -97,7 +117,7 @@
       "name": "ArcBlock",
       "symbol": "ABT",
       "decimals": 18,
-      "logoURI": "https://decentralbros.finance/images/partners/ant.webp",
+      "logoURI": "https://decentralbros.finance/images/partners/abt.webp",
       "pairs": []
     },
     {
