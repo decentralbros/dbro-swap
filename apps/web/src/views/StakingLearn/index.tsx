@@ -33,7 +33,7 @@ const VideoPlayer = () => {
   return (
     <VideoContainer>
       <ResponsiveIframe
-        src="https://decentralbros.s3.us-east-1.amazonaws.com/dbro-wrapped-staking.mp4"
+        src="https://share.decentralbros.dev/dbro-wrapped-staking.mp4"
         title="DBRO Wrapped Staking"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerPolicy="strict-origin-when-cross-origin"
